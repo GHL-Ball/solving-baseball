@@ -4,7 +4,7 @@ title: "分析系"
 
 ## pitch単位
 
-- [投手のギアチェンジについて](/analysis/test-article/gear_change)
+- [投手のギアチェンジについて](/resolving-baseball/analysis/gear_change/)
 
 ## play単位
 

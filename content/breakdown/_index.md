@@ -8,7 +8,7 @@ title: "解説系"
 
 ## 守備指標
 
-- [CSAA: Baseball Prospectus](/breakdown/csaa)
+- [CSAA: Baseball Prospectus](/resolving-baseball/breakdown/csaa/)
 
 ## 走塁指標
 
