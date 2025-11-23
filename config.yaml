@@ -37,11 +37,11 @@ params:
     - python
   highlightjsTheme: github
   highlightjsVersion: 9.12.0
-  logo:
-    alt: Logo
-    height: 50
-    url: logo.png
-    width: 50
+logo:
+  url: /logo.png    # 先頭に / を追加
+  alt: Logo
+  height: 50
+  width: 50
 markup:
   defaultMarkdownHandler: goldmark
   goldmark:
