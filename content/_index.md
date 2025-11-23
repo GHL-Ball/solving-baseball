@@ -11,7 +11,7 @@
 ## 目次
   
 ### 解説系
-- [CSAA: Baseball Prospectus](/resolving-baseball/breakdown/csaa/)
+- [CSAA: Baseball Prospectus](/resolving-baseball/breakdown/csaa)
 
 ### 分析系
 - [投手のギアチェンジについて](/resolving-baseball/analysis/gear_change)

@@ -2,15 +2,13 @@
 title: "解説系"
 ---
   
-性格上ニッチな指標の解説が多くなると思います。
-  
 ## 投手指標
 
 ## 打者指標
 
 ## 守備指標
 
-- [CSAA: Baseball Prospectus](/breakdown/csaa/)
+- [CSAA: Baseball Prospectus](/breakdown/csaa)
 
 ## 走塁指標
 
