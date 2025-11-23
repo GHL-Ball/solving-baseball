@@ -1,0 +1,46 @@
+baseurl: /
+languageCode: ja
+title: Resolving Baseball
+theme: hugo-lithium
+ignoreFiles:
+  - \.Rmd$
+  - \.Rmarkdown$
+  - _cache$
+permalinks:
+  post: /:year/:month/:day/:slug/
+menu:
+  main:
+    - name: About
+      url: /about/
+    - name: 基礎解説
+      url: /basics/
+    - name: 分析・論考
+      url: /analysis/
+    - name: GitHub
+      url: https://github.com/GHL-Ball
+    - name: Twitter
+      url: https://x.com/GHiLiBall
+params:
+  MathJaxCDN: //cdnjs.cloudflare.com/ajax/libs
+  MathJaxVersion: 2.7.5
+  description: 野球の分析サイト
+  favicon: favicon.ico
+  highlightjsCDN: //cdnjs.cloudflare.com/ajax/libs
+  highlightjsLang:
+    - r
+    - yaml
+    - python
+  highlightjsTheme: github
+  highlightjsVersion: 9.12.0
+  logo:
+    alt: Logo
+    height: 50
+    url: logo.png
+    width: 50
+markup:
+  defaultMarkdownHandler: goldmark
+  goldmark:
+    renderer:
+      unsafe: true
+  highlight:
+    codeFences: false
