@@ -22,12 +22,15 @@ menu:
     - name: 分析系
       url: /analysis/
       weight: 4
+    - name: メモ
+      url: /memo/
+      weight: 5
     - name: note
       url: https://note.com/calm_phlox375
-      weight: 5
+      weight: 6
     - name: Twitter
       url: https://x.com/GHiLiBall
-      weight: 6
+      weight: 7
 params:
   MathJaxCDN: //cdnjs.cloudflare.com/ajax/libs
   MathJaxVersion: 2.7.5
