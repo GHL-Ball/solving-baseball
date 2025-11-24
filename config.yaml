@@ -95,13 +95,13 @@ menu:
       name: Twitter
       url: https://x.com/GHiLiBall
       params:
-        icon: brand-x
+        icon: brand-twitter  # brand-x → brand-twitter に変更
     - identifier: note
       name: note
       url: https://note.com/calm_phlox375
       params:
-        icon: pencil
-
+        icon: link  # pencil → link に変更
+        
 markup:
   goldmark:
     renderer:
