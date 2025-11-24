@@ -44,7 +44,7 @@ params:
   highlightjsTheme: github
   highlightjsVersion: 9.12.0
 logo:
-  url: images/logo.png    
+  url: /logo.png    
   alt: Logo
   height: 50
   width: 50
