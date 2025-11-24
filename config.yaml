@@ -11,33 +11,31 @@ params:
   featuredImageField: image
   rssFullContent: true
   favicon: /favicon.ico
-
+  
   footer:
     since: 2025
     customText: Aspiring Saberistの備忘録
-
+    
   dateFormat:
     published: 2006-01-02
     lastUpdated: 2006-01-02 15:04 MST
-
-sidebar:
-    emoji: ⚾  # 絵文字を追加
+    
+  sidebar:
+    emoji: ⚾
     subtitle: 野球のことが知りたくてたまらない人間です。ゆえに所謂セイバーメトリクス的価値観から逃れられない人間です。
     avatar:
-      enabled: false  # true → false に変更
-      local: true
-      src: images/logo.png
-
+      enabled: false
+      
   article:
     math: true
     toc: true
     readingTime: true
     license:
       enabled: false
-
+      
   comments:
     enabled: false
-
+    
   widgets:
     homepage:
       - type: search
