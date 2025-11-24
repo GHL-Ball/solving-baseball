@@ -10,3 +10,5 @@
 "public/" 
 ".DS_Store" 
 "Thumbs.db" 
+**/analytics.js 
+**/*_files/ 
