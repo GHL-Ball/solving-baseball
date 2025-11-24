@@ -20,11 +20,11 @@ params:
     published: 2006-01-02
     lastUpdated: 2006-01-02 15:04 MST
 
-  sidebar:
-    emoji: 
+sidebar:
+    emoji: ⚾  # 絵文字を追加
     subtitle: 野球のことが知りたくてたまらない人間です。ゆえに所謂セイバーメトリクス的価値観から逃れられない人間です。
     avatar:
-      enabled: true
+      enabled: false  # true → false に変更
       local: true
       src: images/logo.png
 
