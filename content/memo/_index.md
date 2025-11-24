@@ -10,6 +10,8 @@ note等でまとめていない粗い分析・論考を貯蔵しておきます�
 
 ## play単位
 
+- [xwOBAの改良](/resolving-baseball/memo/memo_02/)
+
 ## game単位
 
 ## season単位

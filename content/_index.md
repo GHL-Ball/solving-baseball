@@ -10,10 +10,10 @@
   
 ## 目次
   
-### 解説系
+### [解説系](/resolving-baseball/breakdown)
 - [CSAA: Baseball Prospectus](/resolving-baseball/breakdown/csaa)
 
-### 分析系
+### [分析系](/resolving-baseball/analysis)
 - [投手のギアチェンジについて](/resolving-baseball/analysis/gear_change)
 
 ---
