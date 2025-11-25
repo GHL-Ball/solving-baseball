@@ -10,7 +10,7 @@ title: "解説系"
 
 ## 守備指標
 
-- [CSAA: Baseball Prospectus](/resolving-baseball/breakdown/csaa/)
+- [CSAA: Baseball Prospectus](/resolving-baseball/csaa/)
 
 ## 走塁指標
 
