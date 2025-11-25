@@ -97,7 +97,7 @@ menu:
       url: https://note.com/calm_phlox375
       weight: 20
       params:
-        icon: edit
+        icon: archives
     - identifier: github
       name: GitHub
       url: https://github.com/ghl-ball
@@ -109,7 +109,7 @@ menu:
       url: mailto:trevormetrics@gmail.com
       weight: 40
       params:
-        icon: brand-gmail
+        icon: messages
         
 markup:
   goldmark:
