@@ -68,22 +68,6 @@ menu:
       name: Home
       url: /
       weight: 1
-    - identifier: about
-      name: About
-      url: /about/
-      weight: 2
-    - identifier: breakdown
-      name: 解説系
-      url: /breakdown/
-      weight: 3
-    - identifier: analysis
-      name: 分析系
-      url: /analysis/
-      weight: 4
-    - identifier: memo
-      name: メモ
-      url: /memo/
-      weight: 5
 
   social:
     - identifier: twitter

@@ -4,7 +4,6 @@ menu:
     main:
         weight: 3
         params:
-            icon: hash
 layout: "archives"  # または "page"
 ---
 

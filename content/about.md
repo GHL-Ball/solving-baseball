@@ -4,7 +4,6 @@ menu:
     main:
         weight: 2
         params:
-            icon: user
 ---
 
 野球のことが知りたくてたまらない人間です。
