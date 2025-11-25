@@ -6,11 +6,11 @@ note等でまとめていない粗い分析・論考を貯蔵しておきます�
   
 ## pitch単位
 
-- [コマンド力の推定](/resolving-baseball/memo_01/)
+- [コマンド力の推定](/memo/memo_01/)
 
 ## play単位
 
-- [xwOBAの改良](/resolving-baseball/memo_02/)
+- [xwOBAの改良](/memo/memo_02/)
 
 ## game単位
 
