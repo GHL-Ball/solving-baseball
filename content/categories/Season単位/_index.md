@@ -1,6 +1,6 @@
 ---
 title: "Season単位"
 style:
-  background: "#2563eb"
+  background: "#16a34a"
   color: "#fff"
 ---

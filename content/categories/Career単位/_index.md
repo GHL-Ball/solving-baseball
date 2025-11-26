@@ -1,6 +1,6 @@
 ---
 title: "Career単位"
 style:
-  background: "#2563eb"
+  background: "#65a30d"
   color: "#fff"
 ---

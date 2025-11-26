@@ -1,6 +1,6 @@
 ---
 title: "走塁指標"
 style:
-  background: "#2563eb"
+  background: "#ca8a04"
   color: "#fff"
 ---

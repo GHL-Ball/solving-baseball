@@ -1,6 +1,6 @@
 ---
 title: "Play単位"
 style:
-  background: "#2563eb"
+  background: "#0891b2"
   color: "#fff"
 ---

@@ -1,6 +1,6 @@
 ---
 title: "打撃指標"
 style:
-  background: "#2563eb"
+  background: "#7c3aed"
   color: "#fff"
 ---

@@ -1,6 +1,6 @@
 ---
 title: "Game単位"
 style:
-  background: "#2563eb"
+  background: "#059669"
   color: "#fff"
 ---
