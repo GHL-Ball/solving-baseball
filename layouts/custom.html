@@ -1,0 +1,22 @@
+<style>
+  /* Overwrite CSS variable */
+  :root {
+    --ja-font-family: "游ゴシック体", "Yu Gothic", YuGothic, "ヒラギノ角ゴ Pro",
+      "Hiragino Kaku Gothic Pro", "メイリオ", "Meiryo";
+    --base-font-family: "Lato", var(--sys-font-family), var(--ja-font-family),
+      sans-serif;
+  }
+</style>
+
+<script>
+  (function () {
+    const customFont = document.createElement("link");
+    customFont.href =
+      "https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap";
+
+    customFont.type = "text/css";
+    customFont.rel = "stylesheet";
+
+    document.head.appendChild(customFont);
+  })();
+</script>
