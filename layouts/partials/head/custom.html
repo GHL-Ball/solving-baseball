@@ -1,8 +1,7 @@
 <style>
-  /* Overwrite CSS variable */
   :root {
-    --ja-font-family: "游ゴシック体", "Yu Gothic", YuGothic, "ヒラギノ角ゴ Pro",
-      "Hiragino Kaku Gothic Pro", "メイリオ", "Meiryo";
+    --ja-font-family: "Noto Sans JP", "游ゴシック体", "Yu Gothic", YuGothic, 
+      "ヒラギノ角ゴ Pro", "Hiragino Kaku Gothic Pro", "メイリオ", "Meiryo";
     --base-font-family: "Lato", var(--sys-font-family), var(--ja-font-family),
       sans-serif;
   }
@@ -12,11 +11,9 @@
   (function () {
     const customFont = document.createElement("link");
     customFont.href =
-      "https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap";
-
+      "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Lato:wght@400;700&display=swap";
     customFont.type = "text/css";
     customFont.rel = "stylesheet";
-
     document.head.appendChild(customFont);
   })();
 </script>
