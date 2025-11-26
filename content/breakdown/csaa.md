@@ -2,7 +2,7 @@
 title: "CSAA: Baseball Prospectus"
 date: 2025-05-06
 categories: ["守備指標"]
-tags: ["CSAA", "混合モデル", "GLMM"]
+tags: ["CSAA", "混合モデル", "GLMM", "フレーミング"]
 ---
   
 ## Baseball Prospectus CSAA（ver.1）解説
