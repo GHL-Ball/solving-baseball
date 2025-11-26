@@ -1,7 +1,7 @@
 ---
 title: "xwOBAの改良"
 date: 2025-10-11
-categories: ["Play単位"]
+categories: ["Play単位", "メモ"]
 tags: ["Batting", "xwOBA"]
 ---
 

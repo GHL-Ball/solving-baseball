@@ -1,7 +1,7 @@
 ---
 title: "コマンド力の推定"
 date: 2025-11-11
-categories: ["Pitch単位"]
+categories: ["Pitch単位", "メモ"]
 tags: ["Pitching", "コマンド"]
 ---
 

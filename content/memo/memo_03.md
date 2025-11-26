@@ -1,7 +1,7 @@
 ---
 title: "MLB誤審率推移"
 date: 2025-10-04
-categories: ["Pitch単位"]
+categories: ["Pitch単位", "メモ"]
 tags: ["審判", "フレーミング"]
 ---
 
