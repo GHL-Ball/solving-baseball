@@ -4,16 +4,16 @@ title: "メモ"
 
 note等でまとめていない粗い分析・論考を貯蔵しておきます。
   
-### pitch単位
+### Pitch単位
 
 - [コマンド力の推定](/resolving-baseball/memo/memo_01/)
 
-### play単位
+### Play単位
 
 - [xwOBAの改良](/resolving-baseball/memo/memo_02/)
 
-### game単位
+### Game単位
 
-### season単位
+### Season単位
 
-### carea単位
+### Career単位
