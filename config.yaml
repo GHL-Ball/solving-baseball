@@ -18,7 +18,7 @@ params:
     - memo
   featuredImageField: image
   rssFullContent: false
-  favicon: /images/favicon.png
+  favicon: /resolving-baseball/images/favicon.png
   
   footer:
     since: 2025
