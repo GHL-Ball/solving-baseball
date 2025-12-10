@@ -7,7 +7,7 @@ tags: ["捕手", "リード", "フレーミング", "WAR"]
 
 前回の説明系noteで逃げたRerCとそれを採用するrWAR,DRSについての説明＆感想系noteです。前回のRerC以外の守備指標の軽いまとめはこちら⬇
 
-前回→[捕手の守備指標まとめ](/solving-baseball/posts/catcher-defense-metrics-summary/)
+前回→[捕手の守備指標まとめ](/solving-baseball/breakdown/catcher-defense-metrics-summary/)
 
 ---
 

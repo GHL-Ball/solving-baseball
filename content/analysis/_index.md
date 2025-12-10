@@ -12,7 +12,7 @@ title: "分析系"
 
 ### Play単位
 
-- [ポストシーズンの低BABIPの要因](/solving-baseball/analysis/ps_babip/)
+- [ポストシーズンの低BABIPの要因](/solving-baseball/analysis/ps-babip/)
 - [打球分類ごとのEscape Velocity](/solving-baseball/analysis/escape-velocity-by-batted-ball-type/)
 
 ### Game単位
