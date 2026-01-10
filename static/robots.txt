@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ghl-ball.github.io/solving-baseball/sitemap.xml
