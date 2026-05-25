@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+    <head><script src="/solving-baseball/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=solving-baseball/livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="ピッチモデリング指標の解説\rStuff+、BotCmd、PitchPro、近年よく聞くようになったこれらの指標は一般的に「Pitch Modeling（ピッチモデリング）」指標と呼ばれています。\nモデリング自体は昔からある概念ですし、もちろん野球においてもモデリングの性質を持った指標は多いです。\nただ、今回解説する、主に投手の出力（プロセス）に基づいたモデリングは、長年セイバーメトリクスを支えてきた打席や投球の結果（アウトカム）に基づいたモデリングとは意味合いに違いがあります。\nピッチモデリング指標とあえて表現する背景にはこのような文脈もあり（多分）、またそれが、プロセス情報の入手が困難だった時代に構築されたモデリング指標とは一線を画す存在となる理由でもあります。\n機械学習とは\rピッチモデリング指標は機械学習を活用しています。\nそもそも機械学習とは『データから規則性を学習し、未知のデータに対して予測や推定を行う手法』の総称です。\nこれには線形回帰やロジスティック回帰といった、セイバーメトリクスの文脈で初期から活用されてきた分析手法も含まれます。\nただ、それらをわざわざ機械学習と呼称することは少なく、一般的には Random Forest（ランダムフォレスト）や Neural Network（ニューラルネットワーク）といった、より複雑なアルゴリズムを指していることが多いです。\nセイバーメトリクスファンは k-Nearest Neighbor algorithm（k近傍法、k-NN）は聞き馴染みがあるでしょう。\n現在主流のピッチモデリング指標は全て、機械学習の手法の一つ、Gradient Boosting Decision Tree（勾配ブースティング決定木、GBDT）を活用しています。\nGBDTとは\rGBDTは有り難いことに名前がその手法を表しています。『勾配』を使って『ブースティング』を行う『決定木』といった感じですね。\nGBDTは初めて聞く方も多いとは思いますので、名前に沿ってできるだけ簡潔にまとめます。\nGradient（勾配）\rGBDTのゴールを表しているのがこの語句です。\nここで言う勾配も屋根や道路で使われる傾きと同じような意味です（スカラーではなくベクトルですが）。\nそして機械学習における勾配とは、損失関数（予測誤差の大きさを表す関数）の増加方向と大きさを表すベクトルであり、GBDTでは勾配と逆方向に進む＝誤差を減らすことをゴールとする勾配降下法をこの後紹介するブースティング決定木によって実現しています。\n勾配降下法については、線形回帰をはじめとし、多くの機械学習で採用されている、言わば土台のようなものです。\nGBDTはその勾配降下法の中身が特殊です、という話をこれからしていきます。\nBoosting（ブースティング）\rブースティングは『弱い学習器を逐次的に学習・統合することで、全体として高性能なモデルを作る』手法です。\nこの手法の主眼は、前のモデルの系統的な誤差（バイアス）を後のモデルが修正していくことにあります。\nまた、弱い学習器を多数使用することで、それぞれのモデルが違う方向に間違ってくれるため、結果的にノイズが平準化され、過学習を防ぐことができます。\nGBDTは、このブースティングの過程に先に述べた勾配降下法を取り入れたという点で、機械学習において革新的なアルゴリズムとなりました。\nちなみに、ブースティングのような複数のモデルを組み合わせる手法＝アンサンブル学習には、**モデルの安定性や信頼区間を得ることに焦点を置いている Bagging（バギング）**と呼ばれるものもあります。\n逐次的に学習するブースティングとは対照的に並列に学習することで分散（バリアンス）が低減されます。\nモデルの性能を高める（バイアスを低減する）ことに焦点を置いているブースティングとともに、統計学的に無視できない観点ですので記憶の片隅に入れておくことをおすすめします。\n▶︎フレーミング指標の解説でバギングについても少しだけ触れています\nCSAA: Baseball Prospectus Decision Tree（決定木）\r最後に弱学習器としてブースティングに使用している決定木の説明です。\n決定木は一言で言うと『条件分岐の繰り返しで予測する』手法です。\n上記のイメージ図からも想像できるとは思いますが、決定木は弱学習器を多数作るブースティングにかなり向いています。\n分岐の数（深さ）を制限するだけで簡単かつ確実に弱学習器を作れます。 上記の図で言うと、最初の pfx_z の条件で分岐を終えるだけで（全くの無能ではない）弱い予測モデルができることは想像しやすいと思います。\nまた、条件分岐という特徴により特徴量（≒説明変数）のスケーリングが不要になりますし、非線形な関係はもちろん、カテゴリ変数や段階的な関係も捉えやすくなります。野球分析に向いている匂いがプンプンしてきました。\nGBDTはブースティングの学習器として決定木を採用し、その高い実用性を実現しています。\n野球におけるGBDTの強み\rでは先述したGBDTの特徴は野球分析においてどのような強みを持つでしょうか。\n以下に野球分析において有り難い要素を並べてみました。\n特徴量のスケーリングが不要 決定木では特徴量の大小関係（順序）に基づいて分割する 欠損値や外れ値の処理が比較的優れている 分割に焦点を置く決定木では分布や外れ値の影響を受けにくい 段階的な変数に強い 決定木は条件分岐を繰り返す構造なので特徴量間の複雑な関係性に強い 特徴量の交互作用を捕捉できる 決定木は条件分岐ごとに異なる特徴量を選ぶため、モデル全体として特徴量間の主要な交互作用を捕捉できる（ライブラリによって制約はある） カテゴリ変数に強い ダミー変数化せずに直接利用でき、次元の増加が抑えられ、多重共線性を起こしにくい（ライブラリによって差はある） 表形式データに強い 条件分岐がベースにある決定木と表形式データは相性が良い 無駄な特徴量を入れても精度が落ちにくい 勾配に基づいて誤差を修正するため、予測に影響を与えない特徴量は後の条件分岐で選択されにくくなる 大規模データに強い 現代のライブラリでは計算効率が極限まで高められている 特徴量重要度を明確に示せる GBDTはモデル全体で、各特徴量がどれだけ損失を減少させたか、または予測に寄与したかを累積的に評価できる 解釈性がそこまで低くはない 全体像を把握するのは困難だが、他の複雑なアルゴリズムと比較して、予測結果の筋道は比較的理解しやすい 多クラス分類に対応できる 勾配降下法の汎用性とブースティングの逐次的な修正により、複数の確率を同時に予測できる まず注目するポイントとしては事前のデータ整形のプレッシャーが抑えられる点でしょう。\n">
+<title>ピッチモデリング指標の解説</title>
+
+<link rel='canonical' href='http://localhost:1313/solving-baseball/breakdown/pitch_modeling/'>
+
+<link rel="stylesheet" href="/solving-baseball/scss/style.min.4d36f8dc1fd48129e1635deb4b8eb2870fa09474f7280c4cb606d40b2526994b.css"><meta property='og:title' content="ピッチモデリング指標の解説">
+<meta property='og:description' content="ピッチモデリング指標の解説\rStuff+、BotCmd、PitchPro、近年よく聞くようになったこれらの指標は一般的に「Pitch Modeling（ピッチモデリング）」指標と呼ばれています。\nモデリング自体は昔からある概念ですし、もちろん野球においてもモデリングの性質を持った指標は多いです。\nただ、今回解説する、主に投手の出力（プロセス）に基づいたモデリングは、長年セイバーメトリクスを支えてきた打席や投球の結果（アウトカム）に基づいたモデリングとは意味合いに違いがあります。\nピッチモデリング指標とあえて表現する背景にはこのような文脈もあり（多分）、またそれが、プロセス情報の入手が困難だった時代に構築されたモデリング指標とは一線を画す存在となる理由でもあります。\n機械学習とは\rピッチモデリング指標は機械学習を活用しています。\nそもそも機械学習とは『データから規則性を学習し、未知のデータに対して予測や推定を行う手法』の総称です。\nこれには線形回帰やロジスティック回帰といった、セイバーメトリクスの文脈で初期から活用されてきた分析手法も含まれます。\nただ、それらをわざわざ機械学習と呼称することは少なく、一般的には Random Forest（ランダムフォレスト）や Neural Network（ニューラルネットワーク）といった、より複雑なアルゴリズムを指していることが多いです。\nセイバーメトリクスファンは k-Nearest Neighbor algorithm（k近傍法、k-NN）は聞き馴染みがあるでしょう。\n現在主流のピッチモデリング指標は全て、機械学習の手法の一つ、Gradient Boosting Decision Tree（勾配ブースティング決定木、GBDT）を活用しています。\nGBDTとは\rGBDTは有り難いことに名前がその手法を表しています。『勾配』を使って『ブースティング』を行う『決定木』といった感じですね。\nGBDTは初めて聞く方も多いとは思いますので、名前に沿ってできるだけ簡潔にまとめます。\nGradient（勾配）\rGBDTのゴールを表しているのがこの語句です。\nここで言う勾配も屋根や道路で使われる傾きと同じような意味です（スカラーではなくベクトルですが）。\nそして機械学習における勾配とは、損失関数（予測誤差の大きさを表す関数）の増加方向と大きさを表すベクトルであり、GBDTでは勾配と逆方向に進む＝誤差を減らすことをゴールとする勾配降下法をこの後紹介するブースティング決定木によって実現しています。\n勾配降下法については、線形回帰をはじめとし、多くの機械学習で採用されている、言わば土台のようなものです。\nGBDTはその勾配降下法の中身が特殊です、という話をこれからしていきます。\nBoosting（ブースティング）\rブースティングは『弱い学習器を逐次的に学習・統合することで、全体として高性能なモデルを作る』手法です。\nこの手法の主眼は、前のモデルの系統的な誤差（バイアス）を後のモデルが修正していくことにあります。\nまた、弱い学習器を多数使用することで、それぞれのモデルが違う方向に間違ってくれるため、結果的にノイズが平準化され、過学習を防ぐことができます。\nGBDTは、このブースティングの過程に先に述べた勾配降下法を取り入れたという点で、機械学習において革新的なアルゴリズムとなりました。\nちなみに、ブースティングのような複数のモデルを組み合わせる手法＝アンサンブル学習には、**モデルの安定性や信頼区間を得ることに焦点を置いている Bagging（バギング）**と呼ばれるものもあります。\n逐次的に学習するブースティングとは対照的に並列に学習することで分散（バリアンス）が低減されます。\nモデルの性能を高める（バイアスを低減する）ことに焦点を置いているブースティングとともに、統計学的に無視できない観点ですので記憶の片隅に入れておくことをおすすめします。\n▶︎フレーミング指標の解説でバギングについても少しだけ触れています\nCSAA: Baseball Prospectus Decision Tree（決定木）\r最後に弱学習器としてブースティングに使用している決定木の説明です。\n決定木は一言で言うと『条件分岐の繰り返しで予測する』手法です。\n上記のイメージ図からも想像できるとは思いますが、決定木は弱学習器を多数作るブースティングにかなり向いています。\n分岐の数（深さ）を制限するだけで簡単かつ確実に弱学習器を作れます。 上記の図で言うと、最初の pfx_z の条件で分岐を終えるだけで（全くの無能ではない）弱い予測モデルができることは想像しやすいと思います。\nまた、条件分岐という特徴により特徴量（≒説明変数）のスケーリングが不要になりますし、非線形な関係はもちろん、カテゴリ変数や段階的な関係も捉えやすくなります。野球分析に向いている匂いがプンプンしてきました。\nGBDTはブースティングの学習器として決定木を採用し、その高い実用性を実現しています。\n野球におけるGBDTの強み\rでは先述したGBDTの特徴は野球分析においてどのような強みを持つでしょうか。\n以下に野球分析において有り難い要素を並べてみました。\n特徴量のスケーリングが不要 決定木では特徴量の大小関係（順序）に基づいて分割する 欠損値や外れ値の処理が比較的優れている 分割に焦点を置く決定木では分布や外れ値の影響を受けにくい 段階的な変数に強い 決定木は条件分岐を繰り返す構造なので特徴量間の複雑な関係性に強い 特徴量の交互作用を捕捉できる 決定木は条件分岐ごとに異なる特徴量を選ぶため、モデル全体として特徴量間の主要な交互作用を捕捉できる（ライブラリによって制約はある） カテゴリ変数に強い ダミー変数化せずに直接利用でき、次元の増加が抑えられ、多重共線性を起こしにくい（ライブラリによって差はある） 表形式データに強い 条件分岐がベースにある決定木と表形式データは相性が良い 無駄な特徴量を入れても精度が落ちにくい 勾配に基づいて誤差を修正するため、予測に影響を与えない特徴量は後の条件分岐で選択されにくくなる 大規模データに強い 現代のライブラリでは計算効率が極限まで高められている 特徴量重要度を明確に示せる GBDTはモデル全体で、各特徴量がどれだけ損失を減少させたか、または予測に寄与したかを累積的に評価できる 解釈性がそこまで低くはない 全体像を把握するのは困難だが、他の複雑なアルゴリズムと比較して、予測結果の筋道は比較的理解しやすい 多クラス分類に対応できる 勾配降下法の汎用性とブースティングの逐次的な修正により、複数の確率を同時に予測できる まず注目するポイントとしては事前のデータ整形のプレッシャーが抑えられる点でしょう。\n">
+<meta property='og:url' content='http://localhost:1313/solving-baseball/breakdown/pitch_modeling/'>
+<meta property='og:site_name' content='Solving Baseball Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Breakdown' /><meta property='article:tag' content='ピッチモデリング' /><meta property='article:tag' content='GBDT' /><meta property='article:tag' content='ホームアドバンテージ' /><meta property='article:published_time' content='2025-10-24T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-10-24T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="ピッチモデリング指標の解説">
+<meta name="twitter:description" content="ピッチモデリング指標の解説\rStuff+、BotCmd、PitchPro、近年よく聞くようになったこれらの指標は一般的に「Pitch Modeling（ピッチモデリング）」指標と呼ばれています。\nモデリング自体は昔からある概念ですし、もちろん野球においてもモデリングの性質を持った指標は多いです。\nただ、今回解説する、主に投手の出力（プロセス）に基づいたモデリングは、長年セイバーメトリクスを支えてきた打席や投球の結果（アウトカム）に基づいたモデリングとは意味合いに違いがあります。\nピッチモデリング指標とあえて表現する背景にはこのような文脈もあり（多分）、またそれが、プロセス情報の入手が困難だった時代に構築されたモデリング指標とは一線を画す存在となる理由でもあります。\n機械学習とは\rピッチモデリング指標は機械学習を活用しています。\nそもそも機械学習とは『データから規則性を学習し、未知のデータに対して予測や推定を行う手法』の総称です。\nこれには線形回帰やロジスティック回帰といった、セイバーメトリクスの文脈で初期から活用されてきた分析手法も含まれます。\nただ、それらをわざわざ機械学習と呼称することは少なく、一般的には Random Forest（ランダムフォレスト）や Neural Network（ニューラルネットワーク）といった、より複雑なアルゴリズムを指していることが多いです。\nセイバーメトリクスファンは k-Nearest Neighbor algorithm（k近傍法、k-NN）は聞き馴染みがあるでしょう。\n現在主流のピッチモデリング指標は全て、機械学習の手法の一つ、Gradient Boosting Decision Tree（勾配ブースティング決定木、GBDT）を活用しています。\nGBDTとは\rGBDTは有り難いことに名前がその手法を表しています。『勾配』を使って『ブースティング』を行う『決定木』といった感じですね。\nGBDTは初めて聞く方も多いとは思いますので、名前に沿ってできるだけ簡潔にまとめます。\nGradient（勾配）\rGBDTのゴールを表しているのがこの語句です。\nここで言う勾配も屋根や道路で使われる傾きと同じような意味です（スカラーではなくベクトルですが）。\nそして機械学習における勾配とは、損失関数（予測誤差の大きさを表す関数）の増加方向と大きさを表すベクトルであり、GBDTでは勾配と逆方向に進む＝誤差を減らすことをゴールとする勾配降下法をこの後紹介するブースティング決定木によって実現しています。\n勾配降下法については、線形回帰をはじめとし、多くの機械学習で採用されている、言わば土台のようなものです。\nGBDTはその勾配降下法の中身が特殊です、という話をこれからしていきます。\nBoosting（ブースティング）\rブースティングは『弱い学習器を逐次的に学習・統合することで、全体として高性能なモデルを作る』手法です。\nこの手法の主眼は、前のモデルの系統的な誤差（バイアス）を後のモデルが修正していくことにあります。\nまた、弱い学習器を多数使用することで、それぞれのモデルが違う方向に間違ってくれるため、結果的にノイズが平準化され、過学習を防ぐことができます。\nGBDTは、このブースティングの過程に先に述べた勾配降下法を取り入れたという点で、機械学習において革新的なアルゴリズムとなりました。\nちなみに、ブースティングのような複数のモデルを組み合わせる手法＝アンサンブル学習には、**モデルの安定性や信頼区間を得ることに焦点を置いている Bagging（バギング）**と呼ばれるものもあります。\n逐次的に学習するブースティングとは対照的に並列に学習することで分散（バリアンス）が低減されます。\nモデルの性能を高める（バイアスを低減する）ことに焦点を置いているブースティングとともに、統計学的に無視できない観点ですので記憶の片隅に入れておくことをおすすめします。\n▶︎フレーミング指標の解説でバギングについても少しだけ触れています\nCSAA: Baseball Prospectus Decision Tree（決定木）\r最後に弱学習器としてブースティングに使用している決定木の説明です。\n決定木は一言で言うと『条件分岐の繰り返しで予測する』手法です。\n上記のイメージ図からも想像できるとは思いますが、決定木は弱学習器を多数作るブースティングにかなり向いています。\n分岐の数（深さ）を制限するだけで簡単かつ確実に弱学習器を作れます。 上記の図で言うと、最初の pfx_z の条件で分岐を終えるだけで（全くの無能ではない）弱い予測モデルができることは想像しやすいと思います。\nまた、条件分岐という特徴により特徴量（≒説明変数）のスケーリングが不要になりますし、非線形な関係はもちろん、カテゴリ変数や段階的な関係も捉えやすくなります。野球分析に向いている匂いがプンプンしてきました。\nGBDTはブースティングの学習器として決定木を採用し、その高い実用性を実現しています。\n野球におけるGBDTの強み\rでは先述したGBDTの特徴は野球分析においてどのような強みを持つでしょうか。\n以下に野球分析において有り難い要素を並べてみました。\n特徴量のスケーリングが不要 決定木では特徴量の大小関係（順序）に基づいて分割する 欠損値や外れ値の処理が比較的優れている 分割に焦点を置く決定木では分布や外れ値の影響を受けにくい 段階的な変数に強い 決定木は条件分岐を繰り返す構造なので特徴量間の複雑な関係性に強い 特徴量の交互作用を捕捉できる 決定木は条件分岐ごとに異なる特徴量を選ぶため、モデル全体として特徴量間の主要な交互作用を捕捉できる（ライブラリによって制約はある） カテゴリ変数に強い ダミー変数化せずに直接利用でき、次元の増加が抑えられ、多重共線性を起こしにくい（ライブラリによって差はある） 表形式データに強い 条件分岐がベースにある決定木と表形式データは相性が良い 無駄な特徴量を入れても精度が落ちにくい 勾配に基づいて誤差を修正するため、予測に影響を与えない特徴量は後の条件分岐で選択されにくくなる 大規模データに強い 現代のライブラリでは計算効率が極限まで高められている 特徴量重要度を明確に示せる GBDTはモデル全体で、各特徴量がどれだけ損失を減少させたか、または予測に寄与したかを累積的に評価できる 解釈性がそこまで低くはない 全体像を把握するのは困難だが、他の複雑なアルゴリズムと比較して、予測結果の筋道は比較的理解しやすい 多クラス分類に対応できる 勾配降下法の汎用性とブースティングの逐次的な修正により、複数の確率を同時に予測できる まず注目するポイントとしては事前のデータ整形のプレッシャーが抑えられる点でしょう。\n">
+    <link rel="shortcut icon" href="/solving-baseball/images/favicon.png" />
+<style>
+  :root {
+    --ja-font-family: "Noto Sans JP", "游ゴシック体", "Yu Gothic", YuGothic, 
+      "ヒラギノ角ゴ Pro", "Hiragino Kaku Gothic Pro", "メイリオ", "Meiryo";
+    --base-font-family: "Lato", var(--sys-font-family), var(--ja-font-family),
+      sans-serif;
+  }
+
+   
+  .article-content {
+    color: var(--card-text-color-main);
+  }
+
+  .article-content a {
+    color: var(--accent-color);
+  }
+</style>
+
+<script>
+  (function () {
+    const customFont = document.createElement("link");
+    customFont.href =
+      "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Lato:wght@400;700&display=swap";
+    customFont.type = "text/css";
+    customFont.rel = "stylesheet";
+    document.head.appendChild(customFont);
+  })();
+</script>
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="メニューを開く・閉じる">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/solving-baseball">Solving Baseball Blog</a></h1>
+            <h2 class="site-description">Aspiring Saberistの備忘録</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://x.com/GHiLiBall'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://note.com/calm_phlox375'
+                        target="_blank"
+                        title="note"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/solving-baseball/leaderboard/' >
+                
+                
+                
+                <span>Leaderboard</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/' >
+                
+                
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/about/' >
+                
+                
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/analysis/' >
+                
+                
+                
+                <span>分析系</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/breakdown/' >
+                
+                
+                
+                <span>解説系</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/memo/' >
+                
+                
+                
+                <span>メモ</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/page/search/' >
+                
+                
+                
+                <span>検索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/categories/' >
+                
+                
+                
+                <span>カテゴリ一覧</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/tags/' >
+                
+                
+                
+                <span>タグ一覧</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>ダークモード</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目次</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#ピッチモデリング指標の解説">ピッチモデリング指標の解説</a>
+      <ul>
+        <li><a href="#機械学習とは">機械学習とは</a></li>
+        <li><a href="#gbdtとは">GBDTとは</a>
+          <ul>
+            <li><a href="#gradient勾配">Gradient（勾配）</a></li>
+            <li><a href="#boostingブースティング">Boosting（ブースティング）</a></li>
+            <li><a href="#decision-tree決定木">Decision Tree（決定木）</a></li>
+          </ul>
+        </li>
+        <li><a href="#野球におけるgbdtの強み">野球におけるGBDTの強み</a></li>
+        <li><a href="#算出方法">算出方法</a>
+          <ul>
+            <li><a href="#訓練データとテストデータ">訓練データとテストデータ</a></li>
+            <li><a href="#サブモデル">サブモデル</a></li>
+            <li><a href="#特徴量">特徴量</a></li>
+            <li><a href="#ライブラリ">ライブラリ</a></li>
+            <li><a href="#得点価値予測">得点価値予測</a></li>
+          </ul>
+        </li>
+        <li><a href="#性能">性能</a></li>
+      </ul>
+    </li>
+    <li><a href="#ピッチモデリング指標を活かした分析">ピッチモデリング指標を活かした分析</a>
+      <ul>
+        <li><a href="#ピッチモデリング指標の強み">ピッチモデリング指標の強み</a></li>
+        <li><a href="#有効活用しているセイバリストの紹介">有効活用しているセイバリストの紹介</a>
+          <ul>
+            <li><a href="#ttopの分解">TTOPの分解</a></li>
+            <li><a href="#pfの分解">PFの分解</a></li>
+          </ul>
+        </li>
+        <li><a href="#ホームアドバンテージの責任分配">ホームアドバンテージの責任分配</a></li>
+        <li><a href="#強みを活かした分析あれこれ">強みを活かした分析あれこれ</a>
+          <ul>
+            <li><a href="#対象階層でのアウトカムが存在しない投手">対象階層でのアウトカムが存在しない投手</a></li>
+            <li><a href="#特徴量の操作">特徴量の操作</a></li>
+            <li><a href="#球種別の評価">球種別の評価</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#おわりに">おわりに</a></li>
+    <li><a href="#参考文献">参考文献</a></li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/solving-baseball/categories/%E6%8A%95%E6%89%8B%E6%8C%87%E6%A8%99/" style="background-color: #dc2626; color: #fff;">
+                投手指標
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/solving-baseball/breakdown/pitch_modeling/">ピッチモデリング指標の解説</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published" datetime='2025-10-24T00:00:00Z'>2025-10-24</time>
+            </div>
+        
+
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="ピッチモデリング指標の解説">ピッチモデリング指標の解説
+</h2><p>Stuff+、BotCmd、PitchPro、近年よく聞くようになったこれらの指標は一般的に「Pitch Modeling（ピッチモデリング）」指標と呼ばれています。</p>
+<p>モデリング自体は昔からある概念ですし、もちろん野球においてもモデリングの性質を持った指標は多いです。</p>
+<p>ただ、今回解説する、主に投手の出力（プロセス）に基づいたモデリングは、長年セイバーメトリクスを支えてきた打席や投球の結果（アウトカム）に基づいたモデリングとは意味合いに違いがあります。</p>
+<p>ピッチモデリング指標とあえて表現する背景にはこのような文脈もあり（多分）、またそれが、<strong>プロセス情報の入手が困難だった時代に構築されたモデリング指標とは一線を画す存在</strong>となる理由でもあります。</p>
+<hr>
+<h3 id="機械学習とは">機械学習とは
+</h3><p>ピッチモデリング指標は機械学習を活用しています。</p>
+<p>そもそも機械学習とは『<strong>データから規則性を学習し、未知のデータに対して予測や推定を行う手法</strong>』の総称です。</p>
+<p>これには線形回帰やロジスティック回帰といった、セイバーメトリクスの文脈で初期から活用されてきた分析手法も含まれます。</p>
+<p>ただ、それらをわざわざ機械学習と呼称することは少なく、一般的には Random Forest（ランダムフォレスト）や Neural Network（ニューラルネットワーク）といった、より複雑なアルゴリズムを指していることが多いです。</p>
+<p>セイバーメトリクスファンは k-Nearest Neighbor algorithm（k近傍法、k-NN）は聞き馴染みがあるでしょう。</p>
+<p>現在主流のピッチモデリング指標は全て、機械学習の手法の一つ、Gradient Boosting Decision Tree（勾配ブースティング決定木、GBDT）を活用しています。</p>
+<hr>
+<h3 id="gbdtとは">GBDTとは
+</h3><p>GBDTは有り難いことに名前がその手法を表しています。『勾配』を使って『ブースティング』を行う『決定木』といった感じですね。</p>
+<p>GBDTは初めて聞く方も多いとは思いますので、名前に沿ってできるだけ簡潔にまとめます。</p>
+<h4 id="gradient勾配">Gradient（勾配）
+</h4><p>GBDTのゴールを表しているのがこの語句です。</p>
+<p>ここで言う勾配も屋根や道路で使われる傾きと同じような意味です（スカラーではなくベクトルですが）。</p>
+<p>そして機械学習における勾配とは、損失関数（予測誤差の大きさを表す関数）の増加方向と大きさを表すベクトルであり、GBDTでは勾配と逆方向に進む＝誤差を減らすことをゴールとする<strong>勾配降下法</strong>をこの後紹介するブースティング決定木によって実現しています。</p>
+<p>勾配降下法については、線形回帰をはじめとし、多くの機械学習で採用されている、言わば土台のようなものです。</p>
+<p>GBDTはその勾配降下法の中身が特殊です、という話をこれからしていきます。</p>
+<h4 id="boostingブースティング">Boosting（ブースティング）
+</h4><p>ブースティングは『<strong>弱い学習器を逐次的に学習・統合することで、全体として高性能なモデルを作る</strong>』手法です。</p>
+<p>この手法の主眼は、前のモデルの系統的な誤差（バイアス）を後のモデルが修正していくことにあります。</p>
+<p>また、弱い学習器を多数使用することで、それぞれのモデルが違う方向に間違ってくれるため、結果的にノイズが平準化され、過学習を防ぐことができます。</p>
+<p>GBDTは、この<strong>ブースティングの過程に先に述べた勾配降下法を取り入れた</strong>という点で、機械学習において革新的なアルゴリズムとなりました。</p>
+<p>ちなみに、ブースティングのような複数のモデルを組み合わせる手法＝アンサンブル学習には、**モデルの安定性や信頼区間を得ることに焦点を置いている Bagging（バギング）**と呼ばれるものもあります。</p>
+<p>逐次的に学習するブースティングとは対照的に並列に学習することで分散（バリアンス）が低減されます。</p>
+<p>モデルの性能を高める（バイアスを低減する）ことに焦点を置いているブースティングとともに、統計学的に無視できない観点ですので記憶の片隅に入れておくことをおすすめします。</p>
+<p>▶︎フレーミング指標の解説でバギングについても少しだけ触れています</p>
+<ul>
+<li><a class="link" href="/solving-baseball/breakdown/csaa/" >CSAA: Baseball Prospectus</a></li>
+</ul>
+<h4 id="decision-tree決定木">Decision Tree（決定木）
+</h4><p>最後に弱学習器としてブースティングに使用している決定木の説明です。</p>
+<p>決定木は一言で言うと『<strong>条件分岐の繰り返しで予測する</strong>』手法です。</p>
+<p><img src="/solving-baseball/images/46.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="決定木イメージ"
+	
+	
+></p>
+<p>上記のイメージ図からも想像できるとは思いますが、<strong>決定木は弱学習器を多数作るブースティングにかなり向いています</strong>。</p>
+<p><strong>分岐の数（深さ）を制限</strong>するだけで簡単かつ確実に弱学習器を作れます。
+上記の図で言うと、最初の pfx_z の条件で分岐を終えるだけで（全くの無能ではない）弱い予測モデルができることは想像しやすいと思います。</p>
+<p>また、条件分岐という特徴により<strong>特徴量（≒説明変数）のスケーリングが不要</strong>になりますし、非線形な関係はもちろん、<strong>カテゴリ変数</strong>や<strong>段階的な関係</strong>も捉えやすくなります。野球分析に向いている匂いがプンプンしてきました。</p>
+<p>GBDTはブースティングの学習器として決定木を採用し、その高い実用性を実現しています。</p>
+<hr>
+<h3 id="野球におけるgbdtの強み">野球におけるGBDTの強み
+</h3><p>では先述したGBDTの特徴は野球分析においてどのような強みを持つでしょうか。</p>
+<p>以下に野球分析において有り難い要素を並べてみました。</p>
+<ul>
+<li><strong>特徴量のスケーリングが不要</strong>
+<ul>
+<li>決定木では特徴量の大小関係（順序）に基づいて分割する</li>
+</ul>
+</li>
+<li><strong>欠損値や外れ値の処理が比較的優れている</strong>
+<ul>
+<li>分割に焦点を置く決定木では分布や外れ値の影響を受けにくい</li>
+</ul>
+</li>
+<li><strong>段階的な変数に強い</strong>
+<ul>
+<li>決定木は条件分岐を繰り返す構造なので特徴量間の複雑な関係性に強い</li>
+</ul>
+</li>
+<li><strong>特徴量の交互作用を捕捉できる</strong>
+<ul>
+<li>決定木は条件分岐ごとに異なる特徴量を選ぶため、モデル全体として特徴量間の主要な交互作用を捕捉できる（ライブラリによって制約はある）</li>
+</ul>
+</li>
+<li><strong>カテゴリ変数に強い</strong>
+<ul>
+<li>ダミー変数化せずに直接利用でき、次元の増加が抑えられ、多重共線性を起こしにくい（ライブラリによって差はある）</li>
+</ul>
+</li>
+<li><strong>表形式データに強い</strong>
+<ul>
+<li>条件分岐がベースにある決定木と表形式データは相性が良い</li>
+</ul>
+</li>
+<li><strong>無駄な特徴量を入れても精度が落ちにくい</strong>
+<ul>
+<li>勾配に基づいて誤差を修正するため、予測に影響を与えない特徴量は後の条件分岐で選択されにくくなる</li>
+</ul>
+</li>
+<li><strong>大規模データに強い</strong>
+<ul>
+<li>現代のライブラリでは計算効率が極限まで高められている</li>
+</ul>
+</li>
+<li><strong>特徴量重要度を明確に示せる</strong>
+<ul>
+<li>GBDTはモデル全体で、各特徴量がどれだけ損失を減少させたか、または予測に寄与したかを累積的に評価できる</li>
+</ul>
+</li>
+<li><strong>解釈性がそこまで低くはない</strong>
+<ul>
+<li>全体像を把握するのは困難だが、他の複雑なアルゴリズムと比較して、予測結果の筋道は比較的理解しやすい</li>
+</ul>
+</li>
+<li><strong>多クラス分類に対応できる</strong>
+<ul>
+<li>勾配降下法の汎用性とブースティングの逐次的な修正により、複数の確率を同時に予測できる</li>
+</ul>
+</li>
+</ul>
+<p>まず注目するポイントとしては事前のデータ整形のプレッシャーが抑えられる点でしょう。</p>
+<p>例えば、機械学習において知名度の高いニューラルネットワークでは事前のスケーリングが必須になりますし、深層学習（ディープラーニング）ではより高度な正規化が求められます。野球データにおいて特徴量ごとに適した正規化を行うのはそれだけで骨が折れます。</p>
+<p>そしていわゆる重み付けではなく条件分岐で誤差を減らしていくので、利き手の左右や球場といったカテゴリ変数、そしてピッチカウントと打者の積極性といった（非線形かつ滑らかでない）段階的な変化、またArm Angle × IVBといった交互作用への対応に強くなります。</p>
+<hr>
+<h3 id="算出方法">算出方法
+</h3><p>では実際にモデルを組んである程度の流れも説明していきます。</p>
+<h4 id="訓練データとテストデータ">訓練データとテストデータ
+</h4><p>訓練データは2021〜2023年の欠損値を除くMLBのデータとします。</p>
+<p>2024〜2025年をテストデータとし、記述性や予測性を評価します。</p>
+<h4 id="サブモデル">サブモデル
+</h4><p>サブモデルは以下の4つとします。</p>
+<p><img src="/solving-baseball/images/47.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="サブモデル構造"
+	
+	
+></p>
+<p>もちろん、わざわざサブモデルに展開せず、直接得点価値を推定する手法も間違いではないですし、実際にその手法を取っている野良のセイバリストもいます。ただ現状、主要データサイトのピッチモデリング指標は全て野球をサブモデルに展開しています。</p>
+<p>理由としてはいくつかありますが、まずは<strong>精度の向上</strong>という点。</p>
+<p><strong>サブモデルに展開することでサブモデルごとに最適な特徴量や閾値が選択されます。</strong> スイング時や見逃し時では重要となる特徴量は当然変わってきますので精度向上には必要です。</p>
+<p>また野球において各イベントは均衡しておらず、発生確率に差異が生じます。<strong>サブモデルへの展開でその不均衡を穏やかにすることができます。</strong></p>
+<p>デバックがしやすいのもメリットでしょう。</p>
+<p>そして<strong>解釈性の向上</strong>も理由の一つです。</p>
+<p>順序立てて予測していくことで、<strong>各段階での特徴量重要度</strong>から野球に対する理解度の向上を望めます。</p>
+<p>また得点価値の予測ではなく、各事象の確率予測という点では、<strong>選手のタイプや状況によって変化するレバレッジへの対応</strong>への一助となる可能性を秘めています。</p>
+<h4 id="特徴量">特徴量
+</h4><p>使用した特徴量は以下です。</p>
+<p>もちろんこれは一例であり、目的によって特徴量の取捨選択はできますし、更なる精度向上のために各サブモデルで特徴量を変える選択肢もあります。</p>
+<p><strong>◆ Stuff モデル</strong></p>
+<ul>
+<li>打席</li>
+<li>身長</li>
+<li>アームアングル</li>
+<li>球速</li>
+<li>加速度（x軸、z軸）</li>
+<li>リリースポイント（x軸、z軸）</li>
+<li>変化量から予測される回転軸と実際の回転軸の差</li>
+<li>回転効率</li>
+<li>主要速球との球速差</li>
+<li>主要速球との加速度差（x軸、z軸）</li>
+</ul>
+<p><strong>◆ Location モデル</strong></p>
+<ul>
+<li>打席</li>
+<li>投球座標（x軸、z軸）</li>
+</ul>
+<p><strong>◆ Pitch モデル</strong></p>
+<ul>
+<li>打席</li>
+<li>身長</li>
+<li>アームアングル</li>
+<li>球速</li>
+<li>加速度（x軸、z軸）</li>
+<li>リリースポイント（x軸、z軸）</li>
+<li>変化量から予測される回転軸と実際の回転軸の差</li>
+<li>回転効率</li>
+<li>主要速球との球速差</li>
+<li>主要速球との加速度差（x軸、z軸）</li>
+<li>投球座標（x軸、z軸）</li>
+</ul>
+<p><em>利き手調整済み、ピッチカウント効果は事前に補正</em></p>
+<p>そして先述したようにGBDTでは特徴量重要度を算出することができます。</p>
+<p><img src="/solving-baseball/images/48.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="特徴量重要度"
+	
+	
+></p>
+<p>ただ特徴量重要度にももちろん欠点はあります。</p>
+<p>基本的な手法ですと、条件分岐に出現しやすい多カテゴリや大スケールの特徴量を過大評価してしまったり、未知のデータを対象としているわけではないので実際のモデル性能への貢献度とするのはリスクがあったり……。</p>
+<p>上記の図はそれらの欠点を改善した算出方法ではありますが、それでも特徴量間の交互作用を捉えきれなかったり、あくまでも全体的な話で個別的な解釈には使えなかったり……。</p>
+<h4 id="ライブラリ">ライブラリ
+</h4><p>ライブラリの選択です。</p>
+<p>GBDTの有名なライブラリは <strong>XGBoost</strong>、<strong>LightGBM</strong>、<strong>CatBoost</strong> の三者かと思います。</p>
+<p>同じGBDTでも各ライブラリには違いがあります。</p>
+<p>（流石に退屈だと思うので）この違いについては割愛しますが、例えば決定木の説明で出したイメージ図は XGBoost が近いです。</p>
+<p>LightGBM は木が対称に広がっていかず重要な枝だけ深くなったりします（もちろん過学習のリスクは上がる）。</p>
+<p>対して CatBoost は特徴量の選択や閾値の設定まで対称とするので過学習には強くなりやすいです。</p>
+<p>その結果、処理速度は LightGBM が強く CatBoost が弱かったり。</p>
+<p>ただ、<strong>全体的な精度については優劣はない</strong>ものと思っていただいて構いません（プレイヤーの設定やデータの特徴次第）。</p>
+<p>各サブモデルを先に示した特徴量で実行します。</p>
+<p>今回は（微差ではありますが）一番来シーズンの予測精度が高かった <strong>CatBoost</strong> を採用しました。</p>
+<h4 id="得点価値予測">得点価値予測
+</h4><p>得られた各イベントの予測確率と各イベントの得点価値、そして打球イベントの予測得点価値を組み合わせて全体的な予測得点価値を算出します。</p>
+<p><strong>Stuff モデルは投球座標の影響を減らしたい</strong>ので、スイング結果モデルと打球価値モデルのみ考慮します。</p>
+<hr>
+<h3 id="性能">性能
+</h3><p>主要データサイトのピッチモデリング指標と比較した性能を見ておきましょう。とりあえず指標名は「Pitch New」、「Stuff New」としておきます。</p>
+<p>まずは<strong>記述性</strong>です。</p>
+<p>目的変数は同年の Run Value（レバレッジあり）とします。</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: center">指標名</th>
+          <th style="text-align: center">相関係数</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: center">PitchPro</td>
+          <td style="text-align: center">0.530</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">Pitching+</td>
+          <td style="text-align: center">0.504</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">Pitch New</td>
+          <td style="text-align: center">0.495</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">StuffPro</td>
+          <td style="text-align: center">0.478</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">botOvr</td>
+          <td style="text-align: center">0.455</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">botStf</td>
+          <td style="text-align: center">0.433</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">Stuff+</td>
+          <td style="text-align: center">0.429</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">Stuff New</td>
+          <td style="text-align: center">0.411</td>
+      </tr>
+  </tbody>
+</table></div>
+<p><em>2024〜2025 MLB（1000球以上）| n = 537</em>
+<em>Data: FanGraphs, Baseball Prospectus, Baseball Savant</em></p>
+<p>記述性についてはそれほど拘りたくありません。</p>
+<p>もちろん、ここに載せないほど低い Location モデルたちはそもそもの野球的な意味を問われてしまいますが、プロセス情報に基づいたモデリング指標である以上、<strong>アウトカム情報に基づいたそれより記述性は低く</strong>ならないなら、それはどちらかの指標に不備がある可能性が高いです。</p>
+<p>簡単に言うと、アラエスのコンタクトやウォルナーの空振りをより記述するモデルが野球的に正しいとは言えません。</p>
+<p>次に<strong>一貫性</strong>です。</p>
+<p>目的変数は翌年の同指標とします。</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: center">指標名</th>
+          <th style="text-align: center">相関係数</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: center">Stuff New</td>
+          <td style="text-align: center">0.863</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">botStf</td>
+          <td style="text-align: center">0.843</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">StuffPro</td>
+          <td style="text-align: center">0.809</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">Pitch New</td>
+          <td style="text-align: center">0.783</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">Stuff+</td>
+          <td style="text-align: center">0.765</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">botOvr</td>
+          <td style="text-align: center">0.688</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">Pitching+</td>
+          <td style="text-align: center">0.681</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">PitchPro</td>
+          <td style="text-align: center">0.673</td>
+      </tr>
+  </tbody>
+</table></div>
+<p><em>2024〜2025 MLB（1000球以上）| n = 153</em>
+<em>Data: FanGraphs, Baseball Prospectus, Baseball Savant</em></p>
+<p>不備の少ない設計では、<strong>記述性と一貫性は基本的にはトレードオフ</strong>となります。</p>
+<p>記述性で一番評価が低かった Stuff New や Pitchカテゴリーではそこまで高くなかった Pitch New の一貫性が目立ちます。</p>
+<p>最後に<strong>予測性</strong>です。</p>
+<p>目的変数は翌年の Run Value（レバレッジあり）とします。</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: center">指標名</th>
+          <th style="text-align: center">相関係数</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: center">Pitch New</td>
+          <td style="text-align: center">0.408</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">Pitching+</td>
+          <td style="text-align: center">0.395</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">Stuff New</td>
+          <td style="text-align: center">0.392</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">StuffPro</td>
+          <td style="text-align: center">0.379</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">botStf</td>
+          <td style="text-align: center">0.377</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">PitchPro</td>
+          <td style="text-align: center">0.358</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">Stuff+</td>
+          <td style="text-align: center">0.343</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">botOvr</td>
+          <td style="text-align: center">0.294</td>
+      </tr>
+  </tbody>
+</table></div>
+<p><em>2024〜2025 MLB（1000球以上）| n = 153</em>
+<em>Data: FanGraphs, Baseball Prospectus, Baseball Savant</em></p>
+<p>予測性は実質的に<strong>記述性と一貫性の総合評価</strong>です。</p>
+<p>記述性はそこまで高くなかった Pitch New と Stuff New の評価が高くなっています。</p>
+<p>記述性と予測性のバランスが良い Pitching+ や StuffPro は感情的にも機能的にも有り難いでしょう。</p>
+<p>逆に言うと、Pitch系のカテゴリーでは記述性も低く予測性も低い BotOvr は何らかの見直しは必要かもしれません。</p>
+<hr>
+<h2 id="ピッチモデリング指標を活かした分析">ピッチモデリング指標を活かした分析
+</h2><p>では軽くではありますが、ピッチモデリング指標の活かし方についても触れておきます。</p>
+<p>この note 内で『革命的な指標』だとか、『一線を画す存在』だとか仰々しい表現をしましたが、「メイソン・ミラーの Stuff 凄い！」だけで終わることが多い現状ではその域には達していないでしょう。</p>
+<hr>
+<h3 id="ピッチモデリング指標の強み">ピッチモデリング指標の強み
+</h3><p>先に述べた通り、ピッチモデリング指標の強みは『<strong>主に投手の出力情報に基づいている</strong>』点です。</p>
+<p>くどいようですが、これが意味するのは<strong>他の選手（や調整次第では他の環境）の情報が薄い</strong>という点です。</p>
+<p>責任の所在を明らかにしやすい野球という競技においても、当該選手のみによって生み出される情報は限られるものでした。</p>
+<p>その点でトラッキングデータは革命であり、その中でも高精度なホークアイデータを活用したピッチモデリング指標は、過去に難しかったアウトカムの分解、いわゆる<strong>責任分配</strong>、さらには<strong>因果推論</strong>まで進むためのペダルとなるべきだと考えています。</p>
+<hr>
+<h3 id="有効活用しているセイバリストの紹介">有効活用しているセイバリストの紹介
+</h3><p>自身でモデルを構築しアウトプットするセイバリストが増えた近年においても、その観点において精力的だなと感じる方はほとんどいないです。</p>
+<p>例を挙げておきます。</p>
+<h4 id="ttopの分解">TTOPの分解
+</h4><p><img src="/solving-baseball/images/49.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="TTOPの分解"
+	
+	
+></p>
+<p>-<a class="link" href="https://x.com/Pitching_Bot/status/1462466560304549891"  target="_blank" rel="noopener"
+    >TTOPの分解</a></p>
+<p><strong>Pitching Bot 開発者の Cameron Grove によるTTOP（周回効果）の分解</strong>は有名かと思います。</p>
+<p>投手と打者と守備者とその他環境によって生み出される周回効果（対戦回数が増えるほどRVが増加する）から、<strong>投手のプロセス情報を抽出する</strong>ことによって、打者の&quot;慣れ&quot;が関係するという仮説に近づくことができます。</p>
+<h4 id="pfの分解">PFの分解
+</h4><p><img src="/solving-baseball/images/50.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="PFの分解"
+	
+	
+></p>
+<p>-<a class="link" href="https://bsky.app/profile/srbrown70.bsky.social/post/3lax6hkqx7s23"  target="_blank" rel="noopener"
+    >PFの分解</a></p>
+<p>プロセス情報を活かした分析において群を抜いて精力的だと感じているのが、<strong>PitchPro、StuffPro 開発者の Stephen Sutton-Brown（SSB）</strong>。</p>
+<p>上記の例では、空振りPark Factor が大きい T-Mobile Park と Tropicana Field はその因果は全く違う可能性が示唆されています。</p>
+<p>SSBについてはこれはほんの一例で、ピッチモデリング指標を活かした責任分配から投球戦略、また打者におけるプロセス要素の強い変数を活かした分析等、個人的にかなり理想に近いアウトプットをしていると感じています。</p>
+<p>もちろん、その精力さ故に交絡因子の見落とし等もあるとは思いますが、その点についてトップクラスの Tom Tango を心の中に飼い、アクセル（SSB）とブレーキ（Tango）をうまく使いながら探究を深めていきたいなと最近は考えています。</p>
+<hr>
+<h3 id="ホームアドバンテージの責任分配">ホームアドバンテージの責任分配
+</h3><p>では、簡単にではありますが、自分もメジャーなテーマをプロセス情報を活かして調べてみます。</p>
+<p>他の競技と同様、野球にもホームアドバンテージがあることはよく知られているかと思います。</p>
+<p>おおよそホームチームの勝率が 53% 〜 54% となる傾向で、例えばこれを Pythagenpat に組み込むと1試合あたりのPitch Valueは +0.14 〜 +0.19 ほどとなります。</p>
+<p>2024年と2025年では以下のようになっています。</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: center">年</th>
+          <th style="text-align: center">ホーム勝率</th>
+          <th style="text-align: center">ホームPV/G</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: center">2024</td>
+          <td style="text-align: center">52.2%</td>
+          <td style="text-align: center">0.124</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2025</td>
+          <td style="text-align: center">54.3%</td>
+          <td style="text-align: center">0.157</td>
+      </tr>
+  </tbody>
+</table></div>
+<p><em>Data: Baseball Reference</em></p>
+<p>この Pitch Value の差を投球、打撃、守備に配分してみましょう。</p>
+<p>算出方法は以下です。</p>
+<p><strong>◆ 投球</strong>
+ホームでの予測 Pitch Value - アウェイでの予測 Pitch Value</p>
+<p><strong>◆ 打撃</strong>
+ホームでの xRun Value - ホームでの予測 Run Value - アウェイでの xRun Value - アウェイでの予測 Run Value</p>
+<p><strong>◆ 守備</strong>
+ホームでの xRun Value bip - ホームでの Run Value bip - アウェイでの xRun Value bip - アウェイでの Run Value bip</p>
+<p><em>予測 Pitch（Run）Value は Pitch New で予測した Pitch（Run）Value</em>
+<em>xRun Value は打球部分（垂直打球角度、水平打球角度、飛距離）を k-NN でモデリングしたもの</em></p>
+<p>投手が投球を始めてからイベントが確定するまでのプロセスは、<strong>投手 ⇒ 打者 ⇒ 守備</strong>です（厳密に言うと気候等の環境や審判が介入する）。</p>
+<p><strong>投手と打者のプロセス情報（ピッチモデリング、打球モデリング）をそれぞれの段階で切り離す</strong>ことで、より野球的な責任分配が可能になります。</p>
+<p>多少の誤差は生じますのでそれらを正規化した比率が以下です。</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: center">年</th>
+          <th style="text-align: center">投球</th>
+          <th style="text-align: center">打撃</th>
+          <th style="text-align: center">守備</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: center">2021</td>
+          <td style="text-align: center">24.7%</td>
+          <td style="text-align: center">40.4%</td>
+          <td style="text-align: center">34.8%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2022</td>
+          <td style="text-align: center">32.9%</td>
+          <td style="text-align: center">45.2%</td>
+          <td style="text-align: center">22.0%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2023</td>
+          <td style="text-align: center">20.1%</td>
+          <td style="text-align: center">49.8%</td>
+          <td style="text-align: center">30.1%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2024</td>
+          <td style="text-align: center">30.2%</td>
+          <td style="text-align: center">63.9%</td>
+          <td style="text-align: center">5.9%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2025</td>
+          <td style="text-align: center">17.7%</td>
+          <td style="text-align: center">55.8%</td>
+          <td style="text-align: center">26.5%</td>
+      </tr>
+  </tbody>
+</table></div>
+<p><em>1シーズンあたり7万球ほどあるとは言え、2021〜2023年は学習データである点に注意</em>
+<em>Data: Baseball Savant</em></p>
+<p>年によってバラつきはありますが、一貫して<strong>打撃の貢献割合が大きく</strong>なっています。</p>
+<p>様々な側面から語られるホームアドバンテージですが、ホーム球場で投手がより良い投球をしている以上に打者がより良い打撃をしている可能性が高そうです。</p>
+<p>示唆される要因としては、バックスクリーンを含むボールの見え方への慣れ、球場特有の変化量への慣れでしょうか。</p>
+<p>もちろん、この算出方法が考慮していない要素は多々あります（例えば打撃は審判の影響が 3%程度入っていそう）。</p>
+<p>ただ、それらを考慮するのも<strong>プロセス情報の入手とモデルへの組み込み、そして切り離し</strong>で可能になります。一応、過去に似たことはやっていたります。</p>
+<p>▶︎ポストシーズンの低いBABIPはどこから？？</p>
+<ul>
+<li><a class="link" href="/solving-baseball/analysis/ps-babip/" >ポストシーズンの低BABIPの要因</a></li>
+</ul>
+<hr>
+<h3 id="強みを活かした分析あれこれ">強みを活かした分析あれこれ
+</h3><p>今回はピッチモデリング指標の活用法として、責任分配に主眼を置きましたが、他にも活かせる文脈は存在します。</p>
+<h4 id="対象階層でのアウトカムが存在しない投手">対象階層でのアウトカムが存在しない投手
+</h4><p>実際にしているアナリストも多いですが、マイナーリーガーやアマチュアの投手など、<strong>対象階層（MLB等）での結果が存在しない投手</strong>の評価です。</p>
+<p>正直なところ対象階層での結果が存在する投手は K-BB% なり SIERA なり見てれば良いですが、そうでない投手の場合、対象階層での貢献を予測する上で所属階層のノイズ（打者が極端に変化球に弱い等）を除去できる指標の優位性が際立ちます。</p>
+<p>それらに通ずる話として、怪我復帰後やフォーム変更後等、<strong>対象階層でのサンプルの信頼性が低い</strong>と判断できる場合もアウトカムに頼らない指標の利用価値は高まります。</p>
+<h4 id="特徴量の操作">特徴量の操作
+</h4><p>先述しましたが、目的によって<strong>特徴量の取捨選択ができる</strong>点も強みです。</p>
+<p>例えば、Tropicana Field を本拠地にしている投手と Coors Field を本拠地にしている投手を特徴量として変化量が入っているピッチモデリング指標で評価して良いでしょうか？</p>
+<p>マウンドからホームに追い風が吹かない屋内球場とそもそもの空気密度の小さい高地の球場において、変化量という特徴量には<strong>能力を測る上でノイズとなる環境要素</strong>が強く含まれてしまいます。</p>
+<p>目的が投手の能力を推定することであるなら、上記の問題に対処する必要はあります。MLBの投手なら PF で補正するというのも手段の一つとなりますが、このような事例はマイナーやアマチュア、海外リーグの投手の評価をする際に必ず直面する問題です。</p>
+<p>そのような投手の能力を評価するという目的のもとに、<strong>環境に左右されにくいプロセス情報を駆使したモデルを構築できる</strong>のも強みです。</p>
+<p>またピッチモデリング指標に対して、「球種構成」「ピッチトンネル」「シークエンス」等が考慮されていないという反応もいくつか見受けられます。</p>
+<p>ただ、それらに関しても<strong>モデルに組み込むことは可能</strong>ですし、実際に「主要速球との球速差」等を特徴量に含めているピッチモデリング指標は多いです。</p>
+<p>そして、あくまでも Pitch レベルに主眼を置いたモデル（現状はそのようなモデルも多い）と球種構成等 Pitching 的な要素も考慮に入れたモデルを比較して、その乖離が大きい投手を探るといった使い方ができるのも魅力です。</p>
+<h4 id="球種別の評価">球種別の評価
+</h4><p>これはピッチモデリング指標の特徴というよりかは、アウトカム情報に基づく指標の網羅性の話になってきますが、役割の違う球種を一元的に評価できるモデリング要素の強い指標がまだ少ないです（その精査もやっていきたいですね）。</p>
+<p>集計されたスタッツをモデリングする指標が多い中、<strong>モデリングされたスタッツを集計する</strong>という特徴は球種別の評価には（注意点はありますが）適しています。</p>
+<hr>
+<h2 id="おわりに">おわりに
+</h2><p>今回はピッチモデリング指標について冗長にならない程度に解説をしてみました。</p>
+<p>比較的新しく、難しい指標だからこそ陥る短絡的な使用法への警笛も兼ねた note となりましたが、どんな指標にも算出方法がある限り、その使用法はリーダーボードを眺めるだけで留まるものではないという点に相違はありません。</p>
+<p>野球の構造的な理解から、あらゆる指標の算出方法の背後にある演繹的、帰納的な理論を読み取り、またそれをさらなる野球の構造的な理解に活かす。</p>
+<p>その積み重ねがお馴染みの FanGraphs のリーダーボードや Baseball Savant の選手トップページをまた違った色に染めてくれるものとも思います。</p>
+<p>現状、そのような『野球の探究』について知見を集めるためには英語文献にも触手を伸ばす必要はありますが、この度新刊が出版された「デルタ・ベースボール・リポート」はそのジャンルの貴重な日本語文献枠でしょう。</p>
+<p>今回紹介したようなモデリング指標を使った考察も掲載されていますので、最後にそちらの宣伝とともにこの note を締めたいと思います。</p>
+<p>-<a class="link" href="https://suiyosha.hondana.jp/book/b668069.html"  target="_blank" rel="noopener"
+    >デルタ・ベースボール・リポート 8</a></p>
+<hr>
+<h2 id="参考文献">参考文献
+</h2><ul>
+<li><a class="link" href="https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/copy.html"  target="_blank" rel="noopener"
+    >Understanding Machine Learning: From Theory to Algorithms</a> - Shalev-Shwartz, S., Ben-David, S. (2014)</li>
+<li><a class="link" href="https://projecteuclid.org/journals/annals-of-statistics/volume-29/issue-5/Greedy-function-approximation-A-gradient-boosting-machine/10.1214/aos/1013203451.full"  target="_blank" rel="noopener"
+    >Greedy function approximation: A gradient boosting machine.</a> - Friedman, J. H. (2001)</li>
+<li><a class="link" href="https://arxiv.org/abs/1603.02754"  target="_blank" rel="noopener"
+    >XGBoost: A Scalable Tree Boosting System</a> - Chen, T., &amp; Guestrin, C. (2016)</li>
+<li><a class="link" href="https://papers.nips.cc/paper/2017/hash/6449f44a102fde848669bdd9eb6b76fa-Abstract.html"  target="_blank" rel="noopener"
+    >LightGBM: A Highly Efficient Gradient Boosting Decision Tree</a> - Ke, G., et al. (2017)</li>
+<li><a class="link" href="https://papers.nips.cc/paper/2018/hash/14491b756b3a51daac41c24863285549-Abstract.html"  target="_blank" rel="noopener"
+    >CatBoost: unbiased boosting with categorical features</a> - Prokhorenkova, L., et al. (2018)</li>
+<li><a class="link" href="https://library.fangraphs.com/pitching/pitchingbot-pitch-modeling-primer/"  target="_blank" rel="noopener"
+    >PitchingBot Pitch Modeling Primer</a> - FanGraphs</li>
+<li><a class="link" href="https://www.baseballprospectus.com/news/article/86%ea%b2%8c604/introducing-stuffpro-and-pitchpro/"  target="_blank" rel="noopener"
+    >Introducing StuffPro and PitchPro</a> - Baseball Prospectus</li>
+<li><a class="link" href="https://x.com/enosarris/status/1887181953797136872?s=20"  target="_blank" rel="noopener"
+    >Stuff+ is updated!</a></li>
+</ul>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/solving-baseball/tags/%E3%83%94%E3%83%83%E3%83%81%E3%83%A2%E3%83%87%E3%83%AA%E3%83%B3%E3%82%B0/">ピッチモデリング</a>
+        
+            <a href="/solving-baseball/tags/gbdt/">GBDT</a>
+        
+            <a href="/solving-baseball/tags/%E3%83%9B%E3%83%BC%E3%83%A0%E3%82%A2%E3%83%89%E3%83%90%E3%83%B3%E3%83%86%E3%83%BC%E3%82%B8/">ホームアドバンテージ</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        const elementsToRender = [".main-article", ".widget--toc"];
+
+        elementsToRender.forEach(selector => {
+            const element = document.querySelector(selector);
+            if (element) {
+                renderMathInElement(element, {
+                    delimiters: [
+                        { left: "$$", right: "$$", display: true },
+                        { left: "$", right: "$", display: false },
+                        { left: "\\(", right: "\\)", display: false },
+                        { left: "\\[", right: "\\]", display: true }
+                    ],
+                    ignoredClasses: ["gist"]
+                });
+            }
+        });
+    });
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">関連するコンテンツ</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/solving-baseball/memo/memo_24/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">予測スイング率との乖離から投球戦略を考える</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/solving-baseball/memo/memo_34/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">ピッチクロックが球質に及ぼす影響</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script
+    src="https://giscus.app/client.js"
+    data-repo="GHL-Ball/solving-baseball"
+    data-repo-id="R_kgDOQbQpuw"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOQbQpu84CzMFQ"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="light"
+    data-lang="ja"
+    data-loading=""
+    crossorigin="anonymous"
+    async
+></script>
+<script>
+    function setGiscusTheme(theme) {
+        let giscus = document.querySelector("iframe.giscus-frame");
+        if (giscus) {
+            giscus.contentWindow.postMessage(
+                {
+                    giscus: {
+                        setConfig: {
+                            theme: theme,
+                        },
+                    },
+                },
+                "https://giscus.app"
+            );
+        }
+    }
+
+    (function () {
+        addEventListener("message", (e) => {
+            if (event.origin !== "https://giscus.app") return;
+            handler();
+        });
+        window.addEventListener("onColorSchemeChange", handler);
+
+        function handler() {
+            if (document.documentElement.dataset.scheme === "light") {
+                setGiscusTheme('light');
+            } else {
+                setGiscusTheme('dark_dimmed');
+            }
+        }
+    })();
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2025 - 
+        
+        2026 Solving Baseball Blog
+    </section>
+    
+    <section class="powerby">
+        
+            トレバ-(^o^)丿 <br/>
+        <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> で構築されています。 <br />
+        テーマ <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.32.0">Stack</a></b> は <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> によって設計されています。
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/solving-baseball/ts/main.2b3fc53c7455b5631da9fabeefcc69ffc0a3f3cb719d708d3a5f18faf7af88a6.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

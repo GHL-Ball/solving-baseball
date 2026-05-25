@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+    <head><script src="/solving-baseball/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=solving-baseball/livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="今回取り上げるのはポストシーズンの野球の話です。\nポストシーズンや短期決戦において個人的に注目しているのが様々な野球ファンから語られる様々なポストシーズン論です。\nある野球ファンは「小技の重要性が上がる」とか、またある野球ファンは「投手の重要性が上がる」とか、あるセイバーオタクは「ポストシーズンは運」とか、多様な野球論を目にすることのできる楽しい時期でもあります。\nこれらの議論が成り立つのは、ポストシーズンとレギュラーシーズンに類似点だけでなく相違点も存在する（と認識されている）ためです。\n今回はその相違点のうち、BABIPについて紐解いていければと思います。\nレギュラーシーズンとポストシーズンの違い\rでは簡単にレギュラーシーズンとポストシーズンの野球の違いをおさらいしておきます。\nホークアイデータを使う可能性を考えて対象年度は2021年以降としておきます（2020年の特例シーズンは対象外）。\n各イベント発生率の違いが以下です。\n※2021年以降、野手のみ\n大きな違いはK%とBIP（インプレー打球）の結果でしょう。\nポストシーズンではとにかく三振が増え、BIPの結果が悪くなります。\nレギュラーシーズンのBABIP .2926…に対して、ポストシーズンのBABIPは .2810…、差にして .0116…が生じています。対象ポストシーズンのBIPは7,483ですので、レギュラーシーズンを基準とするとポストシーズンにおいて7,483 × 0.01158 ≒ 87 のアウトが期待値より発生しています。この87の追加アウトの発生源を推測してみようというのが主題です。\n打球によるBABIPの低下\r投手と打者については責任分配がややこしいので今回は打球によって低下したBABIPを考えます。\nポストシーズンにおいてのBIPの変化は代表的な4分類から十分に確認できます。以下がBaseball Savantの四分類の割合の比較です。\nGB% LD% FB% PU% BABIP レギュラーシーズン 45.2 24.5 23.0 7.3 .293 ポストシーズン 44.3 23.7 23.2 8.8 .281 ※2021年以降、野手のBIPのみ\n周知の通り、4分類においてBABIP Valueの高さはLD（ライナー）（.622） &gt; GB（ゴロ）（.245） &gt; FB（フライ）（.122） &gt; PU（ポップフライ）（.016）です。\nそしてポストシーズンのBIPにおいてはBABIP Valueの高いLD、そこそこのGBの割合は減り、BABIP Valueの低いPUの割合は増えています。\n投手、打者にどう責任を分配するかはさておき、打球によってポストシーズンのBABIPが低下していることは明らかです。\n例えばこの4分類を使った簡単な xBABIPを求めると、レギュラーシーズンの xBABIP .2926…に対してポストシーズンでは .2859…となり87の追加アウトのうち58%の50個ほどを説明できます。\nただ打球種類の他に打球方向も見ていくと少し変わってきます。\n上記表は4つの打球種類と3つの打球方向で打球を12に分類したものです。\nゴロにおいてはBABIP Valueの低い（.190）引っ張りが減少しているように打球方向に関してはBABIPに有利に働く変化を見せており、この12分類の xBABIPでは .2870…、87の追加アウトのうち48%の42個ほどに落ち着きます。\nまだあります。\n">
+<title>ポストシーズンのBABIPについて</title>
+
+<link rel='canonical' href='http://localhost:1313/solving-baseball/analysis/ps-babip/'>
+
+<link rel="stylesheet" href="/solving-baseball/scss/style.min.4d36f8dc1fd48129e1635deb4b8eb2870fa09474f7280c4cb606d40b2526994b.css"><meta property='og:title' content="ポストシーズンのBABIPについて">
+<meta property='og:description' content="今回取り上げるのはポストシーズンの野球の話です。\nポストシーズンや短期決戦において個人的に注目しているのが様々な野球ファンから語られる様々なポストシーズン論です。\nある野球ファンは「小技の重要性が上がる」とか、またある野球ファンは「投手の重要性が上がる」とか、あるセイバーオタクは「ポストシーズンは運」とか、多様な野球論を目にすることのできる楽しい時期でもあります。\nこれらの議論が成り立つのは、ポストシーズンとレギュラーシーズンに類似点だけでなく相違点も存在する（と認識されている）ためです。\n今回はその相違点のうち、BABIPについて紐解いていければと思います。\nレギュラーシーズンとポストシーズンの違い\rでは簡単にレギュラーシーズンとポストシーズンの野球の違いをおさらいしておきます。\nホークアイデータを使う可能性を考えて対象年度は2021年以降としておきます（2020年の特例シーズンは対象外）。\n各イベント発生率の違いが以下です。\n※2021年以降、野手のみ\n大きな違いはK%とBIP（インプレー打球）の結果でしょう。\nポストシーズンではとにかく三振が増え、BIPの結果が悪くなります。\nレギュラーシーズンのBABIP .2926…に対して、ポストシーズンのBABIPは .2810…、差にして .0116…が生じています。対象ポストシーズンのBIPは7,483ですので、レギュラーシーズンを基準とするとポストシーズンにおいて7,483 × 0.01158 ≒ 87 のアウトが期待値より発生しています。この87の追加アウトの発生源を推測してみようというのが主題です。\n打球によるBABIPの低下\r投手と打者については責任分配がややこしいので今回は打球によって低下したBABIPを考えます。\nポストシーズンにおいてのBIPの変化は代表的な4分類から十分に確認できます。以下がBaseball Savantの四分類の割合の比較です。\nGB% LD% FB% PU% BABIP レギュラーシーズン 45.2 24.5 23.0 7.3 .293 ポストシーズン 44.3 23.7 23.2 8.8 .281 ※2021年以降、野手のBIPのみ\n周知の通り、4分類においてBABIP Valueの高さはLD（ライナー）（.622） &gt; GB（ゴロ）（.245） &gt; FB（フライ）（.122） &gt; PU（ポップフライ）（.016）です。\nそしてポストシーズンのBIPにおいてはBABIP Valueの高いLD、そこそこのGBの割合は減り、BABIP Valueの低いPUの割合は増えています。\n投手、打者にどう責任を分配するかはさておき、打球によってポストシーズンのBABIPが低下していることは明らかです。\n例えばこの4分類を使った簡単な xBABIPを求めると、レギュラーシーズンの xBABIP .2926…に対してポストシーズンでは .2859…となり87の追加アウトのうち58%の50個ほどを説明できます。\nただ打球種類の他に打球方向も見ていくと少し変わってきます。\n上記表は4つの打球種類と3つの打球方向で打球を12に分類したものです。\nゴロにおいてはBABIP Valueの低い（.190）引っ張りが減少しているように打球方向に関してはBABIPに有利に働く変化を見せており、この12分類の xBABIPでは .2870…、87の追加アウトのうち48%の42個ほどに落ち着きます。\nまだあります。\n">
+<meta property='og:url' content='http://localhost:1313/solving-baseball/analysis/ps-babip/'>
+<meta property='og:site_name' content='Solving Baseball Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Analysis' /><meta property='article:tag' content='Pitching' /><meta property='article:tag' content='Batting' /><meta property='article:tag' content='BABIP' /><meta property='article:tag' content='ポストシーズン' /><meta property='article:published_time' content='2024-11-04T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-11-04T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="ポストシーズンのBABIPについて">
+<meta name="twitter:description" content="今回取り上げるのはポストシーズンの野球の話です。\nポストシーズンや短期決戦において個人的に注目しているのが様々な野球ファンから語られる様々なポストシーズン論です。\nある野球ファンは「小技の重要性が上がる」とか、またある野球ファンは「投手の重要性が上がる」とか、あるセイバーオタクは「ポストシーズンは運」とか、多様な野球論を目にすることのできる楽しい時期でもあります。\nこれらの議論が成り立つのは、ポストシーズンとレギュラーシーズンに類似点だけでなく相違点も存在する（と認識されている）ためです。\n今回はその相違点のうち、BABIPについて紐解いていければと思います。\nレギュラーシーズンとポストシーズンの違い\rでは簡単にレギュラーシーズンとポストシーズンの野球の違いをおさらいしておきます。\nホークアイデータを使う可能性を考えて対象年度は2021年以降としておきます（2020年の特例シーズンは対象外）。\n各イベント発生率の違いが以下です。\n※2021年以降、野手のみ\n大きな違いはK%とBIP（インプレー打球）の結果でしょう。\nポストシーズンではとにかく三振が増え、BIPの結果が悪くなります。\nレギュラーシーズンのBABIP .2926…に対して、ポストシーズンのBABIPは .2810…、差にして .0116…が生じています。対象ポストシーズンのBIPは7,483ですので、レギュラーシーズンを基準とするとポストシーズンにおいて7,483 × 0.01158 ≒ 87 のアウトが期待値より発生しています。この87の追加アウトの発生源を推測してみようというのが主題です。\n打球によるBABIPの低下\r投手と打者については責任分配がややこしいので今回は打球によって低下したBABIPを考えます。\nポストシーズンにおいてのBIPの変化は代表的な4分類から十分に確認できます。以下がBaseball Savantの四分類の割合の比較です。\nGB% LD% FB% PU% BABIP レギュラーシーズン 45.2 24.5 23.0 7.3 .293 ポストシーズン 44.3 23.7 23.2 8.8 .281 ※2021年以降、野手のBIPのみ\n周知の通り、4分類においてBABIP Valueの高さはLD（ライナー）（.622） &gt; GB（ゴロ）（.245） &gt; FB（フライ）（.122） &gt; PU（ポップフライ）（.016）です。\nそしてポストシーズンのBIPにおいてはBABIP Valueの高いLD、そこそこのGBの割合は減り、BABIP Valueの低いPUの割合は増えています。\n投手、打者にどう責任を分配するかはさておき、打球によってポストシーズンのBABIPが低下していることは明らかです。\n例えばこの4分類を使った簡単な xBABIPを求めると、レギュラーシーズンの xBABIP .2926…に対してポストシーズンでは .2859…となり87の追加アウトのうち58%の50個ほどを説明できます。\nただ打球種類の他に打球方向も見ていくと少し変わってきます。\n上記表は4つの打球種類と3つの打球方向で打球を12に分類したものです。\nゴロにおいてはBABIP Valueの低い（.190）引っ張りが減少しているように打球方向に関してはBABIPに有利に働く変化を見せており、この12分類の xBABIPでは .2870…、87の追加アウトのうち48%の42個ほどに落ち着きます。\nまだあります。\n">
+    <link rel="shortcut icon" href="/solving-baseball/images/favicon.png" />
+<style>
+  :root {
+    --ja-font-family: "Noto Sans JP", "游ゴシック体", "Yu Gothic", YuGothic, 
+      "ヒラギノ角ゴ Pro", "Hiragino Kaku Gothic Pro", "メイリオ", "Meiryo";
+    --base-font-family: "Lato", var(--sys-font-family), var(--ja-font-family),
+      sans-serif;
+  }
+
+   
+  .article-content {
+    color: var(--card-text-color-main);
+  }
+
+  .article-content a {
+    color: var(--accent-color);
+  }
+</style>
+
+<script>
+  (function () {
+    const customFont = document.createElement("link");
+    customFont.href =
+      "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Lato:wght@400;700&display=swap";
+    customFont.type = "text/css";
+    customFont.rel = "stylesheet";
+    document.head.appendChild(customFont);
+  })();
+</script>
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="メニューを開く・閉じる">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/solving-baseball">Solving Baseball Blog</a></h1>
+            <h2 class="site-description">Aspiring Saberistの備忘録</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://x.com/GHiLiBall'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://note.com/calm_phlox375'
+                        target="_blank"
+                        title="note"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/solving-baseball/leaderboard/' >
+                
+                
+                
+                <span>Leaderboard</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/' >
+                
+                
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/about/' >
+                
+                
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/analysis/' >
+                
+                
+                
+                <span>分析系</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/breakdown/' >
+                
+                
+                
+                <span>解説系</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/memo/' >
+                
+                
+                
+                <span>メモ</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/page/search/' >
+                
+                
+                
+                <span>検索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/categories/' >
+                
+                
+                
+                <span>カテゴリ一覧</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/tags/' >
+                
+                
+                
+                <span>タグ一覧</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>ダークモード</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目次</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#レギュラーシーズンとポストシーズンの違い">レギュラーシーズンとポストシーズンの違い</a></li>
+    <li><a href="#打球によるbabipの低下">打球によるBABIPの低下</a></li>
+    <li><a href="#守備によるbabipの低下">守備によるBABIPの低下</a></li>
+    <li><a href="#球場によるbabipの低下">球場によるBABIPの低下</a></li>
+    <li><a href="#まとめ">まとめ</a></li>
+    <li><a href="#関連記事">関連記事</a></li>
+    <li><a href="#打球の変化について少しだけ">打球の変化について【少しだけ】</a></li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/solving-baseball/categories/game%E5%8D%98%E4%BD%8D/" style="background-color: #059669; color: #fff;">
+                Game単位
+            </a>
+        
+            <a href="/solving-baseball/categories/play%E5%8D%98%E4%BD%8D/" style="background-color: #0891b2; color: #fff;">
+                Play単位
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/solving-baseball/analysis/ps-babip/">ポストシーズンのBABIPについて</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published" datetime='2024-11-04T00:00:00Z'>2024-11-04</time>
+            </div>
+        
+
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <p>今回取り上げるのはポストシーズンの野球の話です。</p>
+<p>ポストシーズンや短期決戦において個人的に注目しているのが様々な野球ファンから語られる様々なポストシーズン論です。</p>
+<p>ある野球ファンは「小技の重要性が上がる」とか、またある野球ファンは「投手の重要性が上がる」とか、あるセイバーオタクは「ポストシーズンは運」とか、多様な野球論を目にすることのできる楽しい時期でもあります。</p>
+<p>これらの議論が成り立つのは、ポストシーズンとレギュラーシーズンに類似点だけでなく<strong>相違点</strong>も存在する（と認識されている）ためです。</p>
+<p>今回はその相違点のうち、<strong>BABIP</strong>について紐解いていければと思います。</p>
+<hr>
+<h2 id="レギュラーシーズンとポストシーズンの違い">レギュラーシーズンとポストシーズンの違い
+</h2><p>では簡単にレギュラーシーズンとポストシーズンの野球の違いをおさらいしておきます。</p>
+<p>ホークアイデータを使う可能性を考えて対象年度は2021年以降としておきます（2020年の特例シーズンは対象外）。</p>
+<p>各イベント発生率の違いが以下です。</p>
+<p><img src="/solving-baseball/images/67.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="イベント発生率の比較"
+	
+	
+></p>
+<p><em>※2021年以降、野手のみ</em></p>
+<p>大きな違いは<strong>K%<strong>と</strong>BIP（インプレー打球）の結果</strong>でしょう。</p>
+<p>ポストシーズンではとにかく三振が増え、BIPの結果が悪くなります。</p>
+<p>レギュラーシーズンのBABIP .2926…に対して、ポストシーズンのBABIPは .2810…、差にして .0116…が生じています。対象ポストシーズンのBIPは7,483ですので、レギュラーシーズンを基準とすると<strong>ポストシーズンにおいて7,483 × 0.01158 ≒ 87 のアウトが期待値より発生</strong>しています。この87の追加アウトの発生源を推測してみようというのが主題です。</p>
+<hr>
+<h2 id="打球によるbabipの低下">打球によるBABIPの低下
+</h2><p>投手と打者については責任分配がややこしいので今回は打球によって低下したBABIPを考えます。</p>
+<p>ポストシーズンにおいてのBIPの変化は代表的な4分類から十分に確認できます。以下がBaseball Savantの四分類の割合の比較です。</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: center"></th>
+          <th style="text-align: center">GB%</th>
+          <th style="text-align: center">LD%</th>
+          <th style="text-align: center">FB%</th>
+          <th style="text-align: center">PU%</th>
+          <th style="text-align: center">BABIP</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: center">レギュラーシーズン</td>
+          <td style="text-align: center">45.2</td>
+          <td style="text-align: center">24.5</td>
+          <td style="text-align: center">23.0</td>
+          <td style="text-align: center">7.3</td>
+          <td style="text-align: center">.293</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">ポストシーズン</td>
+          <td style="text-align: center">44.3</td>
+          <td style="text-align: center">23.7</td>
+          <td style="text-align: center">23.2</td>
+          <td style="text-align: center">8.8</td>
+          <td style="text-align: center">.281</td>
+      </tr>
+  </tbody>
+</table></div>
+<p><em>※2021年以降、野手のBIPのみ</em></p>
+<p>周知の通り、4分類においてBABIP Valueの高さはLD（ライナー）（.622） &gt; GB（ゴロ）（.245） &gt; FB（フライ）（.122） &gt; PU（ポップフライ）（.016）です。</p>
+<p>そしてポストシーズンのBIPにおいてはBABIP Valueの高いLD、そこそこのGBの割合は減り、BABIP Valueの低いPUの割合は増えています。</p>
+<p>投手、打者にどう責任を分配するかはさておき、打球によってポストシーズンのBABIPが低下していることは明らかです。</p>
+<p>例えばこの4分類を使った簡単な xBABIPを求めると、<strong>レギュラーシーズンの xBABIP .2926…に対してポストシーズンでは .2859…<strong>となり87の追加アウトのうち</strong>58%の50個ほど</strong>を説明できます。</p>
+<p>ただ打球種類の他に打球方向も見ていくと少し変わってきます。</p>
+<p><img src="/solving-baseball/images/68.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="打球種類・方向割合比較"
+	
+	
+></p>
+<p>上記表は4つの打球種類と3つの打球方向で打球を12に分類したものです。</p>
+<p>ゴロにおいてはBABIP Valueの低い（.190）引っ張りが減少しているように打球方向に関してはBABIPに有利に働く変化を見せており、この<strong>12分類の xBABIPでは .2870…</strong>、87の追加アウトのうち<strong>48%の42個ほど</strong>に落ち着きます。</p>
+<p>まだあります。</p>
+<p>ポストシーズンはレギュラーシーズンより多少ですが<strong>打球速度が速い</strong>です。打球速度とBABIPは非線形な関係ではありますが、基本的には<strong>打球速度の速さは有利</strong>に働きます。上記のような打球分類でも打球速度は結果的に区切られますが、大雑把ではあります。</p>
+<p>そこで文明の利器を使います。</p>
+<p>変数間の交互作用を考慮できるGAM（一般化加法モデル）や距離の計算を通じて暗黙的にそれらの関係性を捉えられるkNN（k近傍法：k-nearest neighbor algorithm）によって、レギュラーシーズンの打球を訓練データとして説明変数（特微量）を打球速度、垂直打球角度、水平打球角度としてポストシーズンの xBABIPを求めると <strong>.2911…、追加アウトの15%ほど</strong>しか説明できません。</p>
+<p>投手と打者が関与できるのは打球発生までであることを考えると、<strong>BABIPの低下は投手と打者では15%ほどしか説明できない可能性</strong>があります。</p>
+<p>ポストシーズンはレギュラーシーズンより気温が大きく下がりますので、打球速度ほど飛距離が伸びない影響は考慮しない予測モデルでは実際のポストシーズンの環境とは乖離が生じるのは当然です。</p>
+<p>そこで気温等の打球の飛びやすさも自然に反映させられるように<strong>打球速度を飛距離に置き換え</strong>ました。そうすると <strong>xBABIPは .2880…、追加アウトのうち42%ほど</strong>を説明できるようになりました。</p>
+<p>つまり投手と打者の影響以上に<strong>ポストシーズンの飛距離が伸びにくい環境が作用している</strong>と推定されたということです。</p>
+<p>ややこしくなってしまいましたが、<strong>ポストシーズンのBABIP低下の4割強は投手、打者、それから気温等によって引き起こされる打球の変化によって引き起こされる</strong>ことが推定されました。</p>
+<p>ちなみにゴロのBABIPに関わってくる打者の走力ですが、少なくともSprint Speedが速い選手がポストシーズンに偏るといった傾向は見られませんでした（普通に考えたら短期決戦では一塁到達は速くなりそうですが）。</p>
+<hr>
+<h2 id="守備によるbabipの低下">守備によるBABIPの低下
+</h2><p>では次にOAAの登場によって取っ掛かりやすくなった守備の影響度推定をやってみます。</p>
+<p>ポストシーズンでのOAAについては開示されていませんので、レギュラーシーズンのOAAを利用します。</p>
+<p>選手、シーズン、ポジションでグループ化し、それぞれイニングあたりのOAAを算出します。それをポストシーズンに適用し全選手のOAAを合算します。また先ほど表で示したようにレギュラーシーズンとポストシーズンではK%やBB%に差があるのでOAA対象打球の量にも差が生じます（ポストシーズンではイニングあたりOAA対象打球は4.4%ほど減少すると推定）のでそこも考慮します。</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: center">OAA（レギュラーシーズン）</th>
+          <th style="text-align: center">人数</th>
+          <th style="text-align: center">割合（%）</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: center">&gt; 0</td>
+          <td style="text-align: center">244</td>
+          <td style="text-align: center">46.4</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">= 0</td>
+          <td style="text-align: center">92</td>
+          <td style="text-align: center">17.5</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">&lt; 0</td>
+          <td style="text-align: center">190</td>
+          <td style="text-align: center">36.1</td>
+      </tr>
+  </tbody>
+</table></div>
+<p><em>※2021年以降、OAA対象ポジション（投手、捕手以外）</em></p>
+<p>そうして算出された<strong>ポストシーズンのOAAは15</strong>でした。87の追加アウトのうち<strong>17％ほど</strong>を説明できます。ちなみに、レギュラーシーズンに当該ポジションを守っていない選手については計算上OAAが0と仮定されていますが、その割合は0.4%ほどです。</p>
+<p>もちろん、純粋な運動量にも依存する守備能力は162試合を見据えるレギュラーシーズンより一戦必勝のポストシーズンの方が向上する可能性は否めませんが、この推定は難しいんじゃないかなと。</p>
+<hr>
+<h2 id="球場によるbabipの低下">球場によるBABIPの低下
+</h2><p>BABIPは球場の影響も無視できません。例えば縦変化量が出にくく（PUを誘発させづらい）フェアゾーンが広大なクアーズフィールドと縦変化量が出やすくファウルゾーンが広いトロピカーナフィールドではBIP安打の出やすさは違います。</p>
+<p>最初は球場要因は無視できるでしょうと思っていましたが毎年ポストシーズンに出場しているチーム（LAD）とそうじゃないチーム（COL）を思い浮かべたときに無視できないかもと思いました。</p>
+<p>対戦相手、球場の偏りが大きいMLBはPark Factorの算出が面倒くさいので今回は簡便な方法で許してください（Park Factorに関しては今オフに深掘りしようと思っているので…）。</p>
+<p>ということで単純に分母を、</p>
+<p><strong>アウェイでのBABIP × 14 / 15 + ホームでのBABIP × 1 / 15</strong></p>
+<p>として算出したBABIP Park Factorが以下です。</p>
+<p><img src="/solving-baseball/images/69.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="BABIP Park Factor"
+	
+	
+></p>
+<p>球場の形状の影響もありますが、気温や湿度や気圧による変化量の抑制増進でBABIP Valueの低いFB、PUの発生しやすさに球場の環境の影響が介在することも読み取れる結果になったと思います。</p>
+<p>ではポストシーズンのホーム球場での試合数とともに見てみます。</p>
+<p><img src="/solving-baseball/images/70.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="ポストシーズン ホーム球場 試合数"
+	
+	
+></p>
+<p>3年加重平均PFは当該シーズンを5、前後年を4として算出したPark Factorです。単純な4年平均PFも一応並記していますが大きな違いはないです。</p>
+<p>ここから2021年以降の<strong>ポストシーズンにおいてのBABIP PFを求めると、99.2</strong>。2021年以降のレギュラーシーズンを基準としたBABIPにして .2902…と87の追加アウトのうち<strong>21%ほどの18の追加アウト</strong>が球場によって生まれたと推定できます。</p>
+<hr>
+<h2 id="まとめ">まとめ
+</h2><p>では軽くまとめておきます。</p>
+<blockquote>
+<p><strong>ポストシーズンにおけるBABIP低下の理由</strong></p>
+<ul>
+<li><strong>打球が変化する（投手＆打者で15%、気温等で30%弱）</strong></li>
+<li><strong>アウト獲得能力の高い選手が出場する（15〜20%）</strong></li>
+<li><strong>BABIPが低くなりやすい球場に偏った（20%）</strong></li>
+</ul>
+<p><em>Random VariationもありますがBIP7500ならそこまで大きくないと思います</em></p>
+</blockquote>
+<p>詰めの甘い箇所もありますが、<strong>ポストシーズンの低いBABIPは打球の変化が要因であり、守備、球場の影響も無視できない程度には存在</strong>していそうです。</p>
+<p>打球部門、守備部門、球場部門とそれぞれ細部を詰めたり、非公開データを入手できるとまた変わるでしょうが、バランス関係は大きくは変わらないのではないかと思います。変わるとしたら守備ですかね。</p>
+<p><em>※22年からポストシーズン出場枠が拡張され、23年からシフトが規制された影響でポストシーズンの方がシフト規制されたBIPの割合が多少増えていますが、シフトによるBABIP低下を多く見積もって計算しても誤差レベルでした。</em></p>
+<p><em>※OAAは守備位置を能力として扱いませんのでポストシーズンほど適切な位置取りができているのであれば、その分のBABIP低下量を見逃していますが、チームDRSのポジショニング指標を集計してもポストシーズン出場チームに大きなアドバンテージは見られませんし、ポジショニングが結果的に良かったチームがポストシーズンに出場していたという事象をもってしてポストシーズンにおいても同等の追加アウトをもたらせられるという推定はOAAのそれよりも危険に思えます。</em></p>
+<hr>
+<h2 id="関連記事">関連記事
+</h2><ul>
+<li><a class="link" href="https://blogs.fangraphs.com/outpitching-peripherals-in-the-postseason/"  target="_blank" rel="noopener"
+    >Outpitching Peripherals in the Postseason</a> - Davy Andrews</li>
+<li><a class="link" href="https://www.baseballprospectus.com/news/article/18722/baseball-therapy-are-three-true-outcomes-players-better-in-the-playoffs/"  target="_blank" rel="noopener"
+    >Baseball Therapy: Are Three-True-Outcomes Players Better in the Playoffs?</a> - Russell A. Carleton</li>
+</ul>
+<hr>
+<h2 id="打球の変化について少しだけ">打球の変化について【少しだけ】
+</h2><p>ここからは深掘りしていくと大変そうな打球の変化について余談程度の温度感で少しだけ調べてみます。打球の変化というか投手の変化ですね。</p>
+<p>まずは球種割合の変化について。</p>
+<p><img src="/solving-baseball/images/71.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="球種割合の変化"
+	
+	
+></p>
+<p><em>（）内はポストシーズンでの投球割合</em></p>
+<p>レギュラーシーズンにおいて一番投球されているフォーシーム（FF）の割合がポストシーズンでも増えています。そのフォーシームについてBABIPに関わる部分を少し調べてみます。</p>
+<p>レギュラーシーズンではスイーパー（11.0%）に次いでPUの割合が高いフォーシーム（8.9%）ですがポストシーズンにおいてはさらにPU率が上昇（11.1%）し、一番PU率が高い球種となっています（2021年以降）。</p>
+<p>何が変化しているのでしょうか。</p>
+<p>平均球速はもちろん上昇していますが、PU率という点で見たときに大きなfactorとなる投球コースを見てみます。</p>
+<p><img src="/solving-baseball/images/72.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="フォーシーム投球コース比較"
+	
+	
+></p>
+<p>よく分からないと思いますが、細かく言うと1cmくらい高めには投げられています。</p>
+<p>では次、IVB（重力変化を無視した縦変化量）ですね。</p>
+<p>こちらは2cmほど上昇しています。</p>
+<p>そしてリリースポイントの高さも1cmほど下がっています。</p>
+<p>大したことないようで<strong>VAA</strong>として見ると <strong>0.2°ほど小さく</strong>なっています。</p>
+<p><img src="/solving-baseball/images/73.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="VAAの比較"
+	
+	
+></p>
+<p>GAMでVAAのみを使ったPU率予測モデルを作り、ポストシーズンに適用すると予測PU率は10.03%となり、<strong>PU率変化の60%以上を説明</strong>できます。打者より投手の変化の方が大きい気がしてきましたね。</p>
+<p>ちなみに投手の変化といっても球速やIVBは個人間でも上昇する傾向があるのに対して、投球コースやリリースポイントの高さはその傾向は薄いです。</p>
+<p>また、IVBの上昇は気温の低さを主とした空気密度の高さの影響はあるでしょうし実際の気温、湿度、気圧等を入手するか、回転数や回転軸等から変化量を推定し、投手由来の変化とは切り分けたいところです。</p>
+<p>▶︎ セイバー界の大御所物理学者の空気密度の話</p>
+<ul>
+<li><a class="link" href="https://baseball.physics.illinois.edu/Denver.html"  target="_blank" rel="noopener"
+    >Baseball At High Altitude</a> - Alan Nathan</li>
+</ul>
+<p>てなことを一生調べられてしまうので5000字に到達する前に中途半端に終わらせますけど、一般公開されたホークアイデータも今年で5年目？とデータ量も言い訳できないくらい増えたことですし、特に投手と打者の対戦という観点を忘れずに今オフは野球への理解を深められればと思います。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/solving-baseball/tags/pitching/">Pitching</a>
+        
+            <a href="/solving-baseball/tags/batting/">Batting</a>
+        
+            <a href="/solving-baseball/tags/babip/">BABIP</a>
+        
+            <a href="/solving-baseball/tags/%E3%83%9D%E3%82%B9%E3%83%88%E3%82%B7%E3%83%BC%E3%82%BA%E3%83%B3/">ポストシーズン</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        const elementsToRender = [".main-article", ".widget--toc"];
+
+        elementsToRender.forEach(selector => {
+            const element = document.querySelector(selector);
+            if (element) {
+                renderMathInElement(element, {
+                    delimiters: [
+                        { left: "$$", right: "$$", display: true },
+                        { left: "$", right: "$", display: false },
+                        { left: "\\(", right: "\\)", display: false },
+                        { left: "\\[", right: "\\]", display: true }
+                    ],
+                    ignoredClasses: ["gist"]
+                });
+            }
+        });
+    });
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">関連するコンテンツ</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/solving-baseball/memo/memo_31/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">球種ごとの打球の伸びやすさ</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/solving-baseball/analysis/april-vs-may-stats-article/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">4月の成績 vs 5月以降の成績</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/solving-baseball/analysis/strongest-hitters-velocity-article/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">最強打者の特徴【球速編】</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/solving-baseball/analysis/xwoba-what-to-see-article/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">xwOBAと何を見るか</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/solving-baseball/memo/memo_30/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Barrels / Whiffs</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script
+    src="https://giscus.app/client.js"
+    data-repo="GHL-Ball/solving-baseball"
+    data-repo-id="R_kgDOQbQpuw"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOQbQpu84CzMFQ"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="light"
+    data-lang="ja"
+    data-loading=""
+    crossorigin="anonymous"
+    async
+></script>
+<script>
+    function setGiscusTheme(theme) {
+        let giscus = document.querySelector("iframe.giscus-frame");
+        if (giscus) {
+            giscus.contentWindow.postMessage(
+                {
+                    giscus: {
+                        setConfig: {
+                            theme: theme,
+                        },
+                    },
+                },
+                "https://giscus.app"
+            );
+        }
+    }
+
+    (function () {
+        addEventListener("message", (e) => {
+            if (event.origin !== "https://giscus.app") return;
+            handler();
+        });
+        window.addEventListener("onColorSchemeChange", handler);
+
+        function handler() {
+            if (document.documentElement.dataset.scheme === "light") {
+                setGiscusTheme('light');
+            } else {
+                setGiscusTheme('dark_dimmed');
+            }
+        }
+    })();
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2025 - 
+        
+        2026 Solving Baseball Blog
+    </section>
+    
+    <section class="powerby">
+        
+            トレバ-(^o^)丿 <br/>
+        <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> で構築されています。 <br />
+        テーマ <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.32.0">Stack</a></b> は <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> によって設計されています。
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/solving-baseball/ts/main.2b3fc53c7455b5631da9fabeefcc69ffc0a3f3cb719d708d3a5f18faf7af88a6.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

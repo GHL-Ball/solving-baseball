@@ -1,0 +1,821 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Play単位 on Solving Baseball Blog</title>
+        <link>http://localhost:1313/solving-baseball/categories/play%E5%8D%98%E4%BD%8D/</link>
+        <description>Recent content in Play単位 on Solving Baseball Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>ja</language>
+        <lastBuildDate>Sat, 11 Oct 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/solving-baseball/categories/play%E5%8D%98%E4%BD%8D/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>xwOBAの改良</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_02/</link>
+        <pubDate>Sat, 11 Oct 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_02/</guid>
+        <description>&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://tangotiger.com/index.php/search/results/7eafe5f4fef8ce0766fdcd926159fe64/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Tangotiger Blog&lt;/a&gt;にて定期的にxwOBAにおいてSpray Angleは過剰適合してしまうという主旨の記事が上がります。&lt;/p&gt;
+&lt;p&gt;実際、全体の傾向として未知のデータに対する予測力においてLaunch SpeedとLaunch Angleに加えてSpray Angleを説明変数に加えるとモデルの精度は落ちます。&lt;/p&gt;
+&lt;p&gt;ただ、よく話題になるように個別事例においてはその傾向から良い意味でも悪い意味でも逸脱する打者も当然見られます。&lt;/p&gt;
+&lt;p&gt;xwOBAモデルにおける真の意味での誤差を見極め、Spray Angleを含めた情報の取捨選択をアップデートしていくことが最終的な目標となります。&lt;/p&gt;
+&lt;p&gt;Launch SpeedとLaunch Angleのみを説明変数としたxwOBAからSpray Angleの三方向（Pull、Cent、Oppo）のみの情報を付したモデル、Spray Angle（値）の情報を付したモデルの比較を以下に示します。&lt;/p&gt;
+&lt;p&gt;-&lt;img src=&#34;http://localhost:1313/solving-baseball/images/37.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;xwOBA比較&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;基本的にその年のwOBAの記述力はSpray Angleという情報を付与するほど、翌年のwOBAに対する予測力は付与しないほど上がります。&lt;/p&gt;
+&lt;p&gt;Spray Angle有のモデルと無のモデルで差が出た上位下位の打者20人を以下に示します。&lt;/p&gt;
+&lt;p&gt;-&lt;img src=&#34;http://localhost:1313/solving-baseball/images/38.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;xwOBA比較&#34;
+	
+	
+&gt;
+-&lt;img src=&#34;http://localhost:1313/solving-baseball/images/39.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;xwOBA比較&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;複数年で登場する打者が存在するようにSpray Angleの情報が必要な打者も存在する可能性は十分にあります。
+ただこれらの誤差には当然球場や対戦相手の偏りも含まれていますので、それらを考慮しながらサンプルサイズにおける誤差も抽出し、最終的には帰属できていない要素を定量化できればと思います。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>ホームラン打球の分析と選択バイアス</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_08/</link>
+        <pubDate>Mon, 01 Sep 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_08/</guid>
+        <description>&lt;p&gt;野球データにおける典型的な選択バイアスを一つ紹介します。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/169.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;q&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;上記の図は打球速度、打球角度から期待される飛距離からの乖離をホームラン打球と非ホームラン打球で比較したものです。&lt;/p&gt;
+&lt;p&gt;例えば平均的なボールの特性について調査する際に、ホームラン打球に絞って調査すると、その時点でボールの個体値は飛びやすいものに偏るでしょう。&lt;/p&gt;
+&lt;p&gt;このような選択バイアスは野球分析において無数に存在しますので、それを無意識化でも留意できる程度のセンスは常に持っていたいと日々思っています。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>犠牲フライ局面でのフライ割合</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_11/</link>
+        <pubDate>Mon, 04 Aug 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_11/</guid>
+        <description>&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/164.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;q&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;犠牲フライ局面におけるフライ率です。
+この局面においてフライの価値は平常時より高くなりますので打者はフライを普段より狙い、投手は普段より抑制する意思が働きます。&lt;/p&gt;
+&lt;p&gt;結果としては打球イベントにおけるフライ割合は下がっており、投手の戦略の効果も示唆されます。また非打球イベントも含めるとフライ割合は上がるように、打者はこの局面において三振を回避する戦略が投手のそれに勝っていることも示唆されます。&lt;/p&gt;
+&lt;p&gt;深掘りも手軽にできそうなテーマではありそうなので犠牲フライ局面に限らず投手と打者の攻防を数字から覗いてみたいものです。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>高性能打撃マシンの効果について</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_13/</link>
+        <pubDate>Wed, 30 Jul 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_13/</guid>
+        <description>&lt;p&gt;特に結論は出ていませんがTrajekt Arcのような球質再現マシンはプロ野球を大きく変えるのでしょうか。&lt;/p&gt;
+&lt;p&gt;球質再現マシンに効果があるならば打者は投手に対して以前より“慣れ”た状態で対戦しているはずです。
+そして慣れには限界効用の逓減もあると考えられます。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/162.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;a&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;1巡目と2巡目、3巡目のwOBA差&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;2021年以降に変化が観測できれば面白いですが、正直言い切れるレベルの効果を抽出するのは難しいです。
+事前に何巡目相当の球数を体験して打席にいっているのかは分かりませんし、慣れによる効果を測るために制御するべき要素が多すぎます。&lt;/p&gt;
+&lt;p&gt;先発投手も慣れに対抗する術を磨いていますのでそれらの考慮もしなければならないでしょう。面白いテーマだとは思いますので時間が取れたときに考えてみたいと思います。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>打球角度によって変わる打球速度の重要度</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_15/</link>
+        <pubDate>Sun, 01 Jun 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_15/</guid>
+        <description>&lt;p&gt;フライボール革命という言葉が普及するにつれそれに対するいろいろな持論が展開されていますが、多くあるものとしてパワーのない打者に焦点を当てたものがあります。&lt;/p&gt;
+&lt;p&gt;では前提として打球速度の重要性が打球角度によって変わる様を確認しておきましょう。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/158.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;a&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;wOBAを目的変数、打球角度を制御変数として打球速度の係数を算出したものです。&lt;/p&gt;
+&lt;p&gt;周知の通り、ゴロやポップフライは打球速度にほぼ影響を受けません。
+打球角度28°前後のフライ打球は打球速度の影響を濃く受けます。&lt;/p&gt;
+&lt;p&gt;この打球角度による打球速度の重要性という視点がフライボール革命の核です。&lt;/p&gt;
+&lt;p&gt;この大前提を理解、把握した上でSweet Spot内かつ打球速度に影響を受けづらい打球角度17°前後を目指す鍛錬は合理性はあるように感じますが、
+打球速度が重要となる打球角度も隣接している以上、打球速度を向上させられればその許容範囲が広がるということですので打球速度革命から簡単には逃れるべきではないと考えています。&lt;/p&gt;
+&lt;p&gt;ちなみに同じ打球速度でもその分布が上図に沿うような分布の方が打球価値としては正しくなります。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/159.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;a&#34;
+	
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/solving-baseball/images/160.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;a&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;自身の打球速度の出力分布を重ねた例がこちらです。
+Y.ディアスよりギャロの方が打球価値としては正しい分布をしています。
+ただ、上記の分布にはバット軌道は密接に関わりますし、それは非打球にも影響を及ぼすので一概には言えないという難しさを秘めています。
+各選手の才能を見抜き適切なバット軌道を作っていく作業が必要にはなってくるでしょうが、バット軌道の変更は可逆性は低いものと認識していますので育成初期段階でその才能を見極める必要があるということを考えるとまだまだ安定度の高い打者育成は難しいのかなとも思います。&lt;/p&gt;
+&lt;p&gt;フライボール革命は変なボールを使うなどしない限り、野球にとって普遍的な理論を見つめなおした革命ですので自分には当てはまらないと理解を放棄する野球選手はいてほしくないなと考えてもいます。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>打球の伸びと水平角度</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_16/</link>
+        <pubDate>Fri, 30 May 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_16/</guid>
+        <description>&lt;p&gt;基本的に打球の飛距離は打球速度と垂直打球角度によって決まりますが、打球には重量の他にも抗力や揚力が作用しますのでそれらに影響を与える回転数や回転軸も少し影響します。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/157.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;a&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;上記は水平角度と打球速度と垂直打球角度から期待される飛距離からの追加距離の関係です。&lt;/p&gt;
+&lt;p&gt;基本的に打者は軽い引っ張りの時に飛距離が最大化されます。
+打球というのは左右非対称なバット軌道から生み出されますので綺麗なセンター返しより少し引っ張り気味の方が回転軸が打球方向に対して素直になり適した揚力が働くものと思われます。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>スイングの多様性と打球価値について</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_21/</link>
+        <pubDate>Thu, 22 May 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_21/</guid>
+        <description>&lt;p&gt;高めと低め、内角と外角に対してスイングの形状は変わりますし、変えることは理論的には正しいです。
+では実際にBat Pathの標準偏差とxwOBAconには関係性があるのでしょうか。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/148.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;q&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;結果としてスイングに多様性がない打者ほどxwOBAconは高くなっています。
+少なくともMLBという階層においては全ての投球への順応性より自身が対応できるコースへの確実性が打球価値へは好影響を及ぼす可能性がありそうです。&lt;/p&gt;
+&lt;p&gt;Path SDの中央値付近に高xwOBAcon帯がある可能性も考えましたが、実際は線形に近い分布をしており、打球のみに絞って考えるとほとんどの打者は必要以上に順応性を求めていると言えるでしょう。
+図にある名前を見ればわかるようにあくまでも打球のみに絞って考えるとですが。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>縦振り vs 横振り</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_22/</link>
+        <pubDate>Tue, 20 May 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_22/</guid>
+        <description>&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/147.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;q&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;上記はBat Path上位40％と下位40％のグループの2023年と2024年の各指標の相関です。&lt;/p&gt;
+&lt;p&gt;K%やBB%は特に有意差は観測できませんが、一般的に高価値でありながらその中では不安定なSweet Spot%とそれを内包するxwOBAconの安定度に差が見られます。
+縦振りの流行には垂直打球角度の重要性の再確認も背景にあり、垂直方向における打球の操作性を求めたスタイルとしての地位はとりあえずは揺るがなそうです。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>芯で捉えた打球は伸びやすいか</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_23/</link>
+        <pubDate>Mon, 19 May 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_23/</guid>
+        <description>&lt;p&gt;不器用な打者と器用な打者の対比において恐らくその芸術性から芯で捉えることの重要性を説く方を見かけます。
+一概に言えないというのが安牌な答えではありますが、たまに「芯で捉えた打球の方が伸びやすい」といった言説も見かけますのでそれについて調べます。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/146.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;q&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;この図は真芯率と打球速度と打球角度から期待される飛距離との乖離の関係性を示した図です。&lt;/p&gt;
+&lt;p&gt;特に面白い話はなく芯で捉えることの影響は無視できそうです。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>打者の慣れはリリーフにも引き継がれるか</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_25/</link>
+        <pubDate>Thu, 03 Apr 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_25/</guid>
+        <description>&lt;p&gt;同じ投手と何度も対戦することで打撃成績が向上する効果、周回効果について、慣れの側面から少し脇道に逸れたテーマです。&lt;/p&gt;
+&lt;p&gt;同試合内で何度も対戦する投手はほぼ先発投手です。つまり打者は慣れにおいて先発投手にフォーカスを合わせます。&lt;/p&gt;
+&lt;p&gt;という前提から、先発投手の次に対戦する投手にも先発投手の慣れは引き継がれている可能性があります。&lt;/p&gt;
+&lt;p&gt;ということで簡易的ですが調べてみました。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/142.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;q&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;まずは先発投手と二番手投手の利き手の相違で成績が変わるのかというテーマ。&lt;/p&gt;
+&lt;p&gt;正直なところ、MLBのサンプルサイズに甘えてはいますが先発投手の慣れは中継ぎにも引き継がれていそうです。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/143.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;q&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;次は同じ利き手においても投球フォームの類似度で成績は変わるのかというテーマ。&lt;/p&gt;
+&lt;p&gt;こちらもそれっぽい結果が出ています。同じ利き手より違う利き手、高類似度より低類似度の二番手投手の方が打者を抑えられています。&lt;/p&gt;
+&lt;p&gt;今回のように、周回効果という定説の中にある要素を抽出して、その要素から展開できる他の仮説への適用は野球の探究の楽しい部分かなと思います。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>ポストシーズンのBABIPについて</title>
+        <link>http://localhost:1313/solving-baseball/analysis/ps-babip/</link>
+        <pubDate>Mon, 04 Nov 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/analysis/ps-babip/</guid>
+        <description>&lt;p&gt;今回取り上げるのはポストシーズンの野球の話です。&lt;/p&gt;
+&lt;p&gt;ポストシーズンや短期決戦において個人的に注目しているのが様々な野球ファンから語られる様々なポストシーズン論です。&lt;/p&gt;
+&lt;p&gt;ある野球ファンは「小技の重要性が上がる」とか、またある野球ファンは「投手の重要性が上がる」とか、あるセイバーオタクは「ポストシーズンは運」とか、多様な野球論を目にすることのできる楽しい時期でもあります。&lt;/p&gt;
+&lt;p&gt;これらの議論が成り立つのは、ポストシーズンとレギュラーシーズンに類似点だけでなく&lt;strong&gt;相違点&lt;/strong&gt;も存在する（と認識されている）ためです。&lt;/p&gt;
+&lt;p&gt;今回はその相違点のうち、&lt;strong&gt;BABIP&lt;/strong&gt;について紐解いていければと思います。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;レギュラーシーズンとポストシーズンの違い&#34;&gt;レギュラーシーズンとポストシーズンの違い
+&lt;/h2&gt;&lt;p&gt;では簡単にレギュラーシーズンとポストシーズンの野球の違いをおさらいしておきます。&lt;/p&gt;
+&lt;p&gt;ホークアイデータを使う可能性を考えて対象年度は2021年以降としておきます（2020年の特例シーズンは対象外）。&lt;/p&gt;
+&lt;p&gt;各イベント発生率の違いが以下です。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/67.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;イベント発生率の比較&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;※2021年以降、野手のみ&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;大きな違いは&lt;strong&gt;K%&lt;strong&gt;と&lt;/strong&gt;BIP（インプレー打球）の結果&lt;/strong&gt;でしょう。&lt;/p&gt;
+&lt;p&gt;ポストシーズンではとにかく三振が増え、BIPの結果が悪くなります。&lt;/p&gt;
+&lt;p&gt;レギュラーシーズンのBABIP .2926…に対して、ポストシーズンのBABIPは .2810…、差にして .0116…が生じています。対象ポストシーズンのBIPは7,483ですので、レギュラーシーズンを基準とすると&lt;strong&gt;ポストシーズンにおいて7,483 × 0.01158 ≒ 87 のアウトが期待値より発生&lt;/strong&gt;しています。この87の追加アウトの発生源を推測してみようというのが主題です。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;打球によるbabipの低下&#34;&gt;打球によるBABIPの低下
+&lt;/h2&gt;&lt;p&gt;投手と打者については責任分配がややこしいので今回は打球によって低下したBABIPを考えます。&lt;/p&gt;
+&lt;p&gt;ポストシーズンにおいてのBIPの変化は代表的な4分類から十分に確認できます。以下がBaseball Savantの四分類の割合の比較です。&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;GB%&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;LD%&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;FB%&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;PU%&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;BABIP&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;レギュラーシーズン&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;45.2&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;24.5&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;23.0&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;7.3&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;.293&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;ポストシーズン&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;44.3&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;23.7&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;23.2&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;8.8&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;.281&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;em&gt;※2021年以降、野手のBIPのみ&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;周知の通り、4分類においてBABIP Valueの高さはLD（ライナー）（.622） &amp;gt; GB（ゴロ）（.245） &amp;gt; FB（フライ）（.122） &amp;gt; PU（ポップフライ）（.016）です。&lt;/p&gt;
+&lt;p&gt;そしてポストシーズンのBIPにおいてはBABIP Valueの高いLD、そこそこのGBの割合は減り、BABIP Valueの低いPUの割合は増えています。&lt;/p&gt;
+&lt;p&gt;投手、打者にどう責任を分配するかはさておき、打球によってポストシーズンのBABIPが低下していることは明らかです。&lt;/p&gt;
+&lt;p&gt;例えばこの4分類を使った簡単な xBABIPを求めると、&lt;strong&gt;レギュラーシーズンの xBABIP .2926…に対してポストシーズンでは .2859…&lt;strong&gt;となり87の追加アウトのうち&lt;/strong&gt;58%の50個ほど&lt;/strong&gt;を説明できます。&lt;/p&gt;
+&lt;p&gt;ただ打球種類の他に打球方向も見ていくと少し変わってきます。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/68.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;打球種類・方向割合比較&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;上記表は4つの打球種類と3つの打球方向で打球を12に分類したものです。&lt;/p&gt;
+&lt;p&gt;ゴロにおいてはBABIP Valueの低い（.190）引っ張りが減少しているように打球方向に関してはBABIPに有利に働く変化を見せており、この&lt;strong&gt;12分類の xBABIPでは .2870…&lt;/strong&gt;、87の追加アウトのうち&lt;strong&gt;48%の42個ほど&lt;/strong&gt;に落ち着きます。&lt;/p&gt;
+&lt;p&gt;まだあります。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>身長 × パワー</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_28/</link>
+        <pubDate>Thu, 26 Sep 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_28/</guid>
+        <description>&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/135.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;身長vsパワー&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;ただの身長と90th EVの散布図です。
+身長は定数みたいなものですので、特に育成面においてはその定数を考慮する必要があるだろうなとは常々思っています。&lt;/p&gt;
+&lt;p&gt;鍛錬量と成長度というのは完全には線形ではないでしょうし、恐らく対数関数的な曲線を描くものもあると思います。&lt;/p&gt;
+&lt;p&gt;その時、いわゆる伸びしろを評価して有限のリソースを分配する必要がありますので、身長はもちろんですが、その他の定数項を考慮して現状の成長度を見誤らないことは必要となるでしょう。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>球種ごとの打球の伸びやすさ</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_31/</link>
+        <pubDate>Sat, 22 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_31/</guid>
+        <description>&lt;p&gt;飛距離は打球速度と打球角度によってその大方が決定しますが、他の風や気温といった環境以外の要素では打球の回転数や回転効率があります。
+重力と抗力に適した揚力によって伸びる打球が生まれるという話です。&lt;/p&gt;
+&lt;p&gt;そこで球種ごとに打球速度と打球角度から期待される飛距離との乖離に差はあるかという点を調べました。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/126.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;球種ごとの打球の伸びやすさ&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;速球が飛びやすく、Offspeedやカーブ系が飛びにくいといった結果から回転数や回転効率の影響が示唆されています。
+深堀すると面白そうなテーマなのでそのうちNathanの論文と睨めっこしながら考えてみます。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>FB/LD EV</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_32/</link>
+        <pubDate>Tue, 18 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_32/</guid>
+        <description>&lt;p&gt;Baseball SavantにEV（FB/LD）という指標が追加されました。
+単純にFBとLDの打球速度の平均値であり、&lt;a class=&#34;link&#34; href=&#34;http://localhost:1313/solving-baseball/analysis/escape-velocity-by-batted-ball-type/&#34; &gt;打球分類ごとのEscape Velocity&lt;/a&gt;で触れたように、打球速度を上げる意味がほとんどないゴロを打球速度の計算から除外することでより野球的に打球速度を捉えます。&lt;/p&gt;
+&lt;p&gt;Adjusted EVと考えは似ていますし、やっていることの分かりやすさは打球速度系の指標でもかなり上位かなとは思います。ただ、フライやライナーといった打球分類は客観的な分類が難しい部分もありますし、ある程度のノウハウがないリーグでこの指標を使うのは危険かもしれません。&lt;/p&gt;
+&lt;p&gt;性能としてはAdjusted EVと変わりません。xwOBAconを見れない環境での妥協案の一つとなるでしょう。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/120.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;FB/LD EV&#34;
+	
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/solving-baseball/images/121.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;FB/LD EV&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;同年度のwOBAconの記述力&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/122.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;FB/LD EV&#34;
+	
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/solving-baseball/images/123.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;FB/LD EV&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;翌年度のwOBAconの予測力&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/124.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;FB/LD EV&#34;
+	
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/solving-baseball/images/125.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;FB/LD EV&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;xwOBAcon&lt;/em&gt;&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>得点圏打率の捉え方</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_33/</link>
+        <pubDate>Mon, 17 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_33/</guid>
+        <description>&lt;p&gt;得点圏打率という人気指標についてです。
+人気指標であるがゆえに、賢い先人がその脆さを説き、我ら後人が「欠陥指標である」というフレーズを使うだけなのも飽きたので簡単に整理をしておきましょう。&lt;/p&gt;
+&lt;p&gt;得点圏打率の槍玉に挙げられる特徴はその一貫性の無さでしょうし、現在ドジャース移籍後の大谷がたった1ヶ月の得点圏打率でやいのやいのファン同士で言い合いしています。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/118.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;得点圏打率&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;もちろん1ヶ月の得点圏打率に信頼度はない&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;では記述の面はどうでしょう。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/119.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;得点圏打率&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;対象年度とかフィルター基準とか忘れました&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;得点圏というファンがレバレッジをかけて観察する場面において、「打率」に注目することで得点確率を説明するのに役立ちます。
+勝利という面で冷静に見ると出塁率（アウトにならない率）と長打率（塁を進める期待値）から成り立っているOPSが強いでしょうが、ファンの感情としてはRE24の増減ではなく「アウト」「無得点非アウト/得点アウト」と「得点非アウト」くらいで段階的に
+分布していそうなので得点確率を表す得点圏打率はファンの心情に寄り添えているのかなとも思います。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>打球分類ごとのEscape Velocity</title>
+        <link>http://localhost:1313/solving-baseball/analysis/escape-velocity-by-batted-ball-type/</link>
+        <pubDate>Tue, 09 Apr 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/analysis/escape-velocity-by-batted-ball-type/</guid>
+        <description>&lt;p&gt;思いつきですが、Escape Velocityの理論(物理の方じゃないよ)を打球分類(ゴロ、フライ、ライナー)ごとにも当てはめてみます。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;escape-velocity&#34;&gt;Escape Velocity
+&lt;/h2&gt;&lt;p&gt;Escape Velocityは簡単に説明すると、&lt;strong&gt;88mphまでは打球速度で価値に差がつかないんだから88mphからどれだけEscape(脱出)できたかを評価しよう&lt;/strong&gt;という考えから生まれた指標です。&lt;/p&gt;
+&lt;p&gt;具体的には60mphと80mphと100mphはEscape Velocityでは0mphと0mphと12mphという扱いになります。&lt;/p&gt;
+&lt;p&gt;一応確認として、打球速度とwOBAとの関係が以下。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/86.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;EV vs wOBA (2021~2023)&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;88mph以下を等価で評するEscape Velocityや95mph以上の打球割合を示すHard Hit %の妥当性&lt;/strong&gt;が確認できるんじゃないかなと思います。&lt;/p&gt;
+&lt;p&gt;Escape Velocityは同じ平均打球速度でも85mph + 85mph より100mph + 70mphを高く評価しますが上記の関係を考慮すると野球的に正しい指標であると言えます。&lt;/p&gt;
+&lt;p&gt;平均打球速度とEscape Velocityで特徴のあった打者の例はこちら。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/87.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;平均打球速度とEscape Velocityの比較表&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;2021~2023、min 200 BBE、順位は512人中、バントは除く&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;例えばマイク・トラウト、彼は平均打球速度はメジャー32位に甘んじていますがEscape Velocityはメジャー11位の数値です。&lt;/p&gt;
+&lt;p&gt;例えばMJ・メレンデス、彼は平均打球速度はメジャー23位ですがEscape Velocityはメジャー84位です。&lt;/p&gt;
+&lt;p&gt;メレンデスがトラウトより平均して速い打球を飛ばしたことは間違いではないですが、&lt;strong&gt;野球的に&lt;/strong&gt;トラウトより&amp;quot;良い&amp;quot;打球速度を出していたわけではないということです。&lt;/p&gt;
+&lt;p&gt;今回はこの理論を打球分類ごとにも当てはめたり、打球速度とwOBAの関係を打球分類ごとに見ていきたいなという回です。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;ゴロ&#34;&gt;ゴロ
+&lt;/h2&gt;&lt;p&gt;まずはMLBではすっかり負け打球扱いされているゴロです。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/88.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;EV vs wOBA (2021~2023 GB)&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;当たり前ですがそもそもの価値の低さが目立ちます。Escape Velocityの理論もなんとか当てはめられそうですが、その閾値は全打球の時より低く設定できそうです。バントやハーフスイングが含まれていて信頼区間の幅も広い低速打球を取り除いて拡大したのが以下。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/89.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;EV vs wOBA (2021~2023 GB) 拡大&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Escapeできていると言えそうなのは81mphぐらいからでしょうか。全打球では88mphが閾値ですがゴロに限ると80mph程度かなと思います。&lt;/p&gt;
+&lt;p&gt;仮に80mphを閾値に設定した場合の2021~2023のゴロのEscape Velocityトップ10とワースト10がこちら。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/90.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Escape Velocity Top 10 &amp; Worst 10 (GB)&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;2021~2023、min 100 GB、Ovr Rk.は全打球のEscape Velocityの順位を466人換算したもの&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;トップ10には当然パワーヒッターが並びますが、W.カルフーンやM.ビアリング、K.ヘイズのような全打球のEscape Velocityでは上位にいなかった選手が気になります。結論を述べると彼らは&lt;strong&gt;パワーツールをフライやライナーと比して極端にゴロに使っています&lt;/strong&gt;。後にまた語りますが良いとは言えないでしょうね。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>二遊間の入れ替えについて</title>
+        <link>http://localhost:1313/solving-baseball/analysis/ss-2b-switch/</link>
+        <pubDate>Tue, 20 Feb 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/analysis/ss-2b-switch/</guid>
+        <description>&lt;p&gt;2023年に主にセカンドを守ったキム・ハソンとショートを守ったサンダー・ボガーツが2024年は守備位置を交代するようです。ハソンの方が守備が上手いという前提なら、野球のセオリーに基づいた至極真っ当な判断ですが実際チーム内で守備位置を交代しただけでどの程度失点を減らせるんでしょうか。&lt;/p&gt;
+&lt;p&gt;ハソンの方が守備が上手い(=アウトを多く取る)と仮定した場合、ボガーツと守備位置を交代したら確かにショートが取るアウトは増えます。しかしセカンドが取るアウトは減ります。この差がプラスになれば、つまりショートの守備機会がセカンドより多ければ守備位置交代は吉と出ます。&lt;/p&gt;
+&lt;p&gt;ということで2023年のショートとセカンドの守備機会の差を見てみましょう。守備機会と言ってもOAAの算出にあたって副次的に算出されている「Attempts」というスタッツで、選手の能力によって左右されることのないであろう守備機会です。&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;team&lt;/th&gt;
+          &lt;th style=&#34;text-align: right&#34;&gt;ss&lt;/th&gt;
+          &lt;th style=&#34;text-align: right&#34;&gt;2b&lt;/th&gt;
+          &lt;th style=&#34;text-align: right&#34;&gt;ss-2b&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;wsh&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;694&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;552&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;142&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;oak&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;676&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;535&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;141&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;tex&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;712&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;608&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;104&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;hou&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;642&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;543&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;99&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;mia&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;631&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;534&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;97&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;tb&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;666&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;580&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;86&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;cin&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;613&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;538&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;75&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;laa&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;621&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;554&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;67&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;nym&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;580&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;518&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;62&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;sd&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;625&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;586&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;39&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;phi&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;688&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;649&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;39&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;lad&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;613&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;578&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;35&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;bal&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;619&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;587&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;32&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;kc&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;628&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;602&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;26&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;bos&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;607&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;589&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;18&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;chc&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;661&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;644&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;17&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;stl&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;644&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;628&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;16&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;nyy&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;575&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;562&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;13&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;mil&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;588&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;579&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;9&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;det&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;625&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;616&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;9&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;tor&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;540&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;539&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;1&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;col&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;627&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;628&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;-1&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;pit&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;555&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;557&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;-2&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;min&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;572&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;581&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;-9&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;sea&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;594&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;618&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;-24&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;atl&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;573&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;604&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;-31&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;ari&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;656&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;690&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;-34&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;sf&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;602&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;651&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;-49&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;cle&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;598&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;650&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;-52&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;cws&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;549&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;634&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;-85&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;平均&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;619&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;591&lt;/td&gt;
+          &lt;td style=&#34;text-align: right&#34;&gt;28&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;打者は右打者の方が多く(2023年右打席割合は59％)、左右限らず逆方向へのゴロは少ない(ゴロのうち逆方向なのは12%)のでショートの方が守備機会は多くなるんですが、2023年の実際の比は51:49なので思ったより少ないです。&lt;/p&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

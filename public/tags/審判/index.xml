@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>審判 on Solving Baseball Blog</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E5%AF%A9%E5%88%A4/</link>
+        <description>Recent content in 審判 on Solving Baseball Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>ja</language>
+        <lastBuildDate>Sat, 04 Oct 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/solving-baseball/tags/%E5%AF%A9%E5%88%A4/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>MLB誤審率推移</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_03/</link>
+        <pubDate>Sat, 04 Oct 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_03/</guid>
+        <description>&lt;p&gt;フレーミングという捕手の技術と言いますか貢献と言いますか、現代までの野球において決して無視のできない要素があります。&lt;/p&gt;
+&lt;p&gt;フレーミングという貢献はストライク・ボール判定が投球座標のみで決まらず、かつその誤差が各要素に分配できる一貫した誤差であることによって存在しています。
+当然ではありますが、この貢献は第一にストライク・ボール判定が完全に投球座標で決まるようになれば存在しなくなりますし、第二に一貫した誤差が各要素で観測されないことでも存在しなくなります。&lt;/p&gt;
+&lt;p&gt;第一の不存在事由は周知の通り審判の判定精度の上昇とABSの部分的導入で成立に近づいてはいる状態です。
+第二については、フレーミング貢献が再認識、定量化された黎明期以降、特にその多くを担っている捕手はフレーミングの鍛錬の質も量も増しているでしょうし、フレーミングが苦手な捕手の出場機会も減っているでしょう。
+これは捕手という集団におけるフレーミング貢献の分散の抑制が期待されます。実際にMLBでもNPBでも捕手のフレーミング貢献の分散は縮小傾向にはありそうです。&lt;/p&gt;
+&lt;p&gt;という状況を誤審率推移とともに確認してメモ書きとしておきます。&lt;/p&gt;
+&lt;p&gt;-&lt;img src=&#34;http://localhost:1313/solving-baseball/images/40.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;誤審率推移&#34;
+	
+	
+&gt;&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>ストライクゾーン改定の影響を受ける打者</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_04/</link>
+        <pubDate>Wed, 24 Sep 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_04/</guid>
+        <description>&lt;p&gt;かなり雑ではありますがメモにはこのレベルの雑なものも置いておきます。&lt;/p&gt;
+&lt;p&gt;MLBは2026年からABSの導入が決定し、それに伴いストライクゾーンの刷新も行われます。
+野球規則に則った現状のストライクゾーンはあくまでも打撃姿勢におけるストライクゾーンですが、いろいろ事情はあるでしょう、2026年以降は身長によってストライクゾーンが定められることが決定しました。
+これにより打撃フォームだと、しゃがみ系の打者より突っ立ち系の打者の方がストライクゾーンが小さくなります。
+身体的特徴だと、膝下が長い打者より短い選手が、腰位置が低い打者より高い打者が、顔が長い打者より顔が短い打者の方がストライクゾーンが小さくなります。&lt;/p&gt;
+&lt;p&gt;そんな感じでストライクゾーン小さくなる打者の上位下位を出してみたという話です。&lt;/p&gt;
+&lt;p&gt;-&lt;img src=&#34;http://localhost:1313/solving-baseball/images/41.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;ストライクゾーン改定01&#34;
+	
+	
+&gt;
+-&lt;img src=&#34;http://localhost:1313/solving-baseball/images/42.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;ストライクゾーン改定02&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Baseball SavantがPitch単位で設定しているストライクゾーンが縦に何cm小さくなるかを計算しています。
+ベリンジャーやイエリッチは（身長に対して）極端なストライクゾーンでも有名でしょう。&lt;/p&gt;
+&lt;p&gt;ただ注意点として打者の体感として格差が生じるかというと、現状の審判は打者の個別ゾーンに対応できていませんので悪い意味で現行のものと別物にはならないでしょう。
+以下に実際の試合のストライク・ボール判定において、ストライク確率が50％となる高さを打者別に推定したソーンとの比較を示します。&lt;/p&gt;
+&lt;p&gt;-&lt;img src=&#34;http://localhost:1313/solving-baseball/images/43.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;ストライクゾーン改定03&#34;
+	
+	
+&gt;
+-&lt;img src=&#34;http://localhost:1313/solving-baseball/images/44.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;ストライクゾーン改定04&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;ベリンジャーやイエリッチがこちらのリストに登場しないことからも理論と実態の乖離を窺えるかと思います。
+そこも含めて打者へのフィードバックを適切に行わないと、ジャッジが低めの誤審をチャレンジしないとかアルトゥーベが高めの誤審をチャレンジしないとか、そんな状況になる可能性は十分にあります。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>ストライクゾーンの形状の変化</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_26/</link>
+        <pubDate>Tue, 21 Jan 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_26/</guid>
+        <description>&lt;p&gt;MLBにおいてストライクゾーンの形状は変化していることを明確に確認できます。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/141.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;q&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;2008年以降、MLB30球場にPITCHf/xが設置されMLBの審判評価は大きな変革期を迎えます。
+その結果としてよりルールに沿ったストライクゾーンが整えられてきました。
+イチロー松井が活躍していた時代に「MLBはアウトコースが広い」といった定説がありましたが、現在においては嘘と言えるでしょう。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>MLBの審判は本当にルーキーに厳しいのか</title>
+        <link>http://localhost:1313/solving-baseball/analysis/mlb-umpire-rookie-bias/</link>
+        <pubDate>Wed, 21 Feb 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/analysis/mlb-umpire-rookie-bias/</guid>
+        <description>&lt;p&gt;「MLBの審判はルーキーに厳しい」という言説をたまに目にします。MLBを見ていなかった時に自分もそのイメージを持っていました。特に野手のストライク・ボール判定でその風潮があるという個人的イメージに基づいて今回は野手を調べます。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;ルーキーの誤審率&#34;&gt;ルーキーの誤審率
+&lt;/h2&gt;&lt;p&gt;まずは単純にルーキー群と非ルーキー群の誤審率から。&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;year&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;rookies&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;non-rookies&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;difference&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2008&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;16.1%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;15.2%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;0.87%&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2009&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;15.1%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;14.6%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;0.46%&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2010&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;14.4%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;13.5%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;0.81%&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2011&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;13.6%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;13.4%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;0.21%&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2012&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;12.8%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;12.9%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;-0.12%&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2013&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;12.0%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;12.1%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;-0.07%&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2014&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;11.7%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;11.6%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;0.14%&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2015&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;11.3%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;11.1%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;0.14%&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2016&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;10.5%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;10.7%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;-0.13%&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2017&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;9.8%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;9.5%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;0.28%&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2018&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;8.7%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;8.7%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;-0.02%&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2019&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;8.5%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;8.3%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;0.15%&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2020&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;8.6%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;8.1%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;0.42%&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2021&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;8.2%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;7.8%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;0.43%&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2022&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;7.4%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;7.5%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;-0.08%&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2023&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;7.4%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;7.1%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;0.27%&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;em&gt;ルーキーとルーキー以外の誤審率比較　誤審数/見逃し数&lt;/em&gt;&lt;/p&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>指名打者 on Solving Baseball Blog</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E6%8C%87%E5%90%8D%E6%89%93%E8%80%85/</link>
+        <description>Recent content in 指名打者 on Solving Baseball Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>ja</language>
+        <lastBuildDate>Sun, 10 Aug 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/solving-baseball/tags/%E6%8C%87%E5%90%8D%E6%89%93%E8%80%85/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>指名打者というポジションを投手は意識するか</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_10/</link>
+        <pubDate>Sun, 10 Aug 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_10/</guid>
+        <description>&lt;p&gt;打者のDHペナルティは有名ですが、投手はDHに影響を受けているのでしょうか？&lt;/p&gt;
+&lt;p&gt;投手は基本的に強打者に対してその出力を上げています。
+例えば2025年に対面したStuff+の最高値はジャッジでした。&lt;/p&gt;
+&lt;p&gt;ジャッジという打者情報が投手の警戒度を上げるようにDHというポジションは投手の警戒度を上げるでしょうか。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/165.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;q&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;こちらは固定効果としてDHか否か、ランダム効果としてそのシーズンの打者を設定したLMMの結果です。&lt;/p&gt;
+&lt;p&gt;サンプルサイズの暴力によりDHというポジションが球速を0.01mph程度は上昇させることが示唆されています。
+交絡因子となっている可能性もある打順等の効果についても調べてみたいですね。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/166.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;q&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;ちなみに速球に限定したらその効果が顕著になります。
+とは言ってもトリビア程度ですが。&lt;/p&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

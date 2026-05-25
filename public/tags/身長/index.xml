@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>身長 on Solving Baseball Blog</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E8%BA%AB%E9%95%B7/</link>
+        <description>Recent content in 身長 on Solving Baseball Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>ja</language>
+        <lastBuildDate>Thu, 26 Sep 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/solving-baseball/tags/%E8%BA%AB%E9%95%B7/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>身長 × パワー</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_28/</link>
+        <pubDate>Thu, 26 Sep 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_28/</guid>
+        <description>&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/135.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;身長vsパワー&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;ただの身長と90th EVの散布図です。
+身長は定数みたいなものですので、特に育成面においてはその定数を考慮する必要があるだろうなとは常々思っています。&lt;/p&gt;
+&lt;p&gt;鍛錬量と成長度というのは完全には線形ではないでしょうし、恐らく対数関数的な曲線を描くものもあると思います。&lt;/p&gt;
+&lt;p&gt;その時、いわゆる伸びしろを評価して有限のリソースを分配する必要がありますので、身長はもちろんですが、その他の定数項を考慮して現状の成長度を見誤らないことは必要となるでしょう。&lt;/p&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

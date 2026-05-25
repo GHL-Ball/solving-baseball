@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Barrel on Solving Baseball Blog</title>
+        <link>http://localhost:1313/solving-baseball/tags/barrel/</link>
+        <description>Recent content in Barrel on Solving Baseball Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>ja</language>
+        <lastBuildDate>Mon, 01 Jul 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/solving-baseball/tags/barrel/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Barrels / Whiffs</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_30/</link>
+        <pubDate>Mon, 01 Jul 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_30/</guid>
+        <description>&lt;p&gt;-&lt;a class=&#34;link&#34; href=&#34;https://blogs.fangraphs.com/whomps-per-whiff-early-2024-edition/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Whomps per Whiff, Early 2024 Edition&lt;/a&gt; - Ben Clemens&lt;/p&gt;
+&lt;p&gt;空振りあたりにどれだけのBarrelを生み出せるかという解釈性の高い指標についてです。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/127.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Barrels / Whiffs&#34;
+	
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/solving-baseball/images/128.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Barrels / Whiffs&#34;
+	
+	
+&gt;
+&lt;em&gt;翌シーズンのwOBAの予測力&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;実際に性能としては悪いとは言えないもののxwOBAには劣ります。
+単純な指標のようでBarrelを使うということはxwOBAが既にある環境ですので簡易的な指標とは言えないでしょう。
+ただ、K/BBと同じようにスケールを1空振りあたりにすることは、指導面、育成面での選手への翻訳機として機能するかもしれません。&lt;/p&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

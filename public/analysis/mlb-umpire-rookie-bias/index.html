@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+    <head><script src="/solving-baseball/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=solving-baseball/livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="「MLBの審判はルーキーに厳しい」という言説をたまに目にします。MLBを見ていなかった時に自分もそのイメージを持っていました。特に野手のストライク・ボール判定でその風潮があるという個人的イメージに基づいて今回は野手を調べます。\nルーキーの誤審率\rまずは単純にルーキー群と非ルーキー群の誤審率から。\nyear rookies non-rookies difference 2008 16.1% 15.2% 0.87% 2009 15.1% 14.6% 0.46% 2010 14.4% 13.5% 0.81% 2011 13.6% 13.4% 0.21% 2012 12.8% 12.9% -0.12% 2013 12.0% 12.1% -0.07% 2014 11.7% 11.6% 0.14% 2015 11.3% 11.1% 0.14% 2016 10.5% 10.7% -0.13% 2017 9.8% 9.5% 0.28% 2018 8.7% 8.7% -0.02% 2019 8.5% 8.3% 0.15% 2020 8.6% 8.1% 0.42% 2021 8.2% 7.8% 0.43% 2022 7.4% 7.5% -0.08% 2023 7.4% 7.1% 0.27% ルーキーとルーキー以外の誤審率比較\u3000誤審数/見逃し数\n">
+<title>MLBの審判は本当にルーキーに厳しいのか</title>
+
+<link rel='canonical' href='http://localhost:1313/solving-baseball/analysis/mlb-umpire-rookie-bias/'>
+
+<link rel="stylesheet" href="/solving-baseball/scss/style.min.4d36f8dc1fd48129e1635deb4b8eb2870fa09474f7280c4cb606d40b2526994b.css"><meta property='og:title' content="MLBの審判は本当にルーキーに厳しいのか">
+<meta property='og:description' content="「MLBの審判はルーキーに厳しい」という言説をたまに目にします。MLBを見ていなかった時に自分もそのイメージを持っていました。特に野手のストライク・ボール判定でその風潮があるという個人的イメージに基づいて今回は野手を調べます。\nルーキーの誤審率\rまずは単純にルーキー群と非ルーキー群の誤審率から。\nyear rookies non-rookies difference 2008 16.1% 15.2% 0.87% 2009 15.1% 14.6% 0.46% 2010 14.4% 13.5% 0.81% 2011 13.6% 13.4% 0.21% 2012 12.8% 12.9% -0.12% 2013 12.0% 12.1% -0.07% 2014 11.7% 11.6% 0.14% 2015 11.3% 11.1% 0.14% 2016 10.5% 10.7% -0.13% 2017 9.8% 9.5% 0.28% 2018 8.7% 8.7% -0.02% 2019 8.5% 8.3% 0.15% 2020 8.6% 8.1% 0.42% 2021 8.2% 7.8% 0.43% 2022 7.4% 7.5% -0.08% 2023 7.4% 7.1% 0.27% ルーキーとルーキー以外の誤審率比較\u3000誤審数/見逃し数\n">
+<meta property='og:url' content='http://localhost:1313/solving-baseball/analysis/mlb-umpire-rookie-bias/'>
+<meta property='og:site_name' content='Solving Baseball Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Analysis' /><meta property='article:tag' content='審判' /><meta property='article:tag' content='ルーキー' /><meta property='article:tag' content='Attack Zones' /><meta property='article:published_time' content='2024-02-21T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-02-21T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="MLBの審判は本当にルーキーに厳しいのか">
+<meta name="twitter:description" content="「MLBの審判はルーキーに厳しい」という言説をたまに目にします。MLBを見ていなかった時に自分もそのイメージを持っていました。特に野手のストライク・ボール判定でその風潮があるという個人的イメージに基づいて今回は野手を調べます。\nルーキーの誤審率\rまずは単純にルーキー群と非ルーキー群の誤審率から。\nyear rookies non-rookies difference 2008 16.1% 15.2% 0.87% 2009 15.1% 14.6% 0.46% 2010 14.4% 13.5% 0.81% 2011 13.6% 13.4% 0.21% 2012 12.8% 12.9% -0.12% 2013 12.0% 12.1% -0.07% 2014 11.7% 11.6% 0.14% 2015 11.3% 11.1% 0.14% 2016 10.5% 10.7% -0.13% 2017 9.8% 9.5% 0.28% 2018 8.7% 8.7% -0.02% 2019 8.5% 8.3% 0.15% 2020 8.6% 8.1% 0.42% 2021 8.2% 7.8% 0.43% 2022 7.4% 7.5% -0.08% 2023 7.4% 7.1% 0.27% ルーキーとルーキー以外の誤審率比較\u3000誤審数/見逃し数\n">
+    <link rel="shortcut icon" href="/solving-baseball/images/favicon.png" />
+<style>
+  :root {
+    --ja-font-family: "Noto Sans JP", "游ゴシック体", "Yu Gothic", YuGothic, 
+      "ヒラギノ角ゴ Pro", "Hiragino Kaku Gothic Pro", "メイリオ", "Meiryo";
+    --base-font-family: "Lato", var(--sys-font-family), var(--ja-font-family),
+      sans-serif;
+  }
+
+   
+  .article-content {
+    color: var(--card-text-color-main);
+  }
+
+  .article-content a {
+    color: var(--accent-color);
+  }
+</style>
+
+<script>
+  (function () {
+    const customFont = document.createElement("link");
+    customFont.href =
+      "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Lato:wght@400;700&display=swap";
+    customFont.type = "text/css";
+    customFont.rel = "stylesheet";
+    document.head.appendChild(customFont);
+  })();
+</script>
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="メニューを開く・閉じる">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/solving-baseball">Solving Baseball Blog</a></h1>
+            <h2 class="site-description">Aspiring Saberistの備忘録</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://x.com/GHiLiBall'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://note.com/calm_phlox375'
+                        target="_blank"
+                        title="note"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/solving-baseball/leaderboard/' >
+                
+                
+                
+                <span>Leaderboard</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/' >
+                
+                
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/about/' >
+                
+                
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/analysis/' >
+                
+                
+                
+                <span>分析系</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/breakdown/' >
+                
+                
+                
+                <span>解説系</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/memo/' >
+                
+                
+                
+                <span>メモ</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/page/search/' >
+                
+                
+                
+                <span>検索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/categories/' >
+                
+                
+                
+                <span>カテゴリ一覧</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/tags/' >
+                
+                
+                
+                <span>タグ一覧</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>ダークモード</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目次</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#ルーキーの誤審率">ルーキーの誤審率</a></li>
+    <li><a href="#不利な誤審と有利な誤審">不利な誤審と有利な誤審</a></li>
+    <li><a href="#誤審はどこで発生してるか">誤審はどこで発生してるか</a></li>
+    <li><a href="#ルーキーのshadowのストライク率">ルーキーのShadowのストライク率</a></li>
+    <li><a href="#shadow内の格差">Shadow内の格差</a></li>
+    <li><a href="#カウント内の格差">カウント内の格差</a></li>
+    <li><a href="#期待ストライク率との差">期待ストライク率との差</a></li>
+    <li><a href="#現時点での結論">現時点での結論</a></li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/solving-baseball/categories/pitch%E5%8D%98%E4%BD%8D/" style="background-color: #2563eb; color: #fff;">
+                Pitch単位
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/solving-baseball/analysis/mlb-umpire-rookie-bias/">MLBの審判は本当にルーキーに厳しいのか</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published" datetime='2024-02-21T00:00:00Z'>2024-02-21</time>
+            </div>
+        
+
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <p>「MLBの審判はルーキーに厳しい」という言説をたまに目にします。MLBを見ていなかった時に自分もそのイメージを持っていました。特に野手のストライク・ボール判定でその風潮があるという個人的イメージに基づいて今回は野手を調べます。</p>
+<hr>
+<h2 id="ルーキーの誤審率">ルーキーの誤審率
+</h2><p>まずは単純にルーキー群と非ルーキー群の誤審率から。</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: center">year</th>
+          <th style="text-align: center">rookies</th>
+          <th style="text-align: center">non-rookies</th>
+          <th style="text-align: center">difference</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: center">2008</td>
+          <td style="text-align: center">16.1%</td>
+          <td style="text-align: center">15.2%</td>
+          <td style="text-align: center">0.87%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2009</td>
+          <td style="text-align: center">15.1%</td>
+          <td style="text-align: center">14.6%</td>
+          <td style="text-align: center">0.46%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2010</td>
+          <td style="text-align: center">14.4%</td>
+          <td style="text-align: center">13.5%</td>
+          <td style="text-align: center">0.81%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2011</td>
+          <td style="text-align: center">13.6%</td>
+          <td style="text-align: center">13.4%</td>
+          <td style="text-align: center">0.21%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2012</td>
+          <td style="text-align: center">12.8%</td>
+          <td style="text-align: center">12.9%</td>
+          <td style="text-align: center">-0.12%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2013</td>
+          <td style="text-align: center">12.0%</td>
+          <td style="text-align: center">12.1%</td>
+          <td style="text-align: center">-0.07%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2014</td>
+          <td style="text-align: center">11.7%</td>
+          <td style="text-align: center">11.6%</td>
+          <td style="text-align: center">0.14%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2015</td>
+          <td style="text-align: center">11.3%</td>
+          <td style="text-align: center">11.1%</td>
+          <td style="text-align: center">0.14%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2016</td>
+          <td style="text-align: center">10.5%</td>
+          <td style="text-align: center">10.7%</td>
+          <td style="text-align: center">-0.13%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2017</td>
+          <td style="text-align: center">9.8%</td>
+          <td style="text-align: center">9.5%</td>
+          <td style="text-align: center">0.28%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2018</td>
+          <td style="text-align: center">8.7%</td>
+          <td style="text-align: center">8.7%</td>
+          <td style="text-align: center">-0.02%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2019</td>
+          <td style="text-align: center">8.5%</td>
+          <td style="text-align: center">8.3%</td>
+          <td style="text-align: center">0.15%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2020</td>
+          <td style="text-align: center">8.6%</td>
+          <td style="text-align: center">8.1%</td>
+          <td style="text-align: center">0.42%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2021</td>
+          <td style="text-align: center">8.2%</td>
+          <td style="text-align: center">7.8%</td>
+          <td style="text-align: center">0.43%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2022</td>
+          <td style="text-align: center">7.4%</td>
+          <td style="text-align: center">7.5%</td>
+          <td style="text-align: center">-0.08%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2023</td>
+          <td style="text-align: center">7.4%</td>
+          <td style="text-align: center">7.1%</td>
+          <td style="text-align: center">0.27%</td>
+      </tr>
+  </tbody>
+</table></div>
+<p><em>ルーキーとルーキー以外の誤審率比較　誤審数/見逃し数</em></p>
+<p>大きな差はありませんが、<strong>ルーキーが誤審を受けやすい傾向はありそう</strong>です。打者は500打席でおおよそ1000球見逃しますので、<strong>規定打席あたりルーキーは2～3球ほど誤審が多い傾向がある</strong>計算になります。</p>
+<p>(誤審の有無によって打者にボール→ストライク、ストライク→ボール以上の影響があるのか、という点も気になりますがパソコンが得意になってから調べます。)</p>
+<hr>
+<h2 id="不利な誤審と有利な誤審">不利な誤審と有利な誤審
+</h2><p>誤審の多さで判定の厳しさは語れないので、<strong>不利な誤審</strong>(ボールゾーンをストライク判定)と<strong>有利な誤審</strong>(ストライクゾーンをボール判定)に分類します。</p>
+<p><img src="/solving-baseball/images/102.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="不利な誤審と有利な誤審とその差のルーキー群と非ルーキー群の比較"
+	
+	
+></p>
+<p><em>不利な誤審と有利な誤審とその差のルーキー群と非ルーキー群の比較</em></p>
+<p>有利な誤審は16年間で3年ほどルーキーの方が多いシーズンがありますが<strong>不利な誤審は全てのシーズンでルーキーの方が多く</strong>なりました。不利な誤審がより少なく有利な誤審がより多いことが打者にとって優しいことであると考えると、<strong>ルーキーへの判定がルーキー以外への判定より優しかったシーズンは2015のみ</strong>ということになります。</p>
+<p>もう少し調べます。</p>
+<hr>
+<h2 id="誤審はどこで発生してるか">誤審はどこで発生してるか
+</h2><p>一旦MLB全体での誤審について深掘りします。</p>
+<p>まず<strong>誤審はどのようなコースで発生しているか</strong>という話ですが、これはもちろん<strong>ストライクゾーンの境界付近</strong>です。</p>
+<p><img src="/solving-baseball/images/103.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Attack Zones"
+	
+	
+></p>
+<p><em>Attack Zones</em></p>
+<p>Attack Zonesでいうところの<strong>Shadow</strong>ですね。ストライクゾーン境界線の左右では内外8.4cm、高低では内外10.2cmがShadowです。境界線からボール1個～1個半といったあたり。</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: center">year</th>
+          <th style="text-align: center">heart</th>
+          <th style="text-align: center">shadow</th>
+          <th style="text-align: center">chase</th>
+          <th style="text-align: center">waste</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: center">2008</td>
+          <td style="text-align: center">8.0%</td>
+          <td style="text-align: center">33.8%</td>
+          <td style="text-align: center">5.5%</td>
+          <td style="text-align: center">0.1%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2009</td>
+          <td style="text-align: center">6.3%</td>
+          <td style="text-align: center">32.2%</td>
+          <td style="text-align: center">5.3%</td>
+          <td style="text-align: center">0.1%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2010</td>
+          <td style="text-align: center">4.2%</td>
+          <td style="text-align: center">30.4%</td>
+          <td style="text-align: center">4.7%</td>
+          <td style="text-align: center">0.0%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2011</td>
+          <td style="text-align: center">4.5%</td>
+          <td style="text-align: center">29.6%</td>
+          <td style="text-align: center">4.3%</td>
+          <td style="text-align: center">0.0%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2012</td>
+          <td style="text-align: center">3.5%</td>
+          <td style="text-align: center">29.1%</td>
+          <td style="text-align: center">3.9%</td>
+          <td style="text-align: center">0.0%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2013</td>
+          <td style="text-align: center">2.8%</td>
+          <td style="text-align: center">28.0%</td>
+          <td style="text-align: center">2.8%</td>
+          <td style="text-align: center">0.0%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2014</td>
+          <td style="text-align: center">2.5%</td>
+          <td style="text-align: center">27.1%</td>
+          <td style="text-align: center">2.4%</td>
+          <td style="text-align: center">0.0%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2015</td>
+          <td style="text-align: center">2.2%</td>
+          <td style="text-align: center">26.5%</td>
+          <td style="text-align: center">1.9%</td>
+          <td style="text-align: center">0.0%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2016</td>
+          <td style="text-align: center">2.4%</td>
+          <td style="text-align: center">25.4%</td>
+          <td style="text-align: center">1.6%</td>
+          <td style="text-align: center">0.0%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2017</td>
+          <td style="text-align: center">2.1%</td>
+          <td style="text-align: center">23.1%</td>
+          <td style="text-align: center">1.3%</td>
+          <td style="text-align: center">0.0%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2018</td>
+          <td style="text-align: center">1.5%</td>
+          <td style="text-align: center">21.6%</td>
+          <td style="text-align: center">0.8%</td>
+          <td style="text-align: center">0.0%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2019</td>
+          <td style="text-align: center">1.2%</td>
+          <td style="text-align: center">21.4%</td>
+          <td style="text-align: center">0.7%</td>
+          <td style="text-align: center">0.0%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2020</td>
+          <td style="text-align: center">1.1%</td>
+          <td style="text-align: center">20.8%</td>
+          <td style="text-align: center">0.7%</td>
+          <td style="text-align: center">0.0%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2021</td>
+          <td style="text-align: center">0.8%</td>
+          <td style="text-align: center">19.9%</td>
+          <td style="text-align: center">0.6%</td>
+          <td style="text-align: center">0.1%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2022</td>
+          <td style="text-align: center">0.7%</td>
+          <td style="text-align: center">19.1%</td>
+          <td style="text-align: center">0.4%</td>
+          <td style="text-align: center">0.0%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2023</td>
+          <td style="text-align: center">0.7%</td>
+          <td style="text-align: center">18.2%</td>
+          <td style="text-align: center">0.3%</td>
+          <td style="text-align: center">0.0%</td>
+      </tr>
+  </tbody>
+</table></div>
+<p><em>Attack Zoneごとの誤審率</em></p>
+<p>PITCHf/xの登場でストライクゾーンを具体的に定め、具体的なフィードバックができるようになり、年々正規のストライクゾーンに基づいた判定が増えていますが<strong>Shadowで誤審が発生しやすい</strong>というのは共通しています。</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: center">year</th>
+          <th style="text-align: center">heart</th>
+          <th style="text-align: center">shadow</th>
+          <th style="text-align: center">chase</th>
+          <th style="text-align: center">waste</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: center">2008</td>
+          <td style="text-align: center">7.5%</td>
+          <td style="text-align: center">81.3%</td>
+          <td style="text-align: center">11.1%</td>
+          <td style="text-align: center">0.1%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2009</td>
+          <td style="text-align: center">6.3%</td>
+          <td style="text-align: center">82.2%</td>
+          <td style="text-align: center">11.4%</td>
+          <td style="text-align: center">0.1%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2010</td>
+          <td style="text-align: center">4.5%</td>
+          <td style="text-align: center">84.5%</td>
+          <td style="text-align: center">11.0%</td>
+          <td style="text-align: center">0.0%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2011</td>
+          <td style="text-align: center">5.0%</td>
+          <td style="text-align: center">84.8%</td>
+          <td style="text-align: center">10.2%</td>
+          <td style="text-align: center">0.0%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2012</td>
+          <td style="text-align: center">4.1%</td>
+          <td style="text-align: center">86.3%</td>
+          <td style="text-align: center">9.6%</td>
+          <td style="text-align: center">0.0%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2013</td>
+          <td style="text-align: center">3.5%</td>
+          <td style="text-align: center">89.2%</td>
+          <td style="text-align: center">7.3%</td>
+          <td style="text-align: center">0.0%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2014</td>
+          <td style="text-align: center">3.1%</td>
+          <td style="text-align: center">90.3%</td>
+          <td style="text-align: center">6.6%</td>
+          <td style="text-align: center">0.0%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2015</td>
+          <td style="text-align: center">2.8%</td>
+          <td style="text-align: center">91.5%</td>
+          <td style="text-align: center">5.7%</td>
+          <td style="text-align: center">0.0%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2016</td>
+          <td style="text-align: center">3.1%</td>
+          <td style="text-align: center">92.1%</td>
+          <td style="text-align: center">4.8%</td>
+          <td style="text-align: center">0.0%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2017</td>
+          <td style="text-align: center">2.9%</td>
+          <td style="text-align: center">92.6%</td>
+          <td style="text-align: center">4.5%</td>
+          <td style="text-align: center">0.0%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2018</td>
+          <td style="text-align: center">2.2%</td>
+          <td style="text-align: center">94.6%</td>
+          <td style="text-align: center">3.1%</td>
+          <td style="text-align: center">0.0%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2019</td>
+          <td style="text-align: center">1.8%</td>
+          <td style="text-align: center">95.3%</td>
+          <td style="text-align: center">2.9%</td>
+          <td style="text-align: center">0.0%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2020</td>
+          <td style="text-align: center">1.7%</td>
+          <td style="text-align: center">95.4%</td>
+          <td style="text-align: center">2.9%</td>
+          <td style="text-align: center">0.0%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2021</td>
+          <td style="text-align: center">1.4%</td>
+          <td style="text-align: center">96.0%</td>
+          <td style="text-align: center">2.5%</td>
+          <td style="text-align: center">0.1%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2022</td>
+          <td style="text-align: center">1.2%</td>
+          <td style="text-align: center">96.8%</td>
+          <td style="text-align: center">2.0%</td>
+          <td style="text-align: center">0.0%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2023</td>
+          <td style="text-align: center">1.4%</td>
+          <td style="text-align: center">97.0%</td>
+          <td style="text-align: center">1.6%</td>
+          <td style="text-align: center">0.0%</td>
+      </tr>
+  </tbody>
+</table></div>
+<p><em>誤審の発生シェア</em></p>
+<p>審判が正しいストライクゾーンを運用している近年は特に誤審の殆どがShadowで発生しているので、ここに着目します。<strong>Shadowでいかにストライクをとられるかどうかが判定の厳しさ・優しさの指標</strong>になるでしょう。</p>
+<p>Catcher FramingのStrike RateもShadowの話です(シーガーは3年連続1位)</p>
+<p><img src="/solving-baseball/images/104.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Statcast Catcher Framing Leaderboard"
+	
+	
+></p>
+<ul>
+<li><a class="link" href="https://baseballsavant.mlb.com/catcher_framing"  target="_blank" rel="noopener"
+    >Statcast Catcher Framing Leaderboard</a> - Baseball Savant</li>
+</ul>
+<hr>
+<h2 id="ルーキーのshadowのストライク率">ルーキーのShadowのストライク率
+</h2><p>ルーキーはルーキー以外より不利な誤審が多いのでやはり<strong>Shadowのストライク判定率も高くなっています</strong>。</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: center">year</th>
+          <th style="text-align: center">rookies</th>
+          <th style="text-align: center">non-rookies</th>
+          <th style="text-align: center">difference</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: center">2008</td>
+          <td style="text-align: center">43.9%</td>
+          <td style="text-align: center">43.2%</td>
+          <td style="text-align: center">0.66%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2009</td>
+          <td style="text-align: center">43.7%</td>
+          <td style="text-align: center">43.5%</td>
+          <td style="text-align: center">0.22%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2010</td>
+          <td style="text-align: center">45.9%</td>
+          <td style="text-align: center">44.8%</td>
+          <td style="text-align: center">1.12%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2011</td>
+          <td style="text-align: center">45.7%</td>
+          <td style="text-align: center">44.0%</td>
+          <td style="text-align: center">1.68%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2012</td>
+          <td style="text-align: center">45.6%</td>
+          <td style="text-align: center">44.8%</td>
+          <td style="text-align: center">0.83%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2013</td>
+          <td style="text-align: center">46.4%</td>
+          <td style="text-align: center">45.6%</td>
+          <td style="text-align: center">0.78%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2014</td>
+          <td style="text-align: center">48.2%</td>
+          <td style="text-align: center">47.0%</td>
+          <td style="text-align: center">1.17%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2015</td>
+          <td style="text-align: center">46.6%</td>
+          <td style="text-align: center">46.6%</td>
+          <td style="text-align: center">0.03%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2016</td>
+          <td style="text-align: center">46.8%</td>
+          <td style="text-align: center">45.9%</td>
+          <td style="text-align: center">0.92%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2017</td>
+          <td style="text-align: center">47.4%</td>
+          <td style="text-align: center">47.0%</td>
+          <td style="text-align: center">0.43%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2018</td>
+          <td style="text-align: center">47.8%</td>
+          <td style="text-align: center">47.4%</td>
+          <td style="text-align: center">0.45%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2019</td>
+          <td style="text-align: center">49.7%</td>
+          <td style="text-align: center">48.5%</td>
+          <td style="text-align: center">1.18%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2020</td>
+          <td style="text-align: center">51.3%</td>
+          <td style="text-align: center">48.5%</td>
+          <td style="text-align: center">2.80%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2021</td>
+          <td style="text-align: center">49.4%</td>
+          <td style="text-align: center">47.8%</td>
+          <td style="text-align: center">1.64%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2022</td>
+          <td style="text-align: center">48.3%</td>
+          <td style="text-align: center">47.1%</td>
+          <td style="text-align: center">1.20%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2023</td>
+          <td style="text-align: center">46.7%</td>
+          <td style="text-align: center">46.2%</td>
+          <td style="text-align: center">0.51%</td>
+      </tr>
+  </tbody>
+</table></div>
+<p><em>見逃しShadowのストライク率</em></p>
+<p><strong>全てのシーズンでルーキーの方がストライク判定されやすいという結果</strong>になりました。500打席で400ほどの見逃しShadowがあるので規定打席あたり4球ほどShadowのストライク判定が多くなる計算です。</p>
+<hr>
+<h2 id="shadow内の格差">Shadow内の格差
+</h2><p>ここからがやりたかったことですが、ボール2~3個ほどのShadowにおいてもストライク判定されやすいコース、カウント等があります。</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: center">year</th>
+          <th style="text-align: center">shadow-in</th>
+          <th style="text-align: center">shadow-out</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: center">2008</td>
+          <td style="text-align: center">60.2%</td>
+          <td style="text-align: center">28.8%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2009</td>
+          <td style="text-align: center">62.2%</td>
+          <td style="text-align: center">27.4%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2010</td>
+          <td style="text-align: center">65.6%</td>
+          <td style="text-align: center">26.8%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2011</td>
+          <td style="text-align: center">65.8%</td>
+          <td style="text-align: center">25.7%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2012</td>
+          <td style="text-align: center">67.0%</td>
+          <td style="text-align: center">25.8%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2013</td>
+          <td style="text-align: center">69.2%</td>
+          <td style="text-align: center">25.6%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2014</td>
+          <td style="text-align: center">71.7%</td>
+          <td style="text-align: center">26.1%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2015</td>
+          <td style="text-align: center">72.3%</td>
+          <td style="text-align: center">25.5%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2016</td>
+          <td style="text-align: center">72.5%</td>
+          <td style="text-align: center">23.7%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2017</td>
+          <td style="text-align: center">77.0%</td>
+          <td style="text-align: center">23.2%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2018</td>
+          <td style="text-align: center">79.0%</td>
+          <td style="text-align: center">22.1%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2019</td>
+          <td style="text-align: center">80.7%</td>
+          <td style="text-align: center">23.1%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2020</td>
+          <td style="text-align: center">81.3%</td>
+          <td style="text-align: center">22.5%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2021</td>
+          <td style="text-align: center">81.9%</td>
+          <td style="text-align: center">21.2%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2022</td>
+          <td style="text-align: center">81.7%</td>
+          <td style="text-align: center">19.6%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2023</td>
+          <td style="text-align: center">81.5%</td>
+          <td style="text-align: center">17.9%</td>
+      </tr>
+  </tbody>
+</table></div>
+<p><em>Shadow-in,Shadow-outでのストライク判定率比較(MLB全体)</em></p>
+<p>先ほど触れた通りShadowはストライクゾーン境界線の内外8.4~10.2cmの範囲ですが、<strong>境界の内側のストライクの範囲をShadow-in</strong>、<strong>境界の外側のボールの範囲をShadow-out</strong>と表現します。当然といえば当然ですが<strong>Shadow-inとShadow-outではストライク判定率が大きく違います</strong>。素晴らしいところはShadowという判定の難しいコースでも毎年判定の正確さが向上しているところです。審判も人間の限界に近づいているんです。</p>
+<p>話が逸れましたがShadowでもストライクゾーンの内外でストライク率が違うということは、<strong>Shadow-in(ストライク)を打ちにいってShadow-out(ボール)を見逃す打者とShadow-in(ストライク)を見逃してShadow-out(ボール)を打ちにいく打者ではストライク判定率が大きく変わる</strong>ということです。</p>
+<p>この選球が凄いのがコーリー・シーガー。彼はShadowのストライク判定率が断トツで低い打者ですがこの要素が貢献している部分も大きいです。</p>
+<hr>
+<h2 id="カウント内の格差">カウント内の格差
+</h2><p>次にストライク判定されやすいカウントです。これは体感でも十分感じられると思いますが<strong>3-0と0-2では同じようなコースでも圧倒的にストライク判定率が変わります</strong>。</p>
+<p><img src="/solving-baseball/images/105.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="カウント別のストライク判定率(Shadow)"
+	
+	
+></p>
+<p><em>カウント別のストライク判定率(Shadow)</em></p>
+<p>ただこれはShadow-in,Shadow-outで差別化していないのでそれも考慮してみます。</p>
+<p><img src="/solving-baseball/images/106.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Shadow-inでのカウント別ストライク判定率"
+	
+	
+></p>
+<p><em>Shadow-inでのカウント別ストライク判定率</em></p>
+<p><strong>Shadow-inなのでストライク判定するべきコース</strong>ですが0-2では近年でも60%強しかストライク判定されません。3-0では90%以上ストライク判定できていることを鑑みると大きな違いです。まとめると、<strong>近年ほど正確に判定はできているが近年においても打者有利カウントと投手有利カウントでは大きなバイアスが生じている</strong>というところでしょうか。</p>
+<p><img src="/solving-baseball/images/107.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Shadow-outでのカウント別ストライク判定率"
+	
+	
+></p>
+<p><em>Shadow-outでのカウント別ストライク判定率</em></p>
+<p>次は<strong>ボール判定するべきShadow-out</strong>ですが、0-2では90%以上をボール判定できても3-0では30%ほどはストライク判定してしまっています。Shadow-outでも同様に、<strong>近年ほど正確に判定できてはいるがカウントによるバイアスは抜けていない</strong>という結果です。</p>
+<p>これらを考慮してルーキーの期待ストライク率を算出してみます。</p>
+<p><img src="/solving-baseball/images/108.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Shadow-inのカウントごとの見逃し数"
+	
+	
+></p>
+<p><em>Shadow-inのカウントごとの見逃し数</em></p>
+<p><img src="/solving-baseball/images/109.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Shadow-outのカウントごとの見逃し数"
+	
+	
+></p>
+<p><em>Shadow-outのカウントごとの見逃し数</em></p>
+<p>カウントの組み合わせが12通り、inとoutで24通り、とりあえずこれらの<strong>24パターンそれぞれで平均的なストライク率を獲得した場合</strong>のルーキーのストライク判定率(Shadow)を計算して実際のそれと比較します。</p>
+<hr>
+<h2 id="期待ストライク率との差">期待ストライク率との差
+</h2><div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: center">year</th>
+          <th style="text-align: center">xstrike rate</th>
+          <th style="text-align: center">strike rate</th>
+          <th style="text-align: center">strike rate above expected</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: center">2008</td>
+          <td style="text-align: center">42.9%</td>
+          <td style="text-align: center">43.9%</td>
+          <td style="text-align: center">0.99%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2009</td>
+          <td style="text-align: center">43.7%</td>
+          <td style="text-align: center">43.7%</td>
+          <td style="text-align: center">0.04%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2010</td>
+          <td style="text-align: center">44.9%</td>
+          <td style="text-align: center">45.9%</td>
+          <td style="text-align: center">1.07%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2011</td>
+          <td style="text-align: center">44.3%</td>
+          <td style="text-align: center">45.7%</td>
+          <td style="text-align: center">1.39%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2012</td>
+          <td style="text-align: center">45.1%</td>
+          <td style="text-align: center">45.6%</td>
+          <td style="text-align: center">0.57%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2013</td>
+          <td style="text-align: center">45.7%</td>
+          <td style="text-align: center">46.4%</td>
+          <td style="text-align: center">0.72%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2014</td>
+          <td style="text-align: center">47.5%</td>
+          <td style="text-align: center">48.2%</td>
+          <td style="text-align: center">0.64%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2015</td>
+          <td style="text-align: center">46.5%</td>
+          <td style="text-align: center">46.6%</td>
+          <td style="text-align: center">0.15%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2016</td>
+          <td style="text-align: center">45.7%</td>
+          <td style="text-align: center">46.8%</td>
+          <td style="text-align: center">1.11%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2017</td>
+          <td style="text-align: center">46.8%</td>
+          <td style="text-align: center">47.4%</td>
+          <td style="text-align: center">0.67%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2018</td>
+          <td style="text-align: center">47.3%</td>
+          <td style="text-align: center">47.8%</td>
+          <td style="text-align: center">0.54%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2019</td>
+          <td style="text-align: center">48.6%</td>
+          <td style="text-align: center">49.7%</td>
+          <td style="text-align: center">1.11%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2020</td>
+          <td style="text-align: center">48.4%</td>
+          <td style="text-align: center">51.3%</td>
+          <td style="text-align: center">2.90%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2021</td>
+          <td style="text-align: center">48.0%</td>
+          <td style="text-align: center">49.4%</td>
+          <td style="text-align: center">1.46%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2022</td>
+          <td style="text-align: center">47.1%</td>
+          <td style="text-align: center">48.3%</td>
+          <td style="text-align: center">1.23%</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2023</td>
+          <td style="text-align: center">45.8%</td>
+          <td style="text-align: center">46.7%</td>
+          <td style="text-align: center">0.88%</td>
+      </tr>
+  </tbody>
+</table></div>
+<p><em>全シーズン実際のストライク率が上回りました</em></p>
+<p>カウントとコースを考慮しても全シーズンルーキーは想定より多くストライク判定を受けていました。正直無駄骨だったなと思いましたが、ルーキーが選球やカウントで特別ストライク判定を受けやすい状況になっているわけではない可能性が一つ高まりました。</p>
+<hr>
+<h2 id="現時点での結論">現時点での結論
+</h2><p>とりあえず「MLB審判がルーキーに厳しい」可能性は高そうです。ただ、「ルーキーだから審判に厳しくされている」可能性はまだまだ全然高くないです。例えばNPBと同じように打順(≒打者の打力？)によるバイアスが働いていた場合、基本的にwRC+90前後を記録するルーキー群はその被害に遭いますがその場合は『ルーキー』ではなく『打力』差別を受けているわけです。</p>
+<ul>
+<li><a class="link" href="https://1point02.jp/op/gnav/column/bs/column.aspx?cid=53568"  target="_blank" rel="noopener"
+    >球審の判定バイアスの研究Part3 〜打順編〜</a> - 1.02</li>
+</ul>
+<p>また気が向いた時にMLB全体の判定バイアスの被害属性と『ルーキー』属性との共通点を探ろうと思いますがググったら有識者達がとっくに調べてそうですね。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/solving-baseball/tags/%E5%AF%A9%E5%88%A4/">審判</a>
+        
+            <a href="/solving-baseball/tags/%E3%83%AB%E3%83%BC%E3%82%AD%E3%83%BC/">ルーキー</a>
+        
+            <a href="/solving-baseball/tags/attack-zones/">Attack Zones</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        const elementsToRender = [".main-article", ".widget--toc"];
+
+        elementsToRender.forEach(selector => {
+            const element = document.querySelector(selector);
+            if (element) {
+                renderMathInElement(element, {
+                    delimiters: [
+                        { left: "$$", right: "$$", display: true },
+                        { left: "$", right: "$", display: false },
+                        { left: "\\(", right: "\\)", display: false },
+                        { left: "\\[", right: "\\]", display: true }
+                    ],
+                    ignoredClasses: ["gist"]
+                });
+            }
+        });
+    });
+</script>
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <script
+    src="https://giscus.app/client.js"
+    data-repo="GHL-Ball/solving-baseball"
+    data-repo-id="R_kgDOQbQpuw"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOQbQpu84CzMFQ"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="light"
+    data-lang="ja"
+    data-loading=""
+    crossorigin="anonymous"
+    async
+></script>
+<script>
+    function setGiscusTheme(theme) {
+        let giscus = document.querySelector("iframe.giscus-frame");
+        if (giscus) {
+            giscus.contentWindow.postMessage(
+                {
+                    giscus: {
+                        setConfig: {
+                            theme: theme,
+                        },
+                    },
+                },
+                "https://giscus.app"
+            );
+        }
+    }
+
+    (function () {
+        addEventListener("message", (e) => {
+            if (event.origin !== "https://giscus.app") return;
+            handler();
+        });
+        window.addEventListener("onColorSchemeChange", handler);
+
+        function handler() {
+            if (document.documentElement.dataset.scheme === "light") {
+                setGiscusTheme('light');
+            } else {
+                setGiscusTheme('dark_dimmed');
+            }
+        }
+    })();
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2025 - 
+        
+        2026 Solving Baseball Blog
+    </section>
+    
+    <section class="powerby">
+        
+            トレバ-(^o^)丿 <br/>
+        <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> で構築されています。 <br />
+        テーマ <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.32.0">Stack</a></b> は <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> によって設計されています。
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/solving-baseball/ts/main.2b3fc53c7455b5631da9fabeefcc69ffc0a3f3cb719d708d3a5f18faf7af88a6.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

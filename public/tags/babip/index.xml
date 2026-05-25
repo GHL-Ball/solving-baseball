@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>BABIP on Solving Baseball Blog</title>
+        <link>http://localhost:1313/solving-baseball/tags/babip/</link>
+        <description>Recent content in BABIP on Solving Baseball Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>ja</language>
+        <lastBuildDate>Mon, 04 Nov 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/solving-baseball/tags/babip/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>ポストシーズンのBABIPについて</title>
+        <link>http://localhost:1313/solving-baseball/analysis/ps-babip/</link>
+        <pubDate>Mon, 04 Nov 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/analysis/ps-babip/</guid>
+        <description>&lt;p&gt;今回取り上げるのはポストシーズンの野球の話です。&lt;/p&gt;
+&lt;p&gt;ポストシーズンや短期決戦において個人的に注目しているのが様々な野球ファンから語られる様々なポストシーズン論です。&lt;/p&gt;
+&lt;p&gt;ある野球ファンは「小技の重要性が上がる」とか、またある野球ファンは「投手の重要性が上がる」とか、あるセイバーオタクは「ポストシーズンは運」とか、多様な野球論を目にすることのできる楽しい時期でもあります。&lt;/p&gt;
+&lt;p&gt;これらの議論が成り立つのは、ポストシーズンとレギュラーシーズンに類似点だけでなく&lt;strong&gt;相違点&lt;/strong&gt;も存在する（と認識されている）ためです。&lt;/p&gt;
+&lt;p&gt;今回はその相違点のうち、&lt;strong&gt;BABIP&lt;/strong&gt;について紐解いていければと思います。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;レギュラーシーズンとポストシーズンの違い&#34;&gt;レギュラーシーズンとポストシーズンの違い
+&lt;/h2&gt;&lt;p&gt;では簡単にレギュラーシーズンとポストシーズンの野球の違いをおさらいしておきます。&lt;/p&gt;
+&lt;p&gt;ホークアイデータを使う可能性を考えて対象年度は2021年以降としておきます（2020年の特例シーズンは対象外）。&lt;/p&gt;
+&lt;p&gt;各イベント発生率の違いが以下です。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/67.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;イベント発生率の比較&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;※2021年以降、野手のみ&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;大きな違いは&lt;strong&gt;K%&lt;strong&gt;と&lt;/strong&gt;BIP（インプレー打球）の結果&lt;/strong&gt;でしょう。&lt;/p&gt;
+&lt;p&gt;ポストシーズンではとにかく三振が増え、BIPの結果が悪くなります。&lt;/p&gt;
+&lt;p&gt;レギュラーシーズンのBABIP .2926…に対して、ポストシーズンのBABIPは .2810…、差にして .0116…が生じています。対象ポストシーズンのBIPは7,483ですので、レギュラーシーズンを基準とすると&lt;strong&gt;ポストシーズンにおいて7,483 × 0.01158 ≒ 87 のアウトが期待値より発生&lt;/strong&gt;しています。この87の追加アウトの発生源を推測してみようというのが主題です。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;打球によるbabipの低下&#34;&gt;打球によるBABIPの低下
+&lt;/h2&gt;&lt;p&gt;投手と打者については責任分配がややこしいので今回は打球によって低下したBABIPを考えます。&lt;/p&gt;
+&lt;p&gt;ポストシーズンにおいてのBIPの変化は代表的な4分類から十分に確認できます。以下がBaseball Savantの四分類の割合の比較です。&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;GB%&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;LD%&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;FB%&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;PU%&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;BABIP&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;レギュラーシーズン&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;45.2&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;24.5&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;23.0&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;7.3&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;.293&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;ポストシーズン&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;44.3&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;23.7&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;23.2&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;8.8&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;.281&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;em&gt;※2021年以降、野手のBIPのみ&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;周知の通り、4分類においてBABIP Valueの高さはLD（ライナー）（.622） &amp;gt; GB（ゴロ）（.245） &amp;gt; FB（フライ）（.122） &amp;gt; PU（ポップフライ）（.016）です。&lt;/p&gt;
+&lt;p&gt;そしてポストシーズンのBIPにおいてはBABIP Valueの高いLD、そこそこのGBの割合は減り、BABIP Valueの低いPUの割合は増えています。&lt;/p&gt;
+&lt;p&gt;投手、打者にどう責任を分配するかはさておき、打球によってポストシーズンのBABIPが低下していることは明らかです。&lt;/p&gt;
+&lt;p&gt;例えばこの4分類を使った簡単な xBABIPを求めると、&lt;strong&gt;レギュラーシーズンの xBABIP .2926…に対してポストシーズンでは .2859…&lt;strong&gt;となり87の追加アウトのうち&lt;/strong&gt;58%の50個ほど&lt;/strong&gt;を説明できます。&lt;/p&gt;
+&lt;p&gt;ただ打球種類の他に打球方向も見ていくと少し変わってきます。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/68.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;打球種類・方向割合比較&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;上記表は4つの打球種類と3つの打球方向で打球を12に分類したものです。&lt;/p&gt;
+&lt;p&gt;ゴロにおいてはBABIP Valueの低い（.190）引っ張りが減少しているように打球方向に関してはBABIPに有利に働く変化を見せており、この&lt;strong&gt;12分類の xBABIPでは .2870…&lt;/strong&gt;、87の追加アウトのうち&lt;strong&gt;48%の42個ほど&lt;/strong&gt;に落ち着きます。&lt;/p&gt;
+&lt;p&gt;まだあります。&lt;/p&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

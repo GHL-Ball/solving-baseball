@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>ホームアドバンテージ on Solving Baseball Blog</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E3%83%9B%E3%83%BC%E3%83%A0%E3%82%A2%E3%83%89%E3%83%90%E3%83%B3%E3%83%86%E3%83%BC%E3%82%B8/</link>
+        <description>Recent content in ホームアドバンテージ on Solving Baseball Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>ja</language>
+        <lastBuildDate>Fri, 24 Oct 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/solving-baseball/tags/%E3%83%9B%E3%83%BC%E3%83%A0%E3%82%A2%E3%83%89%E3%83%90%E3%83%B3%E3%83%86%E3%83%BC%E3%82%B8/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>ピッチモデリング指標の解説</title>
+        <link>http://localhost:1313/solving-baseball/breakdown/pitch_modeling/</link>
+        <pubDate>Fri, 24 Oct 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/breakdown/pitch_modeling/</guid>
+        <description>&lt;h2 id=&#34;ピッチモデリング指標の解説&#34;&gt;ピッチモデリング指標の解説
+&lt;/h2&gt;&lt;p&gt;Stuff+、BotCmd、PitchPro、近年よく聞くようになったこれらの指標は一般的に「Pitch Modeling（ピッチモデリング）」指標と呼ばれています。&lt;/p&gt;
+&lt;p&gt;モデリング自体は昔からある概念ですし、もちろん野球においてもモデリングの性質を持った指標は多いです。&lt;/p&gt;
+&lt;p&gt;ただ、今回解説する、主に投手の出力（プロセス）に基づいたモデリングは、長年セイバーメトリクスを支えてきた打席や投球の結果（アウトカム）に基づいたモデリングとは意味合いに違いがあります。&lt;/p&gt;
+&lt;p&gt;ピッチモデリング指標とあえて表現する背景にはこのような文脈もあり（多分）、またそれが、&lt;strong&gt;プロセス情報の入手が困難だった時代に構築されたモデリング指標とは一線を画す存在&lt;/strong&gt;となる理由でもあります。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;機械学習とは&#34;&gt;機械学習とは
+&lt;/h3&gt;&lt;p&gt;ピッチモデリング指標は機械学習を活用しています。&lt;/p&gt;
+&lt;p&gt;そもそも機械学習とは『&lt;strong&gt;データから規則性を学習し、未知のデータに対して予測や推定を行う手法&lt;/strong&gt;』の総称です。&lt;/p&gt;
+&lt;p&gt;これには線形回帰やロジスティック回帰といった、セイバーメトリクスの文脈で初期から活用されてきた分析手法も含まれます。&lt;/p&gt;
+&lt;p&gt;ただ、それらをわざわざ機械学習と呼称することは少なく、一般的には Random Forest（ランダムフォレスト）や Neural Network（ニューラルネットワーク）といった、より複雑なアルゴリズムを指していることが多いです。&lt;/p&gt;
+&lt;p&gt;セイバーメトリクスファンは k-Nearest Neighbor algorithm（k近傍法、k-NN）は聞き馴染みがあるでしょう。&lt;/p&gt;
+&lt;p&gt;現在主流のピッチモデリング指標は全て、機械学習の手法の一つ、Gradient Boosting Decision Tree（勾配ブースティング決定木、GBDT）を活用しています。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;gbdtとは&#34;&gt;GBDTとは
+&lt;/h3&gt;&lt;p&gt;GBDTは有り難いことに名前がその手法を表しています。『勾配』を使って『ブースティング』を行う『決定木』といった感じですね。&lt;/p&gt;
+&lt;p&gt;GBDTは初めて聞く方も多いとは思いますので、名前に沿ってできるだけ簡潔にまとめます。&lt;/p&gt;
+&lt;h4 id=&#34;gradient勾配&#34;&gt;Gradient（勾配）
+&lt;/h4&gt;&lt;p&gt;GBDTのゴールを表しているのがこの語句です。&lt;/p&gt;
+&lt;p&gt;ここで言う勾配も屋根や道路で使われる傾きと同じような意味です（スカラーではなくベクトルですが）。&lt;/p&gt;
+&lt;p&gt;そして機械学習における勾配とは、損失関数（予測誤差の大きさを表す関数）の増加方向と大きさを表すベクトルであり、GBDTでは勾配と逆方向に進む＝誤差を減らすことをゴールとする&lt;strong&gt;勾配降下法&lt;/strong&gt;をこの後紹介するブースティング決定木によって実現しています。&lt;/p&gt;
+&lt;p&gt;勾配降下法については、線形回帰をはじめとし、多くの機械学習で採用されている、言わば土台のようなものです。&lt;/p&gt;
+&lt;p&gt;GBDTはその勾配降下法の中身が特殊です、という話をこれからしていきます。&lt;/p&gt;
+&lt;h4 id=&#34;boostingブースティング&#34;&gt;Boosting（ブースティング）
+&lt;/h4&gt;&lt;p&gt;ブースティングは『&lt;strong&gt;弱い学習器を逐次的に学習・統合することで、全体として高性能なモデルを作る&lt;/strong&gt;』手法です。&lt;/p&gt;
+&lt;p&gt;この手法の主眼は、前のモデルの系統的な誤差（バイアス）を後のモデルが修正していくことにあります。&lt;/p&gt;
+&lt;p&gt;また、弱い学習器を多数使用することで、それぞれのモデルが違う方向に間違ってくれるため、結果的にノイズが平準化され、過学習を防ぐことができます。&lt;/p&gt;
+&lt;p&gt;GBDTは、この&lt;strong&gt;ブースティングの過程に先に述べた勾配降下法を取り入れた&lt;/strong&gt;という点で、機械学習において革新的なアルゴリズムとなりました。&lt;/p&gt;
+&lt;p&gt;ちなみに、ブースティングのような複数のモデルを組み合わせる手法＝アンサンブル学習には、**モデルの安定性や信頼区間を得ることに焦点を置いている Bagging（バギング）**と呼ばれるものもあります。&lt;/p&gt;
+&lt;p&gt;逐次的に学習するブースティングとは対照的に並列に学習することで分散（バリアンス）が低減されます。&lt;/p&gt;
+&lt;p&gt;モデルの性能を高める（バイアスを低減する）ことに焦点を置いているブースティングとともに、統計学的に無視できない観点ですので記憶の片隅に入れておくことをおすすめします。&lt;/p&gt;
+&lt;p&gt;▶︎フレーミング指標の解説でバギングについても少しだけ触れています&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;http://localhost:1313/solving-baseball/breakdown/csaa/&#34; &gt;CSAA: Baseball Prospectus&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;decision-tree決定木&#34;&gt;Decision Tree（決定木）
+&lt;/h4&gt;&lt;p&gt;最後に弱学習器としてブースティングに使用している決定木の説明です。&lt;/p&gt;
+&lt;p&gt;決定木は一言で言うと『&lt;strong&gt;条件分岐の繰り返しで予測する&lt;/strong&gt;』手法です。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/46.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;決定木イメージ&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;上記のイメージ図からも想像できるとは思いますが、&lt;strong&gt;決定木は弱学習器を多数作るブースティングにかなり向いています&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;分岐の数（深さ）を制限&lt;/strong&gt;するだけで簡単かつ確実に弱学習器を作れます。
+上記の図で言うと、最初の pfx_z の条件で分岐を終えるだけで（全くの無能ではない）弱い予測モデルができることは想像しやすいと思います。&lt;/p&gt;
+&lt;p&gt;また、条件分岐という特徴により&lt;strong&gt;特徴量（≒説明変数）のスケーリングが不要&lt;/strong&gt;になりますし、非線形な関係はもちろん、&lt;strong&gt;カテゴリ変数&lt;/strong&gt;や&lt;strong&gt;段階的な関係&lt;/strong&gt;も捉えやすくなります。野球分析に向いている匂いがプンプンしてきました。&lt;/p&gt;
+&lt;p&gt;GBDTはブースティングの学習器として決定木を採用し、その高い実用性を実現しています。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;野球におけるgbdtの強み&#34;&gt;野球におけるGBDTの強み
+&lt;/h3&gt;&lt;p&gt;では先述したGBDTの特徴は野球分析においてどのような強みを持つでしょうか。&lt;/p&gt;
+&lt;p&gt;以下に野球分析において有り難い要素を並べてみました。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;特徴量のスケーリングが不要&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;決定木では特徴量の大小関係（順序）に基づいて分割する&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;欠損値や外れ値の処理が比較的優れている&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;分割に焦点を置く決定木では分布や外れ値の影響を受けにくい&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;段階的な変数に強い&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;決定木は条件分岐を繰り返す構造なので特徴量間の複雑な関係性に強い&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;特徴量の交互作用を捕捉できる&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;決定木は条件分岐ごとに異なる特徴量を選ぶため、モデル全体として特徴量間の主要な交互作用を捕捉できる（ライブラリによって制約はある）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;カテゴリ変数に強い&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;ダミー変数化せずに直接利用でき、次元の増加が抑えられ、多重共線性を起こしにくい（ライブラリによって差はある）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;表形式データに強い&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;条件分岐がベースにある決定木と表形式データは相性が良い&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;無駄な特徴量を入れても精度が落ちにくい&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;勾配に基づいて誤差を修正するため、予測に影響を与えない特徴量は後の条件分岐で選択されにくくなる&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;大規模データに強い&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;現代のライブラリでは計算効率が極限まで高められている&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;特徴量重要度を明確に示せる&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;GBDTはモデル全体で、各特徴量がどれだけ損失を減少させたか、または予測に寄与したかを累積的に評価できる&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;解釈性がそこまで低くはない&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;全体像を把握するのは困難だが、他の複雑なアルゴリズムと比較して、予測結果の筋道は比較的理解しやすい&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;多クラス分類に対応できる&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;勾配降下法の汎用性とブースティングの逐次的な修正により、複数の確率を同時に予測できる&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;まず注目するポイントとしては事前のデータ整形のプレッシャーが抑えられる点でしょう。&lt;/p&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

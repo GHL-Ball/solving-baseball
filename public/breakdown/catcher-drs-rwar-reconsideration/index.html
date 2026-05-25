@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+    <head><script src="/solving-baseball/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=solving-baseball/livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="前回の説明系noteで逃げたRerCとそれを採用するrWAR,DRSについての説明＆感想系noteです。前回のRerC以外の守備指標の軽いまとめはこちら⬇\n前回→捕手の守備指標まとめ\nRerCについて\rRerCとは\r前回まとめた指標で異質なのはこれかなと思うんですが、後から書くのでインサイドワーク面の評価と逃げた表現をしました。RerCとは何？という部分をネットで拾える少ない情報量からまとめます。\nまずは大本営BISの見解から。\nThe Fielding Bible FAQより(https://www.fieldingbible.com/faq)\nポイントは3つです。\n捕手別防御率をもとにしていること 組んだ投手の力量をはじめ、様々な側面を考慮していること 全面的に信頼を与えず平均に回帰させていること 投手の力量や様々な側面を考慮した予想捕手防御率(自責点)が実際の捕手防御率(自責点)と乖離しているときに、その責任をある程度は捕手に負わせようということです。\nこれを日本ではリードやマネジメント、総じてインサイドワークと呼んでいるのでRerCの説明に使いました。ちなみにBRではRerCを「Catcher Pitch Calling Runs Above Avg」と表現しているので、文字通りリードの指標と訳しても問題ないのかなと思います。\n具体的な算出式\r大本営の説明で何となくなら算出方法も想像できますが、具体的な算出方法はネットの海でも見つけるのには苦労します。\nCatcher Defense - Part 1 - Lee Panas 上記がRerCの具体的な算出方法が書いてある2010年のブログ記事です。The Fielding Bibleに記載のあるRerCの算出方法をまとめてあります。RerCに触れているBISの記事も複数ありますが、ここで紹介されている算出方法との相違点は確認できませんでした。\nせっかくなので2023シーズンで驚異的なRerCを稼ぎゴールドグラブ賞も獲得したG.モレノで計算してみたいと思います。\n①当該捕手(モレノ)が組んだ全投手のイニング、防御率を用意する\n例）Z.ギャレン 210回 防御率 3.47\n②当該捕手(モレノ)と組んでいる時の全投手のイニング、自責点を用意する\n例）Z.ギャレン 117回 40自責点\n③当該捕手(モレノ)と組んでいる時の推定自責点と実際自責点との差を出す\n例）Z.ギャレン 117/9*3.47-40=5.11\n④平均に回帰する\n43.9(③の全投手合計)*0.33=14.49\n⑤当該捕手のイニング数によってさらに平均に回帰する\n14.49*854/1440(フルシーズンのイニング数)=8.59\n以上が算出方法ですが球場補正もされているとのこと。モレノのRerCは10.511.4なので平均抑止自責点は-23ほどだったんですかね。\nイニング数が少ないほど平均に回帰させる算出方法なので平均抑止自責点がマイナスになるということは主力捕手ほど点を取られていたことを意味するので違和感はあります。\n何か僕がミスってるかもしれないし算出方法が変わったかもしれないですけど、2010年時点の算出方法を紹介したかったのでまぁスルーで。\n問題点\rそもそも「捕手によって投手成績が変わったという現象の責任を捕手に負わせること」だけで濃い議論ができそうですが、一旦その論点は置いといたとしても前述の算出方法には多く疑問が生じます。\n・比較対象が平等でもなく平均でもない\n言ってしまえば、味方の捕手が自分より自責点抑止能力があるかどうかゲーということです。四捨五入誤差を除けばリーグ合計RerCはゼロになるように調整しているはずですが、(平均と比べているが故にゼロサムになる)他の守備指標とは合計がゼロになる意味合いが違います。厳密に言えば内野のRAAもグレーゾーンですが。\n・インサイドワーク以外の守備能力でつく差を考慮していない\n例えばDRS - RerC = +10の捕手が自責点を5ほど抑止していた時にも、この捕手のインサイドワーク面はプラスの評価を受けます。DRSの構成指標はもちろんそれぞれ独立していますし独立させるべきですが、このRerCだけは独立しているとは言えないわけです。\n">
+<title>捕手のDRS,rWARの再考(問題提起)</title>
+
+<link rel='canonical' href='http://localhost:1313/solving-baseball/breakdown/catcher-drs-rwar-reconsideration/'>
+
+<link rel="stylesheet" href="/solving-baseball/scss/style.min.4d36f8dc1fd48129e1635deb4b8eb2870fa09474f7280c4cb606d40b2526994b.css"><meta property='og:title' content="捕手のDRS,rWARの再考(問題提起)">
+<meta property='og:description' content="前回の説明系noteで逃げたRerCとそれを採用するrWAR,DRSについての説明＆感想系noteです。前回のRerC以外の守備指標の軽いまとめはこちら⬇\n前回→捕手の守備指標まとめ\nRerCについて\rRerCとは\r前回まとめた指標で異質なのはこれかなと思うんですが、後から書くのでインサイドワーク面の評価と逃げた表現をしました。RerCとは何？という部分をネットで拾える少ない情報量からまとめます。\nまずは大本営BISの見解から。\nThe Fielding Bible FAQより(https://www.fieldingbible.com/faq)\nポイントは3つです。\n捕手別防御率をもとにしていること 組んだ投手の力量をはじめ、様々な側面を考慮していること 全面的に信頼を与えず平均に回帰させていること 投手の力量や様々な側面を考慮した予想捕手防御率(自責点)が実際の捕手防御率(自責点)と乖離しているときに、その責任をある程度は捕手に負わせようということです。\nこれを日本ではリードやマネジメント、総じてインサイドワークと呼んでいるのでRerCの説明に使いました。ちなみにBRではRerCを「Catcher Pitch Calling Runs Above Avg」と表現しているので、文字通りリードの指標と訳しても問題ないのかなと思います。\n具体的な算出式\r大本営の説明で何となくなら算出方法も想像できますが、具体的な算出方法はネットの海でも見つけるのには苦労します。\nCatcher Defense - Part 1 - Lee Panas 上記がRerCの具体的な算出方法が書いてある2010年のブログ記事です。The Fielding Bibleに記載のあるRerCの算出方法をまとめてあります。RerCに触れているBISの記事も複数ありますが、ここで紹介されている算出方法との相違点は確認できませんでした。\nせっかくなので2023シーズンで驚異的なRerCを稼ぎゴールドグラブ賞も獲得したG.モレノで計算してみたいと思います。\n①当該捕手(モレノ)が組んだ全投手のイニング、防御率を用意する\n例）Z.ギャレン 210回 防御率 3.47\n②当該捕手(モレノ)と組んでいる時の全投手のイニング、自責点を用意する\n例）Z.ギャレン 117回 40自責点\n③当該捕手(モレノ)と組んでいる時の推定自責点と実際自責点との差を出す\n例）Z.ギャレン 117/9*3.47-40=5.11\n④平均に回帰する\n43.9(③の全投手合計)*0.33=14.49\n⑤当該捕手のイニング数によってさらに平均に回帰する\n14.49*854/1440(フルシーズンのイニング数)=8.59\n以上が算出方法ですが球場補正もされているとのこと。モレノのRerCは10.511.4なので平均抑止自責点は-23ほどだったんですかね。\nイニング数が少ないほど平均に回帰させる算出方法なので平均抑止自責点がマイナスになるということは主力捕手ほど点を取られていたことを意味するので違和感はあります。\n何か僕がミスってるかもしれないし算出方法が変わったかもしれないですけど、2010年時点の算出方法を紹介したかったのでまぁスルーで。\n問題点\rそもそも「捕手によって投手成績が変わったという現象の責任を捕手に負わせること」だけで濃い議論ができそうですが、一旦その論点は置いといたとしても前述の算出方法には多く疑問が生じます。\n・比較対象が平等でもなく平均でもない\n言ってしまえば、味方の捕手が自分より自責点抑止能力があるかどうかゲーということです。四捨五入誤差を除けばリーグ合計RerCはゼロになるように調整しているはずですが、(平均と比べているが故にゼロサムになる)他の守備指標とは合計がゼロになる意味合いが違います。厳密に言えば内野のRAAもグレーゾーンですが。\n・インサイドワーク以外の守備能力でつく差を考慮していない\n例えばDRS - RerC = +10の捕手が自責点を5ほど抑止していた時にも、この捕手のインサイドワーク面はプラスの評価を受けます。DRSの構成指標はもちろんそれぞれ独立していますし独立させるべきですが、このRerCだけは独立しているとは言えないわけです。\n">
+<meta property='og:url' content='http://localhost:1313/solving-baseball/breakdown/catcher-drs-rwar-reconsideration/'>
+<meta property='og:site_name' content='Solving Baseball Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Breakdown' /><meta property='article:tag' content='捕手' /><meta property='article:tag' content='リード' /><meta property='article:tag' content='フレーミング' /><meta property='article:tag' content='WAR' /><meta property='article:published_time' content='2024-03-02T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-03-02T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="捕手のDRS,rWARの再考(問題提起)">
+<meta name="twitter:description" content="前回の説明系noteで逃げたRerCとそれを採用するrWAR,DRSについての説明＆感想系noteです。前回のRerC以外の守備指標の軽いまとめはこちら⬇\n前回→捕手の守備指標まとめ\nRerCについて\rRerCとは\r前回まとめた指標で異質なのはこれかなと思うんですが、後から書くのでインサイドワーク面の評価と逃げた表現をしました。RerCとは何？という部分をネットで拾える少ない情報量からまとめます。\nまずは大本営BISの見解から。\nThe Fielding Bible FAQより(https://www.fieldingbible.com/faq)\nポイントは3つです。\n捕手別防御率をもとにしていること 組んだ投手の力量をはじめ、様々な側面を考慮していること 全面的に信頼を与えず平均に回帰させていること 投手の力量や様々な側面を考慮した予想捕手防御率(自責点)が実際の捕手防御率(自責点)と乖離しているときに、その責任をある程度は捕手に負わせようということです。\nこれを日本ではリードやマネジメント、総じてインサイドワークと呼んでいるのでRerCの説明に使いました。ちなみにBRではRerCを「Catcher Pitch Calling Runs Above Avg」と表現しているので、文字通りリードの指標と訳しても問題ないのかなと思います。\n具体的な算出式\r大本営の説明で何となくなら算出方法も想像できますが、具体的な算出方法はネットの海でも見つけるのには苦労します。\nCatcher Defense - Part 1 - Lee Panas 上記がRerCの具体的な算出方法が書いてある2010年のブログ記事です。The Fielding Bibleに記載のあるRerCの算出方法をまとめてあります。RerCに触れているBISの記事も複数ありますが、ここで紹介されている算出方法との相違点は確認できませんでした。\nせっかくなので2023シーズンで驚異的なRerCを稼ぎゴールドグラブ賞も獲得したG.モレノで計算してみたいと思います。\n①当該捕手(モレノ)が組んだ全投手のイニング、防御率を用意する\n例）Z.ギャレン 210回 防御率 3.47\n②当該捕手(モレノ)と組んでいる時の全投手のイニング、自責点を用意する\n例）Z.ギャレン 117回 40自責点\n③当該捕手(モレノ)と組んでいる時の推定自責点と実際自責点との差を出す\n例）Z.ギャレン 117/9*3.47-40=5.11\n④平均に回帰する\n43.9(③の全投手合計)*0.33=14.49\n⑤当該捕手のイニング数によってさらに平均に回帰する\n14.49*854/1440(フルシーズンのイニング数)=8.59\n以上が算出方法ですが球場補正もされているとのこと。モレノのRerCは10.511.4なので平均抑止自責点は-23ほどだったんですかね。\nイニング数が少ないほど平均に回帰させる算出方法なので平均抑止自責点がマイナスになるということは主力捕手ほど点を取られていたことを意味するので違和感はあります。\n何か僕がミスってるかもしれないし算出方法が変わったかもしれないですけど、2010年時点の算出方法を紹介したかったのでまぁスルーで。\n問題点\rそもそも「捕手によって投手成績が変わったという現象の責任を捕手に負わせること」だけで濃い議論ができそうですが、一旦その論点は置いといたとしても前述の算出方法には多く疑問が生じます。\n・比較対象が平等でもなく平均でもない\n言ってしまえば、味方の捕手が自分より自責点抑止能力があるかどうかゲーということです。四捨五入誤差を除けばリーグ合計RerCはゼロになるように調整しているはずですが、(平均と比べているが故にゼロサムになる)他の守備指標とは合計がゼロになる意味合いが違います。厳密に言えば内野のRAAもグレーゾーンですが。\n・インサイドワーク以外の守備能力でつく差を考慮していない\n例えばDRS - RerC = +10の捕手が自責点を5ほど抑止していた時にも、この捕手のインサイドワーク面はプラスの評価を受けます。DRSの構成指標はもちろんそれぞれ独立していますし独立させるべきですが、このRerCだけは独立しているとは言えないわけです。\n">
+    <link rel="shortcut icon" href="/solving-baseball/images/favicon.png" />
+<style>
+  :root {
+    --ja-font-family: "Noto Sans JP", "游ゴシック体", "Yu Gothic", YuGothic, 
+      "ヒラギノ角ゴ Pro", "Hiragino Kaku Gothic Pro", "メイリオ", "Meiryo";
+    --base-font-family: "Lato", var(--sys-font-family), var(--ja-font-family),
+      sans-serif;
+  }
+
+   
+  .article-content {
+    color: var(--card-text-color-main);
+  }
+
+  .article-content a {
+    color: var(--accent-color);
+  }
+</style>
+
+<script>
+  (function () {
+    const customFont = document.createElement("link");
+    customFont.href =
+      "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Lato:wght@400;700&display=swap";
+    customFont.type = "text/css";
+    customFont.rel = "stylesheet";
+    document.head.appendChild(customFont);
+  })();
+</script>
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="メニューを開く・閉じる">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/solving-baseball">Solving Baseball Blog</a></h1>
+            <h2 class="site-description">Aspiring Saberistの備忘録</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://x.com/GHiLiBall'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://note.com/calm_phlox375'
+                        target="_blank"
+                        title="note"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/solving-baseball/leaderboard/' >
+                
+                
+                
+                <span>Leaderboard</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/' >
+                
+                
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/about/' >
+                
+                
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/analysis/' >
+                
+                
+                
+                <span>分析系</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/breakdown/' >
+                
+                
+                
+                <span>解説系</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/memo/' >
+                
+                
+                
+                <span>メモ</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/page/search/' >
+                
+                
+                
+                <span>検索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/categories/' >
+                
+                
+                
+                <span>カテゴリ一覧</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/tags/' >
+                
+                
+                
+                <span>タグ一覧</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>ダークモード</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目次</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#rercについて">RerCについて</a>
+      <ul>
+        <li><a href="#rercとは">RerCとは</a></li>
+        <li><a href="#具体的な算出式">具体的な算出式</a></li>
+        <li><a href="#問題点">問題点</a></li>
+        <li><a href="#drs内での立ち位置">DRS内での立ち位置</a></li>
+      </ul>
+    </li>
+    <li><a href="#rercの改善案">RerCの改善案</a>
+      <ul>
+        <li><a href="#比較対象を平均に設定する">比較対象を平均に設定する</a></li>
+        <li><a href="#守備の影響を排除する">守備の影響を排除する</a></li>
+        <li><a href="#捕手への配分量を再考する">捕手への配分量を再考する</a></li>
+      </ul>
+    </li>
+    <li><a href="#rwarの改善案">rWARの改善案</a>
+      <ul>
+        <li><a href="#fwarpwarとの違い">fWAR,pWARとの違い</a></li>
+        <li><a href="#フレーミングを評価の対象にする">フレーミングを評価の対象にする</a></li>
+        <li><a href="#rercを改善する">RerCを改善する</a></li>
+      </ul>
+    </li>
+    <li><a href="#最後に">最後に</a></li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/solving-baseball/categories/%E5%AE%88%E5%82%99%E6%8C%87%E6%A8%99/" style="background-color: #ea580c; color: #fff;">
+                守備指標
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/solving-baseball/breakdown/catcher-drs-rwar-reconsideration/">捕手のDRS,rWARの再考(問題提起)</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published" datetime='2024-03-02T00:00:00Z'>2024-03-02</time>
+            </div>
+        
+
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <p>前回の説明系noteで逃げたRerCとそれを採用するrWAR,DRSについての説明＆感想系noteです。前回のRerC以外の守備指標の軽いまとめはこちら⬇</p>
+<p>前回→<a class="link" href="/solving-baseball/breakdown/catcher-defense-metrics-summary/" >捕手の守備指標まとめ</a></p>
+<hr>
+<h2 id="rercについて">RerCについて
+</h2><h3 id="rercとは">RerCとは
+</h3><p>前回まとめた指標で異質なのはこれかなと思うんですが、後から書くのでインサイドワーク面の評価と逃げた表現をしました。RerCとは何？という部分をネットで拾える少ない情報量からまとめます。</p>
+<p>まずは大本営BISの見解から。</p>
+<p><img src="/solving-baseball/images/115.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="The Fielding Bible FAQ"
+	
+	
+></p>
+<p><em>The Fielding Bible FAQより(<a class="link" href="https://www.fieldingbible.com/faq"  target="_blank" rel="noopener"
+    >https://www.fieldingbible.com/faq</a>)</em></p>
+<p>ポイントは3つです。</p>
+<ul>
+<li><strong>捕手別防御率をもとにしていること</strong></li>
+<li><strong>組んだ投手の力量をはじめ、様々な側面を考慮していること</strong></li>
+<li><strong>全面的に信頼を与えず平均に回帰させていること</strong></li>
+</ul>
+<p>投手の力量や様々な側面を考慮した<strong>予想捕手防御率(自責点)が実際の捕手防御率(自責点)と乖離しているときに、その責任をある程度は捕手に負わせよう</strong>ということです。</p>
+<p>これを日本ではリードやマネジメント、総じてインサイドワークと呼んでいるのでRerCの説明に使いました。ちなみにBRではRerCを「<strong>Catcher Pitch Calling Runs Above Avg</strong>」と表現しているので、文字通りリードの指標と訳しても問題ないのかなと思います。</p>
+<hr>
+<h3 id="具体的な算出式">具体的な算出式
+</h3><p>大本営の説明で何となくなら算出方法も想像できますが、具体的な算出方法はネットの海でも見つけるのには苦労します。</p>
+<ul>
+<li><a class="link" href="https://tigertalestemp.blogspot.com/2010/12/catcher-defense-part-1.html"  target="_blank" rel="noopener"
+    >Catcher Defense - Part 1</a> - Lee Panas</li>
+</ul>
+<p>上記がRerCの具体的な算出方法が書いてある2010年のブログ記事です。The Fielding Bibleに記載のあるRerCの算出方法をまとめてあります。RerCに触れているBISの記事も複数ありますが、ここで紹介されている算出方法との相違点は確認できませんでした。</p>
+<p>せっかくなので2023シーズンで驚異的なRerCを稼ぎゴールドグラブ賞も獲得したG.モレノで計算してみたいと思います。</p>
+<p><strong>①当該捕手(モレノ)が組んだ全投手のイニング、防御率を用意する</strong></p>
+<p>例）Z.ギャレン 210回 防御率 3.47</p>
+<p><strong>②当該捕手(モレノ)と組んでいる時の全投手のイニング、自責点を用意する</strong></p>
+<p>例）Z.ギャレン 117回 40自責点</p>
+<p><strong>③当該捕手(モレノ)と組んでいる時の推定自責点と実際自責点との差を出す</strong></p>
+<p>例）Z.ギャレン 117/9*3.47-40=5.11</p>
+<p><strong>④平均に回帰する</strong></p>
+<p>43.9(③の全投手合計)*0.33=14.49</p>
+<p><strong>⑤当該捕手のイニング数によってさらに平均に回帰する</strong></p>
+<p>14.49*854/1440(フルシーズンのイニング数)=8.59</p>
+<p>以上が算出方法ですが球場補正もされているとのこと。モレノのRerCは10.5<del>11.4なので平均抑止自責点は-2</del>3ほどだったんですかね。</p>
+<p>イニング数が少ないほど平均に回帰させる算出方法なので平均抑止自責点がマイナスになるということは主力捕手ほど点を取られていたことを意味するので違和感はあります。</p>
+<p>何か僕がミスってるかもしれないし算出方法が変わったかもしれないですけど、2010年時点の算出方法を紹介したかったのでまぁスルーで。</p>
+<hr>
+<h3 id="問題点">問題点
+</h3><p>そもそも「捕手によって投手成績が変わったという現象の責任を捕手に負わせること」だけで濃い議論ができそうですが、一旦その論点は置いといたとしても前述の算出方法には多く疑問が生じます。</p>
+<p><strong>・比較対象が平等でもなく平均でもない</strong></p>
+<p>言ってしまえば、味方の捕手が自分より自責点抑止能力があるかどうかゲーということです。四捨五入誤差を除けばリーグ合計RerCはゼロになるように調整しているはずですが、(平均と比べているが故にゼロサムになる)他の守備指標とは合計がゼロになる意味合いが違います。厳密に言えば内野のRAAもグレーゾーンですが。</p>
+<p><strong>・インサイドワーク以外の守備能力でつく差を考慮していない</strong></p>
+<p>例えばDRS - RerC = +10の捕手が自責点を5ほど抑止していた時にも、この捕手のインサイドワーク面はプラスの評価を受けます。DRSの構成指標はもちろんそれぞれ独立していますし独立させるべきですが、このRerCだけは独立しているとは言えないわけです。</p>
+<p>大きなポイントはここら辺りかなと思いますが、細かい部分も気にするとまだまだ思いつくとは思います(細かい部分はどんな指標でもありますが)。</p>
+<p>まあBISが単純な捕手別防御率と一緒にすんなと言っているように、投手ごとに計算しているだけでも捕手別防御率よりかは利用価値のある指標だとは思います。(ちなみに単純な捕手別防御率から求めたRerCと投手ごとの捕手別防御率から求めたRerCのR^2は0.68はありました。)</p>
+<hr>
+<h3 id="drs内での立ち位置">DRS内での立ち位置
+</h3><p>散々文句を並べましたけど、<strong>指標の算出方法とその指標が機能するかは別だったりもする</strong>のでRerCの結果に注目してみます。算出方法が変わっているかもしれないですし。</p>
+<p><strong>偶然の産物でないか、能力に起因するのかどうか</strong>といったポイントを測るスタートとなる年度間や移籍前後間の相関を見てみます。積み上げ指標なのでイニングあたりで計算してます。</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: center"></th>
+          <th style="text-align: center">年度間相関(/Inn)</th>
+          <th style="text-align: center">移籍前後間相関(/Inn)</th>
+          <th style="text-align: center">標準偏差</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: center">Rpm</td>
+          <td style="text-align: center">0.11</td>
+          <td style="text-align: center">0.04</td>
+          <td style="text-align: center">1.1</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">Rgood</td>
+          <td style="text-align: center">0.39</td>
+          <td style="text-align: center">0.25</td>
+          <td style="text-align: center">2.4</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">RszC</td>
+          <td style="text-align: center">0.70</td>
+          <td style="text-align: center">0.59</td>
+          <td style="text-align: center">5.9</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">RsbC</td>
+          <td style="text-align: center">0.32</td>
+          <td style="text-align: center">0.31</td>
+          <td style="text-align: center">2.6</td>
+      </tr>
+      <tr>
+          <td style="text-align: center"><strong>RerC</strong></td>
+          <td style="text-align: center"><strong>0.07</strong></td>
+          <td style="text-align: center"><strong>0.10</strong></td>
+          <td style="text-align: center"><strong>2.9</strong></td>
+      </tr>
+      <tr>
+          <td style="text-align: center">RerC*1440/Inn</td>
+          <td style="text-align: center">0.10</td>
+          <td style="text-align: center">0.22</td>
+          <td style="text-align: center"></td>
+      </tr>
+  </tbody>
+</table></div>
+<p><em>2011-2023(Rpmは2013-),300イニング以上</em></p>
+<p>年度間では少しは相関が確認できるかなと思っていましたが、<strong>単純な捕手別防御率ではなく同投手間の捕手別防御率を利用しているだけあってRerCの年度を跨いだ相関はなさそう</strong>です。(RerC*1440/Innの移籍前後間に関してはもう少しサンプルサイズや抽出方法を整えて考察してもいいかなとは思いますが、年度間で相関がなく、チームメイトが比較対象の指標の移籍前後を見て分かることとは？みたいな気持ちはあります。)</p>
+<p><strong>RerCは捕手の能力が関与しなさそうな要素なのに、それなりにDRS内では影響力も持っている</strong>と言えるでしょう。rWARではフレーミングが抜かれているのでさらにRerCが幅を利かせているということになります。</p>
+<p>また他の指標と比べるとやはり<strong>フレーミングは捕手の能力によって大きな差がつく要素</strong>で、合理的なMLBにおいて最重要視される理由が分かります。</p>
+<hr>
+<h2 id="rercの改善案">RerCの改善案
+</h2><p>RerCのネガキャンをしてますが忘れてはならないのが「能力に依存する結果じゃない⇒DRSやWARに組み込むべきではない」とはならないことです。もちろんBaseball Prospectusのように年度間相関に拘ってもいいんですが、Baseball Prospectusも「貢献を測る指標である」という前提は崩したくないという姿勢は見えます。<strong>能力と結果のギャップがうまれない競技ではない以上、そのギャップを当該選手に帰属させるのも貢献度を測る指標として正しい指針</strong>だと思います。</p>
+<p>ただその結果の測り方と帰属先は再考の余地があると思うので少し考えてみます。</p>
+<hr>
+<h3 id="比較対象を平均に設定する">比較対象を平均に設定する
+</h3><p>現状はチームメイトとの比較に過ぎないので比較対象は平均に設定したいところです。(イニング数によって平均に回帰するという作業(⑤)はイニング数によって信頼度に差をつけるという目的だけでなく、平均の模索も少しは兼ねているんじゃないかとも思いますが…)</p>
+<p>言うは易く行うは難しで具体的な案はパッと思いつかないのでまたの機会に考えたいですが、チームメイトとの比較に頼らずにする方法はトラッキングデータを使う系以外は思いついてません。</p>
+<hr>
+<h3 id="守備の影響を排除する">守備の影響を排除する
+</h3><p>RerCが捕手の投手へのリードやマネジメントの結果を表すことを目的としたものなら、守備の影響は排除したいところです。BRなのでrWARとの繋がりを意識すればDRSで補正したRA9かなとは思いますが、フレーミングを考慮したIFFIPとかの方が守備の影響の排除と。</p>
+<hr>
+<h3 id="捕手への配分量を再考する">捕手への配分量を再考する
+</h3><p>前述の算出方法の平均に回帰するフェーズは見方を変えれば失点抑止貢献の投手と捕手への配分ですが、ここも再考したいところです。RerC*1440/Innの年度間の相関がなかったのに対して、投手の場合はK%,BB%等は強く、FIP,ERA等に関しても組んでいる捕手が変わってもそこそこには相関があります。つまり、<strong>特定の捕手の時に投球結果が良くなるという現象を引き起こす要因は投手の能力である可能性が高い</strong>ということです。</p>
+<p>これを考慮して捕手への貢献の配分は極限定的にすべきではないかなというのが持論です。具体的な数字を出すのは簡単ではないですが、今よりも平均への回帰量(投手への配分量)は大きくなると思います。</p>
+<hr>
+<h2 id="rwarの改善案">rWARの改善案
+</h2><p>DRSに関してはRerCが改善できれば問題ないはずですが、rWARに関しては違うのでそこを考えます。</p>
+<h3 id="fwarpwarとの違い">fWAR,pWARとの違い
+</h3><div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: center"></th>
+          <th style="text-align: center">rWAR</th>
+          <th style="text-align: center">fWAR</th>
+          <th style="text-align: center">pWAR</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: center">フレーミング</td>
+          <td style="text-align: center">×</td>
+          <td style="text-align: center">○</td>
+          <td style="text-align: center">○</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">ブロッキング</td>
+          <td style="text-align: center">○</td>
+          <td style="text-align: center">×</td>
+          <td style="text-align: center">○</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">盗塁阻止</td>
+          <td style="text-align: center">○</td>
+          <td style="text-align: center">○</td>
+          <td style="text-align: center">○</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">打球処理</td>
+          <td style="text-align: center">○</td>
+          <td style="text-align: center">×</td>
+          <td style="text-align: center">○</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">インサイドワーク</td>
+          <td style="text-align: center">○</td>
+          <td style="text-align: center">×</td>
+          <td style="text-align: center">×</td>
+      </tr>
+  </tbody>
+</table></div>
+<p><em>各WARの違い</em></p>
+<p><img src="/solving-baseball/images/116.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="各WARの関係"
+	
+	
+></p>
+<p><em>各WARの関係</em></p>
+<p>各WARの構成要素の違いと守備部分の各WARの関係(2023年)です。</p>
+<p><strong>Rfield(rWAR)がDRP(pWAR)とFielding(fWAR)とは全く違う守備評価を下している</strong>ことが分かります。フレーミングを評価外にしているので驚きはないです。</p>
+<p><img src="/solving-baseball/images/117.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="DRSとの関係"
+	
+	
+></p>
+<p><em>DRSとの関係</em></p>
+<p>DRSと比較しても説明できない部分はまだ大きいです。BISのフレーミング指標の特徴やRerCの影響が大きそうです。</p>
+<hr>
+<h3 id="フレーミングを評価の対象にする">フレーミングを評価の対象にする
+</h3><p>遙か昔がどうかは分かりませんが少なくともフレーミング指標が算出されるようになってから総合指標においてフレーミングを評価対象外にすることは、<strong>遊撃手をoWARで評価するようなもん</strong>です。もちろん、指標の選択やポジション補正値や代替水準の設定などが作成者の裁量に委ねられているのがWARの魅力ですが、BRはそれらを高いレベルで作成選択設定してきたMLB界の大御所サイトですのでフレーミング評価のアップデートは希望したいのが本音です。</p>
+<p>(DRSとは違いrWARはRszCとRerCを共存させていないので、好意的に受け止めるとRerCでフレーミングとリードを評価しているとも考えることはできないこともないとも言えないこともないとは思いますが、現実としてRerCでフレーミングを評価はできていないのでそんな好意的な受け止め方はしません。)</p>
+<hr>
+<h3 id="rercを改善する">RerCを改善する
+</h3><p>先述した通り、現状の問題点を改善したRerCを採用することも必要でしょう。</p>
+<p>簡単ではありませんが、Game Callingの要素を適切に抽出できれば他社のWARに対して優位性が取れるかは別として許容可能な範囲での差別化を図れるでしょう。</p>
+<hr>
+<h2 id="最後に">最後に
+</h2><p>いろいろ語りましたが、RerCの問題は性能評価の怠りかなと思っています。その当時のその当人の考えから演繹的に指標を導出するというだけでなく、性能の評価も行うことで認識とのズレを発見でき、さらなる野球への深い理解、精度の高い指標の開発に
+進めるのではないでしょうか。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/solving-baseball/tags/%E6%8D%95%E6%89%8B/">捕手</a>
+        
+            <a href="/solving-baseball/tags/%E3%83%AA%E3%83%BC%E3%83%89/">リード</a>
+        
+            <a href="/solving-baseball/tags/%E3%83%95%E3%83%AC%E3%83%BC%E3%83%9F%E3%83%B3%E3%82%B0/">フレーミング</a>
+        
+            <a href="/solving-baseball/tags/war/">WAR</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        const elementsToRender = [".main-article", ".widget--toc"];
+
+        elementsToRender.forEach(selector => {
+            const element = document.querySelector(selector);
+            if (element) {
+                renderMathInElement(element, {
+                    delimiters: [
+                        { left: "$$", right: "$$", display: true },
+                        { left: "$", right: "$", display: false },
+                        { left: "\\(", right: "\\)", display: false },
+                        { left: "\\[", right: "\\]", display: true }
+                    ],
+                    ignoredClasses: ["gist"]
+                });
+            }
+        });
+    });
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">関連するコンテンツ</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/solving-baseball/breakdown/catcher-defense-metrics-summary/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">捕手の守備指標まとめ</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script
+    src="https://giscus.app/client.js"
+    data-repo="GHL-Ball/solving-baseball"
+    data-repo-id="R_kgDOQbQpuw"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOQbQpu84CzMFQ"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="light"
+    data-lang="ja"
+    data-loading=""
+    crossorigin="anonymous"
+    async
+></script>
+<script>
+    function setGiscusTheme(theme) {
+        let giscus = document.querySelector("iframe.giscus-frame");
+        if (giscus) {
+            giscus.contentWindow.postMessage(
+                {
+                    giscus: {
+                        setConfig: {
+                            theme: theme,
+                        },
+                    },
+                },
+                "https://giscus.app"
+            );
+        }
+    }
+
+    (function () {
+        addEventListener("message", (e) => {
+            if (event.origin !== "https://giscus.app") return;
+            handler();
+        });
+        window.addEventListener("onColorSchemeChange", handler);
+
+        function handler() {
+            if (document.documentElement.dataset.scheme === "light") {
+                setGiscusTheme('light');
+            } else {
+                setGiscusTheme('dark_dimmed');
+            }
+        }
+    })();
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2025 - 
+        
+        2026 Solving Baseball Blog
+    </section>
+    
+    <section class="powerby">
+        
+            トレバ-(^o^)丿 <br/>
+        <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> で構築されています。 <br />
+        テーマ <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.32.0">Stack</a></b> は <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> によって設計されています。
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/solving-baseball/ts/main.2b3fc53c7455b5631da9fabeefcc69ffc0a3f3cb719d708d3a5f18faf7af88a6.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

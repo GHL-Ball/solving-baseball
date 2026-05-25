@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>選択バイアス on Solving Baseball Blog</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E9%81%B8%E6%8A%9E%E3%83%90%E3%82%A4%E3%82%A2%E3%82%B9/</link>
+        <description>Recent content in 選択バイアス on Solving Baseball Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>ja</language>
+        <lastBuildDate>Mon, 01 Sep 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/solving-baseball/tags/%E9%81%B8%E6%8A%9E%E3%83%90%E3%82%A4%E3%82%A2%E3%82%B9/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>ホームラン打球の分析と選択バイアス</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_08/</link>
+        <pubDate>Mon, 01 Sep 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_08/</guid>
+        <description>&lt;p&gt;野球データにおける典型的な選択バイアスを一つ紹介します。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/169.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;q&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;上記の図は打球速度、打球角度から期待される飛距離からの乖離をホームラン打球と非ホームラン打球で比較したものです。&lt;/p&gt;
+&lt;p&gt;例えば平均的なボールの特性について調査する際に、ホームラン打球に絞って調査すると、その時点でボールの個体値は飛びやすいものに偏るでしょう。&lt;/p&gt;
+&lt;p&gt;このような選択バイアスは野球分析において無数に存在しますので、それを無意識化でも留意できる程度のセンスは常に持っていたいと日々思っています。&lt;/p&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

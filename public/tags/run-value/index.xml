@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Run Value on Solving Baseball Blog</title>
+        <link>http://localhost:1313/solving-baseball/tags/run-value/</link>
+        <description>Recent content in Run Value on Solving Baseball Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>ja</language>
+        <lastBuildDate>Sun, 22 Sep 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/solving-baseball/tags/run-value/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>最強打者の特徴【球速編】</title>
+        <link>http://localhost:1313/solving-baseball/analysis/strongest-hitters-velocity-article/</link>
+        <pubDate>Sun, 22 Sep 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/analysis/strongest-hitters-velocity-article/</guid>
+        <description>&lt;p&gt;テーマは&lt;strong&gt;最強打者&lt;/strong&gt;について。&lt;/p&gt;
+&lt;p&gt;とりあえず見てもらいたいのが以下のヒストグラム。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/78.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;MLB球速分布&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;今シーズンのMLBの球速分布を示しています。&lt;/p&gt;
+&lt;p&gt;速球の山と変化球の山が確認できるかと思います。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;最強打者達はこの山のどのあたりを得意にしているのか&lt;/strong&gt;、（相対的に）&lt;strong&gt;苦手にしているのか&lt;/strong&gt;、といったところに興味が湧きましたので簡単に見ていきます。&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;対象としたのは2015年以降（2020年を除く）の規定打席到達打者。&lt;/p&gt;
+&lt;p&gt;最強打者は wRC+ が最高の打者でいいとして、n 数の確保のため &lt;strong&gt;95 パーセンタイル以上の wRC+ を持つ打者&lt;/strong&gt;を最強打者の一人として集めました。各シーズン 7、8人ほどですね。&lt;/p&gt;
+&lt;p&gt;そして各シーズンで&lt;strong&gt;球速帯をそれぞれ投球数が等しくなるように六分割&lt;/strong&gt;します。&lt;/p&gt;
+&lt;p&gt;その&lt;strong&gt;各球速帯におけるRun Valueの結果&lt;/strong&gt;を比較してみました。（wRC+ で打者を選んでおいてRVを調べる？？まあ、RVで強打者を選ぶのも結果球のみを分析の対象にするのも微妙でしょう）&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;球速帯（パーセンタイル）&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;全体&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;〜16.7&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;16.7〜33.3&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;33.3〜50.0&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;50.0〜66.7&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;66.7〜83.3&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;83.3〜&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;RV / 100（パーセンタイル）&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;96.2&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;79.9&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;76.4&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;79.7&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;82.0&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;80.6&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;76.5&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;em&gt;Data : Baseball Savant&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;一番の傑出力を見せたのは球速帯が 50〜66.7パーセンタイルの範囲。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;この球速帯は遅めのフォーシーム、シンカーが大部分を占め、残りを速めのカッターやスライダー、チェンジアップなどが占めています。&lt;/p&gt;
+&lt;p&gt;対して、&lt;strong&gt;相対的に対応を苦手としているのが豪速球蔓延る球速帯&lt;/strong&gt;と&lt;strong&gt;スライダー、チェンジアップ、スプリットが大部分を占める球速帯&lt;/strong&gt;です。&lt;/p&gt;
+&lt;p&gt;一応例として、今シーズンの球速帯グループの分布を示しておきます。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/79.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;MLB球速分布（球速帯別）&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Data : Baseball Savant&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;最強打者達は上図で言う黄色の部分を得意とし、その両隣もそこそこに、ただもう一段階離れたら流石に対応力は落ちてしまうよと、でも遅すぎる球速帯なら対応できるよと、そんなところでしょうか。&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;今回は軽めの note にしたかったので早々に切り上げますけど、面白い見方だなと思いました（絶対他に似たようなことやってる人いますけどね）。&lt;/p&gt;
+&lt;p&gt;例えば年々高速化しているのが野球界ですから、次の最強打者は上図で言うオレンジを得意としている打者なんじゃないかとかね。&lt;/p&gt;
+&lt;p&gt;豪速球に強いと良い意味で話題になりやすいけど、実際どうなん？とかね。&lt;/p&gt;
+&lt;p&gt;今回はパーセンタイルで見ましたけど、絶対値で範囲を区切った見方もすればもう少し深い考察もできるでしょうし。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>投手のギアチェンジについて</title>
+        <link>http://localhost:1313/solving-baseball/analysis/gear_change/</link>
+        <pubDate>Fri, 07 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/analysis/gear_change/</guid>
+        <description>&lt;p&gt;ピッチング、特に先発投手のピッチングについて語る場面でよく出くわす&amp;quot;ギアチェンジ&amp;quot;という概念。この概念が事実としてあるのか、あるのならその中身も覗いてみたいと思います。&lt;/p&gt;
+&lt;h2 id=&#34;ギアチェンジは存在するか&#34;&gt;ギアチェンジは存在するか
+&lt;/h2&gt;&lt;p&gt;野球におけるギアチェンジ、解説者や選手、ファンの使い方としては「(重要な場面に)常時は全開でない(先発)投手が出力を上げて抑えにいくこと」でしょうか。&lt;/p&gt;
+&lt;p&gt;ちなみに大御所野球ゲーム、パワプロにもギアチェンジという特殊能力がありますが、その発動条件・効果は&lt;a class=&#34;link&#34; href=&#34;https://gamerch.com/pawapuro2022/364469&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Gamerch&lt;/a&gt;によると以下です。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/2.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;パワプロのギアチェンジ能力&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;ではギアチェンジの存在を数字でしっかり拾えるかどうか調べてみます。&lt;/p&gt;
+&lt;h3 id=&#34;ピンチにおける出力の変化&#34;&gt;ピンチにおける出力の変化
+&lt;/h3&gt;&lt;p&gt;パワプロでは球速以外にもコントロールや変化球のキレ(曲がり始めの遅速)も上がる能力とされていますが、コントロールとか変化球のキレの話は複雑かつ高度ですし、解説者やファンがギアチェンジを測る指標としてよく使われるのが球速なのでここを調べます。&lt;/p&gt;
+&lt;p&gt;ギアチェンジによる球速変化の比較対象はその試合の球速です。「試合序盤の150キロ前後のストレートから大幅に球速を上げていました」という上記記事の表現もよく聞きます。&lt;/p&gt;
+&lt;p&gt;ということでトラックマン、ホークアイによる測定値が記録されている2017年以降のMLBを対象に、その試合における平均球速との差を球種ごとに算出し、それをアウトカウント、塁状況別にまとめました。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/3.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;アウトカウント・塁状況別の球速変化&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;いろいろ興味深い箇所はありますが、状況によって投手の出力が変わっているのは間違いなさそうです。&lt;/p&gt;
+&lt;p&gt;ランナーが先の塁にいるほど、アウトが増えるほど出力が上がっています。気になるところはランナーが二盗可能な状況では他の似た状況と比して出力が上がっていないところ。盗塁の警戒から出力に最適化されたフォームで投げられていないのでしょうか。&lt;/p&gt;
+&lt;p&gt;他は、満塁より三塁・二三塁の方が多少ではありますが出力が上がっているところ。満塁より四球による損失は小さく、内野ゴロのアウト期待値の違いから三振の相対的失点抑止力が二三塁の方が大きくなるからとかが考えられますかね。&lt;/p&gt;
+&lt;p&gt;では先発投手とリリーフ投手でこの傾向に違いはあるのでしょうか。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/4.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;先発とリリーフの球速変化比較&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;ピンチな場面ほど出力が上がる基本的な傾向は似ていますが、やはり長いイニングを投げることも求められる先発の方が出力の変化の幅が大きいです。&lt;/p&gt;
+&lt;p&gt;先発が無死無走者を基準にすると二死満塁で1.38km/h出力が上がりますが、リリーフ投手は二死三塁で0.65km/hの上昇が最大です。&lt;/p&gt;
+&lt;p&gt;ここで先ほど語った、満塁と三塁・二三塁での出力変化の違いの話にも進展が見えます。この状況を比べたとき、先発はランナーの数ほど出力が上がっていますがリリーフはむしろ逆です。&lt;/p&gt;
+&lt;p&gt;試合の序盤・中盤を投げる先発ほどランナーの数(失点期待値)を、終盤を投げるリリーフほど失点確率の方を意識しがちなことは推定できるので、失点確率の方に比重を置くと四球を出しても(制球を落としても)三振を獲りにいく(出力を上げる)という行動の合理性はリリーフの方が高くなることも推測できます。&lt;/p&gt;
+&lt;p&gt;何にせよ、ギアチェンジという言葉が使われる理由は数字で確認できました。&lt;/p&gt;
+&lt;p&gt;ではざっくりとした&amp;quot;ピンチ&amp;quot;という表現ではなく、得点期待値の観点からも見てみます。(ここからは主に先発投手を対象にします)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/5.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;得点期待値と球速変化&#34;
+	
+	
+&gt;
+&lt;em&gt;得点期待値はBaseball Savant(2017~2023)から算出&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;状況による出力変化を合理たらしめるものは、状況による重要度の変化です。&lt;/p&gt;
+&lt;p&gt;ということで、まずは定番の得点期待値と照らし合わせてみますが、基本的にアウトを重ねるほど出力が上がる投手に対して、得点期待値はアウトを重ねるほど下がるので目立った相関はありません(R = 0.17)。&lt;/p&gt;
+&lt;p&gt;ただこれは、得点期待値という複数打席(その状況からイニング終了まで)の数字と単打席の出力変化を照らし合わせるのがそもそも頭の悪い話です。&lt;/p&gt;
+&lt;p&gt;そこで単純ではありますが、状況そのままにアウトを増やしたときの抑止得点期待値と照らし合わせてみます。例えば無死満塁(得点期待値 2.32)から三振なり内野フライなりで一死満塁(得点期待値 1.59)にできたら得点期待値は0.74(四捨五入誤差)下がりますねということです。&lt;/p&gt;
+&lt;p&gt;この観点から見ると、アウトを重ねるほど出力を上げることの非合理さも目立たず、そこそこの関係性が窺えます(R = 0.57)。また後述しますが、投手は球数を重ねるほど出力は下がるので、終わりが見えない無死より終わりの見える二死ほど出力が上がるのもイニング単位で考えると多少の合理性は見えてくるのではないのかなとも思います。&lt;/p&gt;
+&lt;h3 id=&#34;場面の重要度における出力の変化&#34;&gt;場面の重要度における出力の変化
+&lt;/h3&gt;&lt;p&gt;さっきと同じじゃね？と思うかもしれませんが、失点を減らす観点での場面の重要度と試合に勝利するという観点での重要度は違います。&lt;/p&gt;
+&lt;p&gt;1回裏 5 - 0 の二死二三塁と9回裏 1 - 0 の二死二三塁では1つのアウトや1つのヒットが勝敗結果に及ぼす影響度が違うことは分かりやすいかと思います。&lt;/p&gt;
+&lt;p&gt;先ほど失点の観点からシチュエーションを24通りに分けましたが、勝利の観点ではさらに点差、イニング、先攻後攻によっても分けられます。&lt;/p&gt;
+&lt;p&gt;そこで、そのような場面ごとの重要度を測る指標「&lt;a class=&#34;link&#34; href=&#34;https://tht.fangraphs.com/crucial-situations/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Leverage Index&lt;/a&gt;」を利用します。Leverage Index (LI)を一言で説明すると、「勝利確率の振れ幅」でしょうか。大差のついた最終回の1打席では勝利確率の増減は0%に近くても、接戦なら1打席で20%程度の増減もあるのが野球です。その振れ幅の平均との比較で場面の重要度を測っています。英単語&amp;quot;leverage&amp;quot;はてこの原理という意味でもよく使われるので連想もしやすいかなと思います。&lt;/p&gt;
+&lt;p&gt;LI は得点期待値と同じくsavantの変数から算出しました。FanGraphsのLIとの比較がこちら。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/6.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;LI比較&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;FGが具体的にどの期間を対象にLIを算出しているのか知りませんが、とりあえず2008~2023を対象に算出したLIで十分そうです。&lt;/p&gt;
+&lt;p&gt;ではLIと出力変化について見ていきます。&lt;/p&gt;
+&lt;p&gt;まずは単純にLIごとの球速の変化がこちら。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/7.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;LIと球速変化&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;順当にレバレッジが高い場面ほど出力が上がっています。がここには罠があります。&lt;/p&gt;
+&lt;p&gt;というのも投手はイニングを追うごとに球速を落とします。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/8.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;イニング別球速変化&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;なんだかんだ言って元気のある初回に元気のある球を投げています。がここにも少し罠があります。&lt;/p&gt;
+&lt;p&gt;というのもイニングによってLIが違います。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/9.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;イニング別LI&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;接戦であるほど、終盤であるほどレバレッジは高くなりますが先発投手の場合、打者が慣れてきて投手が疲れてくる終盤に続投を決断されるのはレバレッジの低い大差のついた場面が多くなります。&lt;/p&gt;
+&lt;p&gt;という風に投手のイニング、レバレッジごとの球速変化というのはイニングやレバレッジがお互いに作用している可能性があるのです。&lt;/p&gt;
+&lt;p&gt;なのでLIによる球速変化を調べるにあたってイニングによる補正も行います。具体的には各LIを0.25ごとに丸めてイニングを揃えて比較し、データ数によって加重平均します。その結果がこちら。&lt;/p&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>ホームランダービー on Solving Baseball Blog</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E3%83%9B%E3%83%BC%E3%83%A0%E3%83%A9%E3%83%B3%E3%83%80%E3%83%BC%E3%83%93%E3%83%BC/</link>
+        <description>Recent content in ホームランダービー on Solving Baseball Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>ja</language>
+        <lastBuildDate>Tue, 15 Jul 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/solving-baseball/tags/%E3%83%9B%E3%83%BC%E3%83%A0%E3%83%A9%E3%83%B3%E3%83%80%E3%83%BC%E3%83%93%E3%83%BC/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>ホームランダービーに悪影響はあるか</title>
+        <link>http://localhost:1313/solving-baseball/analysis/homerun-derby/</link>
+        <pubDate>Tue, 15 Jul 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/analysis/homerun-derby/</guid>
+        <description>&lt;h2 id=&#34;はじめに&#34;&gt;はじめに
+&lt;/h2&gt;&lt;p&gt;ホームランダービーの季節が近づくと&lt;strong&gt;ダービーの悪影響&lt;/strong&gt;を憂うファンが散見され、気が向いたセイバリストがそれを検証した記事を出すというのは最早お決まりの流れとなっています。&lt;/p&gt;
+&lt;p&gt;とは言え、近年は先行研究を引用して「ダービーは後半戦の成績に影響しないよ」だけで終わっている節があると個人的に感じていますし、日本語での分析は&lt;a class=&#34;link&#34; href=&#34;https://note.com/baseball_namiki/n/n9b115a8f74ea?sub_rt=share_sb&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;namikiさん&lt;/a&gt;のものしか認知していませんので、貴重な日本人セイバーメトリクス好きとして再検証していきます。&lt;/p&gt;
+&lt;p&gt;MLBは2015年シーズンからStatcastシステムを全面導入し、打球速度や Sprint Speed といった選手の能力に迫ることのできる指標やプレーの細部をより深く説明できる情報を入手できる環境が整いました。&lt;/p&gt;
+&lt;p&gt;そしてタイムリーなことに、MLBのホームランダービーのレギュレーションが&lt;strong&gt;アウト制から時間制になったのも2015年&lt;/strong&gt;です。&lt;/p&gt;
+&lt;p&gt;アウト制の頃のホームランダービーでも&amp;quot;ダービーは打撃に悪影響を及ぼす&amp;quot;といった言説は確認できますが、時間制になったことでその勢力に加勢した方々も少なくないでしょう。&lt;/p&gt;
+&lt;p&gt;日本人的には、標高1600mで息を切らし、（休憩はありますが）5分間で68もの&amp;quot;ホームラン狙いの&amp;quot;スイングをした、2021年大谷翔平が後半戦に打撃成績を落としたことは記憶に新しい方も多いのではないでしょうか。&lt;/p&gt;
+&lt;p&gt;前説が長くなりましたが、ダービーが時間制になり、Statcastデータも入手できる2015年以降に絞ってホームランダービーの影響について調べてみたいと思います。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;ダービー出場者は後半戦に成績を落としているか&#34;&gt;ダービー出場者は後半戦に成績を落としているか
+&lt;/h2&gt;&lt;p&gt;はじめに、&lt;strong&gt;ダービー出場者が後半戦に成績を落としているか&lt;/strong&gt;という基本的な前提を検証していきます。&lt;/p&gt;
+&lt;p&gt;念のため、下記に2015年以降のダービー出場者の一覧を記載します。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/51.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;ホームランダービー出場者一覧&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;参考程度に前半戦のHR%とwRC+も（HR%の平均は約3%）&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id=&#34;前後半の成績比較&#34;&gt;前後半の成績比較
+&lt;/h3&gt;&lt;p&gt;まずは単純に、前後半の成績をダービーに出場していなかった選手と比較してみます。（打席数がある程度揃うようにサンプリングしています）&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/52.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;前後半の成績比較&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;色付きは統計的有意性あり（有意水準 0.05）&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;ダービー出場者の後半戦の成績下降が確認できます。&lt;/strong&gt; ただ有意な差が確認できたのはHR%とそれに付随する長打率、wRC+ の成績下降です。ダービー出場者は後半戦に&lt;strong&gt;打球部分&lt;/strong&gt;の打撃成績が低下していることが確認できます。&lt;/p&gt;
+&lt;p&gt;対して、&lt;strong&gt;ダービー非出場者は後半戦の成績低下は確認できません。&lt;/strong&gt; むしろ、HR%の上昇傾向が確認できます。&lt;/p&gt;
+&lt;p&gt;ダービーの時期が毎年7月中旬であることを記憶している方は、7月下旬から8月といった気温の高い（空気密度の小さい）時期が含まれる後半に打撃成績が落ちるといった現象は観測されないと察していたでしょう。&lt;/p&gt;
+&lt;p&gt;では打球部分で成績を落としていたダービー出場者は具体的にどのような打球プロファイルの変化があったのでしょうか。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/53.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;打球プロファイルの変化&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;色付きは統計的有意性あり（有意水準 0.05）&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;有意な差が確認できるのは&lt;strong&gt;HR/FB&lt;/strong&gt;と&lt;strong&gt;Pull%（引っ張り率）&lt;/strong&gt;、基本的な打球分類に変化はありませんがフライ打球がスタンドインする確率が2%ほど下がることにより、HR%が減少しています。&lt;/p&gt;
+&lt;p&gt;引っ張り打球が増加する傾向がありますが、この傾向に負の側面を感じるか、その逆を感じるかは意外と分かれる気はします。少なくともセイバーメトリクスに興味のある最近のMLBファンなら正の側面を感じるでしょう。&lt;/p&gt;
+&lt;p&gt;対して、ダービー非出場者はもちろん、夏場が多く含まれる後半戦にHR/FBが下降するといった傾向は確認できませんでした。&lt;/p&gt;
+&lt;p&gt;大きな差ではありませんが**FB%（フライ率）**が増加し、結果的にHR%も増加する傾向にあるようです。基本的にFBは打者の&amp;quot;勝ち&amp;quot;であり、打席を積み重ねていき&amp;quot;慣れ&amp;quot;てくる後半戦にそのような傾向が観察できることに意外性はありません。（対戦投手に対する慣れが蓄積されやすいNPBではもう少し強く傾向が出ているかもしれません）&lt;/p&gt;
+&lt;p&gt;と、ここまでダービー出場者と非出場者の前後半の成績を簡単に比較してきました。&lt;/p&gt;
+&lt;p&gt;実際のところ、&lt;strong&gt;ダービー出場者は後半戦に成績を落としています。&lt;/strong&gt; ただ、この結果をもってして『ホームランダービー』の悪影響として結論付けるのは早計でしょう。&lt;/p&gt;
+&lt;h3 id=&#34;成績が似ている選手との比較&#34;&gt;成績が似ている選手との比較
+&lt;/h3&gt;&lt;p&gt;では、肝にいきましょう。&lt;/p&gt;
+&lt;p&gt;どのような検証でも必要になるのが、&lt;strong&gt;条件を揃える&lt;/strong&gt;ということです。&lt;/p&gt;
+&lt;p&gt;例えばテレビ視聴率からその番組の人気度を測りたいのなら、時間帯や曜日、裏番組などを揃えないと不公平ということは最低限の情報リテラシーのある方なら理解しているはずです。&lt;/p&gt;
+&lt;p&gt;ということで、ホームランダービーの影響を測りたい今回はどうでしょうか。&lt;/p&gt;
+&lt;p&gt;知りたいのはダービー非出場の成績ではありません。&lt;strong&gt;ダービー出場者がダービーに出場していなかった仮想世界&lt;/strong&gt;です（もしくはその逆も）。&lt;/p&gt;
+&lt;p&gt;もちろんそんな世界は用意できないので、ダービーに出場していた&amp;quot;かも&amp;quot;しれない、&lt;strong&gt;ダービー出場者と前半戦の成績が似ているダービー非出場者&lt;/strong&gt;を抽出します。&lt;/p&gt;
+&lt;p&gt;方法としては代表的なものでもいくつかありますが、今回は結果的に一番類似度が高く抽出できた、ユークリッド距離を使います。&lt;/p&gt;
+&lt;p&gt;抽出した類似選手216人の前半戦成績を以下に示します。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/54.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;類似選手の前半戦成績&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;ではこのダービー出場者に似ているダービー非出場者は後半戦に成績を落としているのでしょうか。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/55.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;類似選手との成績比較&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;色付きは統計的有意性あり（有意水準 0.05）&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;ダービー出場者と同じくHR%、長打率、wRC+で有意な差が確認できました。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;エンタメ性重視で選手の健康など考えず、打撃フォームにも悪影響が出るはずの&lt;strong&gt;ホームランダービーを欠場しても成績が下降してしまっています。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;では、打球部分も見てみましょう。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/56.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;類似選手の打球プロファイル&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;色付きは統計的有意性あり（有意水準 0.05）&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;ここが、今回注目するポイントです。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;ダービー出場者と同じようにHR/FBが下降していますが、Pull%の増加は観察できません。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;ホームランダービーはスローボールをどれだけスタンドインさせるかを競う、言わば、人外でない限りどれだけ引っ張りフライを打てるかの競技ですから、その影響と考えやすい結果ではあります。&lt;/p&gt;
+&lt;p&gt;ではダービー出場者と非出場者の前後半の成績変化の違いに統計的有意性はあるでしょうか？&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/57.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;成績変化の差の検定&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;色付きは統計的有意性あり（有意水準 0.05）&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;察していたとは思いますが、&lt;strong&gt;Pull%にのみ、有意な差が確認できます。&lt;/strong&gt; 少なくとも&lt;strong&gt;Pull%の変化はダービー出場者とそれに類似度の高いダービー非出場者との間で有意に差がありそう&lt;/strong&gt;です。&lt;/p&gt;
+&lt;p&gt;ちなみに、箱ひげ図でPull%の変化を比較したものが以下になります。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/58.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Pull%変化の箱ひげ図&#34;
+	
+	
+&gt;&lt;/p&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

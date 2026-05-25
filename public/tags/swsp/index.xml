@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>SwSp% on Solving Baseball Blog</title>
+        <link>http://localhost:1313/solving-baseball/tags/swsp/</link>
+        <description>Recent content in SwSp% on Solving Baseball Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>ja</language>
+        <lastBuildDate>Tue, 27 Aug 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/solving-baseball/tags/swsp/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>xwOBAと何を見るか</title>
+        <link>http://localhost:1313/solving-baseball/analysis/xwoba-what-to-see-article/</link>
+        <pubDate>Tue, 27 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/analysis/xwoba-what-to-see-article/</guid>
+        <description>&lt;p&gt;打者の打撃能力を測る上で相当に優秀な指標である xwOBA。データサイトで手軽に確認でき、野球ファン大好きな上振れ下振れの話にも繋がり、なかなか人気のある指標ですが、他に一緒に見た方が良い指標はないの？といったことを考えていく記事です。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;xwobaとは&#34;&gt;xwOBAとは
+&lt;/h2&gt;&lt;p&gt;xwOBAを真面目に解説するとそれだけで重くなりますので要点を説明すると、xwOBAは &lt;strong&gt;play ではなく player を表すことを目的&lt;/strong&gt;とし、非打球要素はそのままに打球要素は打球速度、&amp;ldquo;垂直&amp;quot;打球角度に着目し（一応、内野安打が期待されるような打球については走力も考慮される）、それらから期待される wOBAを算出したものになります。&lt;/p&gt;
+&lt;p&gt;測定対象が play ではなく player という xwOBAの特徴として&lt;strong&gt;予測力&lt;/strong&gt;があります。過去の結果には選手の能力以外の&lt;strong&gt;ノイズ&lt;/strong&gt;も含まれていますので、そのノイズ（xwOBAでは相手の守備や水平角度など）を適宜取り除いた指標の方が未来の予測には有用です。&lt;/p&gt;
+&lt;p&gt;実際、xwOBAは来季の wOBA予測において FanGraphs や Baseball Savant にある打撃指標の中では最強の予測力を誇ります。それは打球要素も非打球要素も含む総合打撃指標がほとんどないところが理由でもありますが。&lt;/p&gt;
+&lt;p&gt;ただ、xwOBAの打球部分 xwOBAconも来季の wOBAconの予測力がトップクラスに高い指標です。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/74.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;翌年のwOBAconとの関係&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;翌年の wOBAconとの関係　Data : FanGraphs, Baseball Savant&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;ノイズを多く含む wOBAconより打球速度のみを測定対象としている&lt;strong&gt;Adjusted EV&lt;/strong&gt;（88 mph以下の打球を全て88 mphとして算出した平均打球速度）の方が、さらに打球速度以外に打球角度も考慮している xwOBAcon、Barrel%の方が予測力に優れていることが分かるかと思います。Barrel%がxwOBAconより少し優れている点については後ほど説明できるかと思います。&lt;/p&gt;
+&lt;p&gt;このように xwOBAは単体でも予測力に強みを持ちますが、じゃあ xwOBA以外に何か見るべき指標ってあるの？という話を考えていきます。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;2023年のmチャップマン&#34;&gt;2023年のM・チャップマン
+&lt;/h2&gt;&lt;p&gt;2023年、4月の最強打者M・チャップマンを覚えているでしょうか。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;M・チャップマン　2023年3,4月成績&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;wOBA .481（規定1位/181人）&lt;/li&gt;
+&lt;li&gt;xwOBA .486（規定1位/181人）&lt;/li&gt;
+&lt;li&gt;BABIP .485（規定1位/181人）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;Data : MLB&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;wOBAだけでなく xwOBAも断トツで文字通りMLB最強打者でした。&lt;/p&gt;
+&lt;p&gt;チャップマンの wOBAに近い例ではG・ペルドモがいました。彼の去年の初動とその後はまさにMLBファンが xwOBAを気にする理由でしょう。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;G・ペルドモ　2023年3, 4月 vs 5月以降成績&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;wOBA .456 ➡ wOBA .297&lt;/li&gt;
+&lt;li&gt;xwOBA .301 ➡ xwOBA .271&lt;/li&gt;
+&lt;li&gt;BABIP .477 ➡ BABIP .265&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;Data : MLB&lt;/em&gt;&lt;/p&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

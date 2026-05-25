@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Arm Angle on Solving Baseball Blog</title>
+        <link>http://localhost:1313/solving-baseball/tags/arm-angle/</link>
+        <description>Recent content in Arm Angle on Solving Baseball Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>ja</language>
+        <lastBuildDate>Sun, 03 Aug 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/solving-baseball/tags/arm-angle/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>投手の力むポイント</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_12/</link>
+        <pubDate>Sun, 03 Aug 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_12/</guid>
+        <description>&lt;p&gt;Arm Angleは投球コースの分布や変化の分布においてかなり重要な要素です。
+今回はそれのトリビア程度のテーマを。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/163.gif&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;a&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;このGIFはArm Angleごとの各投手の速球の平均球速からの乖離を集計したものです（利き手やピッチカウントは補正済み）。
+正直分かりにくいですが、球速が最大化するのは通常より腕が加速したときということなのか所謂引っかけた際に最大化していそうです。&lt;/p&gt;
+&lt;p&gt;そして投げおろし型は低めにサイド寄りは対角という傾向はあるかなと思います。&lt;/p&gt;
+&lt;p&gt;大きな効果はないかもしれませんが、投球コースの分布や変化の分布も含めArm Angleの適正化は育成面において重要な要素ですので共通する理論を把握していたいものです。&lt;/p&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

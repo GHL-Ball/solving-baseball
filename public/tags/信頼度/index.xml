@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>信頼度 on Solving Baseball Blog</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E4%BF%A1%E9%A0%BC%E5%BA%A6/</link>
+        <description>Recent content in 信頼度 on Solving Baseball Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>ja</language>
+        <lastBuildDate>Thu, 02 May 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/solving-baseball/tags/%E4%BF%A1%E9%A0%BC%E5%BA%A6/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>4月の成績 vs 5月以降の成績</title>
+        <link>http://localhost:1313/solving-baseball/analysis/april-vs-may-stats-article/</link>
+        <pubDate>Thu, 02 May 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/analysis/april-vs-may-stats-article/</guid>
+        <description>&lt;h2 id=&#34;打者&#34;&gt;打者
+&lt;/h2&gt;&lt;p&gt;まずは打者からです。対象とした打者は2015〜2023年(2020年は除く)の３・４月と５月以降でどちらも規定打席に立った打者です。本当は生存バイアス等にも対処した方が良いと思いますが今回は手軽にいきます。&lt;/p&gt;
+&lt;h3 id=&#34;vs-指標自身&#34;&gt;vs 指標自身
+&lt;/h3&gt;&lt;p&gt;まずは指標自身の話です。「4月のBABIPと５月以降のBABIPって相関あるの？」という感じの話。野球ファンからの関心がそこそこ高そうな指標を中心にピックアップしたものがこちら。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/80.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;各指標の3・4月と5月以降の相関係数（打者）&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;各指標の3・4月と5月以降の相関係数（n = 853）&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;これは野球に限らないことだと思いますが、ファンが第一に気にするような結果ではなく、その結果が出る前の過程を測った指標ほど強い相関を示しています。&lt;/p&gt;
+&lt;p&gt;打者の&lt;strong&gt;アプローチ姿勢&lt;/strong&gt;(Swing%, Contact%)、打者の&lt;strong&gt;パワー&lt;/strong&gt;(打球速度, Hard Hit%)、打者の&lt;strong&gt;スイング軌道&lt;/strong&gt;(打球角度, GB%, FB%)のようなものはシーズン序盤から安定しても、それらに加え内外の様々な変数が組み合わさった結果完成する指標(BABIP, wOBA等)は安定に時間がかかることは想像に難くありません。&lt;/p&gt;
+&lt;p&gt;ゴロとフライの境目であるライナー、引っ張りと流しの境目であるセンター返しも安定に時間がかかりますが特に気を付けるべきはライナー。ライナーは他と比べて恐ろしく生産性の高い打球ですが、ライナーの発生確率が信頼に足るサンプルサイズに達するのは500〜600BBEほど。これは上位打線で年間フル出場近く出場しても選手によっては到達できない数字です。&lt;/p&gt;
+&lt;p&gt;wOBA - xwOBA(0.222)は使用球場の偏りを留意しておく必要はあるでしょう。参考までに、同期間のwOBA - xwOBAはクアーズで .029、ブッシュで -.011です。&lt;/p&gt;
+&lt;p&gt;Clutch(0.034)、打率 - 得点圏打率(-0.032)は美しいですね。&lt;/p&gt;
+&lt;h3 id=&#34;vs-woba&#34;&gt;vs wOBA
+&lt;/h3&gt;&lt;p&gt;次は５月以降のwOBAとの比較です。三振しないことや速い打球を飛ばすことはあくまでも手段です。&lt;strong&gt;目的＝勝利に貢献 ≒ 得点に貢献 ≒ wOBAの高い打者&lt;/strong&gt;は４月のどの指標でその兆しを見せていたのでしょうか。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/81.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;3・4月の各指標と5月以降のwOBAとの相関係数&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;3・4月の各指標と5月以降のwOBAとの相関係数（n = 853）&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;一応相対的にカラースケールしてますが軒並みしょぼいです。&lt;/p&gt;
+&lt;p&gt;xwOBAですら決定係数は0.156、５月以降のwOBAをほとんど説明できません。&lt;/p&gt;
+&lt;p&gt;気を付けるべきはコンタクト系の指標ですかね。コンタクト系の指標はコンタクト力(という言い方も少し違いますが)を測る指標としては信頼度は高いですが、&lt;strong&gt;打者においてコンタクト力は単純に得点創出力に結びつきません。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;これはイチローのあの &lt;strong&gt;.220 40本発言&lt;/strong&gt;が野球ファンに違和感なく受け入れられているように&lt;strong&gt;コンタクト能力と長打力にトレードオフ関係がある&lt;/strong&gt;ことを直感的に理解している人は多そうです。&lt;/p&gt;
+&lt;p&gt;実際のトレードオフ関係を定量化するのは割と大変だと思いますが、現状コンタクト力とK%には強い因果があるのに対して、コンタクト力と得点創出力には相関はありません。これの意味するところはコンタクト力の低い打者は三振による損失を他で補っているということです。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/82.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;wRC&amp;#43; vs Contact%&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;2023 min.300PA&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;丁度良く実例があるので紹介すると、2023年MLBで最も低いK%を記録しながらISO最下位、wRC+は92に甘んじたガーディアンズは昨オフ従来のアプローチ姿勢を打ち破る意向を示し、2024年4月終了時点で昨年からK%の順位を落としながらISO15位、wRC+107とそのトレードオフを成功させています。今年のガーディアンズは要注目です。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.nytimes.com/athletic/5298726/2024/02/26/guardians-offense-swinging-and-missing/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Why Guardians’ bid to boost their offense starts with … swinging-and-missing?&lt;/a&gt; - Zack Meisel&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;投手&#34;&gt;投手
+&lt;/h2&gt;&lt;p&gt;では投手です。対象とした投手は３・４月と５月以降でどちらも規定投球回に達した投手。&lt;/p&gt;
+&lt;h3 id=&#34;vs-指標自身-1&#34;&gt;vs 指標自身
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/83.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;各指標の3・4月と5月以降の相関係数（投手）&#34;
+	
+	
+&gt;&lt;/p&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+    <head><script src="/solving-baseball/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=solving-baseball/livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="はじめに\rホームランダービーの季節が近づくとダービーの悪影響を憂うファンが散見され、気が向いたセイバリストがそれを検証した記事を出すというのは最早お決まりの流れとなっています。\nとは言え、近年は先行研究を引用して「ダービーは後半戦の成績に影響しないよ」だけで終わっている節があると個人的に感じていますし、日本語での分析はnamikiさんのものしか認知していませんので、貴重な日本人セイバーメトリクス好きとして再検証していきます。\nMLBは2015年シーズンからStatcastシステムを全面導入し、打球速度や Sprint Speed といった選手の能力に迫ることのできる指標やプレーの細部をより深く説明できる情報を入手できる環境が整いました。\nそしてタイムリーなことに、MLBのホームランダービーのレギュレーションがアウト制から時間制になったのも2015年です。\nアウト制の頃のホームランダービーでも&quot;ダービーは打撃に悪影響を及ぼす&quot;といった言説は確認できますが、時間制になったことでその勢力に加勢した方々も少なくないでしょう。\n日本人的には、標高1600mで息を切らし、（休憩はありますが）5分間で68もの&quot;ホームラン狙いの&quot;スイングをした、2021年大谷翔平が後半戦に打撃成績を落としたことは記憶に新しい方も多いのではないでしょうか。\n前説が長くなりましたが、ダービーが時間制になり、Statcastデータも入手できる2015年以降に絞ってホームランダービーの影響について調べてみたいと思います。\nダービー出場者は後半戦に成績を落としているか\rはじめに、ダービー出場者が後半戦に成績を落としているかという基本的な前提を検証していきます。\n念のため、下記に2015年以降のダービー出場者の一覧を記載します。\n参考程度に前半戦のHR%とwRC+も（HR%の平均は約3%）\n前後半の成績比較\rまずは単純に、前後半の成績をダービーに出場していなかった選手と比較してみます。（打席数がある程度揃うようにサンプリングしています）\n色付きは統計的有意性あり（有意水準 0.05）\nダービー出場者の後半戦の成績下降が確認できます。 ただ有意な差が確認できたのはHR%とそれに付随する長打率、wRC+ の成績下降です。ダービー出場者は後半戦に打球部分の打撃成績が低下していることが確認できます。\n対して、ダービー非出場者は後半戦の成績低下は確認できません。 むしろ、HR%の上昇傾向が確認できます。\nダービーの時期が毎年7月中旬であることを記憶している方は、7月下旬から8月といった気温の高い（空気密度の小さい）時期が含まれる後半に打撃成績が落ちるといった現象は観測されないと察していたでしょう。\nでは打球部分で成績を落としていたダービー出場者は具体的にどのような打球プロファイルの変化があったのでしょうか。\n色付きは統計的有意性あり（有意水準 0.05）\n有意な差が確認できるのはHR/FBとPull%（引っ張り率）、基本的な打球分類に変化はありませんがフライ打球がスタンドインする確率が2%ほど下がることにより、HR%が減少しています。\n引っ張り打球が増加する傾向がありますが、この傾向に負の側面を感じるか、その逆を感じるかは意外と分かれる気はします。少なくともセイバーメトリクスに興味のある最近のMLBファンなら正の側面を感じるでしょう。\n対して、ダービー非出場者はもちろん、夏場が多く含まれる後半戦にHR/FBが下降するといった傾向は確認できませんでした。\n大きな差ではありませんが**FB%（フライ率）**が増加し、結果的にHR%も増加する傾向にあるようです。基本的にFBは打者の&quot;勝ち&quot;であり、打席を積み重ねていき&quot;慣れ&quot;てくる後半戦にそのような傾向が観察できることに意外性はありません。（対戦投手に対する慣れが蓄積されやすいNPBではもう少し強く傾向が出ているかもしれません）\nと、ここまでダービー出場者と非出場者の前後半の成績を簡単に比較してきました。\n実際のところ、ダービー出場者は後半戦に成績を落としています。 ただ、この結果をもってして『ホームランダービー』の悪影響として結論付けるのは早計でしょう。\n成績が似ている選手との比較\rでは、肝にいきましょう。\nどのような検証でも必要になるのが、条件を揃えるということです。\n例えばテレビ視聴率からその番組の人気度を測りたいのなら、時間帯や曜日、裏番組などを揃えないと不公平ということは最低限の情報リテラシーのある方なら理解しているはずです。\nということで、ホームランダービーの影響を測りたい今回はどうでしょうか。\n知りたいのはダービー非出場の成績ではありません。ダービー出場者がダービーに出場していなかった仮想世界です（もしくはその逆も）。\nもちろんそんな世界は用意できないので、ダービーに出場していた&quot;かも&quot;しれない、ダービー出場者と前半戦の成績が似ているダービー非出場者を抽出します。\n方法としては代表的なものでもいくつかありますが、今回は結果的に一番類似度が高く抽出できた、ユークリッド距離を使います。\n抽出した類似選手216人の前半戦成績を以下に示します。\nではこのダービー出場者に似ているダービー非出場者は後半戦に成績を落としているのでしょうか。\n色付きは統計的有意性あり（有意水準 0.05）\nダービー出場者と同じくHR%、長打率、wRC+で有意な差が確認できました。\nエンタメ性重視で選手の健康など考えず、打撃フォームにも悪影響が出るはずのホームランダービーを欠場しても成績が下降してしまっています。\nでは、打球部分も見てみましょう。\n色付きは統計的有意性あり（有意水準 0.05）\nここが、今回注目するポイントです。\nダービー出場者と同じようにHR/FBが下降していますが、Pull%の増加は観察できません。\nホームランダービーはスローボールをどれだけスタンドインさせるかを競う、言わば、人外でない限りどれだけ引っ張りフライを打てるかの競技ですから、その影響と考えやすい結果ではあります。\nではダービー出場者と非出場者の前後半の成績変化の違いに統計的有意性はあるでしょうか？\n色付きは統計的有意性あり（有意水準 0.05）\n察していたとは思いますが、Pull%にのみ、有意な差が確認できます。 少なくともPull%の変化はダービー出場者とそれに類似度の高いダービー非出場者との間で有意に差がありそうです。\nちなみに、箱ひげ図でPull%の変化を比較したものが以下になります。\n">
+<title>ホームランダービーに悪影響はあるか</title>
+
+<link rel='canonical' href='http://localhost:1313/solving-baseball/analysis/homerun-derby/'>
+
+<link rel="stylesheet" href="/solving-baseball/scss/style.min.4d36f8dc1fd48129e1635deb4b8eb2870fa09474f7280c4cb606d40b2526994b.css"><meta property='og:title' content="ホームランダービーに悪影響はあるか">
+<meta property='og:description' content="はじめに\rホームランダービーの季節が近づくとダービーの悪影響を憂うファンが散見され、気が向いたセイバリストがそれを検証した記事を出すというのは最早お決まりの流れとなっています。\nとは言え、近年は先行研究を引用して「ダービーは後半戦の成績に影響しないよ」だけで終わっている節があると個人的に感じていますし、日本語での分析はnamikiさんのものしか認知していませんので、貴重な日本人セイバーメトリクス好きとして再検証していきます。\nMLBは2015年シーズンからStatcastシステムを全面導入し、打球速度や Sprint Speed といった選手の能力に迫ることのできる指標やプレーの細部をより深く説明できる情報を入手できる環境が整いました。\nそしてタイムリーなことに、MLBのホームランダービーのレギュレーションがアウト制から時間制になったのも2015年です。\nアウト制の頃のホームランダービーでも&quot;ダービーは打撃に悪影響を及ぼす&quot;といった言説は確認できますが、時間制になったことでその勢力に加勢した方々も少なくないでしょう。\n日本人的には、標高1600mで息を切らし、（休憩はありますが）5分間で68もの&quot;ホームラン狙いの&quot;スイングをした、2021年大谷翔平が後半戦に打撃成績を落としたことは記憶に新しい方も多いのではないでしょうか。\n前説が長くなりましたが、ダービーが時間制になり、Statcastデータも入手できる2015年以降に絞ってホームランダービーの影響について調べてみたいと思います。\nダービー出場者は後半戦に成績を落としているか\rはじめに、ダービー出場者が後半戦に成績を落としているかという基本的な前提を検証していきます。\n念のため、下記に2015年以降のダービー出場者の一覧を記載します。\n参考程度に前半戦のHR%とwRC+も（HR%の平均は約3%）\n前後半の成績比較\rまずは単純に、前後半の成績をダービーに出場していなかった選手と比較してみます。（打席数がある程度揃うようにサンプリングしています）\n色付きは統計的有意性あり（有意水準 0.05）\nダービー出場者の後半戦の成績下降が確認できます。 ただ有意な差が確認できたのはHR%とそれに付随する長打率、wRC+ の成績下降です。ダービー出場者は後半戦に打球部分の打撃成績が低下していることが確認できます。\n対して、ダービー非出場者は後半戦の成績低下は確認できません。 むしろ、HR%の上昇傾向が確認できます。\nダービーの時期が毎年7月中旬であることを記憶している方は、7月下旬から8月といった気温の高い（空気密度の小さい）時期が含まれる後半に打撃成績が落ちるといった現象は観測されないと察していたでしょう。\nでは打球部分で成績を落としていたダービー出場者は具体的にどのような打球プロファイルの変化があったのでしょうか。\n色付きは統計的有意性あり（有意水準 0.05）\n有意な差が確認できるのはHR/FBとPull%（引っ張り率）、基本的な打球分類に変化はありませんがフライ打球がスタンドインする確率が2%ほど下がることにより、HR%が減少しています。\n引っ張り打球が増加する傾向がありますが、この傾向に負の側面を感じるか、その逆を感じるかは意外と分かれる気はします。少なくともセイバーメトリクスに興味のある最近のMLBファンなら正の側面を感じるでしょう。\n対して、ダービー非出場者はもちろん、夏場が多く含まれる後半戦にHR/FBが下降するといった傾向は確認できませんでした。\n大きな差ではありませんが**FB%（フライ率）**が増加し、結果的にHR%も増加する傾向にあるようです。基本的にFBは打者の&quot;勝ち&quot;であり、打席を積み重ねていき&quot;慣れ&quot;てくる後半戦にそのような傾向が観察できることに意外性はありません。（対戦投手に対する慣れが蓄積されやすいNPBではもう少し強く傾向が出ているかもしれません）\nと、ここまでダービー出場者と非出場者の前後半の成績を簡単に比較してきました。\n実際のところ、ダービー出場者は後半戦に成績を落としています。 ただ、この結果をもってして『ホームランダービー』の悪影響として結論付けるのは早計でしょう。\n成績が似ている選手との比較\rでは、肝にいきましょう。\nどのような検証でも必要になるのが、条件を揃えるということです。\n例えばテレビ視聴率からその番組の人気度を測りたいのなら、時間帯や曜日、裏番組などを揃えないと不公平ということは最低限の情報リテラシーのある方なら理解しているはずです。\nということで、ホームランダービーの影響を測りたい今回はどうでしょうか。\n知りたいのはダービー非出場の成績ではありません。ダービー出場者がダービーに出場していなかった仮想世界です（もしくはその逆も）。\nもちろんそんな世界は用意できないので、ダービーに出場していた&quot;かも&quot;しれない、ダービー出場者と前半戦の成績が似ているダービー非出場者を抽出します。\n方法としては代表的なものでもいくつかありますが、今回は結果的に一番類似度が高く抽出できた、ユークリッド距離を使います。\n抽出した類似選手216人の前半戦成績を以下に示します。\nではこのダービー出場者に似ているダービー非出場者は後半戦に成績を落としているのでしょうか。\n色付きは統計的有意性あり（有意水準 0.05）\nダービー出場者と同じくHR%、長打率、wRC+で有意な差が確認できました。\nエンタメ性重視で選手の健康など考えず、打撃フォームにも悪影響が出るはずのホームランダービーを欠場しても成績が下降してしまっています。\nでは、打球部分も見てみましょう。\n色付きは統計的有意性あり（有意水準 0.05）\nここが、今回注目するポイントです。\nダービー出場者と同じようにHR/FBが下降していますが、Pull%の増加は観察できません。\nホームランダービーはスローボールをどれだけスタンドインさせるかを競う、言わば、人外でない限りどれだけ引っ張りフライを打てるかの競技ですから、その影響と考えやすい結果ではあります。\nではダービー出場者と非出場者の前後半の成績変化の違いに統計的有意性はあるでしょうか？\n色付きは統計的有意性あり（有意水準 0.05）\n察していたとは思いますが、Pull%にのみ、有意な差が確認できます。 少なくともPull%の変化はダービー出場者とそれに類似度の高いダービー非出場者との間で有意に差がありそうです。\nちなみに、箱ひげ図でPull%の変化を比較したものが以下になります。\n">
+<meta property='og:url' content='http://localhost:1313/solving-baseball/analysis/homerun-derby/'>
+<meta property='og:site_name' content='Solving Baseball Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Analysis' /><meta property='article:tag' content='Batting' /><meta property='article:tag' content='ホームランダービー' /><meta property='article:tag' content='平均への回帰' /><meta property='article:published_time' content='2025-07-15T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-07-15T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="ホームランダービーに悪影響はあるか">
+<meta name="twitter:description" content="はじめに\rホームランダービーの季節が近づくとダービーの悪影響を憂うファンが散見され、気が向いたセイバリストがそれを検証した記事を出すというのは最早お決まりの流れとなっています。\nとは言え、近年は先行研究を引用して「ダービーは後半戦の成績に影響しないよ」だけで終わっている節があると個人的に感じていますし、日本語での分析はnamikiさんのものしか認知していませんので、貴重な日本人セイバーメトリクス好きとして再検証していきます。\nMLBは2015年シーズンからStatcastシステムを全面導入し、打球速度や Sprint Speed といった選手の能力に迫ることのできる指標やプレーの細部をより深く説明できる情報を入手できる環境が整いました。\nそしてタイムリーなことに、MLBのホームランダービーのレギュレーションがアウト制から時間制になったのも2015年です。\nアウト制の頃のホームランダービーでも&quot;ダービーは打撃に悪影響を及ぼす&quot;といった言説は確認できますが、時間制になったことでその勢力に加勢した方々も少なくないでしょう。\n日本人的には、標高1600mで息を切らし、（休憩はありますが）5分間で68もの&quot;ホームラン狙いの&quot;スイングをした、2021年大谷翔平が後半戦に打撃成績を落としたことは記憶に新しい方も多いのではないでしょうか。\n前説が長くなりましたが、ダービーが時間制になり、Statcastデータも入手できる2015年以降に絞ってホームランダービーの影響について調べてみたいと思います。\nダービー出場者は後半戦に成績を落としているか\rはじめに、ダービー出場者が後半戦に成績を落としているかという基本的な前提を検証していきます。\n念のため、下記に2015年以降のダービー出場者の一覧を記載します。\n参考程度に前半戦のHR%とwRC+も（HR%の平均は約3%）\n前後半の成績比較\rまずは単純に、前後半の成績をダービーに出場していなかった選手と比較してみます。（打席数がある程度揃うようにサンプリングしています）\n色付きは統計的有意性あり（有意水準 0.05）\nダービー出場者の後半戦の成績下降が確認できます。 ただ有意な差が確認できたのはHR%とそれに付随する長打率、wRC+ の成績下降です。ダービー出場者は後半戦に打球部分の打撃成績が低下していることが確認できます。\n対して、ダービー非出場者は後半戦の成績低下は確認できません。 むしろ、HR%の上昇傾向が確認できます。\nダービーの時期が毎年7月中旬であることを記憶している方は、7月下旬から8月といった気温の高い（空気密度の小さい）時期が含まれる後半に打撃成績が落ちるといった現象は観測されないと察していたでしょう。\nでは打球部分で成績を落としていたダービー出場者は具体的にどのような打球プロファイルの変化があったのでしょうか。\n色付きは統計的有意性あり（有意水準 0.05）\n有意な差が確認できるのはHR/FBとPull%（引っ張り率）、基本的な打球分類に変化はありませんがフライ打球がスタンドインする確率が2%ほど下がることにより、HR%が減少しています。\n引っ張り打球が増加する傾向がありますが、この傾向に負の側面を感じるか、その逆を感じるかは意外と分かれる気はします。少なくともセイバーメトリクスに興味のある最近のMLBファンなら正の側面を感じるでしょう。\n対して、ダービー非出場者はもちろん、夏場が多く含まれる後半戦にHR/FBが下降するといった傾向は確認できませんでした。\n大きな差ではありませんが**FB%（フライ率）**が増加し、結果的にHR%も増加する傾向にあるようです。基本的にFBは打者の&quot;勝ち&quot;であり、打席を積み重ねていき&quot;慣れ&quot;てくる後半戦にそのような傾向が観察できることに意外性はありません。（対戦投手に対する慣れが蓄積されやすいNPBではもう少し強く傾向が出ているかもしれません）\nと、ここまでダービー出場者と非出場者の前後半の成績を簡単に比較してきました。\n実際のところ、ダービー出場者は後半戦に成績を落としています。 ただ、この結果をもってして『ホームランダービー』の悪影響として結論付けるのは早計でしょう。\n成績が似ている選手との比較\rでは、肝にいきましょう。\nどのような検証でも必要になるのが、条件を揃えるということです。\n例えばテレビ視聴率からその番組の人気度を測りたいのなら、時間帯や曜日、裏番組などを揃えないと不公平ということは最低限の情報リテラシーのある方なら理解しているはずです。\nということで、ホームランダービーの影響を測りたい今回はどうでしょうか。\n知りたいのはダービー非出場の成績ではありません。ダービー出場者がダービーに出場していなかった仮想世界です（もしくはその逆も）。\nもちろんそんな世界は用意できないので、ダービーに出場していた&quot;かも&quot;しれない、ダービー出場者と前半戦の成績が似ているダービー非出場者を抽出します。\n方法としては代表的なものでもいくつかありますが、今回は結果的に一番類似度が高く抽出できた、ユークリッド距離を使います。\n抽出した類似選手216人の前半戦成績を以下に示します。\nではこのダービー出場者に似ているダービー非出場者は後半戦に成績を落としているのでしょうか。\n色付きは統計的有意性あり（有意水準 0.05）\nダービー出場者と同じくHR%、長打率、wRC+で有意な差が確認できました。\nエンタメ性重視で選手の健康など考えず、打撃フォームにも悪影響が出るはずのホームランダービーを欠場しても成績が下降してしまっています。\nでは、打球部分も見てみましょう。\n色付きは統計的有意性あり（有意水準 0.05）\nここが、今回注目するポイントです。\nダービー出場者と同じようにHR/FBが下降していますが、Pull%の増加は観察できません。\nホームランダービーはスローボールをどれだけスタンドインさせるかを競う、言わば、人外でない限りどれだけ引っ張りフライを打てるかの競技ですから、その影響と考えやすい結果ではあります。\nではダービー出場者と非出場者の前後半の成績変化の違いに統計的有意性はあるでしょうか？\n色付きは統計的有意性あり（有意水準 0.05）\n察していたとは思いますが、Pull%にのみ、有意な差が確認できます。 少なくともPull%の変化はダービー出場者とそれに類似度の高いダービー非出場者との間で有意に差がありそうです。\nちなみに、箱ひげ図でPull%の変化を比較したものが以下になります。\n">
+    <link rel="shortcut icon" href="/solving-baseball/images/favicon.png" />
+<style>
+  :root {
+    --ja-font-family: "Noto Sans JP", "游ゴシック体", "Yu Gothic", YuGothic, 
+      "ヒラギノ角ゴ Pro", "Hiragino Kaku Gothic Pro", "メイリオ", "Meiryo";
+    --base-font-family: "Lato", var(--sys-font-family), var(--ja-font-family),
+      sans-serif;
+  }
+
+   
+  .article-content {
+    color: var(--card-text-color-main);
+  }
+
+  .article-content a {
+    color: var(--accent-color);
+  }
+</style>
+
+<script>
+  (function () {
+    const customFont = document.createElement("link");
+    customFont.href =
+      "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Lato:wght@400;700&display=swap";
+    customFont.type = "text/css";
+    customFont.rel = "stylesheet";
+    document.head.appendChild(customFont);
+  })();
+</script>
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="メニューを開く・閉じる">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/solving-baseball">Solving Baseball Blog</a></h1>
+            <h2 class="site-description">Aspiring Saberistの備忘録</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://x.com/GHiLiBall'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://note.com/calm_phlox375'
+                        target="_blank"
+                        title="note"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/solving-baseball/leaderboard/' >
+                
+                
+                
+                <span>Leaderboard</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/' >
+                
+                
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/about/' >
+                
+                
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/analysis/' >
+                
+                
+                
+                <span>分析系</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/breakdown/' >
+                
+                
+                
+                <span>解説系</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/memo/' >
+                
+                
+                
+                <span>メモ</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/page/search/' >
+                
+                
+                
+                <span>検索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/categories/' >
+                
+                
+                
+                <span>カテゴリ一覧</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/tags/' >
+                
+                
+                
+                <span>タグ一覧</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>ダークモード</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目次</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#はじめに">はじめに</a></li>
+    <li><a href="#ダービー出場者は後半戦に成績を落としているか">ダービー出場者は後半戦に成績を落としているか</a>
+      <ul>
+        <li><a href="#前後半の成績比較">前後半の成績比較</a></li>
+        <li><a href="#成績が似ている選手との比較">成績が似ている選手との比較</a></li>
+      </ul>
+    </li>
+    <li><a href="#打球の変化の影響を考える">打球の変化の影響を考える</a>
+      <ul>
+        <li><a href="#pullの推移比較">Pull%の推移比較</a></li>
+        <li><a href="#10分類における変化">10分類における変化</a></li>
+        <li><a href="#水平角度が及ぼす打球価値の変化">水平角度が及ぼす打球価値の変化</a></li>
+        <li><a href="#打球速度の変化">打球速度の変化</a></li>
+      </ul>
+    </li>
+    <li><a href="#まとめ">まとめ</a></li>
+    <li><a href="#おまけ">おまけ</a></li>
+    <li><a href="#先行研究">先行研究</a></li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/solving-baseball/categories/season%E5%8D%98%E4%BD%8D/" style="background-color: #16a34a; color: #fff;">
+                Season単位
+            </a>
+        
+            <a href="/solving-baseball/categories/game%E5%8D%98%E4%BD%8D/" style="background-color: #059669; color: #fff;">
+                Game単位
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/solving-baseball/analysis/homerun-derby/">ホームランダービーに悪影響はあるか</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published" datetime='2025-07-15T00:00:00Z'>2025-07-15</time>
+            </div>
+        
+
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="はじめに">はじめに
+</h2><p>ホームランダービーの季節が近づくと<strong>ダービーの悪影響</strong>を憂うファンが散見され、気が向いたセイバリストがそれを検証した記事を出すというのは最早お決まりの流れとなっています。</p>
+<p>とは言え、近年は先行研究を引用して「ダービーは後半戦の成績に影響しないよ」だけで終わっている節があると個人的に感じていますし、日本語での分析は<a class="link" href="https://note.com/baseball_namiki/n/n9b115a8f74ea?sub_rt=share_sb"  target="_blank" rel="noopener"
+    >namikiさん</a>のものしか認知していませんので、貴重な日本人セイバーメトリクス好きとして再検証していきます。</p>
+<p>MLBは2015年シーズンからStatcastシステムを全面導入し、打球速度や Sprint Speed といった選手の能力に迫ることのできる指標やプレーの細部をより深く説明できる情報を入手できる環境が整いました。</p>
+<p>そしてタイムリーなことに、MLBのホームランダービーのレギュレーションが<strong>アウト制から時間制になったのも2015年</strong>です。</p>
+<p>アウト制の頃のホームランダービーでも&quot;ダービーは打撃に悪影響を及ぼす&quot;といった言説は確認できますが、時間制になったことでその勢力に加勢した方々も少なくないでしょう。</p>
+<p>日本人的には、標高1600mで息を切らし、（休憩はありますが）5分間で68もの&quot;ホームラン狙いの&quot;スイングをした、2021年大谷翔平が後半戦に打撃成績を落としたことは記憶に新しい方も多いのではないでしょうか。</p>
+<p>前説が長くなりましたが、ダービーが時間制になり、Statcastデータも入手できる2015年以降に絞ってホームランダービーの影響について調べてみたいと思います。</p>
+<hr>
+<h2 id="ダービー出場者は後半戦に成績を落としているか">ダービー出場者は後半戦に成績を落としているか
+</h2><p>はじめに、<strong>ダービー出場者が後半戦に成績を落としているか</strong>という基本的な前提を検証していきます。</p>
+<p>念のため、下記に2015年以降のダービー出場者の一覧を記載します。</p>
+<p><img src="/solving-baseball/images/51.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="ホームランダービー出場者一覧"
+	
+	
+></p>
+<p><em>参考程度に前半戦のHR%とwRC+も（HR%の平均は約3%）</em></p>
+<h3 id="前後半の成績比較">前後半の成績比較
+</h3><p>まずは単純に、前後半の成績をダービーに出場していなかった選手と比較してみます。（打席数がある程度揃うようにサンプリングしています）</p>
+<p><img src="/solving-baseball/images/52.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="前後半の成績比較"
+	
+	
+></p>
+<p><em>色付きは統計的有意性あり（有意水準 0.05）</em></p>
+<p><strong>ダービー出場者の後半戦の成績下降が確認できます。</strong> ただ有意な差が確認できたのはHR%とそれに付随する長打率、wRC+ の成績下降です。ダービー出場者は後半戦に<strong>打球部分</strong>の打撃成績が低下していることが確認できます。</p>
+<p>対して、<strong>ダービー非出場者は後半戦の成績低下は確認できません。</strong> むしろ、HR%の上昇傾向が確認できます。</p>
+<p>ダービーの時期が毎年7月中旬であることを記憶している方は、7月下旬から8月といった気温の高い（空気密度の小さい）時期が含まれる後半に打撃成績が落ちるといった現象は観測されないと察していたでしょう。</p>
+<p>では打球部分で成績を落としていたダービー出場者は具体的にどのような打球プロファイルの変化があったのでしょうか。</p>
+<p><img src="/solving-baseball/images/53.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="打球プロファイルの変化"
+	
+	
+></p>
+<p><em>色付きは統計的有意性あり（有意水準 0.05）</em></p>
+<p>有意な差が確認できるのは<strong>HR/FB</strong>と<strong>Pull%（引っ張り率）</strong>、基本的な打球分類に変化はありませんがフライ打球がスタンドインする確率が2%ほど下がることにより、HR%が減少しています。</p>
+<p>引っ張り打球が増加する傾向がありますが、この傾向に負の側面を感じるか、その逆を感じるかは意外と分かれる気はします。少なくともセイバーメトリクスに興味のある最近のMLBファンなら正の側面を感じるでしょう。</p>
+<p>対して、ダービー非出場者はもちろん、夏場が多く含まれる後半戦にHR/FBが下降するといった傾向は確認できませんでした。</p>
+<p>大きな差ではありませんが**FB%（フライ率）**が増加し、結果的にHR%も増加する傾向にあるようです。基本的にFBは打者の&quot;勝ち&quot;であり、打席を積み重ねていき&quot;慣れ&quot;てくる後半戦にそのような傾向が観察できることに意外性はありません。（対戦投手に対する慣れが蓄積されやすいNPBではもう少し強く傾向が出ているかもしれません）</p>
+<p>と、ここまでダービー出場者と非出場者の前後半の成績を簡単に比較してきました。</p>
+<p>実際のところ、<strong>ダービー出場者は後半戦に成績を落としています。</strong> ただ、この結果をもってして『ホームランダービー』の悪影響として結論付けるのは早計でしょう。</p>
+<h3 id="成績が似ている選手との比較">成績が似ている選手との比較
+</h3><p>では、肝にいきましょう。</p>
+<p>どのような検証でも必要になるのが、<strong>条件を揃える</strong>ということです。</p>
+<p>例えばテレビ視聴率からその番組の人気度を測りたいのなら、時間帯や曜日、裏番組などを揃えないと不公平ということは最低限の情報リテラシーのある方なら理解しているはずです。</p>
+<p>ということで、ホームランダービーの影響を測りたい今回はどうでしょうか。</p>
+<p>知りたいのはダービー非出場の成績ではありません。<strong>ダービー出場者がダービーに出場していなかった仮想世界</strong>です（もしくはその逆も）。</p>
+<p>もちろんそんな世界は用意できないので、ダービーに出場していた&quot;かも&quot;しれない、<strong>ダービー出場者と前半戦の成績が似ているダービー非出場者</strong>を抽出します。</p>
+<p>方法としては代表的なものでもいくつかありますが、今回は結果的に一番類似度が高く抽出できた、ユークリッド距離を使います。</p>
+<p>抽出した類似選手216人の前半戦成績を以下に示します。</p>
+<p><img src="/solving-baseball/images/54.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="類似選手の前半戦成績"
+	
+	
+></p>
+<p>ではこのダービー出場者に似ているダービー非出場者は後半戦に成績を落としているのでしょうか。</p>
+<p><img src="/solving-baseball/images/55.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="類似選手との成績比較"
+	
+	
+></p>
+<p><em>色付きは統計的有意性あり（有意水準 0.05）</em></p>
+<p><strong>ダービー出場者と同じくHR%、長打率、wRC+で有意な差が確認できました。</strong></p>
+<p>エンタメ性重視で選手の健康など考えず、打撃フォームにも悪影響が出るはずの<strong>ホームランダービーを欠場しても成績が下降してしまっています。</strong></p>
+<p>では、打球部分も見てみましょう。</p>
+<p><img src="/solving-baseball/images/56.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="類似選手の打球プロファイル"
+	
+	
+></p>
+<p><em>色付きは統計的有意性あり（有意水準 0.05）</em></p>
+<p>ここが、今回注目するポイントです。</p>
+<p><strong>ダービー出場者と同じようにHR/FBが下降していますが、Pull%の増加は観察できません。</strong></p>
+<p>ホームランダービーはスローボールをどれだけスタンドインさせるかを競う、言わば、人外でない限りどれだけ引っ張りフライを打てるかの競技ですから、その影響と考えやすい結果ではあります。</p>
+<p>ではダービー出場者と非出場者の前後半の成績変化の違いに統計的有意性はあるでしょうか？</p>
+<p><img src="/solving-baseball/images/57.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="成績変化の差の検定"
+	
+	
+></p>
+<p><em>色付きは統計的有意性あり（有意水準 0.05）</em></p>
+<p>察していたとは思いますが、<strong>Pull%にのみ、有意な差が確認できます。</strong> 少なくとも<strong>Pull%の変化はダービー出場者とそれに類似度の高いダービー非出場者との間で有意に差がありそう</strong>です。</p>
+<p>ちなみに、箱ひげ図でPull%の変化を比較したものが以下になります。</p>
+<p><img src="/solving-baseball/images/58.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Pull%変化の箱ひげ図"
+	
+	
+></p>
+<p><em>赤がダービー出場者</em></p>
+<p>Pull%の変化の集団間の差異が、偶然では説明しづらいという状態が視覚的にイメージできるかなと思います。</p>
+<hr>
+<h2 id="打球の変化の影響を考える">打球の変化の影響を考える
+</h2><p>ここまでは FanGraphs、BIS 提供の整えられたデータを使って分析してきました。ここからは Statcast データを用いてPull%、そして水平打球角度の変化についてもう少し考えてみます。</p>
+<h3 id="pullの推移比較">Pull%の推移比較
+</h3><p>まずはPull%の推移を比較してみます。</p>
+<p><img src="/solving-baseball/images/59.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Pull%の推移比較"
+	
+	
+></p>
+<p><em>赤がダービー出場者</em></p>
+<p>ダービー非出場者の安定感に対して、<strong>ダービー出場者は後半戦の前半にPull%が増加</strong>しています。ダービーの影響と考えやすい結果ではあります。</p>
+<p>ただ、前半戦の前半も視界に入れると、また別の交絡因子の存在の可能性も否定できないかと思います。もちろん、もっと期間を分割することは可能ですが、それは信頼性の低下とセットではありますので、一旦次に行きます。</p>
+<h3 id="10分類における変化">10分類における変化
+</h3><p>ダービー出場者が後半戦に引っ張りが増えることは確認できました。</p>
+<p>では、引っ張りと言ってもどのような引っ張りが増えたのでしょうか？</p>
+<p>MLBで近年注目度が高まり、上昇傾向にある引っ張りフライが代表的ですが、ゴロやフライといった打球分類の中でも<strong>水平角度によってその打球価値には差が生まれます。</strong></p>
+<p>PU（ポップフライ）以外のGB（ゴロ）、LD（ライナー）、FB（フライ）を水平角度でも分割し、打球価値の違いを見ておきましょう。</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: center"></th>
+          <th style="text-align: center">Pull</th>
+          <th style="text-align: center">Cent</th>
+          <th style="text-align: center">Oppo</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: center">PU</td>
+          <td style="text-align: center"></td>
+          <td style="text-align: center">.018</td>
+          <td style="text-align: center"></td>
+      </tr>
+      <tr>
+          <td style="text-align: center">FB</td>
+          <td style="text-align: center">.870</td>
+          <td style="text-align: center">.313</td>
+          <td style="text-align: center">.237</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">LD</td>
+          <td style="text-align: center">.739</td>
+          <td style="text-align: center">.592</td>
+          <td style="text-align: center">.621</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">GB</td>
+          <td style="text-align: center">.209</td>
+          <td style="text-align: center">.277</td>
+          <td style="text-align: center">.370</td>
+      </tr>
+  </tbody>
+</table></div>
+<p><em>wOBA by Batted Ball Type（2021 - 2024 MLB）</em>
+<em>Data: Baseball Savant</em></p>
+<p>特に<strong>FBでの打球価値の差が顕著</strong>になっているのが確認できます。一口にPull%が増加したと言っても、FBのPull%が増加したのか、GBのそれかでは野球的にプラスにもマイナスにもなるということが伝わったかと思います。</p>
+<p>では、この10分類の前後半の割合変化を見てみましょう。</p>
+<p><img src="/solving-baseball/images/60.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="10分類の前後半変化"
+	
+	
+></p>
+<p>ダービー出場者は特にPull GB%が増加していることが分かります、とするのは微妙でしょう。そもそもの発生確率の高いPull GBは後半戦に1.05倍になっていますが、<strong>Pull FBも1.08倍</strong>になっています。</p>
+<p>野球的な価値に落とし込んでも、Pull GBが1.2%増加することによる損失は、Pull FBが0.6%増加することによる利益を相殺できないのは先に示した表で十分に分かるかと思います。</p>
+<p>対してPull%の増加傾向が確認できなかったダービー非出場者は<strong>価値の高いPull FBが減少し、価値の低いPull GBが増加</strong>しています。</p>
+<p><strong>本当に『ホームランダービー』に&quot;悪&quot;影響はあるのでしょうか？</strong></p>
+<p>少なくとも打球分類的な視点では軽微とはいえ、むしろ好影響の可能性すら示唆されています。</p>
+<h3 id="水平角度が及ぼす打球価値の変化">水平角度が及ぼす打球価値の変化
+</h3><p>では、「ホームランダービーが後半戦の水平角度に影響を及ぼす」という前提で、<strong>「ダービー出場者がダービーに出場していなかった」仮想世界</strong>と**「ダービー非出場者がダービーに出場していた」仮想世界**を作ってみましょう。</p>
+<p>以下、今回の手法です。思ったより長い文章になったのでしんどくなったら結果まで飛ばしてください。</p>
+<blockquote>
+<p>まず、ダービーに出場していなかった（していた）場合の後半戦の期待水平打球角度を各打球ごとに算出します。</p>
+<p>ダービー出場者は非出場者と比べて<strong>水平打球角度が後半戦に平均して1度ほど下がります</strong>（基本的に水平打球角度は流し方向がプラスとして運用される）。</p>
+<p>この平均値を利用しても良いんですが、局所的に水平打球角度が変化している場合にも対処するため、水平打球角度の各パーセンタイル区間の変化を適用します。</p>
+<p>具体的にはダービー出場者、非出場者でそれぞれ水平打球角度のパーセンタイル値を取得し、各パーセンタイル区間で前後半の水平打球角度の変化を集計します。それを<strong>ダービー出場者の後半戦にはダービー非出場者の変化傾向</strong>を、<strong>ダービー非出場者の後半にはダービー出場者の変化傾向</strong>を取り入れます。</p>
+<p>そして <strong>xwOBAcon</strong> を利用します。</p>
+<p>一般的に xwOBAcon と聞くと、Baseball Savant が公開している、打球速度と垂直打球角度の2つを説明変数とした k-NN（k近傍法）から期待される wOBAcon（にゴロや弱い打球においては GAM で Sprint Speed を考慮したもの）を思い浮かべるかと思います。</p>
+<p>ここでは、打球速度と垂直打球角度に加えて、<strong>水平打球角度も変数に加えた 3VxwOBAcon</strong> を使います。</p>
+<p>そして、後半戦の各打球の水平打球角度について、実際の水平打球角度とは別に先ほど述べたダービーに出場していなかった（していた）場合の期待水平打球角度も使います。</p>
+<p>そうして求めた <strong>Adjusted（Adj.）3VxwOBAcon</strong> と<strong>実際の 3VxwOBAcon</strong> を比較し、ダービー出場によって変化する水平角度による打球価値への影響を測ります。</p>
+</blockquote>
+<p>Adjusted（Adj.）3VxwOBAcon と 3VxwOBAcon を比較したものが以下です。</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: center"></th>
+          <th style="text-align: center">1st Half 3VxwOBAcon</th>
+          <th style="text-align: center">2nd Half 3VxwOBAcon</th>
+          <th style="text-align: center">2nd Half Adj. 3VxwOBAcon</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: center">Derby</td>
+          <td style="text-align: center">.433</td>
+          <td style="text-align: center">.414</td>
+          <td style="text-align: center">.412</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">Non-Derby</td>
+          <td style="text-align: center">.418</td>
+          <td style="text-align: center">.403</td>
+          <td style="text-align: center">.405</td>
+      </tr>
+  </tbody>
+</table></div>
+<p><em>ホークアイデータ（2021 - 2024）のみで学習</em>
+<em>Data: Baseball Savant</em></p>
+<p>ダービー出場者の後半戦の 3VxwOBAcon が .414に対して、ダービーに出場していなかった場合に期待される 3VxwOBAcon は .412です。</p>
+<p>ダービー非出場者がダービーに出場していた場合の 3VxwOBAcon も実際の .403に対して .405となっています。</p>
+<p><strong>平均して1度程度の水平角度の変化はほとんど打球価値に影響を及ぼさない</strong>ことが分かります。</p>
+<p>むしろ、先に述べた通り、水平角度が下がることは良い影響を及ぼす可能性の方が高いでしょう。</p>
+<h3 id="打球速度の変化">打球速度の変化
+</h3><p>ちなみに、ここまで触れてこなかった<strong>打球速度</strong>の変化ですが、こちらも後半戦に統計的に有意に下がるものの、高類似度のダービー非出場者も同じように下がっています。</p>
+<p><img src="/solving-baseball/images/61.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="打球速度の前後半変化"
+	
+	
+></p>
+<p><em>Adj. EVの前後半の変化の比較</em></p>
+<p>もちろん数多の先行研究でも触れられていることではありますが、やはり随所に<strong>平均への回帰</strong>を感じることのできる結果になっています。</p>
+<p>ホームランダービーに出場する選手は基本的に前半戦にホームランを多く打った選手であり、その&quot;結果&quot;には後半戦にも<strong>不変の能力以外の誤差</strong>が含まれています。あえて大衆に伝わりやすい表現を使うと、この場合の誤差は<strong>上振れ方向の誤差</strong>である可能性が高いです。その不安定な誤差により平均への回帰が起こります。</p>
+<p>これはホームランダービーだけに限らず、&ldquo;上振れた&quot;選手が選ばれやすい WBC 等の影響を考察する際にも忘れてはいけない視点です。</p>
+<hr>
+<h2 id="まとめ">まとめ
+</h2><p>まだまだ調べ足りないですが、納期（ホームランダービー：日本時間 7/15 午前9時）も過ぎてしまったのでまとめます。</p>
+<ul>
+<li><strong>ダービー出場者は後半戦に成績を落とす</strong></li>
+<li><strong>ダービーに出場していたかもしれない高類似度選手より成績を落とすとは言えない</strong></li>
+<li><strong>ただ高類似度選手より引っ張り打球が増える傾向にある</strong></li>
+<li><strong>この引っ張り打球の増加は打球の価値、被打球の価値に有意に悪影響を及ぼしていない</strong></li>
+</ul>
+<p>今回ホームランダービーの分析をするにあたり、改めて先行研究をザッと見返しましたが、引っ張り打球の増加について述べてある文献が少なかった（個別事例はいくつか紹介されていた程度）ので、note にまとめてみました。</p>
+<p>ホームランダービーに限らず、ある出来事がもたらす影響、その影響の損益について分析する際にヒントとなる視点がこの note に隠れていることを願って、筆を置くことにします。</p>
+<hr>
+<h2 id="おまけ">おまけ
+</h2><p>先ほど深堀りしなかったPull%の期間推移ですが、期間を8分割するとこうなります。</p>
+<p><img src="/solving-baseball/images/62.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Pull%の8分割推移"
+	
+	
+></p>
+<p><em>赤がダービー出場者</em></p>
+<p>この推移を見ると、「ホームランダービーがきっかけになって引っ張りが増える」というよりは、**「引っ張りの上昇傾向がある選手ほどダービーに出場する」<strong>だったり、</strong>「ダービー出場を意識し始めてからPull％が上昇する」**といった、直接的ではないダービーの影響の可能性もあるのではないかと思えてきます。</p>
+<p>先行研究の多いテーマではありますが、まだまだ調べる余地は残っているかもしれません。</p>
+<p>またダービーだけに限りませんが、引っ張りが増えることの影響もまだまだ深堀りできるはずです。</p>
+<p>予定としてはこの note で引っ張りが増えるリターンの大きい打者や逆にリスクの大きい打者の特徴まで調べる気でいました。はい。</p>
+<p>またそれは次に気が向いたときにしますが~~（そんな分かりやすい傾向はなさそうでした）~~、ここまで読んでくださった、僕と同じAspiring Saberistにも期待しておきます（ ﾟ∀ﾟ ）</p>
+<hr>
+<h2 id="先行研究">先行研究
+</h2><ul>
+<li><a class="link" href="https://note.com/baseball_namiki/n/n9b115a8f74ea"  target="_blank" rel="noopener"
+    >ホームランダービー参加者は後半戦に調子を崩すのか。</a> - Namiki</li>
+<li><a class="link" href="https://sportsanalytics.studentorg.berkeley.edu/articles/home-run-derby.html?utm_source=chatgpt.com"  target="_blank" rel="noopener"
+    >Home Run Derby or Crystal Ball?</a> - Jade Abrica</li>
+<li><a class="link" href="https://www.beyondtheboxscore.com/2014/6/26/5844106/the-home-run-derby-doesnt-affect-some-types-of-hitters-more-paul-goldschmidt-david-wright"  target="_blank" rel="noopener"
+    >Post-Home Run Derby Slumps and All-Fields Hitters</a> - Ryan P. Morrison</li>
+<li><a class="link" href="https://www.tdabaseball.com/post/does-the-home-run-derby-affect-player-performance"  target="_blank" rel="noopener"
+    >Does the Home Run Derby Affect Player Performance?</a> - Dylan Drummey</li>
+<li><a class="link" href="https://sabr.org/journal/article/home-run-derby-curse-fact-or-fiction/"  target="_blank" rel="noopener"
+    >Home Run Derby Curse: Fact or Fiction?</a> - Marcus Jaiclin, Joseph McCollum</li>
+<li><a class="link" href="https://community.fangraphs.com/the-home-run-derby-and-second-half-production-a-meta-analysis-of-all-players-from-1985-to-2013/"  target="_blank" rel="noopener"
+    >The Home Run Derby and Second Half Production: A Meta-Analysis of All Players from 1985 to 2013</a> - Chjwill</li>
+<li><a class="link" href="https://www.emerald.com/books/edited-volume/15433/chapter-abstract/86640623/Is-there-a-Home-Run-Derby-Curse?redirectedFrom=fulltext"  target="_blank" rel="noopener"
+    >Is there a Home Run Derby Curse?</a> - Daniel E. O’Leary</li>
+<li><a class="link" href="https://www.beyondtheboxscore.com/2018/8/9/17669616/hoskins-rhys-harper-bryce-baez-javier-home-run-derby-swings-approach-mlb"  target="_blank" rel="noopener"
+    >Can the Home Run Derby help swings?</a> - Devan Fink</li>
+<li><a class="link" href="https://community.fangraphs.com/we-were-wrong-about-the-home-run-derby-curse/"  target="_blank" rel="noopener"
+    >We Were Wrong About the Home Run Derby Curse</a> - Saul Forman</li>
+<li><a class="link" href="https://www.spokesman.com/stories/2023/jul/12/home-run-derby-curse-urban-legend-or-cause-for-con/"  target="_blank" rel="noopener"
+    >&lsquo;Home Run Derby curse&rsquo;: Urban legend, or cause for concern for MLB&rsquo;s heavy-hitters?</a> - Liam Bradford</li>
+<li><a class="link" href="https://www.researchgate.net/publication/349648356_Home_Run_Derby_Participation_in_Major_League_Baseball_Players_Is_There_Associated_Injury_Risk_and_Impact_on_Second-Half_Performance"  target="_blank" rel="noopener"
+    >Home Run Derby Participation in Major League Baseball Players: Is There Associated Injury Risk and Impact on Second-Half Performance?</a> - Steven DeFroda, Steven Staffa, Tim Keeley, Peter Kriz</li>
+<li><a class="link" href="https://arxiv.org/abs/0902.1360"  target="_blank" rel="noopener"
+    >Hierarchical Bayesian Modeling of Hitting Performance in Baseball</a> - Shane T. Jensen, Blake McShane, Abraham J. Wyner</li>
+<li><a class="link" href="https://blogs.fangraphs.com/the-home-run-derby-curse/"  target="_blank" rel="noopener"
+    >The Home Run Derby Curse</a> - J.P. Breen</li>
+</ul>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/solving-baseball/tags/batting/">Batting</a>
+        
+            <a href="/solving-baseball/tags/%E3%83%9B%E3%83%BC%E3%83%A0%E3%83%A9%E3%83%B3%E3%83%80%E3%83%BC%E3%83%93%E3%83%BC/">ホームランダービー</a>
+        
+            <a href="/solving-baseball/tags/%E5%B9%B3%E5%9D%87%E3%81%B8%E3%81%AE%E5%9B%9E%E5%B8%B0/">平均への回帰</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        const elementsToRender = [".main-article", ".widget--toc"];
+
+        elementsToRender.forEach(selector => {
+            const element = document.querySelector(selector);
+            if (element) {
+                renderMathInElement(element, {
+                    delimiters: [
+                        { left: "$$", right: "$$", display: true },
+                        { left: "$", right: "$", display: false },
+                        { left: "\\(", right: "\\)", display: false },
+                        { left: "\\[", right: "\\]", display: true }
+                    ],
+                    ignoredClasses: ["gist"]
+                });
+            }
+        });
+    });
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">関連するコンテンツ</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/solving-baseball/memo/memo_14/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">打者が慣れやすい球種</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/solving-baseball/memo/memo_15/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">打球角度によって変わる打球速度の重要度</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/solving-baseball/memo/memo_16/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">打球の伸びと水平角度</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/solving-baseball/memo/memo_17/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Bat Trackingから打者のズレを可視化する</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/solving-baseball/memo/memo_18/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">球種、プラトーン別のDeception</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script
+    src="https://giscus.app/client.js"
+    data-repo="GHL-Ball/solving-baseball"
+    data-repo-id="R_kgDOQbQpuw"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOQbQpu84CzMFQ"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="light"
+    data-lang="ja"
+    data-loading=""
+    crossorigin="anonymous"
+    async
+></script>
+<script>
+    function setGiscusTheme(theme) {
+        let giscus = document.querySelector("iframe.giscus-frame");
+        if (giscus) {
+            giscus.contentWindow.postMessage(
+                {
+                    giscus: {
+                        setConfig: {
+                            theme: theme,
+                        },
+                    },
+                },
+                "https://giscus.app"
+            );
+        }
+    }
+
+    (function () {
+        addEventListener("message", (e) => {
+            if (event.origin !== "https://giscus.app") return;
+            handler();
+        });
+        window.addEventListener("onColorSchemeChange", handler);
+
+        function handler() {
+            if (document.documentElement.dataset.scheme === "light") {
+                setGiscusTheme('light');
+            } else {
+                setGiscusTheme('dark_dimmed');
+            }
+        }
+    })();
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2025 - 
+        
+        2026 Solving Baseball Blog
+    </section>
+    
+    <section class="powerby">
+        
+            トレバ-(^o^)丿 <br/>
+        <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> で構築されています。 <br />
+        テーマ <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.32.0">Stack</a></b> は <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> によって設計されています。
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/solving-baseball/ts/main.2b3fc53c7455b5631da9fabeefcc69ffc0a3f3cb719d708d3a5f18faf7af88a6.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

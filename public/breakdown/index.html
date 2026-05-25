@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+    <head><script src="/solving-baseball/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=solving-baseball/livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="とりあえずnoteで公開している記事を追加しておきます。性格上、いわゆるニッチな指標が多くなると思います。">
+<title>解説系</title>
+
+<link rel='canonical' href='http://localhost:1313/solving-baseball/breakdown/'>
+
+<link rel="stylesheet" href="/solving-baseball/scss/style.min.4d36f8dc1fd48129e1635deb4b8eb2870fa09474f7280c4cb606d40b2526994b.css"><meta property='og:title' content="解説系">
+<meta property='og:description' content="とりあえずnoteで公開している記事を追加しておきます。性格上、いわゆるニッチな指標が多くなると思います。">
+<meta property='og:url' content='http://localhost:1313/solving-baseball/breakdown/'>
+<meta property='og:site_name' content='Solving Baseball Blog'>
+<meta property='og:type' content='website'><meta property='og:updated_time' content=' 2025-11-11T00:00:00&#43;00:00 '/>
+<meta name="twitter:title" content="解説系">
+<meta name="twitter:description" content="とりあえずnoteで公開している記事を追加しておきます。性格上、いわゆるニッチな指標が多くなると思います。"><link rel="alternate" type="application/rss&#43;xml" href="http://localhost:1313/solving-baseball/breakdown/index.xml">
+    <link rel="shortcut icon" href="/solving-baseball/images/favicon.png" />
+<style>
+  :root {
+    --ja-font-family: "Noto Sans JP", "游ゴシック体", "Yu Gothic", YuGothic, 
+      "ヒラギノ角ゴ Pro", "Hiragino Kaku Gothic Pro", "メイリオ", "Meiryo";
+    --base-font-family: "Lato", var(--sys-font-family), var(--ja-font-family),
+      sans-serif;
+  }
+
+   
+  .article-content {
+    color: var(--card-text-color-main);
+  }
+
+  .article-content a {
+    color: var(--accent-color);
+  }
+</style>
+
+<script>
+  (function () {
+    const customFont = document.createElement("link");
+    customFont.href =
+      "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Lato:wght@400;700&display=swap";
+    customFont.type = "text/css";
+    customFont.rel = "stylesheet";
+    document.head.appendChild(customFont);
+  })();
+</script>
+    </head>
+    <body class="">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="メニューを開く・閉じる">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/solving-baseball">Solving Baseball Blog</a></h1>
+            <h2 class="site-description">Aspiring Saberistの備忘録</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://x.com/GHiLiBall'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://note.com/calm_phlox375'
+                        target="_blank"
+                        title="note"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/solving-baseball/leaderboard/' >
+                
+                
+                
+                <span>Leaderboard</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/' >
+                
+                
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/about/' >
+                
+                
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/analysis/' >
+                
+                
+                
+                <span>分析系</span>
+            </a>
+        </li>
+        
+        
+        <li  class='current' >
+            <a href='/solving-baseball/breakdown/' >
+                
+                
+                
+                <span>解説系</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/memo/' >
+                
+                
+                
+                <span>メモ</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/page/search/' >
+                
+                
+                
+                <span>検索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/categories/' >
+                
+                
+                
+                <span>カテゴリ一覧</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/tags/' >
+                
+                
+                
+                <span>タグ一覧</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>ダークモード</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                <form action="/solving-baseball/page/search/" class="search-form widget" >
+        <p>
+            <label>検索</label>
+            <input name="keyword" required placeholder="入力..." />
+        
+            <button title="検索">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+            </button>
+        </p>
+    </form>
+            
+        
+            
+                <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-infinity" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M9.828 9.172a4 4 0 1 0 0 5.656 a10 10 0 0 0 2.172 -2.828a10 10 0 0 1 2.172 -2.828 a4 4 0 1 1 0 5.656a10 10 0 0 1 -2.172 -2.828a10 10 0 0 0 -2.172 -2.828" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">アーカイブ</h2>
+
+        
+        
+        
+        
+        
+        <div class="widget-archive--list">
+            <div class="archives-year">
+                    <a href="/solving-baseball/page/archives/#2025">
+                        
+                            <span class="year">2025</span>
+                            <span class="count">29</span>
+                        
+                    </a> 
+                </div>
+            <div class="archives-year">
+                    <a href="/solving-baseball/page/archives/#2024">
+                        
+                            <span class="year">2024</span>
+                            <span class="count">18</span>
+                        
+                    </a> 
+                </div>
+            
+        </div>
+    </section>
+            
+        
+            
+                <section class="widget tagCloud">
+    <div class="widget-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+    </div>
+    <h2 class="widget-title section-title">カテゴリ</h2>
+
+    <div class="tagCloud-tags">
+        
+            <a href="/solving-baseball/categories/%E3%83%A1%E3%83%A2/" class="font_size_34">
+                メモ
+            </a>
+        
+            <a href="/solving-baseball/categories/pitch%E5%8D%98%E4%BD%8D/" class="font_size_17">
+                Pitch単位
+            </a>
+        
+            <a href="/solving-baseball/categories/play%E5%8D%98%E4%BD%8D/" class="font_size_17">
+                Play単位
+            </a>
+        
+            <a href="/solving-baseball/categories/season%E5%8D%98%E4%BD%8D/" class="font_size_9">
+                Season単位
+            </a>
+        
+            <a href="/solving-baseball/categories/%E5%AE%88%E5%82%99%E6%8C%87%E6%A8%99/" class="font_size_3">
+                守備指標
+            </a>
+        
+            <a href="/solving-baseball/categories/game%E5%8D%98%E4%BD%8D/" class="font_size_2">
+                Game単位
+            </a>
+        
+            <a href="/solving-baseball/categories/%E6%8A%95%E6%89%8B%E6%8C%87%E6%A8%99/" class="font_size_1">
+                投手指標
+            </a>
+        
+    </div>
+</section>
+
+            
+        
+            
+                <section class="widget tagCloud">
+    <div class="widget-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-tag" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11 3L20 12a1.5 1.5 0 0 1 0 2L14 20a1.5 1.5 0 0 1 -2 0L3 11v-4a4 4 0 0 1 4 -4h4" />
+  <circle cx="9" cy="9" r="2" />
+</svg>
+
+
+
+    </div>
+    <h2 class="widget-title section-title">タグ</h2>
+
+    <div class="tagCloud-tags">
+        
+            <a href="/solving-baseball/tags/batting/">
+                Batting
+            </a>
+        
+            <a href="/solving-baseball/tags/pitching/">
+                Pitching
+            </a>
+        
+            <a href="/solving-baseball/tags/%E3%83%90%E3%83%83%E3%83%88%E3%83%88%E3%83%A9%E3%83%83%E3%82%AD%E3%83%B3%E3%82%B0/">
+                バットトラッキング
+            </a>
+        
+            <a href="/solving-baseball/tags/%E3%83%95%E3%83%AC%E3%83%BC%E3%83%9F%E3%83%B3%E3%82%B0/">
+                フレーミング
+            </a>
+        
+            <a href="/solving-baseball/tags/%E5%AF%A9%E5%88%A4/">
+                審判
+            </a>
+        
+            <a href="/solving-baseball/tags/%E9%A3%9B%E8%B7%9D%E9%9B%A2/">
+                飛距離
+            </a>
+        
+            <a href="/solving-baseball/tags/exit-velocity/">
+                Exit Velocity
+            </a>
+        
+            <a href="/solving-baseball/tags/xwoba/">
+                xwOBA
+            </a>
+        
+            <a href="/solving-baseball/tags/%E3%83%94%E3%83%83%E3%83%81%E3%83%A2%E3%83%87%E3%83%AA%E3%83%B3%E3%82%B0/">
+                ピッチモデリング
+            </a>
+        
+            <a href="/solving-baseball/tags/%E5%91%A8%E5%9B%9E%E5%8A%B9%E6%9E%9C/">
+                周回効果
+            </a>
+        
+    </div>
+</section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <header>
+        <h3 class="section-title">
+            
+                セクション
+            
+        </h3>
+
+        <div class="section-card">
+            <div class="section-details">
+                <h3 class="section-count">4 ページ目</h3>
+                <h1 class="section-term">解説系</h1>
+                
+                    <h2 class="section-description">とりあえずnoteで公開している記事を追加しておきます。性格上、いわゆるニッチな指標が多くなると思います。</h2>
+                
+            </div>
+        </div>
+    </header>
+
+    
+    
+        <div class="article-content">
+            <h3 id="投手指標">投手指標
+</h3><ul>
+<li><a class="link" href="/solving-baseball/breakdown/pitch_modeling/" >ピッチモデリング指標の解説</a></li>
+</ul>
+<h3 id="打者指標">打者指標
+</h3><h3 id="守備指標">守備指標
+</h3><ul>
+<li><a class="link" href="/solving-baseball/breakdown/csaa/" >CSAA: Baseball Prospectus</a></li>
+<li><a class="link" href="/solving-baseball/breakdown/catcher-defense-metrics-summary/" >捕手の守備指標まとめ</a></li>
+<li><a class="link" href="/solving-baseball/breakdown/catcher-drs-rwar-reconsideration/" >捕手のDRS,rWARの再考(問題提起)</a></li>
+</ul>
+<h3 id="走塁指標">走塁指標
+</h3><h3 id="総合指標">総合指標
+</h3>
+        </div>
+    
+    <section class="article-list--compact">
+        
+            <article>
+    <a href="/solving-baseball/breakdown/pitch_modeling/">
+        <div class="article-details">
+            <h2 class="article-title">ピッチモデリング指標の解説</h2>
+            <footer class="article-time">
+                <time datetime='2025-10-24T00:00:00Z'>2025-10-24</time>
+            </footer>
+        </div>
+    </a>
+</article>
+        
+            <article>
+    <a href="/solving-baseball/breakdown/csaa/">
+        <div class="article-details">
+            <h2 class="article-title">CSAA: Baseball Prospectus</h2>
+            <footer class="article-time">
+                <time datetime='2025-05-06T00:00:00Z'>2025-05-06</time>
+            </footer>
+        </div>
+    </a>
+</article>
+        
+            <article>
+    <a href="/solving-baseball/breakdown/catcher-drs-rwar-reconsideration/">
+        <div class="article-details">
+            <h2 class="article-title">捕手のDRS,rWARの再考(問題提起)</h2>
+            <footer class="article-time">
+                <time datetime='2024-03-02T00:00:00Z'>2024-03-02</time>
+            </footer>
+        </div>
+    </a>
+</article>
+        
+            <article>
+    <a href="/solving-baseball/breakdown/catcher-defense-metrics-summary/">
+        <div class="article-details">
+            <h2 class="article-title">捕手の守備指標まとめ</h2>
+            <footer class="article-time">
+                <time datetime='2024-02-29T00:00:00Z'>2024-02-29</time>
+            </footer>
+        </div>
+    </a>
+</article>
+        
+    </section>
+<footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2025 - 
+        
+        2026 Solving Baseball Blog
+    </section>
+    
+    <section class="powerby">
+        
+            トレバ-(^o^)丿 <br/>
+        <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> で構築されています。 <br />
+        テーマ <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.32.0">Stack</a></b> は <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> によって設計されています。
+    </section>
+</footer>
+
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/solving-baseball/ts/main.2b3fc53c7455b5631da9fabeefcc69ffc0a3f3cb719d708d3a5f18faf7af88a6.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>xwOBAcon on Solving Baseball Blog</title>
+        <link>http://localhost:1313/solving-baseball/tags/xwobacon/</link>
+        <description>Recent content in xwOBAcon on Solving Baseball Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>ja</language>
+        <lastBuildDate>Tue, 18 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/solving-baseball/tags/xwobacon/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>FB/LD EV</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_32/</link>
+        <pubDate>Tue, 18 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_32/</guid>
+        <description>&lt;p&gt;Baseball SavantにEV（FB/LD）という指標が追加されました。
+単純にFBとLDの打球速度の平均値であり、&lt;a class=&#34;link&#34; href=&#34;http://localhost:1313/solving-baseball/analysis/escape-velocity-by-batted-ball-type/&#34; &gt;打球分類ごとのEscape Velocity&lt;/a&gt;で触れたように、打球速度を上げる意味がほとんどないゴロを打球速度の計算から除外することでより野球的に打球速度を捉えます。&lt;/p&gt;
+&lt;p&gt;Adjusted EVと考えは似ていますし、やっていることの分かりやすさは打球速度系の指標でもかなり上位かなとは思います。ただ、フライやライナーといった打球分類は客観的な分類が難しい部分もありますし、ある程度のノウハウがないリーグでこの指標を使うのは危険かもしれません。&lt;/p&gt;
+&lt;p&gt;性能としてはAdjusted EVと変わりません。xwOBAconを見れない環境での妥協案の一つとなるでしょう。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/120.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;FB/LD EV&#34;
+	
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/solving-baseball/images/121.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;FB/LD EV&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;同年度のwOBAconの記述力&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/122.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;FB/LD EV&#34;
+	
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/solving-baseball/images/123.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;FB/LD EV&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;翌年度のwOBAconの予測力&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/124.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;FB/LD EV&#34;
+	
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/solving-baseball/images/125.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;FB/LD EV&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;xwOBAcon&lt;/em&gt;&lt;/p&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

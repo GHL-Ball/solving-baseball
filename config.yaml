@@ -5,12 +5,6 @@ theme: hugo-theme-stack
 
 capitalizeListTitles: false
 
-outputs:
-  home:
-    - HTML
-    - RSS
-    - JSON
-
 params:
   mainSections:
     - analysis
@@ -36,7 +30,7 @@ params:
   article:
     math: true
     toc: true
-    readingTime: true
+    readingTime: false
     license:
       enabled: false
       
@@ -82,18 +76,22 @@ params:
 
 menu:
   main:
+    - identifier: leaderboard
+      name: Leaderboard
+      url: /leaderboard/
+      weight: 1
     - identifier: home
       name: Home
       url: /
-      weight: 1
+      weight: 2
     - identifier: about
       name: About
       url: /about/
-      weight: 2
+      weight: 3
     - identifier: breakdown
       name: 解説系
       url: /breakdown/
-      weight: 3
+      weight: 4
     - identifier: analysis
       name: 分析系
       url: /analysis/
@@ -101,19 +99,19 @@ menu:
     - identifier: memo
       name: メモ
       url: /memo/
-      weight: 5
+      weight: 6
     - identifier: search
       name: 検索
       url: /page/search/
-      weight: 6
+      weight: 7
     - identifier: categories
       name: カテゴリ一覧
       url: /categories/
-      weight: 7
+      weight: 8
     - identifier: tags
       name: タグ一覧
       url: /tags/
-      weight: 8
+      weight: 9
       
   social:
     - identifier: twitter

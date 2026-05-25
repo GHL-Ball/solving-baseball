@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>ABS on Solving Baseball Blog</title>
+        <link>http://localhost:1313/solving-baseball/tags/abs/</link>
+        <description>Recent content in ABS on Solving Baseball Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>ja</language>
+        <lastBuildDate>Wed, 24 Sep 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/solving-baseball/tags/abs/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>ストライクゾーン改定の影響を受ける打者</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_04/</link>
+        <pubDate>Wed, 24 Sep 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_04/</guid>
+        <description>&lt;p&gt;かなり雑ではありますがメモにはこのレベルの雑なものも置いておきます。&lt;/p&gt;
+&lt;p&gt;MLBは2026年からABSの導入が決定し、それに伴いストライクゾーンの刷新も行われます。
+野球規則に則った現状のストライクゾーンはあくまでも打撃姿勢におけるストライクゾーンですが、いろいろ事情はあるでしょう、2026年以降は身長によってストライクゾーンが定められることが決定しました。
+これにより打撃フォームだと、しゃがみ系の打者より突っ立ち系の打者の方がストライクゾーンが小さくなります。
+身体的特徴だと、膝下が長い打者より短い選手が、腰位置が低い打者より高い打者が、顔が長い打者より顔が短い打者の方がストライクゾーンが小さくなります。&lt;/p&gt;
+&lt;p&gt;そんな感じでストライクゾーン小さくなる打者の上位下位を出してみたという話です。&lt;/p&gt;
+&lt;p&gt;-&lt;img src=&#34;http://localhost:1313/solving-baseball/images/41.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;ストライクゾーン改定01&#34;
+	
+	
+&gt;
+-&lt;img src=&#34;http://localhost:1313/solving-baseball/images/42.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;ストライクゾーン改定02&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Baseball SavantがPitch単位で設定しているストライクゾーンが縦に何cm小さくなるかを計算しています。
+ベリンジャーやイエリッチは（身長に対して）極端なストライクゾーンでも有名でしょう。&lt;/p&gt;
+&lt;p&gt;ただ注意点として打者の体感として格差が生じるかというと、現状の審判は打者の個別ゾーンに対応できていませんので悪い意味で現行のものと別物にはならないでしょう。
+以下に実際の試合のストライク・ボール判定において、ストライク確率が50％となる高さを打者別に推定したソーンとの比較を示します。&lt;/p&gt;
+&lt;p&gt;-&lt;img src=&#34;http://localhost:1313/solving-baseball/images/43.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;ストライクゾーン改定03&#34;
+	
+	
+&gt;
+-&lt;img src=&#34;http://localhost:1313/solving-baseball/images/44.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;ストライクゾーン改定04&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;ベリンジャーやイエリッチがこちらのリストに登場しないことからも理論と実態の乖離を窺えるかと思います。
+そこも含めて打者へのフィードバックを適切に行わないと、ジャッジが低めの誤審をチャレンジしないとかアルトゥーベが高めの誤審をチャレンジしないとか、そんな状況になる可能性は十分にあります。&lt;/p&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

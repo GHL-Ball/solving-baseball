@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+    <head><script src="/solving-baseball/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=solving-baseball/livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="打者\rまずは打者からです。対象とした打者は2015〜2023年(2020年は除く)の３・４月と５月以降でどちらも規定打席に立った打者です。本当は生存バイアス等にも対処した方が良いと思いますが今回は手軽にいきます。\nvs 指標自身\rまずは指標自身の話です。「4月のBABIPと５月以降のBABIPって相関あるの？」という感じの話。野球ファンからの関心がそこそこ高そうな指標を中心にピックアップしたものがこちら。\n各指標の3・4月と5月以降の相関係数（n = 853）\nこれは野球に限らないことだと思いますが、ファンが第一に気にするような結果ではなく、その結果が出る前の過程を測った指標ほど強い相関を示しています。\n打者のアプローチ姿勢(Swing%, Contact%)、打者のパワー(打球速度, Hard Hit%)、打者のスイング軌道(打球角度, GB%, FB%)のようなものはシーズン序盤から安定しても、それらに加え内外の様々な変数が組み合わさった結果完成する指標(BABIP, wOBA等)は安定に時間がかかることは想像に難くありません。\nゴロとフライの境目であるライナー、引っ張りと流しの境目であるセンター返しも安定に時間がかかりますが特に気を付けるべきはライナー。ライナーは他と比べて恐ろしく生産性の高い打球ですが、ライナーの発生確率が信頼に足るサンプルサイズに達するのは500〜600BBEほど。これは上位打線で年間フル出場近く出場しても選手によっては到達できない数字です。\nwOBA - xwOBA(0.222)は使用球場の偏りを留意しておく必要はあるでしょう。参考までに、同期間のwOBA - xwOBAはクアーズで .029、ブッシュで -.011です。\nClutch(0.034)、打率 - 得点圏打率(-0.032)は美しいですね。\nvs wOBA\r次は５月以降のwOBAとの比較です。三振しないことや速い打球を飛ばすことはあくまでも手段です。目的＝勝利に貢献 ≒ 得点に貢献 ≒ wOBAの高い打者は４月のどの指標でその兆しを見せていたのでしょうか。\n3・4月の各指標と5月以降のwOBAとの相関係数（n = 853）\n一応相対的にカラースケールしてますが軒並みしょぼいです。\nxwOBAですら決定係数は0.156、５月以降のwOBAをほとんど説明できません。\n気を付けるべきはコンタクト系の指標ですかね。コンタクト系の指標はコンタクト力(という言い方も少し違いますが)を測る指標としては信頼度は高いですが、打者においてコンタクト力は単純に得点創出力に結びつきません。\nこれはイチローのあの .220 40本発言が野球ファンに違和感なく受け入れられているようにコンタクト能力と長打力にトレードオフ関係があることを直感的に理解している人は多そうです。\n実際のトレードオフ関係を定量化するのは割と大変だと思いますが、現状コンタクト力とK%には強い因果があるのに対して、コンタクト力と得点創出力には相関はありません。これの意味するところはコンタクト力の低い打者は三振による損失を他で補っているということです。\n2023 min.300PA\n丁度良く実例があるので紹介すると、2023年MLBで最も低いK%を記録しながらISO最下位、wRC+は92に甘んじたガーディアンズは昨オフ従来のアプローチ姿勢を打ち破る意向を示し、2024年4月終了時点で昨年からK%の順位を落としながらISO15位、wRC+107とそのトレードオフを成功させています。今年のガーディアンズは要注目です。\nWhy Guardians’ bid to boost their offense starts with … swinging-and-missing? - Zack Meisel 投手\rでは投手です。対象とした投手は３・４月と５月以降でどちらも規定投球回に達した投手。\nvs 指標自身\r">
+<title>4月の成績 vs 5月以降の成績</title>
+
+<link rel='canonical' href='http://localhost:1313/solving-baseball/analysis/april-vs-may-stats-article/'>
+
+<link rel="stylesheet" href="/solving-baseball/scss/style.min.4d36f8dc1fd48129e1635deb4b8eb2870fa09474f7280c4cb606d40b2526994b.css"><meta property='og:title' content="4月の成績 vs 5月以降の成績">
+<meta property='og:description' content="打者\rまずは打者からです。対象とした打者は2015〜2023年(2020年は除く)の３・４月と５月以降でどちらも規定打席に立った打者です。本当は生存バイアス等にも対処した方が良いと思いますが今回は手軽にいきます。\nvs 指標自身\rまずは指標自身の話です。「4月のBABIPと５月以降のBABIPって相関あるの？」という感じの話。野球ファンからの関心がそこそこ高そうな指標を中心にピックアップしたものがこちら。\n各指標の3・4月と5月以降の相関係数（n = 853）\nこれは野球に限らないことだと思いますが、ファンが第一に気にするような結果ではなく、その結果が出る前の過程を測った指標ほど強い相関を示しています。\n打者のアプローチ姿勢(Swing%, Contact%)、打者のパワー(打球速度, Hard Hit%)、打者のスイング軌道(打球角度, GB%, FB%)のようなものはシーズン序盤から安定しても、それらに加え内外の様々な変数が組み合わさった結果完成する指標(BABIP, wOBA等)は安定に時間がかかることは想像に難くありません。\nゴロとフライの境目であるライナー、引っ張りと流しの境目であるセンター返しも安定に時間がかかりますが特に気を付けるべきはライナー。ライナーは他と比べて恐ろしく生産性の高い打球ですが、ライナーの発生確率が信頼に足るサンプルサイズに達するのは500〜600BBEほど。これは上位打線で年間フル出場近く出場しても選手によっては到達できない数字です。\nwOBA - xwOBA(0.222)は使用球場の偏りを留意しておく必要はあるでしょう。参考までに、同期間のwOBA - xwOBAはクアーズで .029、ブッシュで -.011です。\nClutch(0.034)、打率 - 得点圏打率(-0.032)は美しいですね。\nvs wOBA\r次は５月以降のwOBAとの比較です。三振しないことや速い打球を飛ばすことはあくまでも手段です。目的＝勝利に貢献 ≒ 得点に貢献 ≒ wOBAの高い打者は４月のどの指標でその兆しを見せていたのでしょうか。\n3・4月の各指標と5月以降のwOBAとの相関係数（n = 853）\n一応相対的にカラースケールしてますが軒並みしょぼいです。\nxwOBAですら決定係数は0.156、５月以降のwOBAをほとんど説明できません。\n気を付けるべきはコンタクト系の指標ですかね。コンタクト系の指標はコンタクト力(という言い方も少し違いますが)を測る指標としては信頼度は高いですが、打者においてコンタクト力は単純に得点創出力に結びつきません。\nこれはイチローのあの .220 40本発言が野球ファンに違和感なく受け入れられているようにコンタクト能力と長打力にトレードオフ関係があることを直感的に理解している人は多そうです。\n実際のトレードオフ関係を定量化するのは割と大変だと思いますが、現状コンタクト力とK%には強い因果があるのに対して、コンタクト力と得点創出力には相関はありません。これの意味するところはコンタクト力の低い打者は三振による損失を他で補っているということです。\n2023 min.300PA\n丁度良く実例があるので紹介すると、2023年MLBで最も低いK%を記録しながらISO最下位、wRC+は92に甘んじたガーディアンズは昨オフ従来のアプローチ姿勢を打ち破る意向を示し、2024年4月終了時点で昨年からK%の順位を落としながらISO15位、wRC+107とそのトレードオフを成功させています。今年のガーディアンズは要注目です。\nWhy Guardians’ bid to boost their offense starts with … swinging-and-missing? - Zack Meisel 投手\rでは投手です。対象とした投手は３・４月と５月以降でどちらも規定投球回に達した投手。\nvs 指標自身\r">
+<meta property='og:url' content='http://localhost:1313/solving-baseball/analysis/april-vs-may-stats-article/'>
+<meta property='og:site_name' content='Solving Baseball Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Analysis' /><meta property='article:tag' content='Batting' /><meta property='article:tag' content='Pitching' /><meta property='article:tag' content='信頼度' /><meta property='article:published_time' content='2024-05-02T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-05-02T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="4月の成績 vs 5月以降の成績">
+<meta name="twitter:description" content="打者\rまずは打者からです。対象とした打者は2015〜2023年(2020年は除く)の３・４月と５月以降でどちらも規定打席に立った打者です。本当は生存バイアス等にも対処した方が良いと思いますが今回は手軽にいきます。\nvs 指標自身\rまずは指標自身の話です。「4月のBABIPと５月以降のBABIPって相関あるの？」という感じの話。野球ファンからの関心がそこそこ高そうな指標を中心にピックアップしたものがこちら。\n各指標の3・4月と5月以降の相関係数（n = 853）\nこれは野球に限らないことだと思いますが、ファンが第一に気にするような結果ではなく、その結果が出る前の過程を測った指標ほど強い相関を示しています。\n打者のアプローチ姿勢(Swing%, Contact%)、打者のパワー(打球速度, Hard Hit%)、打者のスイング軌道(打球角度, GB%, FB%)のようなものはシーズン序盤から安定しても、それらに加え内外の様々な変数が組み合わさった結果完成する指標(BABIP, wOBA等)は安定に時間がかかることは想像に難くありません。\nゴロとフライの境目であるライナー、引っ張りと流しの境目であるセンター返しも安定に時間がかかりますが特に気を付けるべきはライナー。ライナーは他と比べて恐ろしく生産性の高い打球ですが、ライナーの発生確率が信頼に足るサンプルサイズに達するのは500〜600BBEほど。これは上位打線で年間フル出場近く出場しても選手によっては到達できない数字です。\nwOBA - xwOBA(0.222)は使用球場の偏りを留意しておく必要はあるでしょう。参考までに、同期間のwOBA - xwOBAはクアーズで .029、ブッシュで -.011です。\nClutch(0.034)、打率 - 得点圏打率(-0.032)は美しいですね。\nvs wOBA\r次は５月以降のwOBAとの比較です。三振しないことや速い打球を飛ばすことはあくまでも手段です。目的＝勝利に貢献 ≒ 得点に貢献 ≒ wOBAの高い打者は４月のどの指標でその兆しを見せていたのでしょうか。\n3・4月の各指標と5月以降のwOBAとの相関係数（n = 853）\n一応相対的にカラースケールしてますが軒並みしょぼいです。\nxwOBAですら決定係数は0.156、５月以降のwOBAをほとんど説明できません。\n気を付けるべきはコンタクト系の指標ですかね。コンタクト系の指標はコンタクト力(という言い方も少し違いますが)を測る指標としては信頼度は高いですが、打者においてコンタクト力は単純に得点創出力に結びつきません。\nこれはイチローのあの .220 40本発言が野球ファンに違和感なく受け入れられているようにコンタクト能力と長打力にトレードオフ関係があることを直感的に理解している人は多そうです。\n実際のトレードオフ関係を定量化するのは割と大変だと思いますが、現状コンタクト力とK%には強い因果があるのに対して、コンタクト力と得点創出力には相関はありません。これの意味するところはコンタクト力の低い打者は三振による損失を他で補っているということです。\n2023 min.300PA\n丁度良く実例があるので紹介すると、2023年MLBで最も低いK%を記録しながらISO最下位、wRC+は92に甘んじたガーディアンズは昨オフ従来のアプローチ姿勢を打ち破る意向を示し、2024年4月終了時点で昨年からK%の順位を落としながらISO15位、wRC+107とそのトレードオフを成功させています。今年のガーディアンズは要注目です。\nWhy Guardians’ bid to boost their offense starts with … swinging-and-missing? - Zack Meisel 投手\rでは投手です。対象とした投手は３・４月と５月以降でどちらも規定投球回に達した投手。\nvs 指標自身\r">
+    <link rel="shortcut icon" href="/solving-baseball/images/favicon.png" />
+<style>
+  :root {
+    --ja-font-family: "Noto Sans JP", "游ゴシック体", "Yu Gothic", YuGothic, 
+      "ヒラギノ角ゴ Pro", "Hiragino Kaku Gothic Pro", "メイリオ", "Meiryo";
+    --base-font-family: "Lato", var(--sys-font-family), var(--ja-font-family),
+      sans-serif;
+  }
+
+   
+  .article-content {
+    color: var(--card-text-color-main);
+  }
+
+  .article-content a {
+    color: var(--accent-color);
+  }
+</style>
+
+<script>
+  (function () {
+    const customFont = document.createElement("link");
+    customFont.href =
+      "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Lato:wght@400;700&display=swap";
+    customFont.type = "text/css";
+    customFont.rel = "stylesheet";
+    document.head.appendChild(customFont);
+  })();
+</script>
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="メニューを開く・閉じる">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/solving-baseball">Solving Baseball Blog</a></h1>
+            <h2 class="site-description">Aspiring Saberistの備忘録</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://x.com/GHiLiBall'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://note.com/calm_phlox375'
+                        target="_blank"
+                        title="note"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/solving-baseball/leaderboard/' >
+                
+                
+                
+                <span>Leaderboard</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/' >
+                
+                
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/about/' >
+                
+                
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/analysis/' >
+                
+                
+                
+                <span>分析系</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/breakdown/' >
+                
+                
+                
+                <span>解説系</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/memo/' >
+                
+                
+                
+                <span>メモ</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/page/search/' >
+                
+                
+                
+                <span>検索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/categories/' >
+                
+                
+                
+                <span>カテゴリ一覧</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/tags/' >
+                
+                
+                
+                <span>タグ一覧</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>ダークモード</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目次</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#打者">打者</a>
+      <ul>
+        <li><a href="#vs-指標自身">vs 指標自身</a></li>
+        <li><a href="#vs-woba">vs wOBA</a></li>
+      </ul>
+    </li>
+    <li><a href="#投手">投手</a>
+      <ul>
+        <li><a href="#vs-指標自身-1">vs 指標自身</a></li>
+        <li><a href="#vs-防御率">vs 防御率</a></li>
+        <li><a href="#vs-fip">vs FIP</a></li>
+      </ul>
+    </li>
+    <li><a href="#最後に">最後に</a></li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/solving-baseball/categories/season%E5%8D%98%E4%BD%8D/" style="background-color: #16a34a; color: #fff;">
+                Season単位
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/solving-baseball/analysis/april-vs-may-stats-article/">4月の成績 vs 5月以降の成績</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published" datetime='2024-05-02T00:00:00Z'>2024-05-02</time>
+            </div>
+        
+
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="打者">打者
+</h2><p>まずは打者からです。対象とした打者は2015〜2023年(2020年は除く)の３・４月と５月以降でどちらも規定打席に立った打者です。本当は生存バイアス等にも対処した方が良いと思いますが今回は手軽にいきます。</p>
+<h3 id="vs-指標自身">vs 指標自身
+</h3><p>まずは指標自身の話です。「4月のBABIPと５月以降のBABIPって相関あるの？」という感じの話。野球ファンからの関心がそこそこ高そうな指標を中心にピックアップしたものがこちら。</p>
+<p><img src="/solving-baseball/images/80.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="各指標の3・4月と5月以降の相関係数（打者）"
+	
+	
+></p>
+<p><em>各指標の3・4月と5月以降の相関係数（n = 853）</em></p>
+<p>これは野球に限らないことだと思いますが、ファンが第一に気にするような結果ではなく、その結果が出る前の過程を測った指標ほど強い相関を示しています。</p>
+<p>打者の<strong>アプローチ姿勢</strong>(Swing%, Contact%)、打者の<strong>パワー</strong>(打球速度, Hard Hit%)、打者の<strong>スイング軌道</strong>(打球角度, GB%, FB%)のようなものはシーズン序盤から安定しても、それらに加え内外の様々な変数が組み合わさった結果完成する指標(BABIP, wOBA等)は安定に時間がかかることは想像に難くありません。</p>
+<p>ゴロとフライの境目であるライナー、引っ張りと流しの境目であるセンター返しも安定に時間がかかりますが特に気を付けるべきはライナー。ライナーは他と比べて恐ろしく生産性の高い打球ですが、ライナーの発生確率が信頼に足るサンプルサイズに達するのは500〜600BBEほど。これは上位打線で年間フル出場近く出場しても選手によっては到達できない数字です。</p>
+<p>wOBA - xwOBA(0.222)は使用球場の偏りを留意しておく必要はあるでしょう。参考までに、同期間のwOBA - xwOBAはクアーズで .029、ブッシュで -.011です。</p>
+<p>Clutch(0.034)、打率 - 得点圏打率(-0.032)は美しいですね。</p>
+<h3 id="vs-woba">vs wOBA
+</h3><p>次は５月以降のwOBAとの比較です。三振しないことや速い打球を飛ばすことはあくまでも手段です。<strong>目的＝勝利に貢献 ≒ 得点に貢献 ≒ wOBAの高い打者</strong>は４月のどの指標でその兆しを見せていたのでしょうか。</p>
+<p><img src="/solving-baseball/images/81.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="3・4月の各指標と5月以降のwOBAとの相関係数"
+	
+	
+></p>
+<p><em>3・4月の各指標と5月以降のwOBAとの相関係数（n = 853）</em></p>
+<p>一応相対的にカラースケールしてますが軒並みしょぼいです。</p>
+<p>xwOBAですら決定係数は0.156、５月以降のwOBAをほとんど説明できません。</p>
+<p>気を付けるべきはコンタクト系の指標ですかね。コンタクト系の指標はコンタクト力(という言い方も少し違いますが)を測る指標としては信頼度は高いですが、<strong>打者においてコンタクト力は単純に得点創出力に結びつきません。</strong></p>
+<p>これはイチローのあの <strong>.220 40本発言</strong>が野球ファンに違和感なく受け入れられているように<strong>コンタクト能力と長打力にトレードオフ関係がある</strong>ことを直感的に理解している人は多そうです。</p>
+<p>実際のトレードオフ関係を定量化するのは割と大変だと思いますが、現状コンタクト力とK%には強い因果があるのに対して、コンタクト力と得点創出力には相関はありません。これの意味するところはコンタクト力の低い打者は三振による損失を他で補っているということです。</p>
+<p><img src="/solving-baseball/images/82.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="wRC&#43; vs Contact%"
+	
+	
+></p>
+<p><em>2023 min.300PA</em></p>
+<p>丁度良く実例があるので紹介すると、2023年MLBで最も低いK%を記録しながらISO最下位、wRC+は92に甘んじたガーディアンズは昨オフ従来のアプローチ姿勢を打ち破る意向を示し、2024年4月終了時点で昨年からK%の順位を落としながらISO15位、wRC+107とそのトレードオフを成功させています。今年のガーディアンズは要注目です。</p>
+<ul>
+<li><a class="link" href="https://www.nytimes.com/athletic/5298726/2024/02/26/guardians-offense-swinging-and-missing/"  target="_blank" rel="noopener"
+    >Why Guardians’ bid to boost their offense starts with … swinging-and-missing?</a> - Zack Meisel</li>
+</ul>
+<hr>
+<h2 id="投手">投手
+</h2><p>では投手です。対象とした投手は３・４月と５月以降でどちらも規定投球回に達した投手。</p>
+<h3 id="vs-指標自身-1">vs 指標自身
+</h3><p><img src="/solving-baseball/images/83.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="各指標の3・4月と5月以降の相関係数（投手）"
+	
+	
+></p>
+<p><em>各指標の3・4月と5月以降の相関係数（n = 333）</em></p>
+<p><strong>・K/BB(0.249) vs K - BB%(0.576)</strong></p>
+<p>その簡易な算出方法から日本のライトなプロ野球ファンからの認知度も高いK/BB、比だからこそ広まった感じもしますが比であることが悪さをします。</p>
+<p>例を挙げるなら、K% 20%, BB% 1%が実力の投手がK% 20%, BB% 2%を記録しても100打者あたり1人多く四球を出しただけの変化であり、実際K - BB%は19%から18%と大した変化を見せませんがK/BBでは20から10へ大きな変化を見せます。この例は極論だとしても<strong>比であることが邪魔して投手の能力を測る指標としてはK - BB%に完敗</strong>しています。</p>
+<p><strong>・WHIP(0.286)</strong></p>
+<p>WHIPも人気指標だと思います。WHIPは防御率(0.163)と違いLOB%(0.060)の不安定さをカバーできますが、BABIP(0.087)の不安定さはカバーしません。</p>
+<p><strong>・IFFB%(0.104), HR/FB(0.096)</strong></p>
+<p>この２つはFIP(0.373)やIFFIPに影響を与えますが、xFIP(0.507)があるようにHR/FBは不安定ですしIFFB%も同程度に不安定です。</p>
+<p>fWARの構成指標IFFIPはもちろん、内野フライを特別扱いしないFIPもその実は「投手の責任範囲を絞った(から予測能力も多少ある)結果説明指標」に過ぎず、だからこそWARの構成指標として胸を張れる部分もあると思います。</p>
+<p><strong>・xERA(0.379)</strong></p>
+<p>Baseball Savantの注目度が上がるにつれxERAもよく目にするようになった体感があるので性格悪く釘刺ししておこうかなと。xERAはその名の通り、ではなく<strong>被xwOBAをERAスケールしたもの</strong>であり、僕は虎の威を借る狐のように見ています。ここで言う虎は三振や四球で、狐はxwOBAcon(0.262)ですね。</p>
+<p>xwOBAconはBABIPのように打者と投手では非対称性があります。その非対称性に対処したのがxFIPやSIERAです。</p>
+<p>打者のxwOBAは信頼度の高い非打球要素と信頼度の高いxwOBAconで構成されていますが、投手のxwOBAは信頼度の高い非打球要素と信頼度の低いxwOBAconで構成されています。なので打者のxwOBAと投手のxwOBAを同じテンションで見るのは危険です。</p>
+<p><strong>・Stuff+(0.871), botStf(0.895)</strong></p>
+<p>ピッチモデリング指標は早い時期から安定します。wOBAcon(0.087)の不安定さと合わせて見ると<strong>4月の打球管理をもとに球質の評価を行うのは相当思い切った行為</strong>と言えそうです。</p>
+<h3 id="vs-防御率">vs 防御率
+</h3><p>では5月以降の防御率との比較です。防御率は今も恐らくこれからも一番人気指標でしょうし、rWARとの結びつきも強く、個人的には重要視はしませんが無視することもできません。</p>
+<p><img src="/solving-baseball/images/84.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="各指標の3・4月と5月以降の防御率との相関係数"
+	
+	
+></p>
+<p><em>各指標の3・4月と5月以降の防御率との相関係数（n = 333）</em></p>
+<p>対象を厳しく設定した割には小さい数字が並び、スモールサンプルの限界を感じますがピッチモデリング指標の健闘は光ります。</p>
+<p><strong>・xERA(0.222)</strong></p>
+<p>xERAがxwOBAconのせいで不安定な指標であることは先ほど述べましたが、防御率を予測する文脈においてもxwOBAconが足を引っ張ります。</p>
+<p>4月のxwOBAconと5月以降のwOBAconの相関係数は0.155です。守備や球場が固定される影響もあるとは言え、4月のxERAのxwOBAcon部分は5月以降のwOBAconの予測に役立ちません。xERAが防御率(0.163)よりはマシな相関係数を記録できているのも三振と四球というトラッキングデータを必要としない要素によるものです。</p>
+<p><strong>・K - BB%(-0.282)</strong></p>
+<p>先ほど、K/BBのようにはバグらない指標として挙げたK - BB%ですが簡易な指標の割には防御率予測の文脈でもFIP(0.255)とSIERA(0.308)の間を取っています。K - BB%が予測指標としてもそれなりの地位を築けているのは<strong>能力依存度の高い指標であること</strong>と、<strong>三振と四球の得点価値が等価に近いこと</strong>、<strong>三振と四球以外の要素で差がつきにくいこと</strong>が理由にあります。</p>
+<p>三振と四球以外の要素は総合すると投手にとってはマイナスになります。もちろん四球もマイナスなので<strong>投手は三振 - 四球の割合をどれだけ増やすかが重要</strong>になってくるわけです。</p>
+<h3 id="vs-fip">vs FIP
+</h3><p>FIPも一応見ておきます。</p>
+<p><img src="/solving-baseball/images/85.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="各指標の3・4月と5月以降のFIPとの相関係数"
+	
+	
+></p>
+<p><em>各指標の3・4月と5月以降のFIPとの相関係数（n = 333）</em></p>
+<p>当たり前ですが、投手が比較的管理できる範囲に絞っている指標なので防御率より予測はしやすくなります。</p>
+<p>FIP予測に限らず、指標自身の信頼度や防御率予測においても打球分類を使ったxFIPやさらに投手も分類して投手ごとに加重割合を変えるような複雑な手法を取っているSIERAなどが優れているのは当然ですが、基本的なスタッツのみで算出できるK - BB%の優秀さはもう少し広まるとうれしいですね。</p>
+<p>ちなみに今回文句ばっかり言ったxERAは防御率を記述する文脈(当該シーズンのxERA vs 当該シーズンの防御率)においては優秀です。実際に打たれたデータを使うので当然と言えば当然ですが。</p>
+<p>優秀と言ってもトラッキングデータを必要としないFIPと記述力も変わらないですが、FIPを能力ではなく結果を表したものと見ることができるならxERAもそのような見方はでき、WARの要素にするとかはおかしいことではないと思います。DeltaGraphsはxERAに性質の近いtRAをWARの要素にしています。</p>
+<p>(指標自体への文句というよりかは名前と機能のズレや使われ方に対する文句なので…)</p>
+<hr>
+<h2 id="最後に">最後に
+</h2><p>文章がとっ散らかって質の低い記事になってしまいましたが、結局のところ4月の成績はあてにならないです。真面目に予測するなら前年の数字の方が有用ですし、今の時代はさらに予測力の高い予測システムがいくつもあります。ただ<strong>4月の段階でも指標間に優劣はある</strong>ので全部同じように信用しないというのももったいないかなと。</p>
+<p>4月の成績が以降の成績予測にあてにならなかろうが実際に起こったことというのも忘れてほしくないところ。得点圏で打ったなら得点圏で打ったのだし、BABIPが低かったのならBABIPが低かったのです。</p>
+<p>あと4月の成績の信頼度を知っているセイバリストの方々もバンバン4月の成績であれこれ語ったりしてるんで、全体像が全然見えない4月だからこそ振れ幅の大きな浪漫ある考察をしていくのも楽しいと思います。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/solving-baseball/tags/batting/">Batting</a>
+        
+            <a href="/solving-baseball/tags/pitching/">Pitching</a>
+        
+            <a href="/solving-baseball/tags/%E4%BF%A1%E9%A0%BC%E5%BA%A6/">信頼度</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        const elementsToRender = [".main-article", ".widget--toc"];
+
+        elementsToRender.forEach(selector => {
+            const element = document.querySelector(selector);
+            if (element) {
+                renderMathInElement(element, {
+                    delimiters: [
+                        { left: "$$", right: "$$", display: true },
+                        { left: "$", right: "$", display: false },
+                        { left: "\\(", right: "\\)", display: false },
+                        { left: "\\[", right: "\\]", display: true }
+                    ],
+                    ignoredClasses: ["gist"]
+                });
+            }
+        });
+    });
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">関連するコンテンツ</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/solving-baseball/analysis/escape-velocity-by-batted-ball-type/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">打球分類ごとのEscape Velocity</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/solving-baseball/memo/memo_34/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">ピッチクロックが球質に及ぼす影響</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script
+    src="https://giscus.app/client.js"
+    data-repo="GHL-Ball/solving-baseball"
+    data-repo-id="R_kgDOQbQpuw"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOQbQpu84CzMFQ"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="light"
+    data-lang="ja"
+    data-loading=""
+    crossorigin="anonymous"
+    async
+></script>
+<script>
+    function setGiscusTheme(theme) {
+        let giscus = document.querySelector("iframe.giscus-frame");
+        if (giscus) {
+            giscus.contentWindow.postMessage(
+                {
+                    giscus: {
+                        setConfig: {
+                            theme: theme,
+                        },
+                    },
+                },
+                "https://giscus.app"
+            );
+        }
+    }
+
+    (function () {
+        addEventListener("message", (e) => {
+            if (event.origin !== "https://giscus.app") return;
+            handler();
+        });
+        window.addEventListener("onColorSchemeChange", handler);
+
+        function handler() {
+            if (document.documentElement.dataset.scheme === "light") {
+                setGiscusTheme('light');
+            } else {
+                setGiscusTheme('dark_dimmed');
+            }
+        }
+    })();
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2025 - 
+        
+        2026 Solving Baseball Blog
+    </section>
+    
+    <section class="powerby">
+        
+            トレバ-(^o^)丿 <br/>
+        <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> で構築されています。 <br />
+        テーマ <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.32.0">Stack</a></b> は <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> によって設計されています。
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/solving-baseball/ts/main.2b3fc53c7455b5631da9fabeefcc69ffc0a3f3cb719d708d3a5f18faf7af88a6.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

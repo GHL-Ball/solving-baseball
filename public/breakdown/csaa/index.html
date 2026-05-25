@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+    <head><script src="/solving-baseball/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=solving-baseball/livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Baseball Prospectus CSAA（ver.1）解説\r捕手のフレーミング評価は野球分析の中では比較的単純で、期待されるストライク率（数）と比較して当該捕手がどの程度ストライクを増やしたかを算出するだけです。この大まかな枠組みはWOWYの時代から各投球座標にアクセスできる現代まで変わってはいませんし、これからも変わることはないでしょう。\n今回は、そのストライク獲得貢献の推定について、Baseball Prospectusの手法をなぞっていけば、少し野球に詳しくなれると思うのでやっていきます。\n貢献とは誤差\r野球ファンの100%がご存じであるように、“理論上は”ストライク判定率は投球座標で決まります。公認野球規則にもそのような記述があるはずです。\nただ、“実際の”ストライク判定率は投球座標“だけ”で説明できないのも野球ファンの99%はご存じであると思います。\nその『誤差』が捕手のフレーミング貢献ですが、当然その誤差を生み出したのは捕手のみではありません。その誤差を各要素に適切に分配することが、捕手のフレーミング貢献の精度向上にも不可欠であることも理解いただけると思います。\n投球座標のみで説明できない誤差と一口に言っても、その誤差にもタイプがあります。ここでは大まかに2つに分けます。\n固定効果\r例えばイニングの表裏。 ホームチームが守備をするイニングの表と攻撃をするイニングの裏ではストライク確率に“違い”が生じます。\nイメージとしては“違い”を明示したい要素です。野球的には他にはピッチカウント、打者や投手の利き手とかですかね。\n普通の線形回帰の説明変数が固定効果という認識でも大丈夫です。\nランダム（変量）効果\rここからが肝です。\n例えば球審。 MLBでは1シーズンで100人ほどの審判が球審を担当します。この球審というグループの中で各球審のストライク判定率には“ブレ”が生じています。\nイメージとしては個体差が存在している集団です。野球的には他には投手や打者といったところでしょう。\n普通の線形回帰の変数とは違い、それぞれを集団に属する（母集団の傾向から）ブレを持った個体として扱います。\nこのタイプ分けがサンプルサイズの異なる変数が互いに絡み合う野球において重要になってきます。\nランダム効果の特性とGLMMの役割\rBaseball Prospectusは、誤差を各要素に分配するフェーズで一般化線形混合モデル（GLMM）を利用しています。GLMMではその名の通り、固定効果とランダム効果を組み合わせたモデルを構築できます。\n先ほども言ったとおり、野球分析でもよく見る普通の線形モデル（LM、GLM）では、各効果を独立した固定の効果として扱います。ただそれでは実務的な問題と理論的な問題が生じます。\n実務的な問題は、捕手100人、球審100人、投手800人、打者1000人をそれぞれ固定効果として扱うような激重モデルの運用は現実的に困難ということです。\n理論的な問題としては、固定効果として扱うと、言うなれば完璧な説明を遂行したがるので、それぞれの選手や審判で信頼性が異なるプロ野球において、過剰に責任を帰属してしまいます。簡単な例を挙げます。\n捕手A\u30005000球\u3000平均 +1% のストライク確率誤差 捕手B\u30002500球\u3000平均 +2% のストライク確率誤差 捕手C\u30001000球\u3000平均 +5% のストライク確率誤差 この3選手のフレーミング貢献は本当に同じなのか？\n固定効果として扱うと上記の『結果』を全て捕手に“そのまま”帰属します。 ただ観測される誤差には「捕手に帰属すべきか分からない」誤差も含まれています。文字通りの運や、モデルの限界や、考慮していない他の要素などです。 そしてその誤差が占める割合は傾向として、サンプルサイズの小さい捕手ほど大きくなります。\nGLMMでは、ランダム効果として扱うと、それぞれの捕手を捕手という（正規分布を持った）グループの中の一つの個体として扱います。 これにより、サンプルサイズが小さかったり、一貫した誤差を生み出していないような個体に対して、その分布の傾向を取り入れる量を多くすることができます。いわゆる平均への回帰が、個体に合わせて合理的に働きます。\nそして、LMやGLMは多重共線性への対応が上手くないというのも聞いたことがある方は多いかと思います。\n現実的なプロ野球のデータ構造では、それぞれを独立した変数と仮定している固定効果のみを扱ったモデルでは、各効果の推定が不安定になります。\n大きな共線性があるのは、例えば投手×捕手でしょう。投手の効果を推定したい場合に観測されている誤差には捕手の効果が相当割合混ざります。この時、固定効果として扱うモデルでは、完璧な説明を遂行したいがために各効果の切り分けが困難になります。\nランダム効果として扱うと、各効果を母集団からのブレとして扱うので上記のような信頼性の低い誤差に対して、母集団の傾向を合理的に取り入れることができます。\nそして、投手より組む相手の範囲が広く、サンプルサイズも大きい、より信頼性の高い捕手の効果を投手の効果の推定に利用できる点も強みです。\nBaseball Prospectus CSAA\r文章ばかりで飽きてきたと思うので、モデル例を見て実感を掴んでいただければと思います。\n2015年のBaseball Prospectusの記事やFanGraphsでBaseball ProspectusのCSAAについての記述がある記事を参考にします。\nまず用意するのは、ベースとなるストライク確率です。 記事によると、投球位置、カウント、球種、球場を効果として盛り込んだPitchInfo提供のものを利用しているので以下のようになるでしょう。\n1 2 3 4 5 # ベースとなるストライク確率を算出 cs_prob_model &lt;- gam( cs ~ s(relative_x, relative_z) + count + pitch_category + home_team, family = binomial, data = pitch_data, na.action = na.exclude ) 投球座標を利用するストライク確率予測では、GAM（一般化加法モデル）のような交互作用や非線形性を捉えられるモデルが適しています。 実際のところは知りませんが、投球位置は相対的投球座標に、球種は合理性を失わない程度にカテゴリーとして分類しています。\n">
+<title>CSAA: Baseball Prospectus</title>
+
+<link rel='canonical' href='http://localhost:1313/solving-baseball/breakdown/csaa/'>
+
+<link rel="stylesheet" href="/solving-baseball/scss/style.min.4d36f8dc1fd48129e1635deb4b8eb2870fa09474f7280c4cb606d40b2526994b.css"><meta property='og:title' content="CSAA: Baseball Prospectus">
+<meta property='og:description' content="Baseball Prospectus CSAA（ver.1）解説\r捕手のフレーミング評価は野球分析の中では比較的単純で、期待されるストライク率（数）と比較して当該捕手がどの程度ストライクを増やしたかを算出するだけです。この大まかな枠組みはWOWYの時代から各投球座標にアクセスできる現代まで変わってはいませんし、これからも変わることはないでしょう。\n今回は、そのストライク獲得貢献の推定について、Baseball Prospectusの手法をなぞっていけば、少し野球に詳しくなれると思うのでやっていきます。\n貢献とは誤差\r野球ファンの100%がご存じであるように、“理論上は”ストライク判定率は投球座標で決まります。公認野球規則にもそのような記述があるはずです。\nただ、“実際の”ストライク判定率は投球座標“だけ”で説明できないのも野球ファンの99%はご存じであると思います。\nその『誤差』が捕手のフレーミング貢献ですが、当然その誤差を生み出したのは捕手のみではありません。その誤差を各要素に適切に分配することが、捕手のフレーミング貢献の精度向上にも不可欠であることも理解いただけると思います。\n投球座標のみで説明できない誤差と一口に言っても、その誤差にもタイプがあります。ここでは大まかに2つに分けます。\n固定効果\r例えばイニングの表裏。 ホームチームが守備をするイニングの表と攻撃をするイニングの裏ではストライク確率に“違い”が生じます。\nイメージとしては“違い”を明示したい要素です。野球的には他にはピッチカウント、打者や投手の利き手とかですかね。\n普通の線形回帰の説明変数が固定効果という認識でも大丈夫です。\nランダム（変量）効果\rここからが肝です。\n例えば球審。 MLBでは1シーズンで100人ほどの審判が球審を担当します。この球審というグループの中で各球審のストライク判定率には“ブレ”が生じています。\nイメージとしては個体差が存在している集団です。野球的には他には投手や打者といったところでしょう。\n普通の線形回帰の変数とは違い、それぞれを集団に属する（母集団の傾向から）ブレを持った個体として扱います。\nこのタイプ分けがサンプルサイズの異なる変数が互いに絡み合う野球において重要になってきます。\nランダム効果の特性とGLMMの役割\rBaseball Prospectusは、誤差を各要素に分配するフェーズで一般化線形混合モデル（GLMM）を利用しています。GLMMではその名の通り、固定効果とランダム効果を組み合わせたモデルを構築できます。\n先ほども言ったとおり、野球分析でもよく見る普通の線形モデル（LM、GLM）では、各効果を独立した固定の効果として扱います。ただそれでは実務的な問題と理論的な問題が生じます。\n実務的な問題は、捕手100人、球審100人、投手800人、打者1000人をそれぞれ固定効果として扱うような激重モデルの運用は現実的に困難ということです。\n理論的な問題としては、固定効果として扱うと、言うなれば完璧な説明を遂行したがるので、それぞれの選手や審判で信頼性が異なるプロ野球において、過剰に責任を帰属してしまいます。簡単な例を挙げます。\n捕手A\u30005000球\u3000平均 +1% のストライク確率誤差 捕手B\u30002500球\u3000平均 +2% のストライク確率誤差 捕手C\u30001000球\u3000平均 +5% のストライク確率誤差 この3選手のフレーミング貢献は本当に同じなのか？\n固定効果として扱うと上記の『結果』を全て捕手に“そのまま”帰属します。 ただ観測される誤差には「捕手に帰属すべきか分からない」誤差も含まれています。文字通りの運や、モデルの限界や、考慮していない他の要素などです。 そしてその誤差が占める割合は傾向として、サンプルサイズの小さい捕手ほど大きくなります。\nGLMMでは、ランダム効果として扱うと、それぞれの捕手を捕手という（正規分布を持った）グループの中の一つの個体として扱います。 これにより、サンプルサイズが小さかったり、一貫した誤差を生み出していないような個体に対して、その分布の傾向を取り入れる量を多くすることができます。いわゆる平均への回帰が、個体に合わせて合理的に働きます。\nそして、LMやGLMは多重共線性への対応が上手くないというのも聞いたことがある方は多いかと思います。\n現実的なプロ野球のデータ構造では、それぞれを独立した変数と仮定している固定効果のみを扱ったモデルでは、各効果の推定が不安定になります。\n大きな共線性があるのは、例えば投手×捕手でしょう。投手の効果を推定したい場合に観測されている誤差には捕手の効果が相当割合混ざります。この時、固定効果として扱うモデルでは、完璧な説明を遂行したいがために各効果の切り分けが困難になります。\nランダム効果として扱うと、各効果を母集団からのブレとして扱うので上記のような信頼性の低い誤差に対して、母集団の傾向を合理的に取り入れることができます。\nそして、投手より組む相手の範囲が広く、サンプルサイズも大きい、より信頼性の高い捕手の効果を投手の効果の推定に利用できる点も強みです。\nBaseball Prospectus CSAA\r文章ばかりで飽きてきたと思うので、モデル例を見て実感を掴んでいただければと思います。\n2015年のBaseball Prospectusの記事やFanGraphsでBaseball ProspectusのCSAAについての記述がある記事を参考にします。\nまず用意するのは、ベースとなるストライク確率です。 記事によると、投球位置、カウント、球種、球場を効果として盛り込んだPitchInfo提供のものを利用しているので以下のようになるでしょう。\n1 2 3 4 5 # ベースとなるストライク確率を算出 cs_prob_model &lt;- gam( cs ~ s(relative_x, relative_z) + count + pitch_category + home_team, family = binomial, data = pitch_data, na.action = na.exclude ) 投球座標を利用するストライク確率予測では、GAM（一般化加法モデル）のような交互作用や非線形性を捉えられるモデルが適しています。 実際のところは知りませんが、投球位置は相対的投球座標に、球種は合理性を失わない程度にカテゴリーとして分類しています。\n">
+<meta property='og:url' content='http://localhost:1313/solving-baseball/breakdown/csaa/'>
+<meta property='og:site_name' content='Solving Baseball Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Breakdown' /><meta property='article:tag' content='CSAA' /><meta property='article:tag' content='混合モデル' /><meta property='article:tag' content='GLMM' /><meta property='article:tag' content='フレーミング' /><meta property='article:published_time' content='2025-05-06T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-05-06T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="CSAA: Baseball Prospectus">
+<meta name="twitter:description" content="Baseball Prospectus CSAA（ver.1）解説\r捕手のフレーミング評価は野球分析の中では比較的単純で、期待されるストライク率（数）と比較して当該捕手がどの程度ストライクを増やしたかを算出するだけです。この大まかな枠組みはWOWYの時代から各投球座標にアクセスできる現代まで変わってはいませんし、これからも変わることはないでしょう。\n今回は、そのストライク獲得貢献の推定について、Baseball Prospectusの手法をなぞっていけば、少し野球に詳しくなれると思うのでやっていきます。\n貢献とは誤差\r野球ファンの100%がご存じであるように、“理論上は”ストライク判定率は投球座標で決まります。公認野球規則にもそのような記述があるはずです。\nただ、“実際の”ストライク判定率は投球座標“だけ”で説明できないのも野球ファンの99%はご存じであると思います。\nその『誤差』が捕手のフレーミング貢献ですが、当然その誤差を生み出したのは捕手のみではありません。その誤差を各要素に適切に分配することが、捕手のフレーミング貢献の精度向上にも不可欠であることも理解いただけると思います。\n投球座標のみで説明できない誤差と一口に言っても、その誤差にもタイプがあります。ここでは大まかに2つに分けます。\n固定効果\r例えばイニングの表裏。 ホームチームが守備をするイニングの表と攻撃をするイニングの裏ではストライク確率に“違い”が生じます。\nイメージとしては“違い”を明示したい要素です。野球的には他にはピッチカウント、打者や投手の利き手とかですかね。\n普通の線形回帰の説明変数が固定効果という認識でも大丈夫です。\nランダム（変量）効果\rここからが肝です。\n例えば球審。 MLBでは1シーズンで100人ほどの審判が球審を担当します。この球審というグループの中で各球審のストライク判定率には“ブレ”が生じています。\nイメージとしては個体差が存在している集団です。野球的には他には投手や打者といったところでしょう。\n普通の線形回帰の変数とは違い、それぞれを集団に属する（母集団の傾向から）ブレを持った個体として扱います。\nこのタイプ分けがサンプルサイズの異なる変数が互いに絡み合う野球において重要になってきます。\nランダム効果の特性とGLMMの役割\rBaseball Prospectusは、誤差を各要素に分配するフェーズで一般化線形混合モデル（GLMM）を利用しています。GLMMではその名の通り、固定効果とランダム効果を組み合わせたモデルを構築できます。\n先ほども言ったとおり、野球分析でもよく見る普通の線形モデル（LM、GLM）では、各効果を独立した固定の効果として扱います。ただそれでは実務的な問題と理論的な問題が生じます。\n実務的な問題は、捕手100人、球審100人、投手800人、打者1000人をそれぞれ固定効果として扱うような激重モデルの運用は現実的に困難ということです。\n理論的な問題としては、固定効果として扱うと、言うなれば完璧な説明を遂行したがるので、それぞれの選手や審判で信頼性が異なるプロ野球において、過剰に責任を帰属してしまいます。簡単な例を挙げます。\n捕手A\u30005000球\u3000平均 +1% のストライク確率誤差 捕手B\u30002500球\u3000平均 +2% のストライク確率誤差 捕手C\u30001000球\u3000平均 +5% のストライク確率誤差 この3選手のフレーミング貢献は本当に同じなのか？\n固定効果として扱うと上記の『結果』を全て捕手に“そのまま”帰属します。 ただ観測される誤差には「捕手に帰属すべきか分からない」誤差も含まれています。文字通りの運や、モデルの限界や、考慮していない他の要素などです。 そしてその誤差が占める割合は傾向として、サンプルサイズの小さい捕手ほど大きくなります。\nGLMMでは、ランダム効果として扱うと、それぞれの捕手を捕手という（正規分布を持った）グループの中の一つの個体として扱います。 これにより、サンプルサイズが小さかったり、一貫した誤差を生み出していないような個体に対して、その分布の傾向を取り入れる量を多くすることができます。いわゆる平均への回帰が、個体に合わせて合理的に働きます。\nそして、LMやGLMは多重共線性への対応が上手くないというのも聞いたことがある方は多いかと思います。\n現実的なプロ野球のデータ構造では、それぞれを独立した変数と仮定している固定効果のみを扱ったモデルでは、各効果の推定が不安定になります。\n大きな共線性があるのは、例えば投手×捕手でしょう。投手の効果を推定したい場合に観測されている誤差には捕手の効果が相当割合混ざります。この時、固定効果として扱うモデルでは、完璧な説明を遂行したいがために各効果の切り分けが困難になります。\nランダム効果として扱うと、各効果を母集団からのブレとして扱うので上記のような信頼性の低い誤差に対して、母集団の傾向を合理的に取り入れることができます。\nそして、投手より組む相手の範囲が広く、サンプルサイズも大きい、より信頼性の高い捕手の効果を投手の効果の推定に利用できる点も強みです。\nBaseball Prospectus CSAA\r文章ばかりで飽きてきたと思うので、モデル例を見て実感を掴んでいただければと思います。\n2015年のBaseball Prospectusの記事やFanGraphsでBaseball ProspectusのCSAAについての記述がある記事を参考にします。\nまず用意するのは、ベースとなるストライク確率です。 記事によると、投球位置、カウント、球種、球場を効果として盛り込んだPitchInfo提供のものを利用しているので以下のようになるでしょう。\n1 2 3 4 5 # ベースとなるストライク確率を算出 cs_prob_model &lt;- gam( cs ~ s(relative_x, relative_z) + count + pitch_category + home_team, family = binomial, data = pitch_data, na.action = na.exclude ) 投球座標を利用するストライク確率予測では、GAM（一般化加法モデル）のような交互作用や非線形性を捉えられるモデルが適しています。 実際のところは知りませんが、投球位置は相対的投球座標に、球種は合理性を失わない程度にカテゴリーとして分類しています。\n">
+    <link rel="shortcut icon" href="/solving-baseball/images/favicon.png" />
+<style>
+  :root {
+    --ja-font-family: "Noto Sans JP", "游ゴシック体", "Yu Gothic", YuGothic, 
+      "ヒラギノ角ゴ Pro", "Hiragino Kaku Gothic Pro", "メイリオ", "Meiryo";
+    --base-font-family: "Lato", var(--sys-font-family), var(--ja-font-family),
+      sans-serif;
+  }
+
+   
+  .article-content {
+    color: var(--card-text-color-main);
+  }
+
+  .article-content a {
+    color: var(--accent-color);
+  }
+</style>
+
+<script>
+  (function () {
+    const customFont = document.createElement("link");
+    customFont.href =
+      "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Lato:wght@400;700&display=swap";
+    customFont.type = "text/css";
+    customFont.rel = "stylesheet";
+    document.head.appendChild(customFont);
+  })();
+</script>
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="メニューを開く・閉じる">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/solving-baseball">Solving Baseball Blog</a></h1>
+            <h2 class="site-description">Aspiring Saberistの備忘録</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://x.com/GHiLiBall'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://note.com/calm_phlox375'
+                        target="_blank"
+                        title="note"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/solving-baseball/leaderboard/' >
+                
+                
+                
+                <span>Leaderboard</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/' >
+                
+                
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/about/' >
+                
+                
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/analysis/' >
+                
+                
+                
+                <span>分析系</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/breakdown/' >
+                
+                
+                
+                <span>解説系</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/memo/' >
+                
+                
+                
+                <span>メモ</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/page/search/' >
+                
+                
+                
+                <span>検索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/categories/' >
+                
+                
+                
+                <span>カテゴリ一覧</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/tags/' >
+                
+                
+                
+                <span>タグ一覧</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>ダークモード</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目次</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#baseball-prospectus-csaaver1解説">Baseball Prospectus CSAA（ver.1）解説</a>
+      <ul>
+        <li><a href="#貢献とは誤差">貢献とは誤差</a></li>
+        <li><a href="#固定効果">固定効果</a></li>
+        <li><a href="#ランダム変量効果">ランダム（変量）効果</a></li>
+        <li><a href="#ランダム効果の特性とglmmの役割">ランダム効果の特性とGLMMの役割</a></li>
+        <li><a href="#baseball-prospectus-csaa">Baseball Prospectus CSAA</a></li>
+      </ul>
+    </li>
+    <li><a href="#モデルを採点する">モデルを採点する</a>
+      <ul>
+        <li><a href="#評価観点">評価観点</a></li>
+        <li><a href="#捕手">捕手</a></li>
+        <li><a href="#打者">打者</a></li>
+        <li><a href="#投手">投手</a></li>
+        <li><a href="#審判">審判</a></li>
+        <li><a href="#他のフレーミング指標">他のフレーミング指標</a></li>
+      </ul>
+    </li>
+    <li><a href="#おわりに">おわりに</a>
+      <ul>
+        <li><a href="#参考文献">参考文献</a></li>
+        <li><a href="#データソース">データソース</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/solving-baseball/categories/%E5%AE%88%E5%82%99%E6%8C%87%E6%A8%99/" style="background-color: #ea580c; color: #fff;">
+                守備指標
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/solving-baseball/breakdown/csaa/">CSAA: Baseball Prospectus</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published" datetime='2025-05-06T00:00:00Z'>2025-05-06</time>
+            </div>
+        
+
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="baseball-prospectus-csaaver1解説">Baseball Prospectus CSAA（ver.1）解説
+</h2><p>捕手のフレーミング評価は野球分析の中では比較的単純で、期待されるストライク率（数）と比較して当該捕手がどの程度ストライクを増やしたかを算出するだけです。この大まかな枠組みはWOWYの時代から各投球座標にアクセスできる現代まで変わってはいませんし、これからも変わることはないでしょう。</p>
+<p>今回は、そのストライク獲得貢献の推定について、Baseball Prospectusの手法をなぞっていけば、少し野球に詳しくなれると思うのでやっていきます。</p>
+<h3 id="貢献とは誤差">貢献とは誤差
+</h3><p>野球ファンの100%がご存じであるように、“理論上は”ストライク判定率は投球座標で決まります。公認野球規則にもそのような記述があるはずです。</p>
+<p>ただ、“実際の”ストライク判定率は投球座標“だけ”で説明できないのも野球ファンの99%はご存じであると思います。</p>
+<p>その『誤差』が捕手のフレーミング貢献ですが、当然その誤差を生み出したのは捕手のみではありません。その誤差を各要素に適切に分配することが、捕手のフレーミング貢献の精度向上にも不可欠であることも理解いただけると思います。</p>
+<p>投球座標のみで説明できない誤差と一口に言っても、その誤差にもタイプがあります。ここでは大まかに2つに分けます。</p>
+<h3 id="固定効果">固定効果
+</h3><p>例えばイニングの表裏。
+ホームチームが守備をするイニングの表と攻撃をするイニングの裏ではストライク確率に“違い”が生じます。</p>
+<p>イメージとしては“違い”を明示したい要素です。野球的には他にはピッチカウント、打者や投手の利き手とかですかね。</p>
+<p>普通の線形回帰の説明変数が固定効果という認識でも大丈夫です。</p>
+<h3 id="ランダム変量効果">ランダム（変量）効果
+</h3><p>ここからが肝です。</p>
+<p>例えば球審。
+MLBでは1シーズンで100人ほどの審判が球審を担当します。この球審というグループの中で各球審のストライク判定率には“ブレ”が生じています。</p>
+<p>イメージとしては個体差が存在している集団です。野球的には他には投手や打者といったところでしょう。</p>
+<p>普通の線形回帰の変数とは違い、それぞれを集団に属する（母集団の傾向から）ブレを持った個体として扱います。</p>
+<p>このタイプ分けがサンプルサイズの異なる変数が互いに絡み合う野球において重要になってきます。</p>
+<h3 id="ランダム効果の特性とglmmの役割">ランダム効果の特性とGLMMの役割
+</h3><p>Baseball Prospectusは、誤差を各要素に分配するフェーズで一般化線形混合モデル（GLMM）を利用しています。GLMMではその名の通り、固定効果とランダム効果を組み合わせたモデルを構築できます。</p>
+<p>先ほども言ったとおり、野球分析でもよく見る普通の線形モデル（LM、GLM）では、各効果を独立した固定の効果として扱います。ただそれでは実務的な問題と理論的な問題が生じます。</p>
+<p>実務的な問題は、捕手100人、球審100人、投手800人、打者1000人をそれぞれ固定効果として扱うような激重モデルの運用は現実的に困難ということです。</p>
+<p>理論的な問題としては、固定効果として扱うと、言うなれば完璧な説明を遂行したがるので、それぞれの選手や審判で信頼性が異なるプロ野球において、過剰に責任を帰属してしまいます。簡単な例を挙げます。</p>
+<blockquote>
+<ul>
+<li>捕手A　<strong>5000球</strong>　平均 +1% のストライク確率誤差</li>
+<li>捕手B　<strong>2500球</strong>　平均 +2% のストライク確率誤差</li>
+<li>捕手C　<strong>1000球</strong>　平均 +5% のストライク確率誤差</li>
+</ul>
+<p><em>この3選手のフレーミング貢献は本当に同じなのか？</em></p>
+</blockquote>
+<p>固定効果として扱うと上記の『結果』を全て捕手に“そのまま”帰属します。
+ただ観測される誤差には「捕手に帰属すべきか分からない」誤差も含まれています。文字通りの運や、モデルの限界や、考慮していない他の要素などです。
+そしてその誤差が占める割合は傾向として、サンプルサイズの小さい捕手ほど大きくなります。</p>
+<p>GLMMでは、ランダム効果として扱うと、それぞれの捕手を捕手という（正規分布を持った）グループの中の一つの個体として扱います。
+これにより、サンプルサイズが小さかったり、一貫した誤差を生み出していないような個体に対して、その分布の傾向を取り入れる量を多くすることができます。いわゆる平均への回帰が、個体に合わせて合理的に働きます。</p>
+<p>そして、LMやGLMは多重共線性への対応が上手くないというのも聞いたことがある方は多いかと思います。</p>
+<p>現実的なプロ野球のデータ構造では、それぞれを独立した変数と仮定している固定効果のみを扱ったモデルでは、各効果の推定が不安定になります。</p>
+<p>大きな共線性があるのは、例えば投手×捕手でしょう。投手の効果を推定したい場合に観測されている誤差には捕手の効果が相当割合混ざります。この時、固定効果として扱うモデルでは、完璧な説明を遂行したいがために各効果の切り分けが困難になります。</p>
+<p>ランダム効果として扱うと、各効果を母集団からのブレとして扱うので上記のような信頼性の低い誤差に対して、母集団の傾向を合理的に取り入れることができます。</p>
+<p>そして、投手より組む相手の範囲が広く、サンプルサイズも大きい、より信頼性の高い捕手の効果を投手の効果の推定に利用できる点も強みです。</p>
+<h3 id="baseball-prospectus-csaa">Baseball Prospectus CSAA
+</h3><p>文章ばかりで飽きてきたと思うので、モデル例を見て実感を掴んでいただければと思います。</p>
+<p>2015年のBaseball Prospectusの記事やFanGraphsでBaseball ProspectusのCSAAについての記述がある記事を参考にします。</p>
+<p>まず用意するのは、ベースとなるストライク確率です。
+記事によると、投球位置、カウント、球種、球場を効果として盛り込んだPitchInfo提供のものを利用しているので以下のようになるでしょう。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># ベースとなるストライク確率を算出</span>
+</span></span><span class="line"><span class="cl"><span class="n">cs_prob_model</span> <span class="o">&lt;-</span> <span class="nf">gam</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl"> <span class="n">cs</span> <span class="o">~</span> <span class="nf">s</span><span class="p">(</span><span class="n">relative_x</span><span class="p">,</span> <span class="n">relative_z</span><span class="p">)</span> <span class="o">+</span> <span class="n">count</span> <span class="o">+</span> <span class="n">pitch_category</span> <span class="o">+</span> <span class="n">home_team</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"> <span class="n">family</span> <span class="o">=</span> <span class="n">binomial</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">pitch_data</span><span class="p">,</span> <span class="n">na.action</span> <span class="o">=</span> <span class="n">na.exclude</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>投球座標を利用するストライク確率予測では、GAM（一般化加法モデル）のような交互作用や非線形性を捉えられるモデルが適しています。
+実際のところは知りませんが、投球位置は相対的投球座標に、球種は合理性を失わない程度にカテゴリーとして分類しています。</p>
+<p>この cs_prob と上記のモデルで考慮しなかったイニングの表裏を固定効果、投手、打者、審判、捕手、捕手と cs_prob の交互作用をランダム効果として、GLMMを構築します。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># GLMMで最終的な予測</span>
+</span></span><span class="line"><span class="cl"><span class="n">csaa_model</span> <span class="o">&lt;-</span> <span class="nf">glmmTMB</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl"> <span class="n">cs</span> <span class="o">~</span> <span class="n">cs_prob</span> <span class="o">+</span> <span class="n">inning_topbot</span> <span class="o">+</span> 
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="m">1</span> <span class="o">|</span> <span class="n">catcher_id</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="m">1</span> <span class="o">|</span> <span class="n">catcher_id</span><span class="o">:</span><span class="n">cs_prob_bin</span><span class="p">)</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="m">1</span> <span class="o">|</span> <span class="n">pitcher_id</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="m">1</span> <span class="o">|</span> <span class="n">batter_id</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="m">1</span> <span class="o">|</span> <span class="n">umpire_id</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl"> <span class="n">family</span> <span class="o">=</span> <span class="nf">binomial</span><span class="p">(</span><span class="n">link</span> <span class="o">=</span> <span class="s">&#34;probit&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl"> <span class="n">data</span> <span class="o">=</span> <span class="n">pitch_data</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"> <span class="n">verbose</span> <span class="o">=</span> <span class="kc">TRUE</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>基本的にフレーミングで差がつくのはShadow Zoneと呼ばれる際どい（ストライク確率が極端な値でない）領域です。
+捕手と cs_prob の交互作用項はその領域でのフレーミングを重点的に抽出することが可能になります。</p>
+<p>また、PitchInfoの提供データが使えない僕たちはGLMMに固定効果をてんこ盛りにして大丈夫ですし、むしろその方が理論としてはすっきりするのではないのでしょうか。投球座標からの誤差をGLMMで全て分配していく感じですね。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">csaa_model</span> <span class="o">&lt;-</span> <span class="nf">glmmTMB</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl"> <span class="n">cs</span> <span class="o">~</span> <span class="n">cs_prob</span> <span class="o">+</span> <span class="n">inning_topbot</span> <span class="o">+</span> <span class="n">count</span> <span class="o">+</span> <span class="n">pitch_category</span> <span class="o">+</span> <span class="n">home_team</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="m">1</span> <span class="o">|</span> <span class="n">catcher_id</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="m">1</span> <span class="o">|</span> <span class="n">catcher_id</span><span class="o">:</span><span class="n">cs_prob_bin</span><span class="p">)</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="m">1</span> <span class="o">|</span> <span class="n">pitcher_id</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="m">1</span> <span class="o">|</span> <span class="n">batter_id</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="m">1</span> <span class="o">|</span> <span class="n">umpire_id</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl"> <span class="n">family</span> <span class="o">=</span> <span class="nf">binomial</span><span class="p">(</span><span class="n">link</span> <span class="o">=</span> <span class="s">&#34;probit&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl"> <span class="n">data</span> <span class="o">=</span> <span class="n">pitch_data</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"> <span class="n">verbose</span> <span class="o">=</span> <span class="kc">TRUE</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>と、ここまでBaseball ProspectusのCSAAを解説してきました。この後は、そのモデルが実際のところどう機能しているかを見てきたいと思います。</p>
+<h2 id="モデルを採点する">モデルを採点する
+</h2><p>では、理論的な話はここら辺にして、実際に機能しているかを考えていきましょう。</p>
+<p>今回のCSAAで特徴的なのはランダム効果でしょうから、比較対象は固定効果のみのモデル α とします。モデル β がモデル α にランダム効果も追加したモデルですね。</p>
+<p>ただランダム効果（各選手の効果）をモデルから直接取り出せるモデル β に対して、モデル α が提供するのはただの期待ストライク率です。なので、モデル α で推定される各選手の効果はその期待ストライク率からの差分ですね。</p>
+<p>また後ほど触れますが、注意点として現在のBaseball ProspectusのCSAAは純粋なGLMMではないので、今回は僕が算出したものを使っています。</p>
+<h3 id="評価観点">評価観点
+</h3><p>二つの重要な評価観点を中心に採点していこうと思います。</p>
+<p>評価観点は『記述性』と『一貫性』です。</p>
+<p>記述性は対象を説明できる度合です。
+記述性の対象は、投球座標から期待されるストライク率からの差分を当該選手に帰属したものとします。失点率の記述性が高い防御率が、投手の正しい貢献指標ではないように、記述性は高ければ良いものではないです。</p>
+<p>一貫性はその指標自体の相関です。ここでは（モデルの性質上）年度間での相関です。一貫性は基本的には高ければ良いですが、今回のように測りたい貢献や能力がある場合、その記述性とのバランスも必要になります。
+これは、年度間相関は高い球速という指標を投手の失点抑止力の貢献推定には使わないという具体例で理解いただけると思います。</p>
+<p>ではモデルの差を見ていきましょう。</p>
+<h3 id="捕手">捕手
+</h3><p>まずは捕手のフレーミング貢献です。</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: left">捕手</th>
+          <th style="text-align: center">モデルα</th>
+          <th style="text-align: center">モデルβ</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">記述性</td>
+          <td style="text-align: center">0.94</td>
+          <td style="text-align: center">0.91</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">一貫性</td>
+          <td style="text-align: center">0.56</td>
+          <td style="text-align: center">0.61</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">一貫性（移籍前後）</td>
+          <td style="text-align: center">0.53</td>
+          <td style="text-align: center">0.51</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">一貫性（小サンプル）</td>
+          <td style="text-align: center">0.46</td>
+          <td style="text-align: center">0.49</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><em>1300機会数以上の捕手が対象（MLB 2015 - 2019）小サンプルは前年300機会数以上1300未満</em></td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table></div>
+<p>ランダム効果を考慮しないモデル α の方が記述性は高く一貫性は低い、理論通りの傾向が確認できます。ただ固定効果のみのモデルでも十分に運用可能かなという所感ではあります。</p>
+<h3 id="打者">打者
+</h3><p>では打者のボール獲得貢献です。
+捕手は捕球の仕方という強力な因果があるものの、打者や投手はここら辺は議論の余地がありますね。</p>
+<p>構えや打力、打順、選球眼の審判からのイメージなど仮説はいくらでも降ってきます。</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: left">打者</th>
+          <th style="text-align: center">モデルα</th>
+          <th style="text-align: center">モデルβ</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">記述性</td>
+          <td style="text-align: center">0.94</td>
+          <td style="text-align: center">0.92</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">一貫性</td>
+          <td style="text-align: center">0.51</td>
+          <td style="text-align: center">0.55</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">一貫性（移籍前後）</td>
+          <td style="text-align: center">0.51</td>
+          <td style="text-align: center">0.55</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">一貫性（小サンプル）</td>
+          <td style="text-align: center">0.29</td>
+          <td style="text-align: center">0.36</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><em>500機会数以上の打者が対象（MLB 2015 - 2019）小サンプルは前年50機会数以上500未満</em></td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table></div>
+<p>こちらもモデル β の記述性は低く、一貫性は高くなる傾向が確認できます。
+ただ打者に関してもそこまでの差はないかなという所感です。
+もちろん、固定効果のみのモデルなら平均への回帰はしときたいですけどね。</p>
+<h3 id="投手">投手
+</h3><p>では投手のストライク獲得貢献です。</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: left">投手</th>
+          <th style="text-align: center">モデルα</th>
+          <th style="text-align: center">モデルβ</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">記述性</td>
+          <td style="text-align: center">0.96</td>
+          <td style="text-align: center">0.85</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">一貫性</td>
+          <td style="text-align: center">0.50</td>
+          <td style="text-align: center">0.54</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">一貫性（移籍前後）</td>
+          <td style="text-align: center">0.47</td>
+          <td style="text-align: center">0.52</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">一貫性（小サンプル）</td>
+          <td style="text-align: center">0.40</td>
+          <td style="text-align: center">0.44</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><em>500機会数以上の投手が対象（MLB 2015 - 2019）小サンプルは前年50機会数以上500未満</em></td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table></div>
+<p>観測される誤差に捕手の効果が多く含まれる投手に関しては、打者よりも大きな記述性の落ち込みが確認できます。これは期待通りの傾向ですし、なんならもっと記述性が落ちても良いんじゃないかという感覚すらあります。
+投手と捕手に被りが多いデータ構造から、どちらも同じように記述性が高いのはかなりの問題がありますので、投手に関しては絶対に（捕手を考慮しない）固定効果モデルでは評価したくないですね。</p>
+<p>そして一貫性についても理論通り、モデル β の方が向上しています。</p>
+<h3 id="審判">審判
+</h3><div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: left">審判</th>
+          <th style="text-align: center">モデルα</th>
+          <th style="text-align: center">モデルβ</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">記述性</td>
+          <td style="text-align: center">0.98</td>
+          <td style="text-align: center">0.96</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">一貫性</td>
+          <td style="text-align: center">0.63</td>
+          <td style="text-align: center">0.66</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">一貫性（小サンプル）</td>
+          <td style="text-align: center">0.25</td>
+          <td style="text-align: center">0.34</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><em>1300機会数以上の審判が対象（MLB 2015 - 2019）小サンプルは前年300機会数以上1300未満</em></td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table></div>
+<p>審判に関しても同様の傾向が確認できました。</p>
+<h3 id="他のフレーミング指標">他のフレーミング指標
+</h3><p>今回書く予定はなかったですが、せっかくなので他のフレーミング指標についてもざっと触れておきます。</p>
+<p>まずはFanGraphsで長くフレーミング指標を引っ張っているFRMという指標、いわゆるSteamerのフレーミング指標です。</p>
+<p>SteamerもBaseball Prospectusとかなり近い算出方法を用いており、ランダム効果を扱うGLMMです。ただし、大きな違いとして捕手のランダム効果をモデル内で推定せず、あくまでもGLMMから算出されたストライク期待値からのズレを捕手に帰属させています。もちろんこれは理論的には穴があり、その補正として最後に手動で平均への回帰を盛り込んでいます。</p>
+<p>次はSIS（BIS）、DRSと言った方が伝わりやすいでしょうか。Fielding Bibleのフレーミング指標です。</p>
+<p>Fielding Bibleも目指しているところはBaseball Prospectusに近い部分はあります。誤差を各要素（捕手、打者、投手、審判）に分配するという思想ですね。ただその手法はなかなか原始的なものを採用しているようです。
+イメージとしては、誤差を各要素に均等に分配するところからスタートして、そこから算出された各個体の効果を最低限考慮して、もう一度分配していくような感じです。また後付けでいろいろ投手×捕手の共線性に対処していたりしますが、詳細に書くとキリがないので気になる方は参考文献のリンクから読んでみてください。他のフレーミング指標に対して分散が極端に小さくなる要因が分かるかと思います。</p>
+<p>最後は、大人気データサイトBaseball Savantです。</p>
+<p>こちらはBaseball Prospectusとは対称的な、実にTangoらしい、ゾーン分割で必要最低限の補正をした簡素なものです。もちろんそれで十分な評価が行えるのが捕手のフレーミングではありますが、流石に近日アプデが入るようです。</p>
+<p>しかし、これまたTango節と言ったところで上記の混合モデル的アプローチとは似ても似つかない、1球単位での解釈性を追い求めたモデルと言えそうです。境界線からの距離や打者と投手の利き手により期待されるストライク確率との差分を全て捕手に帰属します。後付けの平均への回帰もやらないとのことです。フレーミングだからできる甘えという気がしなくもないですが、GLMMではできない条件付きの得意・不得意（とここでは言っておきます）の可視化に特化していると言えます。</p>
+<p><img src="/solving-baseball/images/1.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="新フレーミング指標"
+	
+	
+>
+<em>これは打者視点だけど、こんな感じらしい高めのトップはやっぱり2017年MVPのあの人やねhttps://bsky.app/profile/tangotiger.com/post/3lnyatdpwqk2b</em></p>
+<p>Baseball Savantはセイバーメトリクス初心者の方も多く利用するサイトだと思いますので、ここまで読んでくださっている方に、この注意喚起が伝わればと思います。</p>
+<p>では先ほどの評価観点で各サイトのフレーミング指標についても見ておきましょう。</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: left">フレーミング指標</th>
+          <th style="text-align: center">今回のやつ</th>
+          <th style="text-align: center">Baseball Prospectus</th>
+          <th style="text-align: center">FanGraphs</th>
+          <th style="text-align: center">Baseball Reference</th>
+          <th style="text-align: center">Baseball Savant</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">記述性</td>
+          <td style="text-align: center">0.91</td>
+          <td style="text-align: center">0.88</td>
+          <td style="text-align: center">0.88</td>
+          <td style="text-align: center">0.85</td>
+          <td style="text-align: center">0.92</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">一貫性</td>
+          <td style="text-align: center">0.61</td>
+          <td style="text-align: center">0.63</td>
+          <td style="text-align: center">0.62</td>
+          <td style="text-align: center">0.56</td>
+          <td style="text-align: center">0.47</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">一貫性（移籍前後）</td>
+          <td style="text-align: center">0.51</td>
+          <td style="text-align: center">0.51</td>
+          <td style="text-align: center">0.52</td>
+          <td style="text-align: center">0.50</td>
+          <td style="text-align: center">0.45</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">一貫性（小サンプル）</td>
+          <td style="text-align: center">0.49</td>
+          <td style="text-align: center">0.46</td>
+          <td style="text-align: center">0.44</td>
+          <td style="text-align: center">0.28</td>
+          <td style="text-align: center">0.49</td>
+      </tr>
+  </tbody>
+</table></div>
+<p><em>1300機会数以上の捕手が対象（MLB 2015 - 2019）</em>
+<em>小サンプルは前年300機会数以上1300未満</em></p>
+<p>理論通り、今回取り上げたBaseball Prospectusの旧フレーミング指標に近いものと現フレーミング指標、そしてFanGraphsのFRMはかなり似た傾向を示しています。Baseball Savant（アプデ前）に関しては記述性は高く一貫性は低いという納得感のある傾向ですが、Baseball Referenceに関しては記述性が低いのに一貫性も高くないという微妙な感じに。（まあ、一番独自性は強く数理モデルとも言いにくく、 rWARに採用されてもないので良いですがアプデの噂はないんでしょうかね）</p>
+<h2 id="おわりに">おわりに
+</h2><p>今回はBaseball Prospectus、とりわけJonathan Judgeが手がける多くの指標の基礎となる、ランダム効果を扱う線形混合モデルについてまとめてみました。</p>
+<p>そこまで事前知識を持っていなかったけど、ここまで読み進めていただいた、優しい物好きな方々のほとんどは引っ掛かっている箇所があるかと思います。</p>
+<blockquote>
+<p>GLMMでは、ランダム効果として扱うと、それぞれの捕手を捕手という（正規分布を持った）グループの中の一つの個体として扱います。</p>
+</blockquote>
+<p><em>これえぇの？って話ですよね</em></p>
+<p>LMMやGLMMでは基本的には（一応例外もあります）、各ランダム効果を正規分布と仮定します。</p>
+<p>これけっこう怖いですよね。もしCSAAが xwOBAのような分布を持っていたら、上位層をかなり過小評価してしまう、なんてことにもなります。</p>
+<p>その怖さに立ち向かう理論の代表格はやはり、ベイズ推定でしょう。ベイズ推定は簡単に言うと各効果に事前に分布を明示し、それに従って分布的な推定をします。GLMMのような、正規分布を仮定し、各効果を点推定するモデルより（ちゃんと設計すれば）不確実性とともに実態を捉えられます。</p>
+<p>ただベイズ的アプローチには毎日の更新が求められるデータサイトでは、実務的な障壁があります。
+そこでCSAAでは、事前分布を明示せずとも、ベイズ推定のようにモデルとして分布を推定せずとも、ベイズ的な事後分布に近い、不確実性を含んだ分布を導き出すBayesian Baggingを取り入れています。</p>
+<p>Bayesian Baggingを取り入れる過程の、実務的かつ理論的奮闘が気になる方は参考文献を覗いてみてください。</p>
+<p>やっていることはそこまで難しいことではなく、リサンプリングしてGLMMを複数回実行し、一律ではない観測データの揺らぎから、擬似的に事後分布を推定します。
+例えば、 xwOBAのような右に裾が長い分布を正規分布と仮定すると、上位層が過剰に平均に回帰されます。Bayesian Baggingによって、その一貫した特徴を観測し、柔軟に実態に即した分布を判断するというイメージです。</p>
+<p>正直フレーミングに関してはここまで拘る必要性は薄いですが、この手法や目的を知っていることは、もっとベイズ味のあるBaseball Prospectusの指標を理解する上で少し役立つと思うので最後に紹介しておきました。</p>
+<h3 id="参考文献">参考文献
+</h3><ul>
+<li><a class="link" href="https://www.baseballprospectus.com/news/article/25514/moving-beyond-wowy-a-mixed-approach-to-measuring-catcher-framing/"  target="_blank" rel="noopener"
+    >Moving Beyond WOWY: A Mixed Approach To Measuring Catcher Framingn</a> - Baseball Prospectus</li>
+<li><a class="link" href="https://www.baseballprospectus.com/news/article/38289/bayesian-bagging-generate-uncertainty-intervals-catcher-framing-story/"  target="_blank" rel="noopener"
+    >Bayesian Bagging to Generate Uncertainty Intervals: A Catcher Framing Story</a> - Baseball Prospectus</li>
+<li><a class="link" href="https://tangotiger.com/index.php/site/comments/statcast-update-to-catcher-framing"  target="_blank" rel="noopener"
+    >Statcast: Update to Catcher Framing</a> - Tangotiger Blog</li>
+<li><a class="link" href="https://tangotiger.com/index.php/site/article/catcher-framing-slice-and-dice"  target="_blank" rel="noopener"
+    >Catcher Framing, Slice and Dice</a> - Tangotiger Blog</li>
+<li><a class="link" href="https://blogs.fangraphs.com/fangraphs-pitch-framing/"  target="_blank" rel="noopener"
+    >FanGraphs Pitch Framing</a> - FanGraphs</li>
+<li><a class="link" href="https://blogs.fangraphs.com/instagraphs/pitch-framing-park-factors/"  target="_blank" rel="noopener"
+    >Pitch Framing Park Factors</a> - FanGraphs</li>
+<li><a class="link" href="https://www.sloansportsconference.com/research-papers/who-is-responsible-for-a-called-strike"  target="_blank" rel="noopener"
+    >Who Is Responsible For A Called Strike?</a> - Joe Rosales, Scott Spratt</li>
+</ul>
+<h3 id="データソース">データソース
+</h3><ul>
+<li><a class="link" href="https://www.mlb.com/en"  target="_blank" rel="noopener"
+    >MLB</a></li>
+<li><a class="link" href="https://baseballsavant.mlb.com/"  target="_blank" rel="noopener"
+    >Baseball Savant</a></li>
+<li><a class="link" href="https://www.fangraphs.com/"  target="_blank" rel="noopener"
+    >FanGraphs</a></li>
+<li><a class="link" href="https://www.baseballprospectus.com/"  target="_blank" rel="noopener"
+    >Baseball Prospectus</a></li>
+</ul>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/solving-baseball/tags/csaa/">CSAA</a>
+        
+            <a href="/solving-baseball/tags/%E6%B7%B7%E5%90%88%E3%83%A2%E3%83%87%E3%83%AB/">混合モデル</a>
+        
+            <a href="/solving-baseball/tags/glmm/">GLMM</a>
+        
+            <a href="/solving-baseball/tags/%E3%83%95%E3%83%AC%E3%83%BC%E3%83%9F%E3%83%B3%E3%82%B0/">フレーミング</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        const elementsToRender = [".main-article", ".widget--toc"];
+
+        elementsToRender.forEach(selector => {
+            const element = document.querySelector(selector);
+            if (element) {
+                renderMathInElement(element, {
+                    delimiters: [
+                        { left: "$$", right: "$$", display: true },
+                        { left: "$", right: "$", display: false },
+                        { left: "\\(", right: "\\)", display: false },
+                        { left: "\\[", right: "\\]", display: true }
+                    ],
+                    ignoredClasses: ["gist"]
+                });
+            }
+        });
+    });
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">関連するコンテンツ</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/solving-baseball/memo/memo_29/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">フレーミングとブロッキングはトレードオフの関係にあるか</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/solving-baseball/breakdown/catcher-drs-rwar-reconsideration/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">捕手のDRS,rWARの再考(問題提起)</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/solving-baseball/breakdown/catcher-defense-metrics-summary/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">捕手の守備指標まとめ</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script
+    src="https://giscus.app/client.js"
+    data-repo="GHL-Ball/solving-baseball"
+    data-repo-id="R_kgDOQbQpuw"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOQbQpu84CzMFQ"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="light"
+    data-lang="ja"
+    data-loading=""
+    crossorigin="anonymous"
+    async
+></script>
+<script>
+    function setGiscusTheme(theme) {
+        let giscus = document.querySelector("iframe.giscus-frame");
+        if (giscus) {
+            giscus.contentWindow.postMessage(
+                {
+                    giscus: {
+                        setConfig: {
+                            theme: theme,
+                        },
+                    },
+                },
+                "https://giscus.app"
+            );
+        }
+    }
+
+    (function () {
+        addEventListener("message", (e) => {
+            if (event.origin !== "https://giscus.app") return;
+            handler();
+        });
+        window.addEventListener("onColorSchemeChange", handler);
+
+        function handler() {
+            if (document.documentElement.dataset.scheme === "light") {
+                setGiscusTheme('light');
+            } else {
+                setGiscusTheme('dark_dimmed');
+            }
+        }
+    })();
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2025 - 
+        
+        2026 Solving Baseball Blog
+    </section>
+    
+    <section class="powerby">
+        
+            トレバ-(^o^)丿 <br/>
+        <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> で構築されています。 <br />
+        テーマ <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.32.0">Stack</a></b> は <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> によって設計されています。
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/solving-baseball/ts/main.2b3fc53c7455b5631da9fabeefcc69ffc0a3f3cb719d708d3a5f18faf7af88a6.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

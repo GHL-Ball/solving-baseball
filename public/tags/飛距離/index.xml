@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>飛距離 on Solving Baseball Blog</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E9%A3%9B%E8%B7%9D%E9%9B%A2/</link>
+        <description>Recent content in 飛距離 on Solving Baseball Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>ja</language>
+        <lastBuildDate>Mon, 01 Sep 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/solving-baseball/tags/%E9%A3%9B%E8%B7%9D%E9%9B%A2/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>ホームラン打球の分析と選択バイアス</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_08/</link>
+        <pubDate>Mon, 01 Sep 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_08/</guid>
+        <description>&lt;p&gt;野球データにおける典型的な選択バイアスを一つ紹介します。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/169.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;q&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;上記の図は打球速度、打球角度から期待される飛距離からの乖離をホームラン打球と非ホームラン打球で比較したものです。&lt;/p&gt;
+&lt;p&gt;例えば平均的なボールの特性について調査する際に、ホームラン打球に絞って調査すると、その時点でボールの個体値は飛びやすいものに偏るでしょう。&lt;/p&gt;
+&lt;p&gt;このような選択バイアスは野球分析において無数に存在しますので、それを無意識化でも留意できる程度のセンスは常に持っていたいと日々思っています。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>打球の伸びと水平角度</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_16/</link>
+        <pubDate>Fri, 30 May 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_16/</guid>
+        <description>&lt;p&gt;基本的に打球の飛距離は打球速度と垂直打球角度によって決まりますが、打球には重量の他にも抗力や揚力が作用しますのでそれらに影響を与える回転数や回転軸も少し影響します。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/157.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;a&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;上記は水平角度と打球速度と垂直打球角度から期待される飛距離からの追加距離の関係です。&lt;/p&gt;
+&lt;p&gt;基本的に打者は軽い引っ張りの時に飛距離が最大化されます。
+打球というのは左右非対称なバット軌道から生み出されますので綺麗なセンター返しより少し引っ張り気味の方が回転軸が打球方向に対して素直になり適した揚力が働くものと思われます。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>芯で捉えた打球は伸びやすいか</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_23/</link>
+        <pubDate>Mon, 19 May 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_23/</guid>
+        <description>&lt;p&gt;不器用な打者と器用な打者の対比において恐らくその芸術性から芯で捉えることの重要性を説く方を見かけます。
+一概に言えないというのが安牌な答えではありますが、たまに「芯で捉えた打球の方が伸びやすい」といった言説も見かけますのでそれについて調べます。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/146.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;q&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;この図は真芯率と打球速度と打球角度から期待される飛距離との乖離の関係性を示した図です。&lt;/p&gt;
+&lt;p&gt;特に面白い話はなく芯で捉えることの影響は無視できそうです。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>球種ごとの打球の伸びやすさ</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_31/</link>
+        <pubDate>Sat, 22 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_31/</guid>
+        <description>&lt;p&gt;飛距離は打球速度と打球角度によってその大方が決定しますが、他の風や気温といった環境以外の要素では打球の回転数や回転効率があります。
+重力と抗力に適した揚力によって伸びる打球が生まれるという話です。&lt;/p&gt;
+&lt;p&gt;そこで球種ごとに打球速度と打球角度から期待される飛距離との乖離に差はあるかという点を調べました。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/126.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;球種ごとの打球の伸びやすさ&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;速球が飛びやすく、Offspeedやカーブ系が飛びにくいといった結果から回転数や回転効率の影響が示唆されています。
+深堀すると面白そうなテーマなのでそのうちNathanの論文と睨めっこしながら考えてみます。&lt;/p&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

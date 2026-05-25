@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>wOBA on Solving Baseball Blog</title>
+        <link>http://localhost:1313/solving-baseball/tags/woba/</link>
+        <description>Recent content in wOBA on Solving Baseball Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>ja</language>
+        <lastBuildDate>Sun, 01 Jun 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/solving-baseball/tags/woba/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>打球角度によって変わる打球速度の重要度</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_15/</link>
+        <pubDate>Sun, 01 Jun 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_15/</guid>
+        <description>&lt;p&gt;フライボール革命という言葉が普及するにつれそれに対するいろいろな持論が展開されていますが、多くあるものとしてパワーのない打者に焦点を当てたものがあります。&lt;/p&gt;
+&lt;p&gt;では前提として打球速度の重要性が打球角度によって変わる様を確認しておきましょう。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/158.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;a&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;wOBAを目的変数、打球角度を制御変数として打球速度の係数を算出したものです。&lt;/p&gt;
+&lt;p&gt;周知の通り、ゴロやポップフライは打球速度にほぼ影響を受けません。
+打球角度28°前後のフライ打球は打球速度の影響を濃く受けます。&lt;/p&gt;
+&lt;p&gt;この打球角度による打球速度の重要性という視点がフライボール革命の核です。&lt;/p&gt;
+&lt;p&gt;この大前提を理解、把握した上でSweet Spot内かつ打球速度に影響を受けづらい打球角度17°前後を目指す鍛錬は合理性はあるように感じますが、
+打球速度が重要となる打球角度も隣接している以上、打球速度を向上させられればその許容範囲が広がるということですので打球速度革命から簡単には逃れるべきではないと考えています。&lt;/p&gt;
+&lt;p&gt;ちなみに同じ打球速度でもその分布が上図に沿うような分布の方が打球価値としては正しくなります。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/159.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;a&#34;
+	
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/solving-baseball/images/160.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;a&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;自身の打球速度の出力分布を重ねた例がこちらです。
+Y.ディアスよりギャロの方が打球価値としては正しい分布をしています。
+ただ、上記の分布にはバット軌道は密接に関わりますし、それは非打球にも影響を及ぼすので一概には言えないという難しさを秘めています。
+各選手の才能を見抜き適切なバット軌道を作っていく作業が必要にはなってくるでしょうが、バット軌道の変更は可逆性は低いものと認識していますので育成初期段階でその才能を見極める必要があるということを考えるとまだまだ安定度の高い打者育成は難しいのかなとも思います。&lt;/p&gt;
+&lt;p&gt;フライボール革命は変なボールを使うなどしない限り、野球にとって普遍的な理論を見つめなおした革命ですので自分には当てはまらないと理解を放棄する野球選手はいてほしくないなと考えてもいます。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>打球分類ごとのEscape Velocity</title>
+        <link>http://localhost:1313/solving-baseball/analysis/escape-velocity-by-batted-ball-type/</link>
+        <pubDate>Tue, 09 Apr 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/analysis/escape-velocity-by-batted-ball-type/</guid>
+        <description>&lt;p&gt;思いつきですが、Escape Velocityの理論(物理の方じゃないよ)を打球分類(ゴロ、フライ、ライナー)ごとにも当てはめてみます。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;escape-velocity&#34;&gt;Escape Velocity
+&lt;/h2&gt;&lt;p&gt;Escape Velocityは簡単に説明すると、&lt;strong&gt;88mphまでは打球速度で価値に差がつかないんだから88mphからどれだけEscape(脱出)できたかを評価しよう&lt;/strong&gt;という考えから生まれた指標です。&lt;/p&gt;
+&lt;p&gt;具体的には60mphと80mphと100mphはEscape Velocityでは0mphと0mphと12mphという扱いになります。&lt;/p&gt;
+&lt;p&gt;一応確認として、打球速度とwOBAとの関係が以下。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/86.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;EV vs wOBA (2021~2023)&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;88mph以下を等価で評するEscape Velocityや95mph以上の打球割合を示すHard Hit %の妥当性&lt;/strong&gt;が確認できるんじゃないかなと思います。&lt;/p&gt;
+&lt;p&gt;Escape Velocityは同じ平均打球速度でも85mph + 85mph より100mph + 70mphを高く評価しますが上記の関係を考慮すると野球的に正しい指標であると言えます。&lt;/p&gt;
+&lt;p&gt;平均打球速度とEscape Velocityで特徴のあった打者の例はこちら。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/87.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;平均打球速度とEscape Velocityの比較表&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;2021~2023、min 200 BBE、順位は512人中、バントは除く&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;例えばマイク・トラウト、彼は平均打球速度はメジャー32位に甘んじていますがEscape Velocityはメジャー11位の数値です。&lt;/p&gt;
+&lt;p&gt;例えばMJ・メレンデス、彼は平均打球速度はメジャー23位ですがEscape Velocityはメジャー84位です。&lt;/p&gt;
+&lt;p&gt;メレンデスがトラウトより平均して速い打球を飛ばしたことは間違いではないですが、&lt;strong&gt;野球的に&lt;/strong&gt;トラウトより&amp;quot;良い&amp;quot;打球速度を出していたわけではないということです。&lt;/p&gt;
+&lt;p&gt;今回はこの理論を打球分類ごとにも当てはめたり、打球速度とwOBAの関係を打球分類ごとに見ていきたいなという回です。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;ゴロ&#34;&gt;ゴロ
+&lt;/h2&gt;&lt;p&gt;まずはMLBではすっかり負け打球扱いされているゴロです。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/88.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;EV vs wOBA (2021~2023 GB)&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;当たり前ですがそもそもの価値の低さが目立ちます。Escape Velocityの理論もなんとか当てはめられそうですが、その閾値は全打球の時より低く設定できそうです。バントやハーフスイングが含まれていて信頼区間の幅も広い低速打球を取り除いて拡大したのが以下。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/89.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;EV vs wOBA (2021~2023 GB) 拡大&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Escapeできていると言えそうなのは81mphぐらいからでしょうか。全打球では88mphが閾値ですがゴロに限ると80mph程度かなと思います。&lt;/p&gt;
+&lt;p&gt;仮に80mphを閾値に設定した場合の2021~2023のゴロのEscape Velocityトップ10とワースト10がこちら。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/90.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Escape Velocity Top 10 &amp; Worst 10 (GB)&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;2021~2023、min 100 GB、Ovr Rk.は全打球のEscape Velocityの順位を466人換算したもの&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;トップ10には当然パワーヒッターが並びますが、W.カルフーンやM.ビアリング、K.ヘイズのような全打球のEscape Velocityでは上位にいなかった選手が気になります。結論を述べると彼らは&lt;strong&gt;パワーツールをフライやライナーと比して極端にゴロに使っています&lt;/strong&gt;。後にまた語りますが良いとは言えないでしょうね。&lt;/p&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

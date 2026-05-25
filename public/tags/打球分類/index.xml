@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>打球分類 on Solving Baseball Blog</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E6%89%93%E7%90%83%E5%88%86%E9%A1%9E/</link>
+        <description>Recent content in 打球分類 on Solving Baseball Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>ja</language>
+        <lastBuildDate>Mon, 04 Aug 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/solving-baseball/tags/%E6%89%93%E7%90%83%E5%88%86%E9%A1%9E/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>犠牲フライ局面でのフライ割合</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_11/</link>
+        <pubDate>Mon, 04 Aug 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_11/</guid>
+        <description>&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/164.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;q&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;犠牲フライ局面におけるフライ率です。
+この局面においてフライの価値は平常時より高くなりますので打者はフライを普段より狙い、投手は普段より抑制する意思が働きます。&lt;/p&gt;
+&lt;p&gt;結果としては打球イベントにおけるフライ割合は下がっており、投手の戦略の効果も示唆されます。また非打球イベントも含めるとフライ割合は上がるように、打者はこの局面において三振を回避する戦略が投手のそれに勝っていることも示唆されます。&lt;/p&gt;
+&lt;p&gt;深掘りも手軽にできそうなテーマではありそうなので犠牲フライ局面に限らず投手と打者の攻防を数字から覗いてみたいものです。&lt;/p&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

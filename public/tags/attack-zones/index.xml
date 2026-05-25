@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Attack Zones on Solving Baseball Blog</title>
+        <link>http://localhost:1313/solving-baseball/tags/attack-zones/</link>
+        <description>Recent content in Attack Zones on Solving Baseball Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>ja</language>
+        <lastBuildDate>Wed, 21 Feb 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/solving-baseball/tags/attack-zones/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>MLBの審判は本当にルーキーに厳しいのか</title>
+        <link>http://localhost:1313/solving-baseball/analysis/mlb-umpire-rookie-bias/</link>
+        <pubDate>Wed, 21 Feb 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/analysis/mlb-umpire-rookie-bias/</guid>
+        <description>&lt;p&gt;「MLBの審判はルーキーに厳しい」という言説をたまに目にします。MLBを見ていなかった時に自分もそのイメージを持っていました。特に野手のストライク・ボール判定でその風潮があるという個人的イメージに基づいて今回は野手を調べます。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;ルーキーの誤審率&#34;&gt;ルーキーの誤審率
+&lt;/h2&gt;&lt;p&gt;まずは単純にルーキー群と非ルーキー群の誤審率から。&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;year&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;rookies&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;non-rookies&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;difference&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2008&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;16.1%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;15.2%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;0.87%&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2009&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;15.1%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;14.6%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;0.46%&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2010&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;14.4%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;13.5%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;0.81%&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2011&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;13.6%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;13.4%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;0.21%&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2012&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;12.8%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;12.9%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;-0.12%&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2013&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;12.0%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;12.1%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;-0.07%&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2014&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;11.7%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;11.6%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;0.14%&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2015&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;11.3%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;11.1%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;0.14%&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2016&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;10.5%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;10.7%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;-0.13%&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2017&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;9.8%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;9.5%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;0.28%&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2018&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;8.7%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;8.7%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;-0.02%&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2019&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;8.5%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;8.3%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;0.15%&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2020&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;8.6%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;8.1%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;0.42%&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2021&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;8.2%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;7.8%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;0.43%&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2022&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;7.4%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;7.5%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;-0.08%&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2023&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;7.4%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;7.1%&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;0.27%&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;em&gt;ルーキーとルーキー以外の誤審率比較　誤審数/見逃し数&lt;/em&gt;&lt;/p&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

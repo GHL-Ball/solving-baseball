@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>捕手 on Solving Baseball Blog</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E6%8D%95%E6%89%8B/</link>
+        <description>Recent content in 捕手 on Solving Baseball Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>ja</language>
+        <lastBuildDate>Sun, 07 Jul 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/solving-baseball/tags/%E6%8D%95%E6%89%8B/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>フレーミングとブロッキングはトレードオフの関係にあるか</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_29/</link>
+        <pubDate>Sun, 07 Jul 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_29/</guid>
+        <description>&lt;p&gt;「フレーミングとブロッキングはトレードオフの関係にある」という言説はよく耳にします。&lt;/p&gt;
+&lt;p&gt;ある動作にフォーカスすると他の動作が疎かになるというのは日常生活でも多発する現象ですし、キャッチングにおいても特に低めの投球に対してはブロッキングとフレーミングはミットの角度が大きく異なる場面もありますのでかの言説が流布する所以もわかります。&lt;/p&gt;
+&lt;p&gt;では実際にその傾向は観察できるのでしょうか。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/133.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;フレーミングvsブロッキング&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;上記の図は2018-2024において年度間のフレーミング得点とブロッキング得点の変化を可視化したものです。
+先に述べた言説に従うと、フレーミング得点の増加に意識を割くとブロッキング得点に悪影響を与える可能性があるでしょう。しかしそのような傾向は確認できません。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/134.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;フレーミングvsブロッキング&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;次の図は同年度のフレーミング得点とブロッキング得点の関係です。
+フレーミングが得意な捕手はブロッキングも得意な傾向が観察できるかもしれない程度ではありますが、少しばかりの関係性が窺えます。
+フレーミングもブロッキングも動体視力や反射神経など、共通する身体能力や技術があるでしょうし、驚きはないです。&lt;/p&gt;
+&lt;p&gt;これらの傾向が野球的に普遍なものなのか、MLBという階層の特徴なのかという考察も面白いかもしれません。特に近年のMLBはブロッキングと言っても少年野球のような体で止める系の動作は減っていますしね。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>捕手のDRS,rWARの再考(問題提起)</title>
+        <link>http://localhost:1313/solving-baseball/breakdown/catcher-drs-rwar-reconsideration/</link>
+        <pubDate>Sat, 02 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/breakdown/catcher-drs-rwar-reconsideration/</guid>
+        <description>&lt;p&gt;前回の説明系noteで逃げたRerCとそれを採用するrWAR,DRSについての説明＆感想系noteです。前回のRerC以外の守備指標の軽いまとめはこちら⬇&lt;/p&gt;
+&lt;p&gt;前回→&lt;a class=&#34;link&#34; href=&#34;http://localhost:1313/solving-baseball/breakdown/catcher-defense-metrics-summary/&#34; &gt;捕手の守備指標まとめ&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;rercについて&#34;&gt;RerCについて
+&lt;/h2&gt;&lt;h3 id=&#34;rercとは&#34;&gt;RerCとは
+&lt;/h3&gt;&lt;p&gt;前回まとめた指標で異質なのはこれかなと思うんですが、後から書くのでインサイドワーク面の評価と逃げた表現をしました。RerCとは何？という部分をネットで拾える少ない情報量からまとめます。&lt;/p&gt;
+&lt;p&gt;まずは大本営BISの見解から。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/115.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;The Fielding Bible FAQ&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;The Fielding Bible FAQより(&lt;a class=&#34;link&#34; href=&#34;https://www.fieldingbible.com/faq&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.fieldingbible.com/faq&lt;/a&gt;)&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;ポイントは3つです。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;捕手別防御率をもとにしていること&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;組んだ投手の力量をはじめ、様々な側面を考慮していること&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;全面的に信頼を与えず平均に回帰させていること&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;投手の力量や様々な側面を考慮した&lt;strong&gt;予想捕手防御率(自責点)が実際の捕手防御率(自責点)と乖離しているときに、その責任をある程度は捕手に負わせよう&lt;/strong&gt;ということです。&lt;/p&gt;
+&lt;p&gt;これを日本ではリードやマネジメント、総じてインサイドワークと呼んでいるのでRerCの説明に使いました。ちなみにBRではRerCを「&lt;strong&gt;Catcher Pitch Calling Runs Above Avg&lt;/strong&gt;」と表現しているので、文字通りリードの指標と訳しても問題ないのかなと思います。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;具体的な算出式&#34;&gt;具体的な算出式
+&lt;/h3&gt;&lt;p&gt;大本営の説明で何となくなら算出方法も想像できますが、具体的な算出方法はネットの海でも見つけるのには苦労します。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://tigertalestemp.blogspot.com/2010/12/catcher-defense-part-1.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Catcher Defense - Part 1&lt;/a&gt; - Lee Panas&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;上記がRerCの具体的な算出方法が書いてある2010年のブログ記事です。The Fielding Bibleに記載のあるRerCの算出方法をまとめてあります。RerCに触れているBISの記事も複数ありますが、ここで紹介されている算出方法との相違点は確認できませんでした。&lt;/p&gt;
+&lt;p&gt;せっかくなので2023シーズンで驚異的なRerCを稼ぎゴールドグラブ賞も獲得したG.モレノで計算してみたいと思います。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;①当該捕手(モレノ)が組んだ全投手のイニング、防御率を用意する&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;例）Z.ギャレン 210回 防御率 3.47&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;②当該捕手(モレノ)と組んでいる時の全投手のイニング、自責点を用意する&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;例）Z.ギャレン 117回 40自責点&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;③当該捕手(モレノ)と組んでいる時の推定自責点と実際自責点との差を出す&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;例）Z.ギャレン 117/9*3.47-40=5.11&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;④平均に回帰する&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;43.9(③の全投手合計)*0.33=14.49&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;⑤当該捕手のイニング数によってさらに平均に回帰する&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;14.49*854/1440(フルシーズンのイニング数)=8.59&lt;/p&gt;
+&lt;p&gt;以上が算出方法ですが球場補正もされているとのこと。モレノのRerCは10.5&lt;del&gt;11.4なので平均抑止自責点は-2&lt;/del&gt;3ほどだったんですかね。&lt;/p&gt;
+&lt;p&gt;イニング数が少ないほど平均に回帰させる算出方法なので平均抑止自責点がマイナスになるということは主力捕手ほど点を取られていたことを意味するので違和感はあります。&lt;/p&gt;
+&lt;p&gt;何か僕がミスってるかもしれないし算出方法が変わったかもしれないですけど、2010年時点の算出方法を紹介したかったのでまぁスルーで。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;問題点&#34;&gt;問題点
+&lt;/h3&gt;&lt;p&gt;そもそも「捕手によって投手成績が変わったという現象の責任を捕手に負わせること」だけで濃い議論ができそうですが、一旦その論点は置いといたとしても前述の算出方法には多く疑問が生じます。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;・比較対象が平等でもなく平均でもない&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;言ってしまえば、味方の捕手が自分より自責点抑止能力があるかどうかゲーということです。四捨五入誤差を除けばリーグ合計RerCはゼロになるように調整しているはずですが、(平均と比べているが故にゼロサムになる)他の守備指標とは合計がゼロになる意味合いが違います。厳密に言えば内野のRAAもグレーゾーンですが。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;・インサイドワーク以外の守備能力でつく差を考慮していない&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;例えばDRS - RerC = +10の捕手が自責点を5ほど抑止していた時にも、この捕手のインサイドワーク面はプラスの評価を受けます。DRSの構成指標はもちろんそれぞれ独立していますし独立させるべきですが、このRerCだけは独立しているとは言えないわけです。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>捕手の守備指標まとめ</title>
+        <link>http://localhost:1313/solving-baseball/breakdown/catcher-defense-metrics-summary/</link>
+        <pubDate>Thu, 29 Feb 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/breakdown/catcher-defense-metrics-summary/</guid>
+        <description>&lt;h2 id=&#34;前置き&#34;&gt;前置き
+&lt;/h2&gt;&lt;p&gt;捕手のrWARやDRSに対する疑問(文句)を書きたくて、その前説として他サイトとの相違点をまとめていたらダラダラと重い前説になってしまったので分割します。前説としては重いですが指標説明系としては特に深掘りもしていないので軽いです。&lt;/p&gt;
+&lt;p&gt;次→&lt;a class=&#34;link&#34; href=&#34;http://localhost:1313/solving-baseball/breakdown/catcher-drs-rwar-reconsideration/&#34; &gt;捕手のDRS,rWARの再考(問題提起)&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;三大データサイトでの捕手の守備評価指標&#34;&gt;三大データサイトでの捕手の守備評価指標
+&lt;/h2&gt;&lt;p&gt;三大データサイトで&lt;strong&gt;主力として扱われている捕手の守備のセイバー指標&lt;/strong&gt;についてまとめます。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;baseball-reference&#34;&gt;Baseball-Reference
+&lt;/h3&gt;&lt;p&gt;Baseball-Reference(以降BR)ではBaseball Info Solutions(以降BIS)提供のDefensive Runs Saved(以降DRS)の構成要素を個人ページで全て確認できます。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/110.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;P.ベイリー個人ページ BR&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;①P.ベイリー個人ページ(&lt;a class=&#34;link&#34; href=&#34;https://www.baseball-reference.com/players/b/bailepa01-field.shtml&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.baseball-reference.com/players/b/bailepa01-field.shtml&lt;/a&gt;)&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;ジャイアンツ期待の新人P.ベイリーの個人ページを例に捕手のDRS部分についてのみ確認します。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Rpm&lt;/strong&gt;･･･Rair,Rrange,Rthrowの合計(頭文字を取ってARTとも言われる)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Rair&lt;/strong&gt;･･･明らかにゴロとはみなされない内野フライの処理の評価&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Rrange&lt;/strong&gt;･･･Rairに分類されない打球に対する守備範囲(到達能力)の評価&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Rthrow&lt;/strong&gt;･･･Rairに分類されない打球に到達した後の評価&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Rbnt&lt;/strong&gt;･･･バント処理の評価&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Rgood&lt;/strong&gt;･･･他で評価されない良いプレー、悪いプレーの評価&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;RerC&lt;/strong&gt;･･･インサイドワーク面の評価&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;RsbC&lt;/strong&gt;･･･盗塁抑止、阻止の評価&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;RszC&lt;/strong&gt;･･･フレーミングの評価&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Rdrs&lt;/strong&gt;･･･上記指標(Rpm,Rbnt,Rgood,RerC,RsbC,RszC)の合計&lt;/p&gt;
+&lt;p&gt;頭文字にReferenceの？Runの？Rをつけて捕手のみの指標にはCatcherのCを末尾につけているので若干見づらいですが小文字の部分にのみ注目すれば分かりやすいとは思います(pmはプラスマイナスシステム)。&lt;/p&gt;
+&lt;p&gt;ちなみに&lt;strong&gt;ブロッキングの評価はRgoodに含まれています&lt;/strong&gt;。「P.ベイリーは平均的な捕手と比較してフレーミングや盗塁阻止、打球処理やインサイドワーク面で失点を17点減らし、バント処理やブロッキングを主としたその他のプレーで失点を4点増やしたと推定されている」という見方です。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;fangraphs&#34;&gt;FanGraphs
+&lt;/h3&gt;&lt;p&gt;FanGraphs(以降FG)ではBIS提供のDRSの他にFRMというフレーミング指標を確認できます。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/111.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;P.ベイリー個人ページ FG&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;②P.ベイリー個人ページ(&lt;a class=&#34;link&#34; href=&#34;https://www.fangraphs.com/players/patrick-bailey/27478/stats#fielding&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.fangraphs.com/players/patrick-bailey/27478/stats#fielding&lt;/a&gt;)&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;DRSも確認できますが少し表記に違いがあります(RerCはrCERA=CatcherのERA、RgoodはrGFP=Good Fielding Plays)。打球処理に関わるRpm,Rbntは掲載されていないので合計してもズレが生じる点は注意が必要です。&lt;/p&gt;
+&lt;p&gt;また、同じフレーミング指標でもrSZの11に対してFRMは17.4と差を確認できますが、2019年3月のこの&lt;a class=&#34;link&#34; href=&#34;https://blogs.fangraphs.com/fangraphs-pitch-framing/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;記事&lt;/a&gt;通り&lt;strong&gt;BISのフレーミング指標は他より偏差が小さくなる算出方法&lt;/strong&gt;のようです。一応2019~2023シーズンも確認してみましたが相関係数0.93に対し標準偏差は6.6(FRM)と4.8(rSZ)とその傾向は変わっていません。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;baseball-savant&#34;&gt;Baseball Savant
+&lt;/h3&gt;&lt;p&gt;Baseball SavantではMLB Advanced Media提供のStatcastデータから算出した守備指標を捕手では現在4つ確認できます。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/112.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;P.ベイリー個人ページ Savant&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;③P.ベイリー個人ページ(&lt;a class=&#34;link&#34; href=&#34;https://baseballsavant.mlb.com/savant-player/patrick-bailey-672275?stats=statcast-r-catching-mlb&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://baseballsavant.mlb.com/savant-player/patrick-bailey-672275?stats=statcast-r-catching-mlb&lt;/a&gt;)&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;打球処理以外の&lt;strong&gt;フレーミング&lt;/strong&gt;、&lt;strong&gt;ブロッキング&lt;/strong&gt;、&lt;strong&gt;盗塁阻止&lt;/strong&gt;の得点換算指標と&lt;strong&gt;平均ポップタイム&lt;/strong&gt;の4つです。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Baseball Savantは各指標の詳細まで確認できる&lt;/strong&gt;のが特徴です。&lt;/p&gt;
+&lt;p&gt;上記画像でもポップタイムなら握り替えの時間、フレーミングならコースごとの結果などが確認できますし、リーダーボードの方ではブロッキングのコースごとの結果や盗塁阻止のプレーごとの難易度、当該プレーの動画なども確認できます。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;やっていることは同じ&#34;&gt;やっていることは同じ
+&lt;/h3&gt;&lt;p&gt;一つ一つの指標の詳細算出方法をまとめるのはキリがないし、公開されていない部分も多々あるのでやりませんが共通しているのは&lt;strong&gt;平均的な捕手との差を推定している&lt;/strong&gt;ということです。(RerCについては微妙ですが…)&lt;/p&gt;
+&lt;p&gt;フレーミングなら様々な側面を考慮した&lt;strong&gt;期待ストライク率(数)を算出し、実際のそれと比べ、その差を得点換算する&lt;/strong&gt;という形。ブロッキングでも盗塁阻止でも同じです。差が出るのは考慮する側面の違いや得点換算の部分や測定方法の違いなどが理由でしょうが、僕個人としては意義のある差だと思っています。投手fWAR vs rWAR、OAA+UZR vs DRSのような違いではないですが。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;三大war算出サイトの捕手war守備部分&#34;&gt;三大WAR算出サイトの捕手WAR(守備部分)
+&lt;/h2&gt;&lt;p&gt;次は捕手のWARを構成している守備指標の各サイトの違いをまとめます。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;baseball-reference-1&#34;&gt;Baseball Reference
+&lt;/h3&gt;&lt;p&gt;BRではDRSをWARの守備評価部分に使っていますが、捕手に関しては注意が必要です。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/113.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;P.ベイリー個人ページ WAR詳細&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;④P.ベイリー個人ページ(&lt;a class=&#34;link&#34; href=&#34;https://www.baseball-reference.com/players/b/bailepa01.shtml&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.baseball-reference.com/players/b/bailepa01.shtml&lt;/a&gt;)&lt;/em&gt;&lt;/p&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

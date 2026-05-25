@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>バットトラッキング on Solving Baseball Blog</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E3%83%90%E3%83%83%E3%83%88%E3%83%88%E3%83%A9%E3%83%83%E3%82%AD%E3%83%B3%E3%82%B0/</link>
+        <description>Recent content in バットトラッキング on Solving Baseball Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>ja</language>
+        <lastBuildDate>Mon, 01 Sep 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/solving-baseball/tags/%E3%83%90%E3%83%83%E3%83%88%E3%83%88%E3%83%A9%E3%83%83%E3%82%AD%E3%83%B3%E3%82%B0/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Intercept Point × Bat Speed × xwOBA</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_07/</link>
+        <pubDate>Mon, 01 Sep 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_07/</guid>
+        <description>&lt;p&gt;Pull Air%が流行語となりバットトラッキングの普及でIntercept Pointに焦点を当てた分析も増えてきました。&lt;/p&gt;
+&lt;p&gt;単純化される前に少し釘を刺しておきますがIntercept Pointの変化とwOBAの変化には関連性はありません（r = 0.046）。&lt;/p&gt;
+&lt;p&gt;Intercept Pointが後ろになろうがBat Speedを上げられるかの方が圧倒的に重要です（r = 0.252）。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/170.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;q&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Intercept PointとBat SpeedとxwOBAの変化の関連性を示したものを置いておきます。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>投球に合わせたスイングをすることのジレンマ</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_09/</link>
+        <pubDate>Sun, 24 Aug 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_09/</guid>
+        <description>&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;http://localhost:1313/solving-baseball/memo/memo_21/&#34; &gt;スイングの多様性と打球価値について&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;上記の記事で投球に合わせたスイングをすることは打球価値という視点で見るとマイナスに働きやすい可能性を取り上げました。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/167.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;q&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;ただ野球は非打球イベントもあるのが面白いところです。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/168.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;q&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;打球価値は一貫したBat Pathの方が、空振り率は多様なBat Pathの方が優れています。&lt;/p&gt;
+&lt;p&gt;当てるだけならスイング軌道をその投球に合わせることが有効に働くが、価値の高い打球を生み出すにはスイング軌道が乱されない方が総合的には有利に働く。それっぽい結果ではあるでしょう。&lt;/p&gt;
+&lt;p&gt;このような全体傾向を把握したのちにそこから展開して細部を掘っていきたいですね。例えば空振りはカウントによってその価値が変わりますので、カウントによるBat Pathの多様性の差が大きい打者を調べてみるのも面白そうです。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>Bat Trackingから打者のズレを可視化する</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_17/</link>
+        <pubDate>Tue, 27 May 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_17/</guid>
+        <description>&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;http://localhost:1313/solving-baseball/memo/memo_19/&#34; &gt;投球のDeceptionを指標化する&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;上記の記事で紹介した打者の予測投球コースからのズレを可視化してみます。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/153.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;a&#34;
+	
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/solving-baseball/images/154.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;a&#34;
+	
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/solving-baseball/images/155.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;a&#34;
+	
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/solving-baseball/images/156.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;a&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;少し表記ミスはあります&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;実際のバットの通過点は取得できませんが、Bat Pathからでもこのように野球が記述できるのがセイバーメトリクスの楽しいポイントの一つです。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>球種、プラトーン別のDeception</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_18/</link>
+        <pubDate>Sun, 25 May 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_18/</guid>
+        <description>&lt;p&gt;-&lt;a class=&#34;link&#34; href=&#34;http://localhost:1313/solving-baseball/memo/memo_19/&#34; &gt;投球のDeceptionを指標化する&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Deception Scoreのリーグ平均値を球種、プラトーン別にまとめます。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/138.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;a&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Breaking系の球種や速球でもシンカーは「右vs右」や「左vs左」といった同手に対して強く、スプリットやチェンジアップといったOffspeed系の球種はプラトーンによる有利不利が確認できません。&lt;/p&gt;
+&lt;p&gt;このような傾向に自身の積み重ねた知識理解から違和感を覚えないか、といったレビューは常にしたいですし、今回で言うとカッターのプラトーン格差の無さの中身や速球と遅球でズレる価値の違いなど、違和感を覚えた箇所への修正的アプローチも積み重ねたいと思います。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>Bat Pathと投球コース</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_20/</link>
+        <pubDate>Sat, 24 May 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_20/</guid>
+        <description>&lt;p&gt;試合を見ても、各々イメージしていただいても簡単に分かることではありますが、打者は投球コースによってスイングの形状を変えます。&lt;/p&gt;
+&lt;p&gt;この現象自体に革新さはありませんが、トラッキングデータの進化により各スイングの形状を測定できるようになった現代ではその現象を革新的に利用できます。&lt;/p&gt;
+&lt;p&gt;打者が投球コースに合わせたスイングをするということは、スイングの形状から打者が予測した投球コースを推定できるということです。&lt;/p&gt;
+&lt;p&gt;配球戦略という文脈でも投球の質という文脈でも打者の予測からのズレは言わば目標値のような使われ方はされつつも、空振りや打球イベントといった結果からしか語られないジレンマのようなものもありました。&lt;/p&gt;
+&lt;p&gt;バットトラッキングはそのジレンマの解消に一歩近づく可能性を秘めています。&lt;/p&gt;
+&lt;p&gt;打者ごとに標準化したBat Pathを投球コースで可視化したものが以下になります。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/137.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Bat Pathと投球コース&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;綺麗に高めほどフラットに外角ほどフラットになっていることが分かります。
+このアプローチに潜むバイアスに対処し、予測投球コースの推定の精度を高められれば特に投手の評価について新たな深みを与えられると思います。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>投球のDeceptionを指標化する</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_19/</link>
+        <pubDate>Sat, 24 May 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_19/</guid>
+        <description>&lt;p&gt;-&lt;a class=&#34;link&#34; href=&#34;http://localhost:1313/solving-baseball/memo/memo_20/&#34; &gt;Bat Pathと投球コース&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;上記の記事のBat Pathから推定した打者の予測投球コースと実際の投球コースのズレを投手指標化してみました。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/149.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;q&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;単回帰×2による予測投球コースからの乖離&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;打者のズレを指標化してるものですのでもちろん空振りとの相関はある程度確認できます。
+そして意外と空振りと独立して語られる打球速度の抑制力ですが、理論的にはバットの芯から外すという共通目的からその程度の差によって生まれる二者ですので空振り率に及ぶほどの相関も見せています。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/150.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;q&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;次は一貫性と予測性です。
+年度間での比較ができるサイズは揃っていないので2024年のデータを投手ごとに分割しそれらの一貫性と予測性を調べました。&lt;/p&gt;
+&lt;p&gt;一貫性はこの手の指標ではかなり強いと言えるでしょう。
+一貫性がないと次に進めませんので少なくとも打者の予測からズレる力のある程度の一貫性を確認できたのは良かったです。&lt;/p&gt;
+&lt;p&gt;予測性もxwOBAconをこの程度予測できるのは強いですがまだ野球の摂理に抗えるほどではないかと思います。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/151.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;q&#34;
+	
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/solving-baseball/images/152.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;q&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;多変量GAMによる予測投球コースからの乖離&lt;/em&gt;&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>スイングの多様性と打球価値について</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_21/</link>
+        <pubDate>Thu, 22 May 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_21/</guid>
+        <description>&lt;p&gt;高めと低め、内角と外角に対してスイングの形状は変わりますし、変えることは理論的には正しいです。
+では実際にBat Pathの標準偏差とxwOBAconには関係性があるのでしょうか。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/148.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;q&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;結果としてスイングに多様性がない打者ほどxwOBAconは高くなっています。
+少なくともMLBという階層においては全ての投球への順応性より自身が対応できるコースへの確実性が打球価値へは好影響を及ぼす可能性がありそうです。&lt;/p&gt;
+&lt;p&gt;Path SDの中央値付近に高xwOBAcon帯がある可能性も考えましたが、実際は線形に近い分布をしており、打球のみに絞って考えるとほとんどの打者は必要以上に順応性を求めていると言えるでしょう。
+図にある名前を見ればわかるようにあくまでも打球のみに絞って考えるとですが。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>縦振り vs 横振り</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_22/</link>
+        <pubDate>Tue, 20 May 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_22/</guid>
+        <description>&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/147.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;q&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;上記はBat Path上位40％と下位40％のグループの2023年と2024年の各指標の相関です。&lt;/p&gt;
+&lt;p&gt;K%やBB%は特に有意差は観測できませんが、一般的に高価値でありながらその中では不安定なSweet Spot%とそれを内包するxwOBAconの安定度に差が見られます。
+縦振りの流行には垂直打球角度の重要性の再確認も背景にあり、垂直方向における打球の操作性を求めたスタイルとしての地位はとりあえずは揺るがなそうです。&lt;/p&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

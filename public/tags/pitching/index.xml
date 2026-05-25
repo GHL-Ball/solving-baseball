@@ -1,0 +1,869 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Pitching on Solving Baseball Blog</title>
+        <link>http://localhost:1313/solving-baseball/tags/pitching/</link>
+        <description>Recent content in Pitching on Solving Baseball Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>ja</language>
+        <lastBuildDate>Tue, 11 Nov 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/solving-baseball/tags/pitching/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>コマンド力の推定</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_01/</link>
+        <pubDate>Tue, 11 Nov 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_01/</guid>
+        <description>&lt;p&gt;コマンド力の推定を捕手の構えという情報なしで行います。&lt;/p&gt;
+&lt;p&gt;コマンド力を「目標とした座標に投げられる能力」と定義すると、それの推定に必要なのは投手が当該投球において目標とした座標の推定です。
+目標とした座標は捕手の構えと一致することが多いですが、投手も捕手も考えなしに目標座標は決めていないはずです。
+ピッチカウント、打者、球種、その投手の特性、点差や塁状況などがそれを決定する要素となっているでしょう。&lt;/p&gt;
+&lt;p&gt;本格的なモデルを組まずともこれらの考え方を活かした簡素なコマンド指標を作ることはできます。&lt;/p&gt;
+&lt;p&gt;今回実行するにあたり条件とした要素は「ピッチカウント」「球種」「打席の左右」です。
+それらの条件を揃えたデータセット内での投球座標の散らばりを見ることでコマンド力の推定を行います。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;30
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;31
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;32
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;33
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;34
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;35
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;36
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;37
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;38
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;39
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;40
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;41
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;42
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;43
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;44
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;45
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;46
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;47
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;48
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;49
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;50
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nf&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;tidyverse&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;years&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;2021&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;2025&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;Name&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;read_csv&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;name.csv&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;select&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Name&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;MLBAMID&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;df&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;map_dfr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;years&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;~&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;read_csv&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;paste0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;.x&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;.csv&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;mutate&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;year&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;.x&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 新しい列を作成&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;df&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;df&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nf&#34;&gt;mutate&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c1&#34;&gt;# 打者ごとに正規化する&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;relative_x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;plate_x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;0.833&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;relative_z&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;plate_z&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;strike_zone_bottom&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                 &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;strike_zone_top&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;strike_zone_bottom&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;pitch_count&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;paste0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;balls&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;-&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;strikes&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nf&#34;&gt;select&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;year&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pitcher_id&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bat_side&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pitch_count&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;         &lt;span class=&#34;n&#34;&gt;plate_x&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;plate_z&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;relative_x&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;relative_z&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;         &lt;span class=&#34;n&#34;&gt;pitch_type&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;arm_angle&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# ユークリッド距離的散らばりを計算&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;df_dist&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;df&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nf&#34;&gt;group_by&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pitcher_id&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pitch_count&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pitch_type&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bat_side&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;year&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nf&#34;&gt;mutate&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;mean_x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;mean&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;plate_x&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;na.rm&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;TRUE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;mean_z&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;mean&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;plate_z&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;na.rm&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;TRUE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;distance&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;sqrt&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;((&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;plate_x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;mean_x&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;^2&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;plate_z&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;mean_z&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;^2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nf&#34;&gt;select&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;year&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pitcher_id&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bat_side&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pitch_count&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pitch_type&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;arm_angle&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;distance&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nf&#34;&gt;ungroup&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 投手ごとのサマリー&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;df_dist_summary&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;df_dist&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nf&#34;&gt;group_by&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;year&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pitcher_id&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nf&#34;&gt;summarize&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;mean_distance&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;mean&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;distance&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;na.rm&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;TRUE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;sd_distance&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;sd&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;distance&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;na.rm&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;TRUE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;min_distance&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;min&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;distance&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;na.rm&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;TRUE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;max_distance&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;max&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;distance&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;na.rm&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;TRUE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;IQR_distance&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;IQR&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;distance&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;na.rm&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;TRUE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;p25_distance&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;quantile&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;distance&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;0.25&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;na.rm&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;TRUE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;p75_distance&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;quantile&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;distance&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;0.75&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;na.rm&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;TRUE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;pitches&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(),&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;.groups&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#39;drop&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nf&#34;&gt;group_by&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;year&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nf&#34;&gt;mutate&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pitches_rank&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;percent_rank&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pitches&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nf&#34;&gt;filter&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pitches_rank&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;0.5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nf&#34;&gt;ungroup&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nf&#34;&gt;left_join&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Name&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;by&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;c&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;pitcher_id&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;MLBAMID&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;かなり簡単な考え方と計算ですが理論的にはBB%のようなコマンド力を語る際に登場しやすい指標よりもコマンド力を推定するにおいてはノイズは小さくなります。
+コマンド関係の指標との相関や2025年の上位下位20投手を以下に示します。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>Bat Trackingから打者のタイミングを推し量る</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_05/</link>
+        <pubDate>Tue, 23 Sep 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_05/</guid>
+        <description>&lt;p&gt;Baseball SavantのBat Trackingに追加されたIntercept Pointから打者のタイミング情報を推し量ってみます。
+Intercept Pointはその名の通り、バットとボールの接点（もしくはそれに近い点）であり、基準をホームベースではなく打者に置いたものも取得できます。
+打者のタイミングにおいては後者の方が適切ですので今回はこちらを使用します。&lt;/p&gt;
+&lt;p&gt;周知の通り、打者はタイミングを投手方向にずらされる、いわゆる泳いだ打撃になるスイングでは「想定より投球が遅い」状態であることが多く、
+タイミングを捕手方向にずらされる、いわゆる差し込まれた打撃になるスイングでは「想定より投球が速い」状態であることが多いです。&lt;/p&gt;
+&lt;p&gt;投手視点で見ると、そのズレをどちらの方向にどの程度発生させるかが投球評価における構成要素の一つとなります。&lt;/p&gt;
+&lt;p&gt;トラッキングデータの対象範囲の拡大が進む現代において、投手の多角的な出力情報はStuff+をはじめとするピッチモデリング指標のような文字通りの予測的指標
+（xFIPやSIERAは予測的性能は高いが統計学的に純粋な予測モデルとは言い難い）を生み出しました。
+打者側の反応が多角的に見えるBat Trackingは「空振り」や「ファウル」といった結果の構成要素の分解にも役立ちます。&lt;/p&gt;
+&lt;p&gt;投球はまず打者のスイングの有無で分岐します。それにより、見逃し時により多くストライクを獲得し、スイング時にどれだけ得点価値の低いイベントを誘発させられるかかという評価軸に分解できます。
+そしてスイング時の評価にBat Trackingは活用できます。&lt;/p&gt;
+&lt;p&gt;スイング時の投球評価を変化量の想定とのズレを主としたxz平面とタイミングの想定とのズレを主としたy軸に分解します。
+今回はそのy軸のズレの話です。&lt;/p&gt;
+&lt;p&gt;多数の要因によってy軸のズレは発生しますが必ず考慮しなければならないのが投球コース及びそれに対応するx軸でのIntercept Pointです。
+また絶対値を使うとJ.ターナーは常に泳いだ打撃、ゴールドシュミットは常に差し込まれた打撃と評価してしまうので各打者内で標準化します。&lt;/p&gt;
+&lt;p&gt;ということでIntercept Point(x)を固定効果として設定し、GAMでIntercept Point(y)の予測をします。
+その予測値との差分をTiming Deviationとして評価します。&lt;/p&gt;
+&lt;p&gt;以下にTiming Deviationの分布、空振り率、得点価値との関係を示します。&lt;/p&gt;
+&lt;p&gt;-&lt;img src=&#34;http://localhost:1313/solving-baseball/images/45.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Timing Deviationの分布&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;納得感はありつつも興味深いのは打者は得点価値（多くは打球価値から生み出される）が最大化されるタイミングではなく空振り率が最小化されるタイミングでスイングをしているという点です。
+感覚的ではあるでしょうが、打者はコンタクトを優先的に考え、チャンスがあれば普段より前方の、Bat Speedが最大化しAttack Angleが最適化されるタイミングで捉えるといった感じでしょうか。
+また、選球を正しく行うためにはいわゆるチェックポイントを打者側に近づけた方が良いわけで、打球価値が最大化されるタイミングより程度はあれど差し込まれるタイミングの方が合理的でしょう。&lt;/p&gt;
+&lt;p&gt;これらの点を踏まえると、投手視点ではただタイミングを打者の基準から外すだけではなく、少し泳ぎ気味のタイミングにあるスイートスポットを避ける投球がより必要になるかと思われます。
+この観点では半速球と呼ばれるような主要FastballとBreakingやOffspeedの架け橋となる球種は危険なようにも思えますが、それらの球種はチェックポイントまでに打者が球種を誤認しやすいわけで、
+すると今回取り上げなかったxz平面でのズレにつながる話かなとも思います。実際に主要な球種がFFとCHの最強投手スクーバルはxz平面よりy軸のズレが傑出していますし、主要な球種にFCがある最強投手
+クロシェはy軸よりxz平面でのズレが傑出しています。&lt;/p&gt;
+&lt;p&gt;まだまだラフの段階ではありますが、例えば先ほどの図にBat Trackingの他の要素や球種やピッチカウントといった無視のできない条件も加味していけば、さらに精度高く野球を理解できるかなと思います。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>Bat Trackingから投球を分析する</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_06/</link>
+        <pubDate>Sat, 06 Sep 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_06/</guid>
+        <description>&lt;p&gt;2025年のYearly Savant UpdateではBat Trackingがさらにその対象範囲を広げました。
+打者のスイング情報がより増えたということは投球の分析が深まるということですので、新たに追加された変数を利用して投球の分析を行います。&lt;/p&gt;
+&lt;p&gt;投球はまず打者のスイングの有無で分岐します。今回はそのスイング有に対する分析を行います。&lt;/p&gt;
+&lt;p&gt;スイング時の投球の基本的な目標は打者が標準とする打点（Intercept Point）とバットの芯からズレることです。
+そのズレをxz平面とy軸に分解します。xz平面はSavantだと選手トップページのMovementのやつです。&lt;/p&gt;
+&lt;p&gt;-&lt;img src=&#34;http://localhost:1313/solving-baseball/images/63.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Savant Movement&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;この図、人気ですけど見ての通り現実の野球とは違う「平面」であることは忘れたくないですよね&lt;/em&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;http://localhost:1313/solving-baseball/memo/memo_19/&#34; &gt;投球のDeceptionを指標化する&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;以前の記事で紹介したこの指標を使います。&lt;/p&gt;
+&lt;p&gt;y軸はいわゆる「奥行き」で、緩急、タイミングが関わってくる視点です。&lt;/p&gt;
+&lt;p&gt;こちらはIntercept Point(x)を固定効果として設定し、GAMでIntercept Point(y)の予測、その予測値との差分をTiming Deviationとして指標化します。&lt;/p&gt;
+&lt;p&gt;-&lt;img src=&#34;http://localhost:1313/solving-baseball/images/172.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Savant Movement&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;スクーバルを可視化するとこんな感じになります。
+FFはより速く、CHはより遅く打者が感じています。&lt;/p&gt;
+&lt;p&gt;xz平面のズレとy軸のズレの関係性を示した図が以下になります。&lt;/p&gt;
+&lt;p&gt;-&lt;img src=&#34;http://localhost:1313/solving-baseball/images/171.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Savant Movement&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;xz平面のズレはy軸にも表れますし、y軸のズレはxz平面にも表れますのである程度の正の相関がある図になっています。&lt;/p&gt;
+&lt;p&gt;スクーバルはxz平面ではなくy軸のズレを主として失点を抑止していることが分かります。またセールのような投球フォームから軌道まで特殊な投手は打者が普段とは全く違ったスイング軌道で対応しようとしていることも示唆されています。&lt;/p&gt;
+&lt;p&gt;もっと精査し、得点価値とも結びつけられると、さらに高精度に野球を記述できる観点かと思います。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>投手の力むポイント</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_12/</link>
+        <pubDate>Sun, 03 Aug 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_12/</guid>
+        <description>&lt;p&gt;Arm Angleは投球コースの分布や変化の分布においてかなり重要な要素です。
+今回はそれのトリビア程度のテーマを。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/163.gif&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;a&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;このGIFはArm Angleごとの各投手の速球の平均球速からの乖離を集計したものです（利き手やピッチカウントは補正済み）。
+正直分かりにくいですが、球速が最大化するのは通常より腕が加速したときということなのか所謂引っかけた際に最大化していそうです。&lt;/p&gt;
+&lt;p&gt;そして投げおろし型は低めにサイド寄りは対角という傾向はあるかなと思います。&lt;/p&gt;
+&lt;p&gt;大きな効果はないかもしれませんが、投球コースの分布や変化の分布も含めArm Angleの適正化は育成面において重要な要素ですので共通する理論を把握していたいものです。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>打者が慣れやすい球種</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_14/</link>
+        <pubDate>Sat, 07 Jun 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_14/</guid>
+        <description>&lt;p&gt;有名な周回効果について、脇道にそれた話題を。&lt;/p&gt;
+&lt;p&gt;周回効果に慣れが関わることはまず間違いないですが、その現象が存在するということが実際には打席によって離散しているとは考えづらいでしょう。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/161.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;a&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;上図は同打席内において当該球種が2球投げられた際のRun Valueの変化です。&lt;/p&gt;
+&lt;p&gt;これを見るとBreaking系の球種の方が打者は慣れによる恩恵を受けやすく、Fastball系、Offspeed系は比較して慣れによる恩恵を受けにくい球種となっています。
+大きい変化ほど意外性という面で投手有意に働いている感覚はあります。意外性は見方を変えると慣れによるリスクの高さでもありますので経験則的には腑に落ちる結果となっています。
+見事なくらいKCとCU、STとSLの数値が近く面白い結果だなと思いますが、同じFastball系でもFFとSIの差が大きい部分について深堀してみたいとも思いました。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>Bat Trackingから打者のズレを可視化する</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_17/</link>
+        <pubDate>Tue, 27 May 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_17/</guid>
+        <description>&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;http://localhost:1313/solving-baseball/memo/memo_19/&#34; &gt;投球のDeceptionを指標化する&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;上記の記事で紹介した打者の予測投球コースからのズレを可視化してみます。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/153.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;a&#34;
+	
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/solving-baseball/images/154.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;a&#34;
+	
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/solving-baseball/images/155.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;a&#34;
+	
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/solving-baseball/images/156.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;a&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;少し表記ミスはあります&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;実際のバットの通過点は取得できませんが、Bat Pathからでもこのように野球が記述できるのがセイバーメトリクスの楽しいポイントの一つです。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>球種、プラトーン別のDeception</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_18/</link>
+        <pubDate>Sun, 25 May 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_18/</guid>
+        <description>&lt;p&gt;-&lt;a class=&#34;link&#34; href=&#34;http://localhost:1313/solving-baseball/memo/memo_19/&#34; &gt;投球のDeceptionを指標化する&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Deception Scoreのリーグ平均値を球種、プラトーン別にまとめます。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/138.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;a&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Breaking系の球種や速球でもシンカーは「右vs右」や「左vs左」といった同手に対して強く、スプリットやチェンジアップといったOffspeed系の球種はプラトーンによる有利不利が確認できません。&lt;/p&gt;
+&lt;p&gt;このような傾向に自身の積み重ねた知識理解から違和感を覚えないか、といったレビューは常にしたいですし、今回で言うとカッターのプラトーン格差の無さの中身や速球と遅球でズレる価値の違いなど、違和感を覚えた箇所への修正的アプローチも積み重ねたいと思います。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>Bat Pathと投球コース</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_20/</link>
+        <pubDate>Sat, 24 May 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_20/</guid>
+        <description>&lt;p&gt;試合を見ても、各々イメージしていただいても簡単に分かることではありますが、打者は投球コースによってスイングの形状を変えます。&lt;/p&gt;
+&lt;p&gt;この現象自体に革新さはありませんが、トラッキングデータの進化により各スイングの形状を測定できるようになった現代ではその現象を革新的に利用できます。&lt;/p&gt;
+&lt;p&gt;打者が投球コースに合わせたスイングをするということは、スイングの形状から打者が予測した投球コースを推定できるということです。&lt;/p&gt;
+&lt;p&gt;配球戦略という文脈でも投球の質という文脈でも打者の予測からのズレは言わば目標値のような使われ方はされつつも、空振りや打球イベントといった結果からしか語られないジレンマのようなものもありました。&lt;/p&gt;
+&lt;p&gt;バットトラッキングはそのジレンマの解消に一歩近づく可能性を秘めています。&lt;/p&gt;
+&lt;p&gt;打者ごとに標準化したBat Pathを投球コースで可視化したものが以下になります。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/137.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Bat Pathと投球コース&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;綺麗に高めほどフラットに外角ほどフラットになっていることが分かります。
+このアプローチに潜むバイアスに対処し、予測投球コースの推定の精度を高められれば特に投手の評価について新たな深みを与えられると思います。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>投球のDeceptionを指標化する</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_19/</link>
+        <pubDate>Sat, 24 May 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_19/</guid>
+        <description>&lt;p&gt;-&lt;a class=&#34;link&#34; href=&#34;http://localhost:1313/solving-baseball/memo/memo_20/&#34; &gt;Bat Pathと投球コース&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;上記の記事のBat Pathから推定した打者の予測投球コースと実際の投球コースのズレを投手指標化してみました。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/149.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;q&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;単回帰×2による予測投球コースからの乖離&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;打者のズレを指標化してるものですのでもちろん空振りとの相関はある程度確認できます。
+そして意外と空振りと独立して語られる打球速度の抑制力ですが、理論的にはバットの芯から外すという共通目的からその程度の差によって生まれる二者ですので空振り率に及ぶほどの相関も見せています。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/150.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;q&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;次は一貫性と予測性です。
+年度間での比較ができるサイズは揃っていないので2024年のデータを投手ごとに分割しそれらの一貫性と予測性を調べました。&lt;/p&gt;
+&lt;p&gt;一貫性はこの手の指標ではかなり強いと言えるでしょう。
+一貫性がないと次に進めませんので少なくとも打者の予測からズレる力のある程度の一貫性を確認できたのは良かったです。&lt;/p&gt;
+&lt;p&gt;予測性もxwOBAconをこの程度予測できるのは強いですがまだ野球の摂理に抗えるほどではないかと思います。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/151.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;q&#34;
+	
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/solving-baseball/images/152.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;q&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;多変量GAMによる予測投球コースからの乖離&lt;/em&gt;&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>予測スイング率との乖離から投球戦略を考える</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_24/</link>
+        <pubDate>Tue, 08 Apr 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_24/</guid>
+        <description>&lt;p&gt;投手と打者の対戦が大きな要素を占める野球において、投手が打者に対してどの程度警戒しているかという視点をたまに見かけます。&lt;/p&gt;
+&lt;p&gt;ただ、それをBB％やZone%という結果から推定する方法は、その結果が生成されるまでのプロセス情報が入手できる今の時代では正直ワクワクしません。&lt;/p&gt;
+&lt;p&gt;ということで、Pitching+のようなピッチモデリング指標の算出過程を活用します。&lt;/p&gt;
+&lt;p&gt;例えばハーパーはZone%や3-0率といった結果からお化けみたいな打撃成績を残していない近年も投手から恐れられている印象を抱きますが、少し視点を変えてみるということです。&lt;/p&gt;
+&lt;p&gt;多くのピッチモデリング指標はその算出過程において、投球の特性からスイング率を予測する工程が存在します。この予測スイング率は打者の情報に影響されません。
+つまり、打者にとってその予測スイング率との乖離がスイング積極性であり、投手にとってその乖離に対応した予測スイング率の投球をすることに合理性が生まれます。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/144.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;q&#34;
+	
+	
+&gt;
+&lt;em&gt;ちょっとTangoの図っぽくしてみた&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;上記の図は、x軸に予測スイング率、y軸にその予測からの乖離を示したものです。&lt;/p&gt;
+&lt;p&gt;例で出したハーパーはZone%と同じように打者の情報を含まない予測スイング率は極端に低いです。しかし、その予測からの乖離もトップクラスに大きく、回帰直線を引くと異常値として目立つほどではないでしょう。
+対してソトは予測からの乖離は負の方向に大きく、投手はある程度大胆なアプローチをする合理性が生まれますが実際には予測スイング率もかなり低くなっています。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/145.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;q&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;上記の図は打者の実際のスイング率と予測スイング率からの乖離の関係です。
+もちろんこれらはかなり強く相関しますが、その回帰線からの逸脱具合から歪みのある打者の存在も確認できるかと思います。&lt;/p&gt;
+&lt;p&gt;もちろんこのような思考にはピッチモデリング指標を利用しない方法もありますが、結果を補正して目的とした成分を抽出する手法よりその結果が出るまでのプロセス情報から目的とする成分を抽出する方が理論的には美しいと思います。
+問題としてはブラックボックス化しやすいことによる万人への解釈性や再現性といったところかと思います。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>打者の慣れはリリーフにも引き継がれるか</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_25/</link>
+        <pubDate>Thu, 03 Apr 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_25/</guid>
+        <description>&lt;p&gt;同じ投手と何度も対戦することで打撃成績が向上する効果、周回効果について、慣れの側面から少し脇道に逸れたテーマです。&lt;/p&gt;
+&lt;p&gt;同試合内で何度も対戦する投手はほぼ先発投手です。つまり打者は慣れにおいて先発投手にフォーカスを合わせます。&lt;/p&gt;
+&lt;p&gt;という前提から、先発投手の次に対戦する投手にも先発投手の慣れは引き継がれている可能性があります。&lt;/p&gt;
+&lt;p&gt;ということで簡易的ですが調べてみました。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/142.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;q&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;まずは先発投手と二番手投手の利き手の相違で成績が変わるのかというテーマ。&lt;/p&gt;
+&lt;p&gt;正直なところ、MLBのサンプルサイズに甘えてはいますが先発投手の慣れは中継ぎにも引き継がれていそうです。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/143.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;q&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;次は同じ利き手においても投球フォームの類似度で成績は変わるのかというテーマ。&lt;/p&gt;
+&lt;p&gt;こちらもそれっぽい結果が出ています。同じ利き手より違う利き手、高類似度より低類似度の二番手投手の方が打者を抑えられています。&lt;/p&gt;
+&lt;p&gt;今回のように、周回効果という定説の中にある要素を抽出して、その要素から展開できる他の仮説への適用は野球の探究の楽しい部分かなと思います。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>ポストシーズンのBABIPについて</title>
+        <link>http://localhost:1313/solving-baseball/analysis/ps-babip/</link>
+        <pubDate>Mon, 04 Nov 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/analysis/ps-babip/</guid>
+        <description>&lt;p&gt;今回取り上げるのはポストシーズンの野球の話です。&lt;/p&gt;
+&lt;p&gt;ポストシーズンや短期決戦において個人的に注目しているのが様々な野球ファンから語られる様々なポストシーズン論です。&lt;/p&gt;
+&lt;p&gt;ある野球ファンは「小技の重要性が上がる」とか、またある野球ファンは「投手の重要性が上がる」とか、あるセイバーオタクは「ポストシーズンは運」とか、多様な野球論を目にすることのできる楽しい時期でもあります。&lt;/p&gt;
+&lt;p&gt;これらの議論が成り立つのは、ポストシーズンとレギュラーシーズンに類似点だけでなく&lt;strong&gt;相違点&lt;/strong&gt;も存在する（と認識されている）ためです。&lt;/p&gt;
+&lt;p&gt;今回はその相違点のうち、&lt;strong&gt;BABIP&lt;/strong&gt;について紐解いていければと思います。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;レギュラーシーズンとポストシーズンの違い&#34;&gt;レギュラーシーズンとポストシーズンの違い
+&lt;/h2&gt;&lt;p&gt;では簡単にレギュラーシーズンとポストシーズンの野球の違いをおさらいしておきます。&lt;/p&gt;
+&lt;p&gt;ホークアイデータを使う可能性を考えて対象年度は2021年以降としておきます（2020年の特例シーズンは対象外）。&lt;/p&gt;
+&lt;p&gt;各イベント発生率の違いが以下です。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/67.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;イベント発生率の比較&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;※2021年以降、野手のみ&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;大きな違いは&lt;strong&gt;K%&lt;strong&gt;と&lt;/strong&gt;BIP（インプレー打球）の結果&lt;/strong&gt;でしょう。&lt;/p&gt;
+&lt;p&gt;ポストシーズンではとにかく三振が増え、BIPの結果が悪くなります。&lt;/p&gt;
+&lt;p&gt;レギュラーシーズンのBABIP .2926…に対して、ポストシーズンのBABIPは .2810…、差にして .0116…が生じています。対象ポストシーズンのBIPは7,483ですので、レギュラーシーズンを基準とすると&lt;strong&gt;ポストシーズンにおいて7,483 × 0.01158 ≒ 87 のアウトが期待値より発生&lt;/strong&gt;しています。この87の追加アウトの発生源を推測してみようというのが主題です。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;打球によるbabipの低下&#34;&gt;打球によるBABIPの低下
+&lt;/h2&gt;&lt;p&gt;投手と打者については責任分配がややこしいので今回は打球によって低下したBABIPを考えます。&lt;/p&gt;
+&lt;p&gt;ポストシーズンにおいてのBIPの変化は代表的な4分類から十分に確認できます。以下がBaseball Savantの四分類の割合の比較です。&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;GB%&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;LD%&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;FB%&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;PU%&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;BABIP&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;レギュラーシーズン&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;45.2&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;24.5&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;23.0&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;7.3&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;.293&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;ポストシーズン&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;44.3&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;23.7&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;23.2&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;8.8&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;.281&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;em&gt;※2021年以降、野手のBIPのみ&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;周知の通り、4分類においてBABIP Valueの高さはLD（ライナー）（.622） &amp;gt; GB（ゴロ）（.245） &amp;gt; FB（フライ）（.122） &amp;gt; PU（ポップフライ）（.016）です。&lt;/p&gt;
+&lt;p&gt;そしてポストシーズンのBIPにおいてはBABIP Valueの高いLD、そこそこのGBの割合は減り、BABIP Valueの低いPUの割合は増えています。&lt;/p&gt;
+&lt;p&gt;投手、打者にどう責任を分配するかはさておき、打球によってポストシーズンのBABIPが低下していることは明らかです。&lt;/p&gt;
+&lt;p&gt;例えばこの4分類を使った簡単な xBABIPを求めると、&lt;strong&gt;レギュラーシーズンの xBABIP .2926…に対してポストシーズンでは .2859…&lt;strong&gt;となり87の追加アウトのうち&lt;/strong&gt;58%の50個ほど&lt;/strong&gt;を説明できます。&lt;/p&gt;
+&lt;p&gt;ただ打球種類の他に打球方向も見ていくと少し変わってきます。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/68.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;打球種類・方向割合比較&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;上記表は4つの打球種類と3つの打球方向で打球を12に分類したものです。&lt;/p&gt;
+&lt;p&gt;ゴロにおいてはBABIP Valueの低い（.190）引っ張りが減少しているように打球方向に関してはBABIPに有利に働く変化を見せており、この&lt;strong&gt;12分類の xBABIPでは .2870…&lt;/strong&gt;、87の追加アウトのうち&lt;strong&gt;48%の42個ほど&lt;/strong&gt;に落ち着きます。&lt;/p&gt;
+&lt;p&gt;まだあります。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>球種ごとの打球の伸びやすさ</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_31/</link>
+        <pubDate>Sat, 22 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_31/</guid>
+        <description>&lt;p&gt;飛距離は打球速度と打球角度によってその大方が決定しますが、他の風や気温といった環境以外の要素では打球の回転数や回転効率があります。
+重力と抗力に適した揚力によって伸びる打球が生まれるという話です。&lt;/p&gt;
+&lt;p&gt;そこで球種ごとに打球速度と打球角度から期待される飛距離との乖離に差はあるかという点を調べました。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/126.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;球種ごとの打球の伸びやすさ&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;速球が飛びやすく、Offspeedやカーブ系が飛びにくいといった結果から回転数や回転効率の影響が示唆されています。
+深堀すると面白そうなテーマなのでそのうちNathanの論文と睨めっこしながら考えてみます。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>投手のギアチェンジについて</title>
+        <link>http://localhost:1313/solving-baseball/analysis/gear_change/</link>
+        <pubDate>Fri, 07 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/analysis/gear_change/</guid>
+        <description>&lt;p&gt;ピッチング、特に先発投手のピッチングについて語る場面でよく出くわす&amp;quot;ギアチェンジ&amp;quot;という概念。この概念が事実としてあるのか、あるのならその中身も覗いてみたいと思います。&lt;/p&gt;
+&lt;h2 id=&#34;ギアチェンジは存在するか&#34;&gt;ギアチェンジは存在するか
+&lt;/h2&gt;&lt;p&gt;野球におけるギアチェンジ、解説者や選手、ファンの使い方としては「(重要な場面に)常時は全開でない(先発)投手が出力を上げて抑えにいくこと」でしょうか。&lt;/p&gt;
+&lt;p&gt;ちなみに大御所野球ゲーム、パワプロにもギアチェンジという特殊能力がありますが、その発動条件・効果は&lt;a class=&#34;link&#34; href=&#34;https://gamerch.com/pawapuro2022/364469&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Gamerch&lt;/a&gt;によると以下です。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/2.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;パワプロのギアチェンジ能力&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;ではギアチェンジの存在を数字でしっかり拾えるかどうか調べてみます。&lt;/p&gt;
+&lt;h3 id=&#34;ピンチにおける出力の変化&#34;&gt;ピンチにおける出力の変化
+&lt;/h3&gt;&lt;p&gt;パワプロでは球速以外にもコントロールや変化球のキレ(曲がり始めの遅速)も上がる能力とされていますが、コントロールとか変化球のキレの話は複雑かつ高度ですし、解説者やファンがギアチェンジを測る指標としてよく使われるのが球速なのでここを調べます。&lt;/p&gt;
+&lt;p&gt;ギアチェンジによる球速変化の比較対象はその試合の球速です。「試合序盤の150キロ前後のストレートから大幅に球速を上げていました」という上記記事の表現もよく聞きます。&lt;/p&gt;
+&lt;p&gt;ということでトラックマン、ホークアイによる測定値が記録されている2017年以降のMLBを対象に、その試合における平均球速との差を球種ごとに算出し、それをアウトカウント、塁状況別にまとめました。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/3.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;アウトカウント・塁状況別の球速変化&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;いろいろ興味深い箇所はありますが、状況によって投手の出力が変わっているのは間違いなさそうです。&lt;/p&gt;
+&lt;p&gt;ランナーが先の塁にいるほど、アウトが増えるほど出力が上がっています。気になるところはランナーが二盗可能な状況では他の似た状況と比して出力が上がっていないところ。盗塁の警戒から出力に最適化されたフォームで投げられていないのでしょうか。&lt;/p&gt;
+&lt;p&gt;他は、満塁より三塁・二三塁の方が多少ではありますが出力が上がっているところ。満塁より四球による損失は小さく、内野ゴロのアウト期待値の違いから三振の相対的失点抑止力が二三塁の方が大きくなるからとかが考えられますかね。&lt;/p&gt;
+&lt;p&gt;では先発投手とリリーフ投手でこの傾向に違いはあるのでしょうか。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/4.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;先発とリリーフの球速変化比較&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;ピンチな場面ほど出力が上がる基本的な傾向は似ていますが、やはり長いイニングを投げることも求められる先発の方が出力の変化の幅が大きいです。&lt;/p&gt;
+&lt;p&gt;先発が無死無走者を基準にすると二死満塁で1.38km/h出力が上がりますが、リリーフ投手は二死三塁で0.65km/hの上昇が最大です。&lt;/p&gt;
+&lt;p&gt;ここで先ほど語った、満塁と三塁・二三塁での出力変化の違いの話にも進展が見えます。この状況を比べたとき、先発はランナーの数ほど出力が上がっていますがリリーフはむしろ逆です。&lt;/p&gt;
+&lt;p&gt;試合の序盤・中盤を投げる先発ほどランナーの数(失点期待値)を、終盤を投げるリリーフほど失点確率の方を意識しがちなことは推定できるので、失点確率の方に比重を置くと四球を出しても(制球を落としても)三振を獲りにいく(出力を上げる)という行動の合理性はリリーフの方が高くなることも推測できます。&lt;/p&gt;
+&lt;p&gt;何にせよ、ギアチェンジという言葉が使われる理由は数字で確認できました。&lt;/p&gt;
+&lt;p&gt;ではざっくりとした&amp;quot;ピンチ&amp;quot;という表現ではなく、得点期待値の観点からも見てみます。(ここからは主に先発投手を対象にします)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/5.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;得点期待値と球速変化&#34;
+	
+	
+&gt;
+&lt;em&gt;得点期待値はBaseball Savant(2017~2023)から算出&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;状況による出力変化を合理たらしめるものは、状況による重要度の変化です。&lt;/p&gt;
+&lt;p&gt;ということで、まずは定番の得点期待値と照らし合わせてみますが、基本的にアウトを重ねるほど出力が上がる投手に対して、得点期待値はアウトを重ねるほど下がるので目立った相関はありません(R = 0.17)。&lt;/p&gt;
+&lt;p&gt;ただこれは、得点期待値という複数打席(その状況からイニング終了まで)の数字と単打席の出力変化を照らし合わせるのがそもそも頭の悪い話です。&lt;/p&gt;
+&lt;p&gt;そこで単純ではありますが、状況そのままにアウトを増やしたときの抑止得点期待値と照らし合わせてみます。例えば無死満塁(得点期待値 2.32)から三振なり内野フライなりで一死満塁(得点期待値 1.59)にできたら得点期待値は0.74(四捨五入誤差)下がりますねということです。&lt;/p&gt;
+&lt;p&gt;この観点から見ると、アウトを重ねるほど出力を上げることの非合理さも目立たず、そこそこの関係性が窺えます(R = 0.57)。また後述しますが、投手は球数を重ねるほど出力は下がるので、終わりが見えない無死より終わりの見える二死ほど出力が上がるのもイニング単位で考えると多少の合理性は見えてくるのではないのかなとも思います。&lt;/p&gt;
+&lt;h3 id=&#34;場面の重要度における出力の変化&#34;&gt;場面の重要度における出力の変化
+&lt;/h3&gt;&lt;p&gt;さっきと同じじゃね？と思うかもしれませんが、失点を減らす観点での場面の重要度と試合に勝利するという観点での重要度は違います。&lt;/p&gt;
+&lt;p&gt;1回裏 5 - 0 の二死二三塁と9回裏 1 - 0 の二死二三塁では1つのアウトや1つのヒットが勝敗結果に及ぼす影響度が違うことは分かりやすいかと思います。&lt;/p&gt;
+&lt;p&gt;先ほど失点の観点からシチュエーションを24通りに分けましたが、勝利の観点ではさらに点差、イニング、先攻後攻によっても分けられます。&lt;/p&gt;
+&lt;p&gt;そこで、そのような場面ごとの重要度を測る指標「&lt;a class=&#34;link&#34; href=&#34;https://tht.fangraphs.com/crucial-situations/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Leverage Index&lt;/a&gt;」を利用します。Leverage Index (LI)を一言で説明すると、「勝利確率の振れ幅」でしょうか。大差のついた最終回の1打席では勝利確率の増減は0%に近くても、接戦なら1打席で20%程度の増減もあるのが野球です。その振れ幅の平均との比較で場面の重要度を測っています。英単語&amp;quot;leverage&amp;quot;はてこの原理という意味でもよく使われるので連想もしやすいかなと思います。&lt;/p&gt;
+&lt;p&gt;LI は得点期待値と同じくsavantの変数から算出しました。FanGraphsのLIとの比較がこちら。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/6.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;LI比較&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;FGが具体的にどの期間を対象にLIを算出しているのか知りませんが、とりあえず2008~2023を対象に算出したLIで十分そうです。&lt;/p&gt;
+&lt;p&gt;ではLIと出力変化について見ていきます。&lt;/p&gt;
+&lt;p&gt;まずは単純にLIごとの球速の変化がこちら。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/7.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;LIと球速変化&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;順当にレバレッジが高い場面ほど出力が上がっています。がここには罠があります。&lt;/p&gt;
+&lt;p&gt;というのも投手はイニングを追うごとに球速を落とします。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/8.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;イニング別球速変化&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;なんだかんだ言って元気のある初回に元気のある球を投げています。がここにも少し罠があります。&lt;/p&gt;
+&lt;p&gt;というのもイニングによってLIが違います。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/9.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;イニング別LI&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;接戦であるほど、終盤であるほどレバレッジは高くなりますが先発投手の場合、打者が慣れてきて投手が疲れてくる終盤に続投を決断されるのはレバレッジの低い大差のついた場面が多くなります。&lt;/p&gt;
+&lt;p&gt;という風に投手のイニング、レバレッジごとの球速変化というのはイニングやレバレッジがお互いに作用している可能性があるのです。&lt;/p&gt;
+&lt;p&gt;なのでLIによる球速変化を調べるにあたってイニングによる補正も行います。具体的には各LIを0.25ごとに丸めてイニングを揃えて比較し、データ数によって加重平均します。その結果がこちら。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>4月の成績 vs 5月以降の成績</title>
+        <link>http://localhost:1313/solving-baseball/analysis/april-vs-may-stats-article/</link>
+        <pubDate>Thu, 02 May 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/analysis/april-vs-may-stats-article/</guid>
+        <description>&lt;h2 id=&#34;打者&#34;&gt;打者
+&lt;/h2&gt;&lt;p&gt;まずは打者からです。対象とした打者は2015〜2023年(2020年は除く)の３・４月と５月以降でどちらも規定打席に立った打者です。本当は生存バイアス等にも対処した方が良いと思いますが今回は手軽にいきます。&lt;/p&gt;
+&lt;h3 id=&#34;vs-指標自身&#34;&gt;vs 指標自身
+&lt;/h3&gt;&lt;p&gt;まずは指標自身の話です。「4月のBABIPと５月以降のBABIPって相関あるの？」という感じの話。野球ファンからの関心がそこそこ高そうな指標を中心にピックアップしたものがこちら。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/80.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;各指標の3・4月と5月以降の相関係数（打者）&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;各指標の3・4月と5月以降の相関係数（n = 853）&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;これは野球に限らないことだと思いますが、ファンが第一に気にするような結果ではなく、その結果が出る前の過程を測った指標ほど強い相関を示しています。&lt;/p&gt;
+&lt;p&gt;打者の&lt;strong&gt;アプローチ姿勢&lt;/strong&gt;(Swing%, Contact%)、打者の&lt;strong&gt;パワー&lt;/strong&gt;(打球速度, Hard Hit%)、打者の&lt;strong&gt;スイング軌道&lt;/strong&gt;(打球角度, GB%, FB%)のようなものはシーズン序盤から安定しても、それらに加え内外の様々な変数が組み合わさった結果完成する指標(BABIP, wOBA等)は安定に時間がかかることは想像に難くありません。&lt;/p&gt;
+&lt;p&gt;ゴロとフライの境目であるライナー、引っ張りと流しの境目であるセンター返しも安定に時間がかかりますが特に気を付けるべきはライナー。ライナーは他と比べて恐ろしく生産性の高い打球ですが、ライナーの発生確率が信頼に足るサンプルサイズに達するのは500〜600BBEほど。これは上位打線で年間フル出場近く出場しても選手によっては到達できない数字です。&lt;/p&gt;
+&lt;p&gt;wOBA - xwOBA(0.222)は使用球場の偏りを留意しておく必要はあるでしょう。参考までに、同期間のwOBA - xwOBAはクアーズで .029、ブッシュで -.011です。&lt;/p&gt;
+&lt;p&gt;Clutch(0.034)、打率 - 得点圏打率(-0.032)は美しいですね。&lt;/p&gt;
+&lt;h3 id=&#34;vs-woba&#34;&gt;vs wOBA
+&lt;/h3&gt;&lt;p&gt;次は５月以降のwOBAとの比較です。三振しないことや速い打球を飛ばすことはあくまでも手段です。&lt;strong&gt;目的＝勝利に貢献 ≒ 得点に貢献 ≒ wOBAの高い打者&lt;/strong&gt;は４月のどの指標でその兆しを見せていたのでしょうか。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/81.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;3・4月の各指標と5月以降のwOBAとの相関係数&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;3・4月の各指標と5月以降のwOBAとの相関係数（n = 853）&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;一応相対的にカラースケールしてますが軒並みしょぼいです。&lt;/p&gt;
+&lt;p&gt;xwOBAですら決定係数は0.156、５月以降のwOBAをほとんど説明できません。&lt;/p&gt;
+&lt;p&gt;気を付けるべきはコンタクト系の指標ですかね。コンタクト系の指標はコンタクト力(という言い方も少し違いますが)を測る指標としては信頼度は高いですが、&lt;strong&gt;打者においてコンタクト力は単純に得点創出力に結びつきません。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;これはイチローのあの &lt;strong&gt;.220 40本発言&lt;/strong&gt;が野球ファンに違和感なく受け入れられているように&lt;strong&gt;コンタクト能力と長打力にトレードオフ関係がある&lt;/strong&gt;ことを直感的に理解している人は多そうです。&lt;/p&gt;
+&lt;p&gt;実際のトレードオフ関係を定量化するのは割と大変だと思いますが、現状コンタクト力とK%には強い因果があるのに対して、コンタクト力と得点創出力には相関はありません。これの意味するところはコンタクト力の低い打者は三振による損失を他で補っているということです。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/82.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;wRC&amp;#43; vs Contact%&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;2023 min.300PA&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;丁度良く実例があるので紹介すると、2023年MLBで最も低いK%を記録しながらISO最下位、wRC+は92に甘んじたガーディアンズは昨オフ従来のアプローチ姿勢を打ち破る意向を示し、2024年4月終了時点で昨年からK%の順位を落としながらISO15位、wRC+107とそのトレードオフを成功させています。今年のガーディアンズは要注目です。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.nytimes.com/athletic/5298726/2024/02/26/guardians-offense-swinging-and-missing/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Why Guardians’ bid to boost their offense starts with … swinging-and-missing?&lt;/a&gt; - Zack Meisel&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;投手&#34;&gt;投手
+&lt;/h2&gt;&lt;p&gt;では投手です。対象とした投手は３・４月と５月以降でどちらも規定投球回に達した投手。&lt;/p&gt;
+&lt;h3 id=&#34;vs-指標自身-1&#34;&gt;vs 指標自身
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/83.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;各指標の3・4月と5月以降の相関係数（投手）&#34;
+	
+	
+&gt;&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>ピッチクロックが球質に及ぼす影響</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_34/</link>
+        <pubDate>Sun, 07 Apr 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_34/</guid>
+        <description>&lt;p&gt;2023年、MLBにピッチクロックが導入されました。
+このピッチクロックが野球にもたらす影響について、日本人を中心に様々な批判材料が構築されていましたが、
+その中でもとりわけ多くの支持を集めていたのが「投手の身体への悪影響」でしょう。&lt;/p&gt;
+&lt;p&gt;確かに、旧来の投球間隔が投手の身体的悪影響に対して限界的なラインで凌いでいたものならば、その投球間隔を狭めることは投手に身体的悪影響を及ぼすでしょう。&lt;/p&gt;
+&lt;p&gt;また特に、旧来の投球間隔が長くより多くの投球間隔の短縮を迫られる投手の方が身体的悪影響は現れやすいでしょう。&lt;/p&gt;
+&lt;p&gt;実際に2022年から2023年の投球間隔の短縮幅とピッチモデリング指標の変化が以下です。&lt;/p&gt;
+&lt;p&gt;-&lt;img src=&#34;http://localhost:1313/solving-baseball/images/64.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Pitch Tempo vs Stuff&#34;
+	
+	
+&gt;
+-&lt;img src=&#34;http://localhost:1313/solving-baseball/images/65.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Pitch Tempo vs Stuff&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;とりあえず関係性はないと言えるレベルです。&lt;/p&gt;
+&lt;p&gt;ちなみに、投球間隔の減少幅とILに登録された率や総日数についても特にその主張を裏付けるものとはなっていません。&lt;/p&gt;
+&lt;p&gt;-&lt;img src=&#34;http://localhost:1313/solving-baseball/images/66.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Pitch Tempo vs Stuff&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;確か&lt;a class=&#34;link&#34; href=&#34;https://www.spotrac.com/mlb&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;spotrac&lt;/a&gt;を参照したはず&lt;/em&gt;&lt;/p&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

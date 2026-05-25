@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>wRC&#43; on Solving Baseball Blog</title>
+        <link>http://localhost:1313/solving-baseball/tags/wrc&#43;/</link>
+        <description>Recent content in wRC&#43; on Solving Baseball Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>ja</language>
+        <lastBuildDate>Sun, 22 Sep 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/solving-baseball/tags/wrc+/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>最強打者の特徴【球速編】</title>
+        <link>http://localhost:1313/solving-baseball/analysis/strongest-hitters-velocity-article/</link>
+        <pubDate>Sun, 22 Sep 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/analysis/strongest-hitters-velocity-article/</guid>
+        <description>&lt;p&gt;テーマは&lt;strong&gt;最強打者&lt;/strong&gt;について。&lt;/p&gt;
+&lt;p&gt;とりあえず見てもらいたいのが以下のヒストグラム。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/78.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;MLB球速分布&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;今シーズンのMLBの球速分布を示しています。&lt;/p&gt;
+&lt;p&gt;速球の山と変化球の山が確認できるかと思います。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;最強打者達はこの山のどのあたりを得意にしているのか&lt;/strong&gt;、（相対的に）&lt;strong&gt;苦手にしているのか&lt;/strong&gt;、といったところに興味が湧きましたので簡単に見ていきます。&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;対象としたのは2015年以降（2020年を除く）の規定打席到達打者。&lt;/p&gt;
+&lt;p&gt;最強打者は wRC+ が最高の打者でいいとして、n 数の確保のため &lt;strong&gt;95 パーセンタイル以上の wRC+ を持つ打者&lt;/strong&gt;を最強打者の一人として集めました。各シーズン 7、8人ほどですね。&lt;/p&gt;
+&lt;p&gt;そして各シーズンで&lt;strong&gt;球速帯をそれぞれ投球数が等しくなるように六分割&lt;/strong&gt;します。&lt;/p&gt;
+&lt;p&gt;その&lt;strong&gt;各球速帯におけるRun Valueの結果&lt;/strong&gt;を比較してみました。（wRC+ で打者を選んでおいてRVを調べる？？まあ、RVで強打者を選ぶのも結果球のみを分析の対象にするのも微妙でしょう）&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;球速帯（パーセンタイル）&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;全体&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;〜16.7&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;16.7〜33.3&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;33.3〜50.0&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;50.0〜66.7&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;66.7〜83.3&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;83.3〜&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;RV / 100（パーセンタイル）&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;96.2&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;79.9&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;76.4&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;79.7&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;82.0&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;80.6&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;76.5&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;em&gt;Data : Baseball Savant&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;一番の傑出力を見せたのは球速帯が 50〜66.7パーセンタイルの範囲。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;この球速帯は遅めのフォーシーム、シンカーが大部分を占め、残りを速めのカッターやスライダー、チェンジアップなどが占めています。&lt;/p&gt;
+&lt;p&gt;対して、&lt;strong&gt;相対的に対応を苦手としているのが豪速球蔓延る球速帯&lt;/strong&gt;と&lt;strong&gt;スライダー、チェンジアップ、スプリットが大部分を占める球速帯&lt;/strong&gt;です。&lt;/p&gt;
+&lt;p&gt;一応例として、今シーズンの球速帯グループの分布を示しておきます。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/79.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;MLB球速分布（球速帯別）&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Data : Baseball Savant&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;最強打者達は上図で言う黄色の部分を得意とし、その両隣もそこそこに、ただもう一段階離れたら流石に対応力は落ちてしまうよと、でも遅すぎる球速帯なら対応できるよと、そんなところでしょうか。&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;今回は軽めの note にしたかったので早々に切り上げますけど、面白い見方だなと思いました（絶対他に似たようなことやってる人いますけどね）。&lt;/p&gt;
+&lt;p&gt;例えば年々高速化しているのが野球界ですから、次の最強打者は上図で言うオレンジを得意としている打者なんじゃないかとかね。&lt;/p&gt;
+&lt;p&gt;豪速球に強いと良い意味で話題になりやすいけど、実際どうなん？とかね。&lt;/p&gt;
+&lt;p&gt;今回はパーセンタイルで見ましたけど、絶対値で範囲を区切った見方もすればもう少し深い考察もできるでしょうし。&lt;/p&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

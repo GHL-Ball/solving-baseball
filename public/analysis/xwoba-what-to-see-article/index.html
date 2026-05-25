@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+    <head><script src="/solving-baseball/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=solving-baseball/livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="打者の打撃能力を測る上で相当に優秀な指標である xwOBA。データサイトで手軽に確認でき、野球ファン大好きな上振れ下振れの話にも繋がり、なかなか人気のある指標ですが、他に一緒に見た方が良い指標はないの？といったことを考えていく記事です。\nxwOBAとは\rxwOBAを真面目に解説するとそれだけで重くなりますので要点を説明すると、xwOBAは play ではなく player を表すことを目的とし、非打球要素はそのままに打球要素は打球速度、&ldquo;垂直&quot;打球角度に着目し（一応、内野安打が期待されるような打球については走力も考慮される）、それらから期待される wOBAを算出したものになります。\n測定対象が play ではなく player という xwOBAの特徴として予測力があります。過去の結果には選手の能力以外のノイズも含まれていますので、そのノイズ（xwOBAでは相手の守備や水平角度など）を適宜取り除いた指標の方が未来の予測には有用です。\n実際、xwOBAは来季の wOBA予測において FanGraphs や Baseball Savant にある打撃指標の中では最強の予測力を誇ります。それは打球要素も非打球要素も含む総合打撃指標がほとんどないところが理由でもありますが。\nただ、xwOBAの打球部分 xwOBAconも来季の wOBAconの予測力がトップクラスに高い指標です。\n翌年の wOBAconとの関係\u3000Data : FanGraphs, Baseball Savant\nノイズを多く含む wOBAconより打球速度のみを測定対象としているAdjusted EV（88 mph以下の打球を全て88 mphとして算出した平均打球速度）の方が、さらに打球速度以外に打球角度も考慮している xwOBAcon、Barrel%の方が予測力に優れていることが分かるかと思います。Barrel%がxwOBAconより少し優れている点については後ほど説明できるかと思います。\nこのように xwOBAは単体でも予測力に強みを持ちますが、じゃあ xwOBA以外に何か見るべき指標ってあるの？という話を考えていきます。\n2023年のM・チャップマン\r2023年、4月の最強打者M・チャップマンを覚えているでしょうか。\nM・チャップマン\u30002023年3,4月成績\nwOBA .481（規定1位/181人） xwOBA .486（規定1位/181人） BABIP .485（規定1位/181人） Data : MLB\nwOBAだけでなく xwOBAも断トツで文字通りMLB最強打者でした。\nチャップマンの wOBAに近い例ではG・ペルドモがいました。彼の去年の初動とその後はまさにMLBファンが xwOBAを気にする理由でしょう。\nG・ペルドモ\u30002023年3, 4月 vs 5月以降成績\nwOBA .456 ➡ wOBA .297 xwOBA .301 ➡ xwOBA .271 BABIP .477 ➡ BABIP .265 Data : MLB\n">
+<title>xwOBAと何を見るか</title>
+
+<link rel='canonical' href='http://localhost:1313/solving-baseball/analysis/xwoba-what-to-see-article/'>
+
+<link rel="stylesheet" href="/solving-baseball/scss/style.min.4d36f8dc1fd48129e1635deb4b8eb2870fa09474f7280c4cb606d40b2526994b.css"><meta property='og:title' content="xwOBAと何を見るか">
+<meta property='og:description' content="打者の打撃能力を測る上で相当に優秀な指標である xwOBA。データサイトで手軽に確認でき、野球ファン大好きな上振れ下振れの話にも繋がり、なかなか人気のある指標ですが、他に一緒に見た方が良い指標はないの？といったことを考えていく記事です。\nxwOBAとは\rxwOBAを真面目に解説するとそれだけで重くなりますので要点を説明すると、xwOBAは play ではなく player を表すことを目的とし、非打球要素はそのままに打球要素は打球速度、&ldquo;垂直&quot;打球角度に着目し（一応、内野安打が期待されるような打球については走力も考慮される）、それらから期待される wOBAを算出したものになります。\n測定対象が play ではなく player という xwOBAの特徴として予測力があります。過去の結果には選手の能力以外のノイズも含まれていますので、そのノイズ（xwOBAでは相手の守備や水平角度など）を適宜取り除いた指標の方が未来の予測には有用です。\n実際、xwOBAは来季の wOBA予測において FanGraphs や Baseball Savant にある打撃指標の中では最強の予測力を誇ります。それは打球要素も非打球要素も含む総合打撃指標がほとんどないところが理由でもありますが。\nただ、xwOBAの打球部分 xwOBAconも来季の wOBAconの予測力がトップクラスに高い指標です。\n翌年の wOBAconとの関係\u3000Data : FanGraphs, Baseball Savant\nノイズを多く含む wOBAconより打球速度のみを測定対象としているAdjusted EV（88 mph以下の打球を全て88 mphとして算出した平均打球速度）の方が、さらに打球速度以外に打球角度も考慮している xwOBAcon、Barrel%の方が予測力に優れていることが分かるかと思います。Barrel%がxwOBAconより少し優れている点については後ほど説明できるかと思います。\nこのように xwOBAは単体でも予測力に強みを持ちますが、じゃあ xwOBA以外に何か見るべき指標ってあるの？という話を考えていきます。\n2023年のM・チャップマン\r2023年、4月の最強打者M・チャップマンを覚えているでしょうか。\nM・チャップマン\u30002023年3,4月成績\nwOBA .481（規定1位/181人） xwOBA .486（規定1位/181人） BABIP .485（規定1位/181人） Data : MLB\nwOBAだけでなく xwOBAも断トツで文字通りMLB最強打者でした。\nチャップマンの wOBAに近い例ではG・ペルドモがいました。彼の去年の初動とその後はまさにMLBファンが xwOBAを気にする理由でしょう。\nG・ペルドモ\u30002023年3, 4月 vs 5月以降成績\nwOBA .456 ➡ wOBA .297 xwOBA .301 ➡ xwOBA .271 BABIP .477 ➡ BABIP .265 Data : MLB\n">
+<meta property='og:url' content='http://localhost:1313/solving-baseball/analysis/xwoba-what-to-see-article/'>
+<meta property='og:site_name' content='Solving Baseball Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Analysis' /><meta property='article:tag' content='Batting' /><meta property='article:tag' content='xwOBA' /><meta property='article:tag' content='pwOBA' /><meta property='article:tag' content='SwSp%' /><meta property='article:published_time' content='2024-08-27T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-08-27T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="xwOBAと何を見るか">
+<meta name="twitter:description" content="打者の打撃能力を測る上で相当に優秀な指標である xwOBA。データサイトで手軽に確認でき、野球ファン大好きな上振れ下振れの話にも繋がり、なかなか人気のある指標ですが、他に一緒に見た方が良い指標はないの？といったことを考えていく記事です。\nxwOBAとは\rxwOBAを真面目に解説するとそれだけで重くなりますので要点を説明すると、xwOBAは play ではなく player を表すことを目的とし、非打球要素はそのままに打球要素は打球速度、&ldquo;垂直&quot;打球角度に着目し（一応、内野安打が期待されるような打球については走力も考慮される）、それらから期待される wOBAを算出したものになります。\n測定対象が play ではなく player という xwOBAの特徴として予測力があります。過去の結果には選手の能力以外のノイズも含まれていますので、そのノイズ（xwOBAでは相手の守備や水平角度など）を適宜取り除いた指標の方が未来の予測には有用です。\n実際、xwOBAは来季の wOBA予測において FanGraphs や Baseball Savant にある打撃指標の中では最強の予測力を誇ります。それは打球要素も非打球要素も含む総合打撃指標がほとんどないところが理由でもありますが。\nただ、xwOBAの打球部分 xwOBAconも来季の wOBAconの予測力がトップクラスに高い指標です。\n翌年の wOBAconとの関係\u3000Data : FanGraphs, Baseball Savant\nノイズを多く含む wOBAconより打球速度のみを測定対象としているAdjusted EV（88 mph以下の打球を全て88 mphとして算出した平均打球速度）の方が、さらに打球速度以外に打球角度も考慮している xwOBAcon、Barrel%の方が予測力に優れていることが分かるかと思います。Barrel%がxwOBAconより少し優れている点については後ほど説明できるかと思います。\nこのように xwOBAは単体でも予測力に強みを持ちますが、じゃあ xwOBA以外に何か見るべき指標ってあるの？という話を考えていきます。\n2023年のM・チャップマン\r2023年、4月の最強打者M・チャップマンを覚えているでしょうか。\nM・チャップマン\u30002023年3,4月成績\nwOBA .481（規定1位/181人） xwOBA .486（規定1位/181人） BABIP .485（規定1位/181人） Data : MLB\nwOBAだけでなく xwOBAも断トツで文字通りMLB最強打者でした。\nチャップマンの wOBAに近い例ではG・ペルドモがいました。彼の去年の初動とその後はまさにMLBファンが xwOBAを気にする理由でしょう。\nG・ペルドモ\u30002023年3, 4月 vs 5月以降成績\nwOBA .456 ➡ wOBA .297 xwOBA .301 ➡ xwOBA .271 BABIP .477 ➡ BABIP .265 Data : MLB\n">
+    <link rel="shortcut icon" href="/solving-baseball/images/favicon.png" />
+<style>
+  :root {
+    --ja-font-family: "Noto Sans JP", "游ゴシック体", "Yu Gothic", YuGothic, 
+      "ヒラギノ角ゴ Pro", "Hiragino Kaku Gothic Pro", "メイリオ", "Meiryo";
+    --base-font-family: "Lato", var(--sys-font-family), var(--ja-font-family),
+      sans-serif;
+  }
+
+   
+  .article-content {
+    color: var(--card-text-color-main);
+  }
+
+  .article-content a {
+    color: var(--accent-color);
+  }
+</style>
+
+<script>
+  (function () {
+    const customFont = document.createElement("link");
+    customFont.href =
+      "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Lato:wght@400;700&display=swap";
+    customFont.type = "text/css";
+    customFont.rel = "stylesheet";
+    document.head.appendChild(customFont);
+  })();
+</script>
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="メニューを開く・閉じる">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/solving-baseball">Solving Baseball Blog</a></h1>
+            <h2 class="site-description">Aspiring Saberistの備忘録</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://x.com/GHiLiBall'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://note.com/calm_phlox375'
+                        target="_blank"
+                        title="note"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/solving-baseball/leaderboard/' >
+                
+                
+                
+                <span>Leaderboard</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/' >
+                
+                
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/about/' >
+                
+                
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/analysis/' >
+                
+                
+                
+                <span>分析系</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/breakdown/' >
+                
+                
+                
+                <span>解説系</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/memo/' >
+                
+                
+                
+                <span>メモ</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/page/search/' >
+                
+                
+                
+                <span>検索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/categories/' >
+                
+                
+                
+                <span>カテゴリ一覧</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/tags/' >
+                
+                
+                
+                <span>タグ一覧</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>ダークモード</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目次</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#xwobaとは">xwOBAとは</a></li>
+    <li><a href="#2023年のmチャップマン">2023年のM・チャップマン</a></li>
+    <li><a href="#babipを見ることの価値">BABIPを見ることの価値</a></li>
+    <li><a href="#predictive-woba">Predictive wOBA</a></li>
+    <li><a href="#xwobaと何を見るか">xwOBAと何を見るか</a></li>
+    <li><a href="#文中紹介記事">文中紹介記事</a></li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/solving-baseball/categories/season%E5%8D%98%E4%BD%8D/" style="background-color: #16a34a; color: #fff;">
+                Season単位
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/solving-baseball/analysis/xwoba-what-to-see-article/">xwOBAと何を見るか</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published" datetime='2024-08-27T00:00:00Z'>2024-08-27</time>
+            </div>
+        
+
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <p>打者の打撃能力を測る上で相当に優秀な指標である xwOBA。データサイトで手軽に確認でき、野球ファン大好きな上振れ下振れの話にも繋がり、なかなか人気のある指標ですが、他に一緒に見た方が良い指標はないの？といったことを考えていく記事です。</p>
+<hr>
+<h2 id="xwobaとは">xwOBAとは
+</h2><p>xwOBAを真面目に解説するとそれだけで重くなりますので要点を説明すると、xwOBAは <strong>play ではなく player を表すことを目的</strong>とし、非打球要素はそのままに打球要素は打球速度、&ldquo;垂直&quot;打球角度に着目し（一応、内野安打が期待されるような打球については走力も考慮される）、それらから期待される wOBAを算出したものになります。</p>
+<p>測定対象が play ではなく player という xwOBAの特徴として<strong>予測力</strong>があります。過去の結果には選手の能力以外の<strong>ノイズ</strong>も含まれていますので、そのノイズ（xwOBAでは相手の守備や水平角度など）を適宜取り除いた指標の方が未来の予測には有用です。</p>
+<p>実際、xwOBAは来季の wOBA予測において FanGraphs や Baseball Savant にある打撃指標の中では最強の予測力を誇ります。それは打球要素も非打球要素も含む総合打撃指標がほとんどないところが理由でもありますが。</p>
+<p>ただ、xwOBAの打球部分 xwOBAconも来季の wOBAconの予測力がトップクラスに高い指標です。</p>
+<p><img src="/solving-baseball/images/74.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="翌年のwOBAconとの関係"
+	
+	
+></p>
+<p><em>翌年の wOBAconとの関係　Data : FanGraphs, Baseball Savant</em></p>
+<p>ノイズを多く含む wOBAconより打球速度のみを測定対象としている<strong>Adjusted EV</strong>（88 mph以下の打球を全て88 mphとして算出した平均打球速度）の方が、さらに打球速度以外に打球角度も考慮している xwOBAcon、Barrel%の方が予測力に優れていることが分かるかと思います。Barrel%がxwOBAconより少し優れている点については後ほど説明できるかと思います。</p>
+<p>このように xwOBAは単体でも予測力に強みを持ちますが、じゃあ xwOBA以外に何か見るべき指標ってあるの？という話を考えていきます。</p>
+<hr>
+<h2 id="2023年のmチャップマン">2023年のM・チャップマン
+</h2><p>2023年、4月の最強打者M・チャップマンを覚えているでしょうか。</p>
+<blockquote>
+<p><strong>M・チャップマン　2023年3,4月成績</strong></p>
+<ul>
+<li>wOBA .481（規定1位/181人）</li>
+<li>xwOBA .486（規定1位/181人）</li>
+<li>BABIP .485（規定1位/181人）</li>
+</ul>
+<p><em>Data : MLB</em></p>
+</blockquote>
+<p>wOBAだけでなく xwOBAも断トツで文字通りMLB最強打者でした。</p>
+<p>チャップマンの wOBAに近い例ではG・ペルドモがいました。彼の去年の初動とその後はまさにMLBファンが xwOBAを気にする理由でしょう。</p>
+<blockquote>
+<p><strong>G・ペルドモ　2023年3, 4月 vs 5月以降成績</strong></p>
+<ul>
+<li>wOBA .456 ➡ wOBA .297</li>
+<li>xwOBA .301 ➡ xwOBA .271</li>
+<li>BABIP .477 ➡ BABIP .265</li>
+</ul>
+<p><em>Data : MLB</em></p>
+</blockquote>
+<p>対して xwOBAと wOBAに開きのなかったチャップマンはこちらです。</p>
+<blockquote>
+<p><strong>M・チャップマン　2023年3, 4月 vs 5月以降成績</strong></p>
+<ul>
+<li>wOBA .481（規定1位/181人） ➡ wOBA .291（規定127位/132人）</li>
+<li>xwOBA .486（規定1位/181人） ➡ xwOBA .301（規定120位/132人）</li>
+<li>BABIP .485（規定1位/181人） ➡ BABIP .276（規定111位/132人）</li>
+</ul>
+<p><em>Data : MLB</em></p>
+</blockquote>
+<p>ただの一例なので &ldquo;そういうこともある&rdquo; でスルーする方がむしろ健全ではありますが、維持することのできない高BABIPとともに最強打者なら維持できる xwOBAを 3, 4月に記録し、その後見るも無惨に xwOBAも維持できなかったチャップマンの例は個人的に印象に残りました。</p>
+<hr>
+<h2 id="babipを見ることの価値">BABIPを見ることの価値
+</h2><p>xwOBAがある現代では打者BABIPは打者の色づけ程度の利用価値となっていますが、去年のM・チャップマンの印象に引っ張られて、xwOBAだけでなくBABIPも見ることで wOBAの予測力は上がるのかを調べてみます。</p>
+<p>まずは 2020〜2024 年の期間に 300 打席以上立った打者を対象に、来シーズンの wOBAを目的変数にxwOBAを説明変数にして単回帰分析を行います。結果は以下。（以降 2024年は 8/20 時点のデータです）</p>
+<blockquote>
+<p><strong>係数 [p値]：</strong> xwOBA 0.573 [2e-16]
+<strong>切片 [p値]：</strong> 0.133 [2e-16]
+<strong>自由度調整済み決定係数：</strong> 0.2863</p>
+<p>wOBA(n + 1) = 0.573 × xwOBA(n) + 0.133</p>
+<p><strong>標準誤差：</strong> 0.03122
+<strong>F統計量：</strong> 215.3　p値 2.2e-16</p>
+</blockquote>
+<p>予測力自体の限界はあれど非常に統計的に有意な回帰式が得られます。</p>
+<p>では説明変数にBABIPを含めてみます。</p>
+<blockquote>
+<p><strong>係数 [p値]：</strong> xwOBA 0.582 [2e-16]　BABIP -0.038 [0.331]
+<strong>切片 [p値]：</strong> 0.142 [2e-16]
+<strong>自由度調整済み決定係数：</strong> 0.2863</p>
+<p>wOBA(n + 1) = 0.582 × xwOBA(n) − 0.038 × BABIP(n) + 0.142</p>
+<p><strong>標準誤差：</strong> 0.03122
+<strong>F統計量：</strong> 108.1　p値 2.2e-16</p>
+</blockquote>
+<p>特に説明力に変化は見られません。BABIPの p値も 0.331と wOBA予測において xwOBAと合わせてBABIPを見る実用性はないと言っていいでしょう。ただ打者のBABIPは投手のBABIPより適正値の分散が大きいという特徴があります。イチローの .300は下振れだけど、アロンソの .300は上振れだよねという話です。</p>
+<p>ということで少々雑ですが当該シーズン以前のキャリア平均との比較をしたBABIP diff. を説明変数に設定してみます。</p>
+<blockquote>
+<p><strong>係数 [p値]：</strong> xwOBA 0.580 [2e-16]　BABIP diff. -0.075 [0.035]
+<strong>切片 [p値]：</strong> 0.131 [2e-16]
+<strong>自由度調整済み決定係数：</strong> 0.2910</p>
+<p>wOBA(n + 1) = 0.580 × xwOBA(n) − 0.075 × BABIP diff.(n) + 0.131</p>
+<p><strong>標準誤差：</strong> 0.03112
+<strong>F統計量：</strong> 110.6　p値 2.2e-16</p>
+</blockquote>
+<p>補正R²（自由度調整済み決定係数）は 0.2863から 0.2910と多少ですが説明力は上昇しました。BABIP diff.のp値も0.035と統計的有意性を認められる数字となりました。</p>
+<p>ただこの程度ならキャリアBABIPとの比較をするといった簡便な行為さえも必要ないかなというのが個人的に思うところではあります。</p>
+<p>チャップマンは打球速度の速さを補えないほどにフライヒッターかつ内野フライ率も高い低BABIPヒッターなので、BABIP .485はなおさらに異常値ではありました。</p>
+<p>大した成果も得られなかったことなので、次は逆算する形で wOBAの予測においての xwOBAについて考えていきます。</p>
+<hr>
+<h2 id="predictive-woba">Predictive wOBA
+</h2><p>xwOBAは play よりも player を測ることに注視した指標ですが、あくまでもその試合での価値に紐付いています。違う見方をすれば再現性を細部までは考慮されていません。xwOBAは相対的には十分 Predictive ではあると思いますが、「打球速度 80mph、打球角度 20度の打球は wOBA .850が期待される」というのは理論的には Expected です。</p>
+<p>この点に触れたのが以下の記事です。打球速度と角度を利用するというポイントは xwOBAと揃えて、その係数を &ldquo;期待される&rdquo; wOBA Valueではなく &ldquo;予想される&rdquo; wOBA Valueに置き換えることで予測力を高めています。</p>
+<ul>
+<li><a class="link" href="http://tangotiger.com/index.php/site/comments/introducing-predictive-woba"  target="_blank" rel="noopener"
+    >Introducing Predictive wOBA</a> - Tangotiger Blog</li>
+</ul>
+<p>詳細な算出方法は記されていませんが、ある程度は分かるので自分も算出してみました。</p>
+<ol>
+<li>打球速度、打球角度で打球をラベリングする（今回は12ビン）</li>
+<li>来季の wOBAconを目的変数に今季の12ビンを説明変数に切片を0に設定し重回帰分析によって係数を求める</li>
+</ol>
+<p>では、Expected wOBA Value（xwOBAの算出に使われている係数）とPredictive wOBA Valueの比較をしてみましょう。</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: center">打球角度＼打球速度</th>
+          <th style="text-align: center">〜95</th>
+          <th style="text-align: center">95〜100</th>
+          <th style="text-align: center">100〜105</th>
+          <th style="text-align: center">105〜</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: center">32〜</td>
+          <td style="text-align: center">.063</td>
+          <td style="text-align: center">.203</td>
+          <td style="text-align: center">.668</td>
+          <td style="text-align: center">1.420</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">8〜32</td>
+          <td style="text-align: center">.482</td>
+          <td style="text-align: center">.613</td>
+          <td style="text-align: center">.935</td>
+          <td style="text-align: center">1.219</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">〜8</td>
+          <td style="text-align: center">.182</td>
+          <td style="text-align: center">.319</td>
+          <td style="text-align: center">.383</td>
+          <td style="text-align: center">.452</td>
+      </tr>
+  </tbody>
+</table></div>
+<p><em>〜Expected wOBA Value〜</em></p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: center">打球角度＼打球速度</th>
+          <th style="text-align: center">〜95</th>
+          <th style="text-align: center">95〜100</th>
+          <th style="text-align: center">100〜105</th>
+          <th style="text-align: center">105〜</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: center">32〜</td>
+          <td style="text-align: center">.239</td>
+          <td style="text-align: center">.505</td>
+          <td style="text-align: center">.675</td>
+          <td style="text-align: center">1.429</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">8〜32</td>
+          <td style="text-align: center">.324</td>
+          <td style="text-align: center">.350</td>
+          <td style="text-align: center">.646</td>
+          <td style="text-align: center">.768</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">〜8</td>
+          <td style="text-align: center">.347</td>
+          <td style="text-align: center">.162</td>
+          <td style="text-align: center">.333</td>
+          <td style="text-align: center">.529</td>
+      </tr>
+  </tbody>
+</table></div>
+<p><em>〜Predictive wOBA Value〜</em>
+<em>Predictive wOBA Valueの算出にはホークアイが導入され打球データの取りこぼしがほぼなくなった2020年以降でBBEが200以上の打者を対象</em></p>
+<p>予測的文脈においての xwOBAの問題点を補う形でPredictive wOBAの係数が設定されているかと思います。例えば、試合においては打球速度95〜100mphで打球角度32度以上の打球の価値は低いですが、その打球を打てる打者の価値は高いです（wOBAcon .500は2023年MLBで言うと2位相当）。</p>
+<p>注目ポイントとしては所謂<strong>Sweet Spot</strong>と呼ばれる打球角度8度以上32以下の範囲でしょうか。wOBA .550を超えるような高い価値を持った打球角度としてSweet Spotという基準は作られましたが、<strong>Sweet Spot%の年度間相関は0.596</strong>なのに対して<strong>Hard Hit%（打球速度95mph以上の割合）の年度間相関は0.840</strong>です（2015〜2023、300打席以上）。この再現性の違いを考慮できることでPredictive wOBAは xwOBAより wOBAの予測力を高めています。</p>
+<p>ちなみにPredictive wOBA考案者のトム・タンゴは最終的に8ビンまで減らしています。</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: center">打球角度＼打球速度</th>
+          <th style="text-align: center">〜95</th>
+          <th style="text-align: center">95〜100</th>
+          <th style="text-align: center">100〜105</th>
+          <th style="text-align: center">105〜</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: center">32〜</td>
+          <td style="text-align: center">.206</td>
+          <td style="text-align: center">.570</td>
+          <td style="text-align: center"></td>
+          <td style="text-align: center">.838</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">8〜32</td>
+          <td style="text-align: center"></td>
+          <td style="text-align: center">.383</td>
+          <td style="text-align: center">.606</td>
+          <td style="text-align: center">.867</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">〜8</td>
+          <td style="text-align: center"></td>
+          <td style="text-align: center">.306</td>
+          <td style="text-align: center"></td>
+          <td style="text-align: center">.577</td>
+      </tr>
+  </tbody>
+</table></div>
+<p><em>〜Predictive wOBA Value (Tango Ver.)〜</em></p>
+<p>これらの表でBarrel%が xwOBAconよりも wOBAconを予測できた理由が分かるかと思います。</p>
+<p>Barrelはその閾値を wOBA .950付近（表向きには打率 .500、長打率 1.500）に設定した経緯としてよりシンプルなものに拘ったというポイントがあります。</p>
+<p><img src="/solving-baseball/images/75.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Barrelの閾値設定"
+	
+	
+></p>
+<p><em><a class="link" href="http://tangotiger.com/index.php/site/comments/statcast-lab-barrels"  target="_blank" rel="noopener"
+    >http://tangotiger.com/index.php/site/comments/statcast-lab-barrels</a></em></p>
+<p>上記画像の白い部分も高 wOBAの範囲ですがそこを捨てています。これにより結果的に（ある程度は予想できていたと思いますが）信頼度が低い打球に引っ張られず、xwOBAconよりも wOBAconを僅かながら予測できています。</p>
+<p>では、一応Predictive wOBAconの予測力を確認しておきましょう。</p>
+<p><img src="/solving-baseball/images/76.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="翌年のwOBAconとの関係（pwOBAcon含む）"
+	
+	
+></p>
+<p><em>翌年の wOBAconとの関係</em></p>
+<p>wOBAcon（0.293）から xwOBAcon（0.380）ほどのジャンプアップではないですが、pwOBAcon（0.425）でも無視できないほどのジャンプアップは見せています。</p>
+<p>例に出した2023年4月のチャップマンも xwOBAは .486でしたが、pwOBAは .410でした。</p>
+<hr>
+<h2 id="xwobaと何を見るか">xwOBAと何を見るか
+</h2><p>では xwOBAの相方探しに戻ります。予測を目的としたときにExpectedとは評価がズレる打球がPredictive wOBAの係数によって把握できます。</p>
+<p>その係数の差は以下のようになっています。</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: center">打球角度＼打球速度</th>
+          <th style="text-align: center">〜95</th>
+          <th style="text-align: center">95〜100</th>
+          <th style="text-align: center">100〜105</th>
+          <th style="text-align: center">105〜</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: center">32〜</td>
+          <td style="text-align: center">.176</td>
+          <td style="text-align: center">.303</td>
+          <td style="text-align: center">.006</td>
+          <td style="text-align: center">.009</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">8〜32</td>
+          <td style="text-align: center">-.158</td>
+          <td style="text-align: center">-.263</td>
+          <td style="text-align: center">-.289</td>
+          <td style="text-align: center">-.451</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">〜8</td>
+          <td style="text-align: center">.165</td>
+          <td style="text-align: center">-.157</td>
+          <td style="text-align: center">-.050</td>
+          <td style="text-align: center">.078</td>
+      </tr>
+  </tbody>
+</table></div>
+<p><em>Predictive wOBA Value − Expected wOBA Value</em></p>
+<p>先ほども述べたように打球角度8度から打球角度32度のSweet Spotは試合での価値の高さ（xwOBAにおいての影響度の高さ）の割には信頼度は高いとは言えません。Predictive wOBAはそのような<strong>不安定な打球の平均への回帰で予測力を高めている</strong>とも言えます。</p>
+<p>今回の目的は xwOBAぐらい手軽にサイトで確認できて xwOBAに加えて見ることで wOBA予測に役立つ指標を探すことなので、やはり**Sweet Spot%**でしょうか。FanGraphsでは無理ですがBaseball Savantではすぐに見つけられるはずです。</p>
+<p>では実際の予測力の変化を見ていきます。wOBA予測を検証するか wOBAcon予測を検証するか迷いましたが他の分析と繋げるためにも打球要素と非打球要素は切り分けておこうかなと思います。</p>
+<p>まずは xwOBAconと pwOBAconの差を確認しておきます。</p>
+<blockquote>
+<p><strong>★ xwOBAcon ★</strong>
+<strong>係数 [p値]：</strong> xwOBA 0.611 [2e-16]
+<strong>切片 [p値]：</strong> 0.139 [2e-16]
+<strong>自由度調整済み決定係数：</strong> 0.3792
+<strong>標準誤差：</strong> 0.04259
+<strong>F統計量：</strong> 327.2　p値 2.2e-16</p>
+</blockquote>
+<blockquote>
+<p><strong>★ pwOBAcon ★</strong>
+<strong>係数 [p値]：</strong> pwOBAcon 0.984 [2e-16]
+<strong>切片 [p値]：</strong> -0.006 [0.765]
+<strong>自由度調整済み決定係数：</strong> 0.4244
+<strong>標準誤差：</strong> 0.04101
+<strong>F統計量：</strong> 394.7　p値 2.2e-16</p>
+<p><em>pwOBAconが 0になることはありえないので切片のp値は問題ありません</em></p>
+</blockquote>
+<p>wOBAconを説明変数としたときの補正R²は0.291ですので xwOBAconで0.379への上昇は相当のものがあります。さらに pwOBAconでは0.424まで上昇しました。</p>
+<p>xwOBAconの相方として目指すところは 0.379以上になるでしょう。</p>
+<p>ではSweet Spot%を加えます。</p>
+<p>Sweet Spot%もその信頼度が打球速度系に劣るという話であって打者によって高低の傾向は十分にあります。なのでそのままの数値ではなくキャリア通算との乖離、SwSp diff.を使います。</p>
+<p><img src="/solving-baseball/images/77.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Savantの個人ページ"
+	
+	
+></p>
+<p><em>savantの個人ページですぐに確認できます</em></p>
+<p>結果は以下です。</p>
+<blockquote>
+<p><strong>★ xwOBAcon &amp; SwSp diff. ★</strong>
+<strong>係数 [p値]：</strong> xwOBAcon 0.637 [2e-16]　SwSp diff. -0.244 [3.01e-07]
+<strong>切片 [p値]：</strong> 0.127 [2e-16]
+<strong>自由度調整済み決定係数：</strong> 0.4080
+<strong>標準誤差：</strong> 0.04159
+<strong>F統計量：</strong> 185.0　p値 2.2e-16</p>
+<p><em>SwSp diff. は小数表記としています</em></p>
+</blockquote>
+<p>係数が負の値であるように自身の能力以上と推定されるSweet Spot%で向上させた xwOBAconは割り引いて考える必要がありそうです。補正R²も0.408とそこそこ向上しました。</p>
+<p>チャップマンは22年までの通算Sweet Spot%が32.1%なのに対して、23年4月は42.5%でしたのでまさにその事例でした。</p>
+<p>これ以外に有効的な指標は**Barrel%**です。先ほども述べたようにBarrelは信頼度が比較的高い打球に絞れています。つまり Barrel%も見るということは、xwOBAconの中でも信頼度の高い打球を加重するという話です。</p>
+<p>結果は以下です。</p>
+<blockquote>
+<p><strong>★ xwOBAcon &amp; Barrel% ★</strong>
+<strong>係数 [p値]：</strong> xwOBAcon 0.269 [0.002]　Barrel% 0.475 [1.53e-05]
+<strong>切片 [p値]：</strong> 0.228 [2e-16]
+<strong>自由度調整済み決定係数：</strong> 0.3995
+<strong>標準誤差：</strong> 0.04189
+<strong>F統計量：</strong> 178.6　p値 2.2e-16</p>
+</blockquote>
+<p>補正R²は xwOBAcon単体のみより向上させていて、モデル全体の統計的有意性も問題ありません。</p>
+<p>ただ xwOBAconとBarrel%という関わりの強い変数間には共線性の問題が発生します。重回帰分析は説明変数が互いに独立していることを前提としており、似た情報を含んでいる変数にモデルが適切に係数を振り分けにくくなるということです。</p>
+<p>xwOBAconとBarrel%のVIF（共線性を測る指標）は約 6.55でそこそこ危険な水準ではありますので、係数を直接解釈するのは避けたいところです。</p>
+<p>ちなみにSweet Spot%と関わりの強いLD%やBABIPもキャリア通算との比較をすれば（能力と結果の乖離を推定すれば）xwOBAconを使った wOBAcon予測において追加的な情報を提供します。Sweet Spot%ほど予測力を高めなかったので結論としては**「xwOBAとSweet Spot%を見よう」**とさせていただきます。</p>
+<hr>
+<h2 id="文中紹介記事">文中紹介記事
+</h2><ul>
+<li><a class="link" href="http://tangotiger.com/index.php/site/comments/introducing-predictive-woba"  target="_blank" rel="noopener"
+    >Introducing Predictive wOBA</a> - Tangotiger Blog</li>
+<li><a class="link" href="http://tangotiger.com/index.php/site/comments/statcast-lab-barrels"  target="_blank" rel="noopener"
+    >Statcast Lab: Barrels</a> - Tangotiger Blog</li>
+</ul>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/solving-baseball/tags/batting/">Batting</a>
+        
+            <a href="/solving-baseball/tags/xwoba/">xwOBA</a>
+        
+            <a href="/solving-baseball/tags/pwoba/">pwOBA</a>
+        
+            <a href="/solving-baseball/tags/swsp/">SwSp%</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        const elementsToRender = [".main-article", ".widget--toc"];
+
+        elementsToRender.forEach(selector => {
+            const element = document.querySelector(selector);
+            if (element) {
+                renderMathInElement(element, {
+                    delimiters: [
+                        { left: "$$", right: "$$", display: true },
+                        { left: "$", right: "$", display: false },
+                        { left: "\\(", right: "\\)", display: false },
+                        { left: "\\[", right: "\\]", display: true }
+                    ],
+                    ignoredClasses: ["gist"]
+                });
+            }
+        });
+    });
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">関連するコンテンツ</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/solving-baseball/memo/memo_30/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Barrels / Whiffs</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/solving-baseball/memo/memo_31/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">球種ごとの打球の伸びやすさ</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/solving-baseball/memo/memo_32/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">FB/LD EV</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/solving-baseball/memo/memo_33/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">得点圏打率の捉え方</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/solving-baseball/analysis/april-vs-may-stats-article/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">4月の成績 vs 5月以降の成績</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script
+    src="https://giscus.app/client.js"
+    data-repo="GHL-Ball/solving-baseball"
+    data-repo-id="R_kgDOQbQpuw"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOQbQpu84CzMFQ"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="light"
+    data-lang="ja"
+    data-loading=""
+    crossorigin="anonymous"
+    async
+></script>
+<script>
+    function setGiscusTheme(theme) {
+        let giscus = document.querySelector("iframe.giscus-frame");
+        if (giscus) {
+            giscus.contentWindow.postMessage(
+                {
+                    giscus: {
+                        setConfig: {
+                            theme: theme,
+                        },
+                    },
+                },
+                "https://giscus.app"
+            );
+        }
+    }
+
+    (function () {
+        addEventListener("message", (e) => {
+            if (event.origin !== "https://giscus.app") return;
+            handler();
+        });
+        window.addEventListener("onColorSchemeChange", handler);
+
+        function handler() {
+            if (document.documentElement.dataset.scheme === "light") {
+                setGiscusTheme('light');
+            } else {
+                setGiscusTheme('dark_dimmed');
+            }
+        }
+    })();
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2025 - 
+        
+        2026 Solving Baseball Blog
+    </section>
+    
+    <section class="powerby">
+        
+            トレバ-(^o^)丿 <br/>
+        <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> で構築されています。 <br />
+        テーマ <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.32.0">Stack</a></b> は <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> によって設計されています。
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/solving-baseball/ts/main.2b3fc53c7455b5631da9fabeefcc69ffc0a3f3cb719d708d3a5f18faf7af88a6.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

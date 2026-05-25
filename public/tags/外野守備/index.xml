@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>外野守備 on Solving Baseball Blog</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E5%A4%96%E9%87%8E%E5%AE%88%E5%82%99/</link>
+        <description>Recent content in 外野守備 on Solving Baseball Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>ja</language>
+        <lastBuildDate>Thu, 14 Nov 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/solving-baseball/tags/%E5%A4%96%E9%87%8E%E5%AE%88%E5%82%99/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>取り扱い注意なデータについて</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_27/</link>
+        <pubDate>Thu, 14 Nov 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_27/</guid>
+        <description>&lt;p&gt;データの加工整理に潜む罠について、少し珍しい誤謬があったので自戒も込めて紹介します。&lt;/p&gt;
+&lt;p&gt;-&lt;a class=&#34;link&#34; href=&#34;https://www.baseballprospectus.com/news/article/94992/the-age-of-volatility/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;The Age of Volatility&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;MLBにおける得点環境の変動について考察する上記の記事ですが、決定的なミスが存在します。&lt;/p&gt;
+&lt;p&gt;文中では主論を導くためのデータとして、恐らくBaseball Savantから取得した「打球分類ごとの得点確率や発生イベント確率の推移」を使用しています。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/136.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;取り扱い注意なデータについて&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;FB（上）、LD（下）について1B、2B、3Bの確率推移を調べています&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;この記事における主論は外野守備の向上が得点環境に無視できない影響を与えていることですので、グルーピング自体はミスではありません。
+ただ、推移を見る以上、大前提としてそのグルーピングの定義が統一されていることが必要です。&lt;/p&gt;
+&lt;p&gt;-&lt;img src=&#34;https://www.beyondtheboxscore.com/2015/5/5/8548129/batted-ball-data-fangraphs-baseball-reference-baseball-savant-statcast&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;i&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;上記の記事はそのグルーピングの変遷について疑義を投げかけています。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/139.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;i&#34;
+	
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/solving-baseball/images/140.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;i&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;三社のリーグ打球種類割合変遷&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;この記事にある上記画像のように、FangGraphs(BIS)とBaseball Reference、Baseball Savantでは打球分類に差異が生じます。
+問題となるのはその変遷で、BISに対して他二社は2013年に突飛的な変化が観測できます。2013年にリーグ全体として急激なLD率の上昇が真の意味で存在したのでしょうか。&lt;/p&gt;
+&lt;p&gt;もちろん、大きなルール変更等によってこのようなリーグ環境が突飛的に変化することはありますが（ピッチクロックに伴う規定によって盗塁企図や成功率の突飛的な変化が近年の代表例）、2013年にLDが増えるルール変更は起きていないはずです。
+という前提と他社との比較衡量の結果、上記記事に賛同し、2013年にFBの一部がLDに分類される定義変更が起こっていると考えています（公式の見解がないのでこの温度感ですが）。&lt;/p&gt;
+&lt;p&gt;この定義変更を考慮せずにその分類内の指標の年度推移を利用すると今回のような誤謬が生じます。&lt;/p&gt;
+&lt;p&gt;以前にはFBと分類されていたLDと比較すると価値の低い打球がLDに分類されることでLDの価値が突飛的に下がり、よりLDに近いFBがFBと分類されなくなりFBの価値も突飛的に下がります。&lt;/p&gt;
+&lt;p&gt;今回の例ほど極端な問題は引き起こしませんが、NPBにおける投手の速球の平均球速推移は定期的に話題に上がります。ただその定義は年度を跨いで統一されていません。スピードガンからトラックマン、ホークアイといった測定機器の変遷はもちろん、スピードガンの中でも時期によってその調整が異なる場合がありますし、もしかしたら球種分類も速球と変化球の境目が年度によって変遷しているかもしれません&lt;/p&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

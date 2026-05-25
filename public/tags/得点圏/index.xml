@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>得点圏 on Solving Baseball Blog</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E5%BE%97%E7%82%B9%E5%9C%8F/</link>
+        <description>Recent content in 得点圏 on Solving Baseball Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>ja</language>
+        <lastBuildDate>Mon, 17 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/solving-baseball/tags/%E5%BE%97%E7%82%B9%E5%9C%8F/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>得点圏打率の捉え方</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_33/</link>
+        <pubDate>Mon, 17 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_33/</guid>
+        <description>&lt;p&gt;得点圏打率という人気指標についてです。
+人気指標であるがゆえに、賢い先人がその脆さを説き、我ら後人が「欠陥指標である」というフレーズを使うだけなのも飽きたので簡単に整理をしておきましょう。&lt;/p&gt;
+&lt;p&gt;得点圏打率の槍玉に挙げられる特徴はその一貫性の無さでしょうし、現在ドジャース移籍後の大谷がたった1ヶ月の得点圏打率でやいのやいのファン同士で言い合いしています。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/118.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;得点圏打率&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;もちろん1ヶ月の得点圏打率に信頼度はない&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;では記述の面はどうでしょう。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/119.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;得点圏打率&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;対象年度とかフィルター基準とか忘れました&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;得点圏というファンがレバレッジをかけて観察する場面において、「打率」に注目することで得点確率を説明するのに役立ちます。
+勝利という面で冷静に見ると出塁率（アウトにならない率）と長打率（塁を進める期待値）から成り立っているOPSが強いでしょうが、ファンの感情としてはRE24の増減ではなく「アウト」「無得点非アウト/得点アウト」と「得点非アウト」くらいで段階的に
+分布していそうなので得点確率を表す得点圏打率はファンの心情に寄り添えているのかなとも思います。&lt;/p&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

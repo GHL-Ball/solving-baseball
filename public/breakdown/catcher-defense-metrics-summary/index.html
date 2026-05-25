@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+    <head><script src="/solving-baseball/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=solving-baseball/livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="前置き\r捕手のrWARやDRSに対する疑問(文句)を書きたくて、その前説として他サイトとの相違点をまとめていたらダラダラと重い前説になってしまったので分割します。前説としては重いですが指標説明系としては特に深掘りもしていないので軽いです。\n次→捕手のDRS,rWARの再考(問題提起)\n三大データサイトでの捕手の守備評価指標\r三大データサイトで主力として扱われている捕手の守備のセイバー指標についてまとめます。\nBaseball-Reference\rBaseball-Reference(以降BR)ではBaseball Info Solutions(以降BIS)提供のDefensive Runs Saved(以降DRS)の構成要素を個人ページで全て確認できます。\n①P.ベイリー個人ページ(https://www.baseball-reference.com/players/b/bailepa01-field.shtml)\nジャイアンツ期待の新人P.ベイリーの個人ページを例に捕手のDRS部分についてのみ確認します。\nRpm･･･Rair,Rrange,Rthrowの合計(頭文字を取ってARTとも言われる)\nRair･･･明らかにゴロとはみなされない内野フライの処理の評価 Rrange･･･Rairに分類されない打球に対する守備範囲(到達能力)の評価 Rthrow･･･Rairに分類されない打球に到達した後の評価 Rbnt･･･バント処理の評価\nRgood･･･他で評価されない良いプレー、悪いプレーの評価\nRerC･･･インサイドワーク面の評価\nRsbC･･･盗塁抑止、阻止の評価\nRszC･･･フレーミングの評価\nRdrs･･･上記指標(Rpm,Rbnt,Rgood,RerC,RsbC,RszC)の合計\n頭文字にReferenceの？Runの？Rをつけて捕手のみの指標にはCatcherのCを末尾につけているので若干見づらいですが小文字の部分にのみ注目すれば分かりやすいとは思います(pmはプラスマイナスシステム)。\nちなみにブロッキングの評価はRgoodに含まれています。「P.ベイリーは平均的な捕手と比較してフレーミングや盗塁阻止、打球処理やインサイドワーク面で失点を17点減らし、バント処理やブロッキングを主としたその他のプレーで失点を4点増やしたと推定されている」という見方です。\nFanGraphs\rFanGraphs(以降FG)ではBIS提供のDRSの他にFRMというフレーミング指標を確認できます。\n②P.ベイリー個人ページ(https://www.fangraphs.com/players/patrick-bailey/27478/stats#fielding)\nDRSも確認できますが少し表記に違いがあります(RerCはrCERA=CatcherのERA、RgoodはrGFP=Good Fielding Plays)。打球処理に関わるRpm,Rbntは掲載されていないので合計してもズレが生じる点は注意が必要です。\nまた、同じフレーミング指標でもrSZの11に対してFRMは17.4と差を確認できますが、2019年3月のこの記事通りBISのフレーミング指標は他より偏差が小さくなる算出方法のようです。一応2019~2023シーズンも確認してみましたが相関係数0.93に対し標準偏差は6.6(FRM)と4.8(rSZ)とその傾向は変わっていません。\nBaseball Savant\rBaseball SavantではMLB Advanced Media提供のStatcastデータから算出した守備指標を捕手では現在4つ確認できます。\n③P.ベイリー個人ページ(https://baseballsavant.mlb.com/savant-player/patrick-bailey-672275?stats=statcast-r-catching-mlb)\n打球処理以外のフレーミング、ブロッキング、盗塁阻止の得点換算指標と平均ポップタイムの4つです。\nBaseball Savantは各指標の詳細まで確認できるのが特徴です。\n上記画像でもポップタイムなら握り替えの時間、フレーミングならコースごとの結果などが確認できますし、リーダーボードの方ではブロッキングのコースごとの結果や盗塁阻止のプレーごとの難易度、当該プレーの動画なども確認できます。\nやっていることは同じ\r一つ一つの指標の詳細算出方法をまとめるのはキリがないし、公開されていない部分も多々あるのでやりませんが共通しているのは平均的な捕手との差を推定しているということです。(RerCについては微妙ですが…)\nフレーミングなら様々な側面を考慮した期待ストライク率(数)を算出し、実際のそれと比べ、その差を得点換算するという形。ブロッキングでも盗塁阻止でも同じです。差が出るのは考慮する側面の違いや得点換算の部分や測定方法の違いなどが理由でしょうが、僕個人としては意義のある差だと思っています。投手fWAR vs rWAR、OAA+UZR vs DRSのような違いではないですが。\n三大WAR算出サイトの捕手WAR(守備部分)\r次は捕手のWARを構成している守備指標の各サイトの違いをまとめます。\nBaseball Reference\rBRではDRSをWARの守備評価部分に使っていますが、捕手に関しては注意が必要です。\n④P.ベイリー個人ページ(https://www.baseball-reference.com/players/b/bailepa01.shtml)\n">
+<title>捕手の守備指標まとめ</title>
+
+<link rel='canonical' href='http://localhost:1313/solving-baseball/breakdown/catcher-defense-metrics-summary/'>
+
+<link rel="stylesheet" href="/solving-baseball/scss/style.min.4d36f8dc1fd48129e1635deb4b8eb2870fa09474f7280c4cb606d40b2526994b.css"><meta property='og:title' content="捕手の守備指標まとめ">
+<meta property='og:description' content="前置き\r捕手のrWARやDRSに対する疑問(文句)を書きたくて、その前説として他サイトとの相違点をまとめていたらダラダラと重い前説になってしまったので分割します。前説としては重いですが指標説明系としては特に深掘りもしていないので軽いです。\n次→捕手のDRS,rWARの再考(問題提起)\n三大データサイトでの捕手の守備評価指標\r三大データサイトで主力として扱われている捕手の守備のセイバー指標についてまとめます。\nBaseball-Reference\rBaseball-Reference(以降BR)ではBaseball Info Solutions(以降BIS)提供のDefensive Runs Saved(以降DRS)の構成要素を個人ページで全て確認できます。\n①P.ベイリー個人ページ(https://www.baseball-reference.com/players/b/bailepa01-field.shtml)\nジャイアンツ期待の新人P.ベイリーの個人ページを例に捕手のDRS部分についてのみ確認します。\nRpm･･･Rair,Rrange,Rthrowの合計(頭文字を取ってARTとも言われる)\nRair･･･明らかにゴロとはみなされない内野フライの処理の評価 Rrange･･･Rairに分類されない打球に対する守備範囲(到達能力)の評価 Rthrow･･･Rairに分類されない打球に到達した後の評価 Rbnt･･･バント処理の評価\nRgood･･･他で評価されない良いプレー、悪いプレーの評価\nRerC･･･インサイドワーク面の評価\nRsbC･･･盗塁抑止、阻止の評価\nRszC･･･フレーミングの評価\nRdrs･･･上記指標(Rpm,Rbnt,Rgood,RerC,RsbC,RszC)の合計\n頭文字にReferenceの？Runの？Rをつけて捕手のみの指標にはCatcherのCを末尾につけているので若干見づらいですが小文字の部分にのみ注目すれば分かりやすいとは思います(pmはプラスマイナスシステム)。\nちなみにブロッキングの評価はRgoodに含まれています。「P.ベイリーは平均的な捕手と比較してフレーミングや盗塁阻止、打球処理やインサイドワーク面で失点を17点減らし、バント処理やブロッキングを主としたその他のプレーで失点を4点増やしたと推定されている」という見方です。\nFanGraphs\rFanGraphs(以降FG)ではBIS提供のDRSの他にFRMというフレーミング指標を確認できます。\n②P.ベイリー個人ページ(https://www.fangraphs.com/players/patrick-bailey/27478/stats#fielding)\nDRSも確認できますが少し表記に違いがあります(RerCはrCERA=CatcherのERA、RgoodはrGFP=Good Fielding Plays)。打球処理に関わるRpm,Rbntは掲載されていないので合計してもズレが生じる点は注意が必要です。\nまた、同じフレーミング指標でもrSZの11に対してFRMは17.4と差を確認できますが、2019年3月のこの記事通りBISのフレーミング指標は他より偏差が小さくなる算出方法のようです。一応2019~2023シーズンも確認してみましたが相関係数0.93に対し標準偏差は6.6(FRM)と4.8(rSZ)とその傾向は変わっていません。\nBaseball Savant\rBaseball SavantではMLB Advanced Media提供のStatcastデータから算出した守備指標を捕手では現在4つ確認できます。\n③P.ベイリー個人ページ(https://baseballsavant.mlb.com/savant-player/patrick-bailey-672275?stats=statcast-r-catching-mlb)\n打球処理以外のフレーミング、ブロッキング、盗塁阻止の得点換算指標と平均ポップタイムの4つです。\nBaseball Savantは各指標の詳細まで確認できるのが特徴です。\n上記画像でもポップタイムなら握り替えの時間、フレーミングならコースごとの結果などが確認できますし、リーダーボードの方ではブロッキングのコースごとの結果や盗塁阻止のプレーごとの難易度、当該プレーの動画なども確認できます。\nやっていることは同じ\r一つ一つの指標の詳細算出方法をまとめるのはキリがないし、公開されていない部分も多々あるのでやりませんが共通しているのは平均的な捕手との差を推定しているということです。(RerCについては微妙ですが…)\nフレーミングなら様々な側面を考慮した期待ストライク率(数)を算出し、実際のそれと比べ、その差を得点換算するという形。ブロッキングでも盗塁阻止でも同じです。差が出るのは考慮する側面の違いや得点換算の部分や測定方法の違いなどが理由でしょうが、僕個人としては意義のある差だと思っています。投手fWAR vs rWAR、OAA+UZR vs DRSのような違いではないですが。\n三大WAR算出サイトの捕手WAR(守備部分)\r次は捕手のWARを構成している守備指標の各サイトの違いをまとめます。\nBaseball Reference\rBRではDRSをWARの守備評価部分に使っていますが、捕手に関しては注意が必要です。\n④P.ベイリー個人ページ(https://www.baseball-reference.com/players/b/bailepa01.shtml)\n">
+<meta property='og:url' content='http://localhost:1313/solving-baseball/breakdown/catcher-defense-metrics-summary/'>
+<meta property='og:site_name' content='Solving Baseball Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Breakdown' /><meta property='article:tag' content='捕手' /><meta property='article:tag' content='ブロッキング' /><meta property='article:tag' content='盗塁阻止' /><meta property='article:tag' content='フレーミング' /><meta property='article:tag' content='リード' /><meta property='article:published_time' content='2024-02-29T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-02-29T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="捕手の守備指標まとめ">
+<meta name="twitter:description" content="前置き\r捕手のrWARやDRSに対する疑問(文句)を書きたくて、その前説として他サイトとの相違点をまとめていたらダラダラと重い前説になってしまったので分割します。前説としては重いですが指標説明系としては特に深掘りもしていないので軽いです。\n次→捕手のDRS,rWARの再考(問題提起)\n三大データサイトでの捕手の守備評価指標\r三大データサイトで主力として扱われている捕手の守備のセイバー指標についてまとめます。\nBaseball-Reference\rBaseball-Reference(以降BR)ではBaseball Info Solutions(以降BIS)提供のDefensive Runs Saved(以降DRS)の構成要素を個人ページで全て確認できます。\n①P.ベイリー個人ページ(https://www.baseball-reference.com/players/b/bailepa01-field.shtml)\nジャイアンツ期待の新人P.ベイリーの個人ページを例に捕手のDRS部分についてのみ確認します。\nRpm･･･Rair,Rrange,Rthrowの合計(頭文字を取ってARTとも言われる)\nRair･･･明らかにゴロとはみなされない内野フライの処理の評価 Rrange･･･Rairに分類されない打球に対する守備範囲(到達能力)の評価 Rthrow･･･Rairに分類されない打球に到達した後の評価 Rbnt･･･バント処理の評価\nRgood･･･他で評価されない良いプレー、悪いプレーの評価\nRerC･･･インサイドワーク面の評価\nRsbC･･･盗塁抑止、阻止の評価\nRszC･･･フレーミングの評価\nRdrs･･･上記指標(Rpm,Rbnt,Rgood,RerC,RsbC,RszC)の合計\n頭文字にReferenceの？Runの？Rをつけて捕手のみの指標にはCatcherのCを末尾につけているので若干見づらいですが小文字の部分にのみ注目すれば分かりやすいとは思います(pmはプラスマイナスシステム)。\nちなみにブロッキングの評価はRgoodに含まれています。「P.ベイリーは平均的な捕手と比較してフレーミングや盗塁阻止、打球処理やインサイドワーク面で失点を17点減らし、バント処理やブロッキングを主としたその他のプレーで失点を4点増やしたと推定されている」という見方です。\nFanGraphs\rFanGraphs(以降FG)ではBIS提供のDRSの他にFRMというフレーミング指標を確認できます。\n②P.ベイリー個人ページ(https://www.fangraphs.com/players/patrick-bailey/27478/stats#fielding)\nDRSも確認できますが少し表記に違いがあります(RerCはrCERA=CatcherのERA、RgoodはrGFP=Good Fielding Plays)。打球処理に関わるRpm,Rbntは掲載されていないので合計してもズレが生じる点は注意が必要です。\nまた、同じフレーミング指標でもrSZの11に対してFRMは17.4と差を確認できますが、2019年3月のこの記事通りBISのフレーミング指標は他より偏差が小さくなる算出方法のようです。一応2019~2023シーズンも確認してみましたが相関係数0.93に対し標準偏差は6.6(FRM)と4.8(rSZ)とその傾向は変わっていません。\nBaseball Savant\rBaseball SavantではMLB Advanced Media提供のStatcastデータから算出した守備指標を捕手では現在4つ確認できます。\n③P.ベイリー個人ページ(https://baseballsavant.mlb.com/savant-player/patrick-bailey-672275?stats=statcast-r-catching-mlb)\n打球処理以外のフレーミング、ブロッキング、盗塁阻止の得点換算指標と平均ポップタイムの4つです。\nBaseball Savantは各指標の詳細まで確認できるのが特徴です。\n上記画像でもポップタイムなら握り替えの時間、フレーミングならコースごとの結果などが確認できますし、リーダーボードの方ではブロッキングのコースごとの結果や盗塁阻止のプレーごとの難易度、当該プレーの動画なども確認できます。\nやっていることは同じ\r一つ一つの指標の詳細算出方法をまとめるのはキリがないし、公開されていない部分も多々あるのでやりませんが共通しているのは平均的な捕手との差を推定しているということです。(RerCについては微妙ですが…)\nフレーミングなら様々な側面を考慮した期待ストライク率(数)を算出し、実際のそれと比べ、その差を得点換算するという形。ブロッキングでも盗塁阻止でも同じです。差が出るのは考慮する側面の違いや得点換算の部分や測定方法の違いなどが理由でしょうが、僕個人としては意義のある差だと思っています。投手fWAR vs rWAR、OAA+UZR vs DRSのような違いではないですが。\n三大WAR算出サイトの捕手WAR(守備部分)\r次は捕手のWARを構成している守備指標の各サイトの違いをまとめます。\nBaseball Reference\rBRではDRSをWARの守備評価部分に使っていますが、捕手に関しては注意が必要です。\n④P.ベイリー個人ページ(https://www.baseball-reference.com/players/b/bailepa01.shtml)\n">
+    <link rel="shortcut icon" href="/solving-baseball/images/favicon.png" />
+<style>
+  :root {
+    --ja-font-family: "Noto Sans JP", "游ゴシック体", "Yu Gothic", YuGothic, 
+      "ヒラギノ角ゴ Pro", "Hiragino Kaku Gothic Pro", "メイリオ", "Meiryo";
+    --base-font-family: "Lato", var(--sys-font-family), var(--ja-font-family),
+      sans-serif;
+  }
+
+   
+  .article-content {
+    color: var(--card-text-color-main);
+  }
+
+  .article-content a {
+    color: var(--accent-color);
+  }
+</style>
+
+<script>
+  (function () {
+    const customFont = document.createElement("link");
+    customFont.href =
+      "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Lato:wght@400;700&display=swap";
+    customFont.type = "text/css";
+    customFont.rel = "stylesheet";
+    document.head.appendChild(customFont);
+  })();
+</script>
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="メニューを開く・閉じる">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/solving-baseball">Solving Baseball Blog</a></h1>
+            <h2 class="site-description">Aspiring Saberistの備忘録</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://x.com/GHiLiBall'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://note.com/calm_phlox375'
+                        target="_blank"
+                        title="note"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/solving-baseball/leaderboard/' >
+                
+                
+                
+                <span>Leaderboard</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/' >
+                
+                
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/about/' >
+                
+                
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/analysis/' >
+                
+                
+                
+                <span>分析系</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/breakdown/' >
+                
+                
+                
+                <span>解説系</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/memo/' >
+                
+                
+                
+                <span>メモ</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/page/search/' >
+                
+                
+                
+                <span>検索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/categories/' >
+                
+                
+                
+                <span>カテゴリ一覧</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/tags/' >
+                
+                
+                
+                <span>タグ一覧</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>ダークモード</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目次</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#前置き">前置き</a></li>
+    <li><a href="#三大データサイトでの捕手の守備評価指標">三大データサイトでの捕手の守備評価指標</a>
+      <ul>
+        <li><a href="#baseball-reference">Baseball-Reference</a></li>
+        <li><a href="#fangraphs">FanGraphs</a></li>
+        <li><a href="#baseball-savant">Baseball Savant</a></li>
+        <li><a href="#やっていることは同じ">やっていることは同じ</a></li>
+      </ul>
+    </li>
+    <li><a href="#三大war算出サイトの捕手war守備部分">三大WAR算出サイトの捕手WAR(守備部分)</a>
+      <ul>
+        <li><a href="#baseball-reference-1">Baseball Reference</a></li>
+        <li><a href="#fangraphs-1">FanGraphs</a></li>
+        <li><a href="#baseball-prospectus">Baseball Prospectus</a></li>
+        <li><a href="#まとめると">まとめると…</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/solving-baseball/categories/%E5%AE%88%E5%82%99%E6%8C%87%E6%A8%99/" style="background-color: #ea580c; color: #fff;">
+                守備指標
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/solving-baseball/breakdown/catcher-defense-metrics-summary/">捕手の守備指標まとめ</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published" datetime='2024-02-29T00:00:00Z'>2024-02-29</time>
+            </div>
+        
+
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="前置き">前置き
+</h2><p>捕手のrWARやDRSに対する疑問(文句)を書きたくて、その前説として他サイトとの相違点をまとめていたらダラダラと重い前説になってしまったので分割します。前説としては重いですが指標説明系としては特に深掘りもしていないので軽いです。</p>
+<p>次→<a class="link" href="/solving-baseball/breakdown/catcher-drs-rwar-reconsideration/" >捕手のDRS,rWARの再考(問題提起)</a></p>
+<hr>
+<h2 id="三大データサイトでの捕手の守備評価指標">三大データサイトでの捕手の守備評価指標
+</h2><p>三大データサイトで<strong>主力として扱われている捕手の守備のセイバー指標</strong>についてまとめます。</p>
+<hr>
+<h3 id="baseball-reference">Baseball-Reference
+</h3><p>Baseball-Reference(以降BR)ではBaseball Info Solutions(以降BIS)提供のDefensive Runs Saved(以降DRS)の構成要素を個人ページで全て確認できます。</p>
+<p><img src="/solving-baseball/images/110.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="P.ベイリー個人ページ BR"
+	
+	
+></p>
+<p><em>①P.ベイリー個人ページ(<a class="link" href="https://www.baseball-reference.com/players/b/bailepa01-field.shtml"  target="_blank" rel="noopener"
+    >https://www.baseball-reference.com/players/b/bailepa01-field.shtml</a>)</em></p>
+<p>ジャイアンツ期待の新人P.ベイリーの個人ページを例に捕手のDRS部分についてのみ確認します。</p>
+<p><strong>Rpm</strong>･･･Rair,Rrange,Rthrowの合計(頭文字を取ってARTとも言われる)</p>
+<ul>
+<li><strong>Rair</strong>･･･明らかにゴロとはみなされない内野フライの処理の評価</li>
+<li><strong>Rrange</strong>･･･Rairに分類されない打球に対する守備範囲(到達能力)の評価</li>
+<li><strong>Rthrow</strong>･･･Rairに分類されない打球に到達した後の評価</li>
+</ul>
+<p><strong>Rbnt</strong>･･･バント処理の評価</p>
+<p><strong>Rgood</strong>･･･他で評価されない良いプレー、悪いプレーの評価</p>
+<p><strong>RerC</strong>･･･インサイドワーク面の評価</p>
+<p><strong>RsbC</strong>･･･盗塁抑止、阻止の評価</p>
+<p><strong>RszC</strong>･･･フレーミングの評価</p>
+<p><strong>Rdrs</strong>･･･上記指標(Rpm,Rbnt,Rgood,RerC,RsbC,RszC)の合計</p>
+<p>頭文字にReferenceの？Runの？Rをつけて捕手のみの指標にはCatcherのCを末尾につけているので若干見づらいですが小文字の部分にのみ注目すれば分かりやすいとは思います(pmはプラスマイナスシステム)。</p>
+<p>ちなみに<strong>ブロッキングの評価はRgoodに含まれています</strong>。「P.ベイリーは平均的な捕手と比較してフレーミングや盗塁阻止、打球処理やインサイドワーク面で失点を17点減らし、バント処理やブロッキングを主としたその他のプレーで失点を4点増やしたと推定されている」という見方です。</p>
+<hr>
+<h3 id="fangraphs">FanGraphs
+</h3><p>FanGraphs(以降FG)ではBIS提供のDRSの他にFRMというフレーミング指標を確認できます。</p>
+<p><img src="/solving-baseball/images/111.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="P.ベイリー個人ページ FG"
+	
+	
+></p>
+<p><em>②P.ベイリー個人ページ(<a class="link" href="https://www.fangraphs.com/players/patrick-bailey/27478/stats#fielding"  target="_blank" rel="noopener"
+    >https://www.fangraphs.com/players/patrick-bailey/27478/stats#fielding</a>)</em></p>
+<p>DRSも確認できますが少し表記に違いがあります(RerCはrCERA=CatcherのERA、RgoodはrGFP=Good Fielding Plays)。打球処理に関わるRpm,Rbntは掲載されていないので合計してもズレが生じる点は注意が必要です。</p>
+<p>また、同じフレーミング指標でもrSZの11に対してFRMは17.4と差を確認できますが、2019年3月のこの<a class="link" href="https://blogs.fangraphs.com/fangraphs-pitch-framing/"  target="_blank" rel="noopener"
+    >記事</a>通り<strong>BISのフレーミング指標は他より偏差が小さくなる算出方法</strong>のようです。一応2019~2023シーズンも確認してみましたが相関係数0.93に対し標準偏差は6.6(FRM)と4.8(rSZ)とその傾向は変わっていません。</p>
+<hr>
+<h3 id="baseball-savant">Baseball Savant
+</h3><p>Baseball SavantではMLB Advanced Media提供のStatcastデータから算出した守備指標を捕手では現在4つ確認できます。</p>
+<p><img src="/solving-baseball/images/112.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="P.ベイリー個人ページ Savant"
+	
+	
+></p>
+<p><em>③P.ベイリー個人ページ(<a class="link" href="https://baseballsavant.mlb.com/savant-player/patrick-bailey-672275?stats=statcast-r-catching-mlb"  target="_blank" rel="noopener"
+    >https://baseballsavant.mlb.com/savant-player/patrick-bailey-672275?stats=statcast-r-catching-mlb</a>)</em></p>
+<p>打球処理以外の<strong>フレーミング</strong>、<strong>ブロッキング</strong>、<strong>盗塁阻止</strong>の得点換算指標と<strong>平均ポップタイム</strong>の4つです。</p>
+<p><strong>Baseball Savantは各指標の詳細まで確認できる</strong>のが特徴です。</p>
+<p>上記画像でもポップタイムなら握り替えの時間、フレーミングならコースごとの結果などが確認できますし、リーダーボードの方ではブロッキングのコースごとの結果や盗塁阻止のプレーごとの難易度、当該プレーの動画なども確認できます。</p>
+<hr>
+<h3 id="やっていることは同じ">やっていることは同じ
+</h3><p>一つ一つの指標の詳細算出方法をまとめるのはキリがないし、公開されていない部分も多々あるのでやりませんが共通しているのは<strong>平均的な捕手との差を推定している</strong>ということです。(RerCについては微妙ですが…)</p>
+<p>フレーミングなら様々な側面を考慮した<strong>期待ストライク率(数)を算出し、実際のそれと比べ、その差を得点換算する</strong>という形。ブロッキングでも盗塁阻止でも同じです。差が出るのは考慮する側面の違いや得点換算の部分や測定方法の違いなどが理由でしょうが、僕個人としては意義のある差だと思っています。投手fWAR vs rWAR、OAA+UZR vs DRSのような違いではないですが。</p>
+<hr>
+<h2 id="三大war算出サイトの捕手war守備部分">三大WAR算出サイトの捕手WAR(守備部分)
+</h2><p>次は捕手のWARを構成している守備指標の各サイトの違いをまとめます。</p>
+<hr>
+<h3 id="baseball-reference-1">Baseball Reference
+</h3><p>BRではDRSをWARの守備評価部分に使っていますが、捕手に関しては注意が必要です。</p>
+<p><img src="/solving-baseball/images/113.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="P.ベイリー個人ページ WAR詳細"
+	
+	
+></p>
+<p><em>④P.ベイリー個人ページ(<a class="link" href="https://www.baseball-reference.com/players/b/bailepa01.shtml"  target="_blank" rel="noopener"
+    >https://www.baseball-reference.com/players/b/bailepa01.shtml</a>)</em></p>
+<p>P.ベイリーのDRSは13です(画像①参照)がWARの守備評価部分RfieldとRposのうち、DRS部分であるRfieldでは2となっています。これは<strong>フレーミングによる貢献のRszC 11が評価外</strong>というのが理由です。捕手についてはDRS - RszCがrWARの構成要素ということです。</p>
+<hr>
+<h3 id="fangraphs-1">FanGraphs
+</h3><p>FGは<strong>フレーミング指標FRMとDRSの盗塁阻止指標rSB(RsbC)<strong>がWARの構成要素です。以前はブロッキング指標Runs on Passed Pitches(RPP)がサイトで確認でき、fWARにも採用されていましたが</strong>現在はフレーミングと盗塁阻止のみで捕手の守備を評価</strong>しています。</p>
+<p>FGとしてはブロッキング指標を追加する意思はあるのでsavantのブロッキング指標あたりを遡って採用するとかは今後ありそうですかね。</p>
+<hr>
+<h3 id="baseball-prospectus">Baseball Prospectus
+</h3><p>Baseball Prospectusはインサイドワーク面以外の考慮しうる全ての要素でWARを構成しています。</p>
+<p><img src="/solving-baseball/images/114.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="P.ベイリー個人ページ BP"
+	
+	
+></p>
+<p><em>P.ベイリー個人ページ(<a class="link" href="https://www.baseballprospectus.com/player/112687/patrick-bailey/"  target="_blank" rel="noopener"
+    >https://www.baseballprospectus.com/player/112687/patrick-bailey/</a>)</em></p>
+<p>FrmR(フレーミング)、BlkR(ブロッキング)、ThrR(盗塁阻止)が捕手特有の守備評価指標ということでこの3つの合計値がCDA(Catching defense added)としてまとめられています。そしてCDAにその他の打球処理部分の範囲指標RDA Runs(Range defense added - runs)と送球指標のBRR_ARMを足したのが全体の守備評価指標DRP(Deserved runs prevented)で、このDRPがpWARの構成要素となっています。</p>
+<hr>
+<h3 id="まとめると">まとめると…
+</h3><div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: center"></th>
+          <th style="text-align: center">rWAR</th>
+          <th style="text-align: center">fWAR</th>
+          <th style="text-align: center">pWAR</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: center">フレーミング</td>
+          <td style="text-align: center">×</td>
+          <td style="text-align: center">○</td>
+          <td style="text-align: center">○</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">ブロッキング</td>
+          <td style="text-align: center">○</td>
+          <td style="text-align: center">×</td>
+          <td style="text-align: center">○</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">盗塁阻止</td>
+          <td style="text-align: center">○</td>
+          <td style="text-align: center">○</td>
+          <td style="text-align: center">○</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">打球処理</td>
+          <td style="text-align: center">○</td>
+          <td style="text-align: center">×</td>
+          <td style="text-align: center">○</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">インサイドワーク</td>
+          <td style="text-align: center">○</td>
+          <td style="text-align: center">×</td>
+          <td style="text-align: center">×</td>
+      </tr>
+  </tbody>
+</table></div>
+<p><em>各WARの違い</em></p>
+<p>サイトごとの違いをまとめたのが上記の表です。</p>
+<p>例えば<strong>フレーミングが苦手のS.ペレスが通算rWAR 33.0に対してfWAR 15.3、pWAR 14.7と大きな差がある</strong>のは守備評価部分の構成要素の違いが大きいです。この違いがどの程度有意義な違いかを考えてみたくてnoteを書いていたら重くなったので分割します。</p>
+<p>次はその違いを生み出すRerCについて分かる範囲でいろいろ考えます。</p>
+<p>次→<a class="link" href="/solving-baseball/breakdown/catcher-drs-rwar-reconsideration/" >捕手のDRS,rWARの再考(問題提起)</a></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/solving-baseball/tags/%E6%8D%95%E6%89%8B/">捕手</a>
+        
+            <a href="/solving-baseball/tags/%E3%83%96%E3%83%AD%E3%83%83%E3%82%AD%E3%83%B3%E3%82%B0/">ブロッキング</a>
+        
+            <a href="/solving-baseball/tags/%E7%9B%97%E5%A1%81%E9%98%BB%E6%AD%A2/">盗塁阻止</a>
+        
+            <a href="/solving-baseball/tags/%E3%83%95%E3%83%AC%E3%83%BC%E3%83%9F%E3%83%B3%E3%82%B0/">フレーミング</a>
+        
+            <a href="/solving-baseball/tags/%E3%83%AA%E3%83%BC%E3%83%89/">リード</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        const elementsToRender = [".main-article", ".widget--toc"];
+
+        elementsToRender.forEach(selector => {
+            const element = document.querySelector(selector);
+            if (element) {
+                renderMathInElement(element, {
+                    delimiters: [
+                        { left: "$$", right: "$$", display: true },
+                        { left: "$", right: "$", display: false },
+                        { left: "\\(", right: "\\)", display: false },
+                        { left: "\\[", right: "\\]", display: true }
+                    ],
+                    ignoredClasses: ["gist"]
+                });
+            }
+        });
+    });
+</script>
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <script
+    src="https://giscus.app/client.js"
+    data-repo="GHL-Ball/solving-baseball"
+    data-repo-id="R_kgDOQbQpuw"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOQbQpu84CzMFQ"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="light"
+    data-lang="ja"
+    data-loading=""
+    crossorigin="anonymous"
+    async
+></script>
+<script>
+    function setGiscusTheme(theme) {
+        let giscus = document.querySelector("iframe.giscus-frame");
+        if (giscus) {
+            giscus.contentWindow.postMessage(
+                {
+                    giscus: {
+                        setConfig: {
+                            theme: theme,
+                        },
+                    },
+                },
+                "https://giscus.app"
+            );
+        }
+    }
+
+    (function () {
+        addEventListener("message", (e) => {
+            if (event.origin !== "https://giscus.app") return;
+            handler();
+        });
+        window.addEventListener("onColorSchemeChange", handler);
+
+        function handler() {
+            if (document.documentElement.dataset.scheme === "light") {
+                setGiscusTheme('light');
+            } else {
+                setGiscusTheme('dark_dimmed');
+            }
+        }
+    })();
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2025 - 
+        
+        2026 Solving Baseball Blog
+    </section>
+    
+    <section class="powerby">
+        
+            トレバ-(^o^)丿 <br/>
+        <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> で構築されています。 <br />
+        テーマ <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.32.0">Stack</a></b> は <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> によって設計されています。
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/solving-baseball/ts/main.2b3fc53c7455b5631da9fabeefcc69ffc0a3f3cb719d708d3a5f18faf7af88a6.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

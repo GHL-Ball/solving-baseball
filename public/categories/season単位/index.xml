@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Season単位 on Solving Baseball Blog</title>
+        <link>http://localhost:1313/solving-baseball/categories/season%E5%8D%98%E4%BD%8D/</link>
+        <description>Recent content in Season単位 on Solving Baseball Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>ja</language>
+        <lastBuildDate>Mon, 01 Sep 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/solving-baseball/categories/season%E5%8D%98%E4%BD%8D/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Intercept Point × Bat Speed × xwOBA</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_07/</link>
+        <pubDate>Mon, 01 Sep 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_07/</guid>
+        <description>&lt;p&gt;Pull Air%が流行語となりバットトラッキングの普及でIntercept Pointに焦点を当てた分析も増えてきました。&lt;/p&gt;
+&lt;p&gt;単純化される前に少し釘を刺しておきますがIntercept Pointの変化とwOBAの変化には関連性はありません（r = 0.046）。&lt;/p&gt;
+&lt;p&gt;Intercept Pointが後ろになろうがBat Speedを上げられるかの方が圧倒的に重要です（r = 0.252）。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/170.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;q&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Intercept PointとBat SpeedとxwOBAの変化の関連性を示したものを置いておきます。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>ホームランダービーに悪影響はあるか</title>
+        <link>http://localhost:1313/solving-baseball/analysis/homerun-derby/</link>
+        <pubDate>Tue, 15 Jul 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/analysis/homerun-derby/</guid>
+        <description>&lt;h2 id=&#34;はじめに&#34;&gt;はじめに
+&lt;/h2&gt;&lt;p&gt;ホームランダービーの季節が近づくと&lt;strong&gt;ダービーの悪影響&lt;/strong&gt;を憂うファンが散見され、気が向いたセイバリストがそれを検証した記事を出すというのは最早お決まりの流れとなっています。&lt;/p&gt;
+&lt;p&gt;とは言え、近年は先行研究を引用して「ダービーは後半戦の成績に影響しないよ」だけで終わっている節があると個人的に感じていますし、日本語での分析は&lt;a class=&#34;link&#34; href=&#34;https://note.com/baseball_namiki/n/n9b115a8f74ea?sub_rt=share_sb&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;namikiさん&lt;/a&gt;のものしか認知していませんので、貴重な日本人セイバーメトリクス好きとして再検証していきます。&lt;/p&gt;
+&lt;p&gt;MLBは2015年シーズンからStatcastシステムを全面導入し、打球速度や Sprint Speed といった選手の能力に迫ることのできる指標やプレーの細部をより深く説明できる情報を入手できる環境が整いました。&lt;/p&gt;
+&lt;p&gt;そしてタイムリーなことに、MLBのホームランダービーのレギュレーションが&lt;strong&gt;アウト制から時間制になったのも2015年&lt;/strong&gt;です。&lt;/p&gt;
+&lt;p&gt;アウト制の頃のホームランダービーでも&amp;quot;ダービーは打撃に悪影響を及ぼす&amp;quot;といった言説は確認できますが、時間制になったことでその勢力に加勢した方々も少なくないでしょう。&lt;/p&gt;
+&lt;p&gt;日本人的には、標高1600mで息を切らし、（休憩はありますが）5分間で68もの&amp;quot;ホームラン狙いの&amp;quot;スイングをした、2021年大谷翔平が後半戦に打撃成績を落としたことは記憶に新しい方も多いのではないでしょうか。&lt;/p&gt;
+&lt;p&gt;前説が長くなりましたが、ダービーが時間制になり、Statcastデータも入手できる2015年以降に絞ってホームランダービーの影響について調べてみたいと思います。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;ダービー出場者は後半戦に成績を落としているか&#34;&gt;ダービー出場者は後半戦に成績を落としているか
+&lt;/h2&gt;&lt;p&gt;はじめに、&lt;strong&gt;ダービー出場者が後半戦に成績を落としているか&lt;/strong&gt;という基本的な前提を検証していきます。&lt;/p&gt;
+&lt;p&gt;念のため、下記に2015年以降のダービー出場者の一覧を記載します。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/51.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;ホームランダービー出場者一覧&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;参考程度に前半戦のHR%とwRC+も（HR%の平均は約3%）&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id=&#34;前後半の成績比較&#34;&gt;前後半の成績比較
+&lt;/h3&gt;&lt;p&gt;まずは単純に、前後半の成績をダービーに出場していなかった選手と比較してみます。（打席数がある程度揃うようにサンプリングしています）&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/52.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;前後半の成績比較&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;色付きは統計的有意性あり（有意水準 0.05）&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;ダービー出場者の後半戦の成績下降が確認できます。&lt;/strong&gt; ただ有意な差が確認できたのはHR%とそれに付随する長打率、wRC+ の成績下降です。ダービー出場者は後半戦に&lt;strong&gt;打球部分&lt;/strong&gt;の打撃成績が低下していることが確認できます。&lt;/p&gt;
+&lt;p&gt;対して、&lt;strong&gt;ダービー非出場者は後半戦の成績低下は確認できません。&lt;/strong&gt; むしろ、HR%の上昇傾向が確認できます。&lt;/p&gt;
+&lt;p&gt;ダービーの時期が毎年7月中旬であることを記憶している方は、7月下旬から8月といった気温の高い（空気密度の小さい）時期が含まれる後半に打撃成績が落ちるといった現象は観測されないと察していたでしょう。&lt;/p&gt;
+&lt;p&gt;では打球部分で成績を落としていたダービー出場者は具体的にどのような打球プロファイルの変化があったのでしょうか。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/53.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;打球プロファイルの変化&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;色付きは統計的有意性あり（有意水準 0.05）&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;有意な差が確認できるのは&lt;strong&gt;HR/FB&lt;/strong&gt;と&lt;strong&gt;Pull%（引っ張り率）&lt;/strong&gt;、基本的な打球分類に変化はありませんがフライ打球がスタンドインする確率が2%ほど下がることにより、HR%が減少しています。&lt;/p&gt;
+&lt;p&gt;引っ張り打球が増加する傾向がありますが、この傾向に負の側面を感じるか、その逆を感じるかは意外と分かれる気はします。少なくともセイバーメトリクスに興味のある最近のMLBファンなら正の側面を感じるでしょう。&lt;/p&gt;
+&lt;p&gt;対して、ダービー非出場者はもちろん、夏場が多く含まれる後半戦にHR/FBが下降するといった傾向は確認できませんでした。&lt;/p&gt;
+&lt;p&gt;大きな差ではありませんが**FB%（フライ率）**が増加し、結果的にHR%も増加する傾向にあるようです。基本的にFBは打者の&amp;quot;勝ち&amp;quot;であり、打席を積み重ねていき&amp;quot;慣れ&amp;quot;てくる後半戦にそのような傾向が観察できることに意外性はありません。（対戦投手に対する慣れが蓄積されやすいNPBではもう少し強く傾向が出ているかもしれません）&lt;/p&gt;
+&lt;p&gt;と、ここまでダービー出場者と非出場者の前後半の成績を簡単に比較してきました。&lt;/p&gt;
+&lt;p&gt;実際のところ、&lt;strong&gt;ダービー出場者は後半戦に成績を落としています。&lt;/strong&gt; ただ、この結果をもってして『ホームランダービー』の悪影響として結論付けるのは早計でしょう。&lt;/p&gt;
+&lt;h3 id=&#34;成績が似ている選手との比較&#34;&gt;成績が似ている選手との比較
+&lt;/h3&gt;&lt;p&gt;では、肝にいきましょう。&lt;/p&gt;
+&lt;p&gt;どのような検証でも必要になるのが、&lt;strong&gt;条件を揃える&lt;/strong&gt;ということです。&lt;/p&gt;
+&lt;p&gt;例えばテレビ視聴率からその番組の人気度を測りたいのなら、時間帯や曜日、裏番組などを揃えないと不公平ということは最低限の情報リテラシーのある方なら理解しているはずです。&lt;/p&gt;
+&lt;p&gt;ということで、ホームランダービーの影響を測りたい今回はどうでしょうか。&lt;/p&gt;
+&lt;p&gt;知りたいのはダービー非出場の成績ではありません。&lt;strong&gt;ダービー出場者がダービーに出場していなかった仮想世界&lt;/strong&gt;です（もしくはその逆も）。&lt;/p&gt;
+&lt;p&gt;もちろんそんな世界は用意できないので、ダービーに出場していた&amp;quot;かも&amp;quot;しれない、&lt;strong&gt;ダービー出場者と前半戦の成績が似ているダービー非出場者&lt;/strong&gt;を抽出します。&lt;/p&gt;
+&lt;p&gt;方法としては代表的なものでもいくつかありますが、今回は結果的に一番類似度が高く抽出できた、ユークリッド距離を使います。&lt;/p&gt;
+&lt;p&gt;抽出した類似選手216人の前半戦成績を以下に示します。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/54.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;類似選手の前半戦成績&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;ではこのダービー出場者に似ているダービー非出場者は後半戦に成績を落としているのでしょうか。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/55.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;類似選手との成績比較&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;色付きは統計的有意性あり（有意水準 0.05）&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;ダービー出場者と同じくHR%、長打率、wRC+で有意な差が確認できました。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;エンタメ性重視で選手の健康など考えず、打撃フォームにも悪影響が出るはずの&lt;strong&gt;ホームランダービーを欠場しても成績が下降してしまっています。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;では、打球部分も見てみましょう。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/56.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;類似選手の打球プロファイル&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;色付きは統計的有意性あり（有意水準 0.05）&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;ここが、今回注目するポイントです。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;ダービー出場者と同じようにHR/FBが下降していますが、Pull%の増加は観察できません。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;ホームランダービーはスローボールをどれだけスタンドインさせるかを競う、言わば、人外でない限りどれだけ引っ張りフライを打てるかの競技ですから、その影響と考えやすい結果ではあります。&lt;/p&gt;
+&lt;p&gt;ではダービー出場者と非出場者の前後半の成績変化の違いに統計的有意性はあるでしょうか？&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/57.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;成績変化の差の検定&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;色付きは統計的有意性あり（有意水準 0.05）&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;察していたとは思いますが、&lt;strong&gt;Pull%にのみ、有意な差が確認できます。&lt;/strong&gt; 少なくとも&lt;strong&gt;Pull%の変化はダービー出場者とそれに類似度の高いダービー非出場者との間で有意に差がありそう&lt;/strong&gt;です。&lt;/p&gt;
+&lt;p&gt;ちなみに、箱ひげ図でPull%の変化を比較したものが以下になります。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/58.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Pull%変化の箱ひげ図&#34;
+	
+	
+&gt;&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>ストライクゾーンの形状の変化</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_26/</link>
+        <pubDate>Tue, 21 Jan 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_26/</guid>
+        <description>&lt;p&gt;MLBにおいてストライクゾーンの形状は変化していることを明確に確認できます。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/141.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;q&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;2008年以降、MLB30球場にPITCHf/xが設置されMLBの審判評価は大きな変革期を迎えます。
+その結果としてよりルールに沿ったストライクゾーンが整えられてきました。
+イチロー松井が活躍していた時代に「MLBはアウトコースが広い」といった定説がありましたが、現在においては嘘と言えるでしょう。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>取り扱い注意なデータについて</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_27/</link>
+        <pubDate>Thu, 14 Nov 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_27/</guid>
+        <description>&lt;p&gt;データの加工整理に潜む罠について、少し珍しい誤謬があったので自戒も込めて紹介します。&lt;/p&gt;
+&lt;p&gt;-&lt;a class=&#34;link&#34; href=&#34;https://www.baseballprospectus.com/news/article/94992/the-age-of-volatility/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;The Age of Volatility&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;MLBにおける得点環境の変動について考察する上記の記事ですが、決定的なミスが存在します。&lt;/p&gt;
+&lt;p&gt;文中では主論を導くためのデータとして、恐らくBaseball Savantから取得した「打球分類ごとの得点確率や発生イベント確率の推移」を使用しています。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/136.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;取り扱い注意なデータについて&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;FB（上）、LD（下）について1B、2B、3Bの確率推移を調べています&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;この記事における主論は外野守備の向上が得点環境に無視できない影響を与えていることですので、グルーピング自体はミスではありません。
+ただ、推移を見る以上、大前提としてそのグルーピングの定義が統一されていることが必要です。&lt;/p&gt;
+&lt;p&gt;-&lt;img src=&#34;https://www.beyondtheboxscore.com/2015/5/5/8548129/batted-ball-data-fangraphs-baseball-reference-baseball-savant-statcast&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;i&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;上記の記事はそのグルーピングの変遷について疑義を投げかけています。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/139.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;i&#34;
+	
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/solving-baseball/images/140.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;i&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;三社のリーグ打球種類割合変遷&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;この記事にある上記画像のように、FangGraphs(BIS)とBaseball Reference、Baseball Savantでは打球分類に差異が生じます。
+問題となるのはその変遷で、BISに対して他二社は2013年に突飛的な変化が観測できます。2013年にリーグ全体として急激なLD率の上昇が真の意味で存在したのでしょうか。&lt;/p&gt;
+&lt;p&gt;もちろん、大きなルール変更等によってこのようなリーグ環境が突飛的に変化することはありますが（ピッチクロックに伴う規定によって盗塁企図や成功率の突飛的な変化が近年の代表例）、2013年にLDが増えるルール変更は起きていないはずです。
+という前提と他社との比較衡量の結果、上記記事に賛同し、2013年にFBの一部がLDに分類される定義変更が起こっていると考えています（公式の見解がないのでこの温度感ですが）。&lt;/p&gt;
+&lt;p&gt;この定義変更を考慮せずにその分類内の指標の年度推移を利用すると今回のような誤謬が生じます。&lt;/p&gt;
+&lt;p&gt;以前にはFBと分類されていたLDと比較すると価値の低い打球がLDに分類されることでLDの価値が突飛的に下がり、よりLDに近いFBがFBと分類されなくなりFBの価値も突飛的に下がります。&lt;/p&gt;
+&lt;p&gt;今回の例ほど極端な問題は引き起こしませんが、NPBにおける投手の速球の平均球速推移は定期的に話題に上がります。ただその定義は年度を跨いで統一されていません。スピードガンからトラックマン、ホークアイといった測定機器の変遷はもちろん、スピードガンの中でも時期によってその調整が異なる場合がありますし、もしかしたら球種分類も速球と変化球の境目が年度によって変遷しているかもしれません&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>xwOBAと何を見るか</title>
+        <link>http://localhost:1313/solving-baseball/analysis/xwoba-what-to-see-article/</link>
+        <pubDate>Tue, 27 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/analysis/xwoba-what-to-see-article/</guid>
+        <description>&lt;p&gt;打者の打撃能力を測る上で相当に優秀な指標である xwOBA。データサイトで手軽に確認でき、野球ファン大好きな上振れ下振れの話にも繋がり、なかなか人気のある指標ですが、他に一緒に見た方が良い指標はないの？といったことを考えていく記事です。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;xwobaとは&#34;&gt;xwOBAとは
+&lt;/h2&gt;&lt;p&gt;xwOBAを真面目に解説するとそれだけで重くなりますので要点を説明すると、xwOBAは &lt;strong&gt;play ではなく player を表すことを目的&lt;/strong&gt;とし、非打球要素はそのままに打球要素は打球速度、&amp;ldquo;垂直&amp;quot;打球角度に着目し（一応、内野安打が期待されるような打球については走力も考慮される）、それらから期待される wOBAを算出したものになります。&lt;/p&gt;
+&lt;p&gt;測定対象が play ではなく player という xwOBAの特徴として&lt;strong&gt;予測力&lt;/strong&gt;があります。過去の結果には選手の能力以外の&lt;strong&gt;ノイズ&lt;/strong&gt;も含まれていますので、そのノイズ（xwOBAでは相手の守備や水平角度など）を適宜取り除いた指標の方が未来の予測には有用です。&lt;/p&gt;
+&lt;p&gt;実際、xwOBAは来季の wOBA予測において FanGraphs や Baseball Savant にある打撃指標の中では最強の予測力を誇ります。それは打球要素も非打球要素も含む総合打撃指標がほとんどないところが理由でもありますが。&lt;/p&gt;
+&lt;p&gt;ただ、xwOBAの打球部分 xwOBAconも来季の wOBAconの予測力がトップクラスに高い指標です。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/74.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;翌年のwOBAconとの関係&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;翌年の wOBAconとの関係　Data : FanGraphs, Baseball Savant&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;ノイズを多く含む wOBAconより打球速度のみを測定対象としている&lt;strong&gt;Adjusted EV&lt;/strong&gt;（88 mph以下の打球を全て88 mphとして算出した平均打球速度）の方が、さらに打球速度以外に打球角度も考慮している xwOBAcon、Barrel%の方が予測力に優れていることが分かるかと思います。Barrel%がxwOBAconより少し優れている点については後ほど説明できるかと思います。&lt;/p&gt;
+&lt;p&gt;このように xwOBAは単体でも予測力に強みを持ちますが、じゃあ xwOBA以外に何か見るべき指標ってあるの？という話を考えていきます。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;2023年のmチャップマン&#34;&gt;2023年のM・チャップマン
+&lt;/h2&gt;&lt;p&gt;2023年、4月の最強打者M・チャップマンを覚えているでしょうか。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;M・チャップマン　2023年3,4月成績&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;wOBA .481（規定1位/181人）&lt;/li&gt;
+&lt;li&gt;xwOBA .486（規定1位/181人）&lt;/li&gt;
+&lt;li&gt;BABIP .485（規定1位/181人）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;Data : MLB&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;wOBAだけでなく xwOBAも断トツで文字通りMLB最強打者でした。&lt;/p&gt;
+&lt;p&gt;チャップマンの wOBAに近い例ではG・ペルドモがいました。彼の去年の初動とその後はまさにMLBファンが xwOBAを気にする理由でしょう。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;G・ペルドモ　2023年3, 4月 vs 5月以降成績&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;wOBA .456 ➡ wOBA .297&lt;/li&gt;
+&lt;li&gt;xwOBA .301 ➡ xwOBA .271&lt;/li&gt;
+&lt;li&gt;BABIP .477 ➡ BABIP .265&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;Data : MLB&lt;/em&gt;&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>フレーミングとブロッキングはトレードオフの関係にあるか</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_29/</link>
+        <pubDate>Sun, 07 Jul 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_29/</guid>
+        <description>&lt;p&gt;「フレーミングとブロッキングはトレードオフの関係にある」という言説はよく耳にします。&lt;/p&gt;
+&lt;p&gt;ある動作にフォーカスすると他の動作が疎かになるというのは日常生活でも多発する現象ですし、キャッチングにおいても特に低めの投球に対してはブロッキングとフレーミングはミットの角度が大きく異なる場面もありますのでかの言説が流布する所以もわかります。&lt;/p&gt;
+&lt;p&gt;では実際にその傾向は観察できるのでしょうか。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/133.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;フレーミングvsブロッキング&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;上記の図は2018-2024において年度間のフレーミング得点とブロッキング得点の変化を可視化したものです。
+先に述べた言説に従うと、フレーミング得点の増加に意識を割くとブロッキング得点に悪影響を与える可能性があるでしょう。しかしそのような傾向は確認できません。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/134.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;フレーミングvsブロッキング&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;次の図は同年度のフレーミング得点とブロッキング得点の関係です。
+フレーミングが得意な捕手はブロッキングも得意な傾向が観察できるかもしれない程度ではありますが、少しばかりの関係性が窺えます。
+フレーミングもブロッキングも動体視力や反射神経など、共通する身体能力や技術があるでしょうし、驚きはないです。&lt;/p&gt;
+&lt;p&gt;これらの傾向が野球的に普遍なものなのか、MLBという階層の特徴なのかという考察も面白いかもしれません。特に近年のMLBはブロッキングと言っても少年野球のような体で止める系の動作は減っていますしね。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>Barrels / Whiffs</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_30/</link>
+        <pubDate>Mon, 01 Jul 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_30/</guid>
+        <description>&lt;p&gt;-&lt;a class=&#34;link&#34; href=&#34;https://blogs.fangraphs.com/whomps-per-whiff-early-2024-edition/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Whomps per Whiff, Early 2024 Edition&lt;/a&gt; - Ben Clemens&lt;/p&gt;
+&lt;p&gt;空振りあたりにどれだけのBarrelを生み出せるかという解釈性の高い指標についてです。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/127.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Barrels / Whiffs&#34;
+	
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/solving-baseball/images/128.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Barrels / Whiffs&#34;
+	
+	
+&gt;
+&lt;em&gt;翌シーズンのwOBAの予測力&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;実際に性能としては悪いとは言えないもののxwOBAには劣ります。
+単純な指標のようでBarrelを使うということはxwOBAが既にある環境ですので簡易的な指標とは言えないでしょう。
+ただ、K/BBと同じようにスケールを1空振りあたりにすることは、指導面、育成面での選手への翻訳機として機能するかもしれません。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>4月の成績 vs 5月以降の成績</title>
+        <link>http://localhost:1313/solving-baseball/analysis/april-vs-may-stats-article/</link>
+        <pubDate>Thu, 02 May 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/analysis/april-vs-may-stats-article/</guid>
+        <description>&lt;h2 id=&#34;打者&#34;&gt;打者
+&lt;/h2&gt;&lt;p&gt;まずは打者からです。対象とした打者は2015〜2023年(2020年は除く)の３・４月と５月以降でどちらも規定打席に立った打者です。本当は生存バイアス等にも対処した方が良いと思いますが今回は手軽にいきます。&lt;/p&gt;
+&lt;h3 id=&#34;vs-指標自身&#34;&gt;vs 指標自身
+&lt;/h3&gt;&lt;p&gt;まずは指標自身の話です。「4月のBABIPと５月以降のBABIPって相関あるの？」という感じの話。野球ファンからの関心がそこそこ高そうな指標を中心にピックアップしたものがこちら。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/80.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;各指標の3・4月と5月以降の相関係数（打者）&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;各指標の3・4月と5月以降の相関係数（n = 853）&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;これは野球に限らないことだと思いますが、ファンが第一に気にするような結果ではなく、その結果が出る前の過程を測った指標ほど強い相関を示しています。&lt;/p&gt;
+&lt;p&gt;打者の&lt;strong&gt;アプローチ姿勢&lt;/strong&gt;(Swing%, Contact%)、打者の&lt;strong&gt;パワー&lt;/strong&gt;(打球速度, Hard Hit%)、打者の&lt;strong&gt;スイング軌道&lt;/strong&gt;(打球角度, GB%, FB%)のようなものはシーズン序盤から安定しても、それらに加え内外の様々な変数が組み合わさった結果完成する指標(BABIP, wOBA等)は安定に時間がかかることは想像に難くありません。&lt;/p&gt;
+&lt;p&gt;ゴロとフライの境目であるライナー、引っ張りと流しの境目であるセンター返しも安定に時間がかかりますが特に気を付けるべきはライナー。ライナーは他と比べて恐ろしく生産性の高い打球ですが、ライナーの発生確率が信頼に足るサンプルサイズに達するのは500〜600BBEほど。これは上位打線で年間フル出場近く出場しても選手によっては到達できない数字です。&lt;/p&gt;
+&lt;p&gt;wOBA - xwOBA(0.222)は使用球場の偏りを留意しておく必要はあるでしょう。参考までに、同期間のwOBA - xwOBAはクアーズで .029、ブッシュで -.011です。&lt;/p&gt;
+&lt;p&gt;Clutch(0.034)、打率 - 得点圏打率(-0.032)は美しいですね。&lt;/p&gt;
+&lt;h3 id=&#34;vs-woba&#34;&gt;vs wOBA
+&lt;/h3&gt;&lt;p&gt;次は５月以降のwOBAとの比較です。三振しないことや速い打球を飛ばすことはあくまでも手段です。&lt;strong&gt;目的＝勝利に貢献 ≒ 得点に貢献 ≒ wOBAの高い打者&lt;/strong&gt;は４月のどの指標でその兆しを見せていたのでしょうか。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/81.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;3・4月の各指標と5月以降のwOBAとの相関係数&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;3・4月の各指標と5月以降のwOBAとの相関係数（n = 853）&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;一応相対的にカラースケールしてますが軒並みしょぼいです。&lt;/p&gt;
+&lt;p&gt;xwOBAですら決定係数は0.156、５月以降のwOBAをほとんど説明できません。&lt;/p&gt;
+&lt;p&gt;気を付けるべきはコンタクト系の指標ですかね。コンタクト系の指標はコンタクト力(という言い方も少し違いますが)を測る指標としては信頼度は高いですが、&lt;strong&gt;打者においてコンタクト力は単純に得点創出力に結びつきません。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;これはイチローのあの &lt;strong&gt;.220 40本発言&lt;/strong&gt;が野球ファンに違和感なく受け入れられているように&lt;strong&gt;コンタクト能力と長打力にトレードオフ関係がある&lt;/strong&gt;ことを直感的に理解している人は多そうです。&lt;/p&gt;
+&lt;p&gt;実際のトレードオフ関係を定量化するのは割と大変だと思いますが、現状コンタクト力とK%には強い因果があるのに対して、コンタクト力と得点創出力には相関はありません。これの意味するところはコンタクト力の低い打者は三振による損失を他で補っているということです。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/82.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;wRC&amp;#43; vs Contact%&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;2023 min.300PA&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;丁度良く実例があるので紹介すると、2023年MLBで最も低いK%を記録しながらISO最下位、wRC+は92に甘んじたガーディアンズは昨オフ従来のアプローチ姿勢を打ち破る意向を示し、2024年4月終了時点で昨年からK%の順位を落としながらISO15位、wRC+107とそのトレードオフを成功させています。今年のガーディアンズは要注目です。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.nytimes.com/athletic/5298726/2024/02/26/guardians-offense-swinging-and-missing/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Why Guardians’ bid to boost their offense starts with … swinging-and-missing?&lt;/a&gt; - Zack Meisel&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;投手&#34;&gt;投手
+&lt;/h2&gt;&lt;p&gt;では投手です。対象とした投手は３・４月と５月以降でどちらも規定投球回に達した投手。&lt;/p&gt;
+&lt;h3 id=&#34;vs-指標自身-1&#34;&gt;vs 指標自身
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/83.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;各指標の3・4月と5月以降の相関係数（投手）&#34;
+	
+	
+&gt;&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>ピッチクロックが球質に及ぼす影響</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_34/</link>
+        <pubDate>Sun, 07 Apr 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_34/</guid>
+        <description>&lt;p&gt;2023年、MLBにピッチクロックが導入されました。
+このピッチクロックが野球にもたらす影響について、日本人を中心に様々な批判材料が構築されていましたが、
+その中でもとりわけ多くの支持を集めていたのが「投手の身体への悪影響」でしょう。&lt;/p&gt;
+&lt;p&gt;確かに、旧来の投球間隔が投手の身体的悪影響に対して限界的なラインで凌いでいたものならば、その投球間隔を狭めることは投手に身体的悪影響を及ぼすでしょう。&lt;/p&gt;
+&lt;p&gt;また特に、旧来の投球間隔が長くより多くの投球間隔の短縮を迫られる投手の方が身体的悪影響は現れやすいでしょう。&lt;/p&gt;
+&lt;p&gt;実際に2022年から2023年の投球間隔の短縮幅とピッチモデリング指標の変化が以下です。&lt;/p&gt;
+&lt;p&gt;-&lt;img src=&#34;http://localhost:1313/solving-baseball/images/64.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Pitch Tempo vs Stuff&#34;
+	
+	
+&gt;
+-&lt;img src=&#34;http://localhost:1313/solving-baseball/images/65.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Pitch Tempo vs Stuff&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;とりあえず関係性はないと言えるレベルです。&lt;/p&gt;
+&lt;p&gt;ちなみに、投球間隔の減少幅とILに登録された率や総日数についても特にその主張を裏付けるものとはなっていません。&lt;/p&gt;
+&lt;p&gt;-&lt;img src=&#34;http://localhost:1313/solving-baseball/images/66.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Pitch Tempo vs Stuff&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;確か&lt;a class=&#34;link&#34; href=&#34;https://www.spotrac.com/mlb&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;spotrac&lt;/a&gt;を参照したはず&lt;/em&gt;&lt;/p&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

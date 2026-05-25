@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>ピッチクロック on Solving Baseball Blog</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E3%83%94%E3%83%83%E3%83%81%E3%82%AF%E3%83%AD%E3%83%83%E3%82%AF/</link>
+        <description>Recent content in ピッチクロック on Solving Baseball Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>ja</language>
+        <lastBuildDate>Sun, 07 Apr 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/solving-baseball/tags/%E3%83%94%E3%83%83%E3%83%81%E3%82%AF%E3%83%AD%E3%83%83%E3%82%AF/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>ピッチクロックが球質に及ぼす影響</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_34/</link>
+        <pubDate>Sun, 07 Apr 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_34/</guid>
+        <description>&lt;p&gt;2023年、MLBにピッチクロックが導入されました。
+このピッチクロックが野球にもたらす影響について、日本人を中心に様々な批判材料が構築されていましたが、
+その中でもとりわけ多くの支持を集めていたのが「投手の身体への悪影響」でしょう。&lt;/p&gt;
+&lt;p&gt;確かに、旧来の投球間隔が投手の身体的悪影響に対して限界的なラインで凌いでいたものならば、その投球間隔を狭めることは投手に身体的悪影響を及ぼすでしょう。&lt;/p&gt;
+&lt;p&gt;また特に、旧来の投球間隔が長くより多くの投球間隔の短縮を迫られる投手の方が身体的悪影響は現れやすいでしょう。&lt;/p&gt;
+&lt;p&gt;実際に2022年から2023年の投球間隔の短縮幅とピッチモデリング指標の変化が以下です。&lt;/p&gt;
+&lt;p&gt;-&lt;img src=&#34;http://localhost:1313/solving-baseball/images/64.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Pitch Tempo vs Stuff&#34;
+	
+	
+&gt;
+-&lt;img src=&#34;http://localhost:1313/solving-baseball/images/65.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Pitch Tempo vs Stuff&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;とりあえず関係性はないと言えるレベルです。&lt;/p&gt;
+&lt;p&gt;ちなみに、投球間隔の減少幅とILに登録された率や総日数についても特にその主張を裏付けるものとはなっていません。&lt;/p&gt;
+&lt;p&gt;-&lt;img src=&#34;http://localhost:1313/solving-baseball/images/66.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Pitch Tempo vs Stuff&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;確か&lt;a class=&#34;link&#34; href=&#34;https://www.spotrac.com/mlb&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;spotrac&lt;/a&gt;を参照したはず&lt;/em&gt;&lt;/p&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

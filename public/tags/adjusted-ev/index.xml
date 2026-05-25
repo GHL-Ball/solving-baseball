@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Adjusted EV on Solving Baseball Blog</title>
+        <link>http://localhost:1313/solving-baseball/tags/adjusted-ev/</link>
+        <description>Recent content in Adjusted EV on Solving Baseball Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>ja</language>
+        <lastBuildDate>Tue, 18 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/solving-baseball/tags/adjusted-ev/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>FB/LD EV</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_32/</link>
+        <pubDate>Tue, 18 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_32/</guid>
+        <description>&lt;p&gt;Baseball SavantにEV（FB/LD）という指標が追加されました。
+単純にFBとLDの打球速度の平均値であり、&lt;a class=&#34;link&#34; href=&#34;http://localhost:1313/solving-baseball/analysis/escape-velocity-by-batted-ball-type/&#34; &gt;打球分類ごとのEscape Velocity&lt;/a&gt;で触れたように、打球速度を上げる意味がほとんどないゴロを打球速度の計算から除外することでより野球的に打球速度を捉えます。&lt;/p&gt;
+&lt;p&gt;Adjusted EVと考えは似ていますし、やっていることの分かりやすさは打球速度系の指標でもかなり上位かなとは思います。ただ、フライやライナーといった打球分類は客観的な分類が難しい部分もありますし、ある程度のノウハウがないリーグでこの指標を使うのは危険かもしれません。&lt;/p&gt;
+&lt;p&gt;性能としてはAdjusted EVと変わりません。xwOBAconを見れない環境での妥協案の一つとなるでしょう。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/120.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;FB/LD EV&#34;
+	
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/solving-baseball/images/121.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;FB/LD EV&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;同年度のwOBAconの記述力&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/122.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;FB/LD EV&#34;
+	
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/solving-baseball/images/123.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;FB/LD EV&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;翌年度のwOBAconの予測力&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/124.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;FB/LD EV&#34;
+	
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/solving-baseball/images/125.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;FB/LD EV&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;xwOBAcon&lt;/em&gt;&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>打球分類ごとのEscape Velocity</title>
+        <link>http://localhost:1313/solving-baseball/analysis/escape-velocity-by-batted-ball-type/</link>
+        <pubDate>Tue, 09 Apr 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/analysis/escape-velocity-by-batted-ball-type/</guid>
+        <description>&lt;p&gt;思いつきですが、Escape Velocityの理論(物理の方じゃないよ)を打球分類(ゴロ、フライ、ライナー)ごとにも当てはめてみます。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;escape-velocity&#34;&gt;Escape Velocity
+&lt;/h2&gt;&lt;p&gt;Escape Velocityは簡単に説明すると、&lt;strong&gt;88mphまでは打球速度で価値に差がつかないんだから88mphからどれだけEscape(脱出)できたかを評価しよう&lt;/strong&gt;という考えから生まれた指標です。&lt;/p&gt;
+&lt;p&gt;具体的には60mphと80mphと100mphはEscape Velocityでは0mphと0mphと12mphという扱いになります。&lt;/p&gt;
+&lt;p&gt;一応確認として、打球速度とwOBAとの関係が以下。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/86.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;EV vs wOBA (2021~2023)&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;88mph以下を等価で評するEscape Velocityや95mph以上の打球割合を示すHard Hit %の妥当性&lt;/strong&gt;が確認できるんじゃないかなと思います。&lt;/p&gt;
+&lt;p&gt;Escape Velocityは同じ平均打球速度でも85mph + 85mph より100mph + 70mphを高く評価しますが上記の関係を考慮すると野球的に正しい指標であると言えます。&lt;/p&gt;
+&lt;p&gt;平均打球速度とEscape Velocityで特徴のあった打者の例はこちら。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/87.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;平均打球速度とEscape Velocityの比較表&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;2021~2023、min 200 BBE、順位は512人中、バントは除く&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;例えばマイク・トラウト、彼は平均打球速度はメジャー32位に甘んじていますがEscape Velocityはメジャー11位の数値です。&lt;/p&gt;
+&lt;p&gt;例えばMJ・メレンデス、彼は平均打球速度はメジャー23位ですがEscape Velocityはメジャー84位です。&lt;/p&gt;
+&lt;p&gt;メレンデスがトラウトより平均して速い打球を飛ばしたことは間違いではないですが、&lt;strong&gt;野球的に&lt;/strong&gt;トラウトより&amp;quot;良い&amp;quot;打球速度を出していたわけではないということです。&lt;/p&gt;
+&lt;p&gt;今回はこの理論を打球分類ごとにも当てはめたり、打球速度とwOBAの関係を打球分類ごとに見ていきたいなという回です。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;ゴロ&#34;&gt;ゴロ
+&lt;/h2&gt;&lt;p&gt;まずはMLBではすっかり負け打球扱いされているゴロです。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/88.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;EV vs wOBA (2021~2023 GB)&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;当たり前ですがそもそもの価値の低さが目立ちます。Escape Velocityの理論もなんとか当てはめられそうですが、その閾値は全打球の時より低く設定できそうです。バントやハーフスイングが含まれていて信頼区間の幅も広い低速打球を取り除いて拡大したのが以下。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/89.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;EV vs wOBA (2021~2023 GB) 拡大&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Escapeできていると言えそうなのは81mphぐらいからでしょうか。全打球では88mphが閾値ですがゴロに限ると80mph程度かなと思います。&lt;/p&gt;
+&lt;p&gt;仮に80mphを閾値に設定した場合の2021~2023のゴロのEscape Velocityトップ10とワースト10がこちら。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/90.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Escape Velocity Top 10 &amp; Worst 10 (GB)&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;2021~2023、min 100 GB、Ovr Rk.は全打球のEscape Velocityの順位を466人換算したもの&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;トップ10には当然パワーヒッターが並びますが、W.カルフーンやM.ビアリング、K.ヘイズのような全打球のEscape Velocityでは上位にいなかった選手が気になります。結論を述べると彼らは&lt;strong&gt;パワーツールをフライやライナーと比して極端にゴロに使っています&lt;/strong&gt;。後にまた語りますが良いとは言えないでしょうね。&lt;/p&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

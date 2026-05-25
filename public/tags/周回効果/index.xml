@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>周回効果 on Solving Baseball Blog</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E5%91%A8%E5%9B%9E%E5%8A%B9%E6%9E%9C/</link>
+        <description>Recent content in 周回効果 on Solving Baseball Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>ja</language>
+        <lastBuildDate>Wed, 30 Jul 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/solving-baseball/tags/%E5%91%A8%E5%9B%9E%E5%8A%B9%E6%9E%9C/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>高性能打撃マシンの効果について</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_13/</link>
+        <pubDate>Wed, 30 Jul 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_13/</guid>
+        <description>&lt;p&gt;特に結論は出ていませんがTrajekt Arcのような球質再現マシンはプロ野球を大きく変えるのでしょうか。&lt;/p&gt;
+&lt;p&gt;球質再現マシンに効果があるならば打者は投手に対して以前より“慣れ”た状態で対戦しているはずです。
+そして慣れには限界効用の逓減もあると考えられます。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/162.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;a&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;1巡目と2巡目、3巡目のwOBA差&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;2021年以降に変化が観測できれば面白いですが、正直言い切れるレベルの効果を抽出するのは難しいです。
+事前に何巡目相当の球数を体験して打席にいっているのかは分かりませんし、慣れによる効果を測るために制御するべき要素が多すぎます。&lt;/p&gt;
+&lt;p&gt;先発投手も慣れに対抗する術を磨いていますのでそれらの考慮もしなければならないでしょう。面白いテーマだとは思いますので時間が取れたときに考えてみたいと思います。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>打者が慣れやすい球種</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_14/</link>
+        <pubDate>Sat, 07 Jun 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_14/</guid>
+        <description>&lt;p&gt;有名な周回効果について、脇道にそれた話題を。&lt;/p&gt;
+&lt;p&gt;周回効果に慣れが関わることはまず間違いないですが、その現象が存在するということが実際には打席によって離散しているとは考えづらいでしょう。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/161.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;a&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;上図は同打席内において当該球種が2球投げられた際のRun Valueの変化です。&lt;/p&gt;
+&lt;p&gt;これを見るとBreaking系の球種の方が打者は慣れによる恩恵を受けやすく、Fastball系、Offspeed系は比較して慣れによる恩恵を受けにくい球種となっています。
+大きい変化ほど意外性という面で投手有意に働いている感覚はあります。意外性は見方を変えると慣れによるリスクの高さでもありますので経験則的には腑に落ちる結果となっています。
+見事なくらいKCとCU、STとSLの数値が近く面白い結果だなと思いますが、同じFastball系でもFFとSIの差が大きい部分について深堀してみたいとも思いました。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>打者の慣れはリリーフにも引き継がれるか</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_25/</link>
+        <pubDate>Thu, 03 Apr 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_25/</guid>
+        <description>&lt;p&gt;同じ投手と何度も対戦することで打撃成績が向上する効果、周回効果について、慣れの側面から少し脇道に逸れたテーマです。&lt;/p&gt;
+&lt;p&gt;同試合内で何度も対戦する投手はほぼ先発投手です。つまり打者は慣れにおいて先発投手にフォーカスを合わせます。&lt;/p&gt;
+&lt;p&gt;という前提から、先発投手の次に対戦する投手にも先発投手の慣れは引き継がれている可能性があります。&lt;/p&gt;
+&lt;p&gt;ということで簡易的ですが調べてみました。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/142.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;q&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;まずは先発投手と二番手投手の利き手の相違で成績が変わるのかというテーマ。&lt;/p&gt;
+&lt;p&gt;正直なところ、MLBのサンプルサイズに甘えてはいますが先発投手の慣れは中継ぎにも引き継がれていそうです。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/solving-baseball/images/143.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;q&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;次は同じ利き手においても投球フォームの類似度で成績は変わるのかというテーマ。&lt;/p&gt;
+&lt;p&gt;こちらもそれっぽい結果が出ています。同じ利き手より違う利き手、高類似度より低類似度の二番手投手の方が打者を抑えられています。&lt;/p&gt;
+&lt;p&gt;今回のように、周回効果という定説の中にある要素を抽出して、その要素から展開できる他の仮説への適用は野球の探究の楽しい部分かなと思います。&lt;/p&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

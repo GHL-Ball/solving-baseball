@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Bat Tracking on Solving Baseball Blog</title>
+        <link>http://localhost:1313/solving-baseball/tags/bat-tracking/</link>
+        <description>Recent content in Bat Tracking on Solving Baseball Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>ja</language>
+        <lastBuildDate>Tue, 23 Sep 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/solving-baseball/tags/bat-tracking/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Bat Trackingから打者のタイミングを推し量る</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_05/</link>
+        <pubDate>Tue, 23 Sep 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_05/</guid>
+        <description>&lt;p&gt;Baseball SavantのBat Trackingに追加されたIntercept Pointから打者のタイミング情報を推し量ってみます。
+Intercept Pointはその名の通り、バットとボールの接点（もしくはそれに近い点）であり、基準をホームベースではなく打者に置いたものも取得できます。
+打者のタイミングにおいては後者の方が適切ですので今回はこちらを使用します。&lt;/p&gt;
+&lt;p&gt;周知の通り、打者はタイミングを投手方向にずらされる、いわゆる泳いだ打撃になるスイングでは「想定より投球が遅い」状態であることが多く、
+タイミングを捕手方向にずらされる、いわゆる差し込まれた打撃になるスイングでは「想定より投球が速い」状態であることが多いです。&lt;/p&gt;
+&lt;p&gt;投手視点で見ると、そのズレをどちらの方向にどの程度発生させるかが投球評価における構成要素の一つとなります。&lt;/p&gt;
+&lt;p&gt;トラッキングデータの対象範囲の拡大が進む現代において、投手の多角的な出力情報はStuff+をはじめとするピッチモデリング指標のような文字通りの予測的指標
+（xFIPやSIERAは予測的性能は高いが統計学的に純粋な予測モデルとは言い難い）を生み出しました。
+打者側の反応が多角的に見えるBat Trackingは「空振り」や「ファウル」といった結果の構成要素の分解にも役立ちます。&lt;/p&gt;
+&lt;p&gt;投球はまず打者のスイングの有無で分岐します。それにより、見逃し時により多くストライクを獲得し、スイング時にどれだけ得点価値の低いイベントを誘発させられるかかという評価軸に分解できます。
+そしてスイング時の評価にBat Trackingは活用できます。&lt;/p&gt;
+&lt;p&gt;スイング時の投球評価を変化量の想定とのズレを主としたxz平面とタイミングの想定とのズレを主としたy軸に分解します。
+今回はそのy軸のズレの話です。&lt;/p&gt;
+&lt;p&gt;多数の要因によってy軸のズレは発生しますが必ず考慮しなければならないのが投球コース及びそれに対応するx軸でのIntercept Pointです。
+また絶対値を使うとJ.ターナーは常に泳いだ打撃、ゴールドシュミットは常に差し込まれた打撃と評価してしまうので各打者内で標準化します。&lt;/p&gt;
+&lt;p&gt;ということでIntercept Point(x)を固定効果として設定し、GAMでIntercept Point(y)の予測をします。
+その予測値との差分をTiming Deviationとして評価します。&lt;/p&gt;
+&lt;p&gt;以下にTiming Deviationの分布、空振り率、得点価値との関係を示します。&lt;/p&gt;
+&lt;p&gt;-&lt;img src=&#34;http://localhost:1313/solving-baseball/images/45.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Timing Deviationの分布&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;納得感はありつつも興味深いのは打者は得点価値（多くは打球価値から生み出される）が最大化されるタイミングではなく空振り率が最小化されるタイミングでスイングをしているという点です。
+感覚的ではあるでしょうが、打者はコンタクトを優先的に考え、チャンスがあれば普段より前方の、Bat Speedが最大化しAttack Angleが最適化されるタイミングで捉えるといった感じでしょうか。
+また、選球を正しく行うためにはいわゆるチェックポイントを打者側に近づけた方が良いわけで、打球価値が最大化されるタイミングより程度はあれど差し込まれるタイミングの方が合理的でしょう。&lt;/p&gt;
+&lt;p&gt;これらの点を踏まえると、投手視点ではただタイミングを打者の基準から外すだけではなく、少し泳ぎ気味のタイミングにあるスイートスポットを避ける投球がより必要になるかと思われます。
+この観点では半速球と呼ばれるような主要FastballとBreakingやOffspeedの架け橋となる球種は危険なようにも思えますが、それらの球種はチェックポイントまでに打者が球種を誤認しやすいわけで、
+すると今回取り上げなかったxz平面でのズレにつながる話かなとも思います。実際に主要な球種がFFとCHの最強投手スクーバルはxz平面よりy軸のズレが傑出していますし、主要な球種にFCがある最強投手
+クロシェはy軸よりxz平面でのズレが傑出しています。&lt;/p&gt;
+&lt;p&gt;まだまだラフの段階ではありますが、例えば先ほどの図にBat Trackingの他の要素や球種やピッチカウントといった無視のできない条件も加味していけば、さらに精度高く野球を理解できるかなと思います。&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>Bat Trackingから投球を分析する</title>
+        <link>http://localhost:1313/solving-baseball/memo/memo_06/</link>
+        <pubDate>Sat, 06 Sep 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/memo/memo_06/</guid>
+        <description>&lt;p&gt;2025年のYearly Savant UpdateではBat Trackingがさらにその対象範囲を広げました。
+打者のスイング情報がより増えたということは投球の分析が深まるということですので、新たに追加された変数を利用して投球の分析を行います。&lt;/p&gt;
+&lt;p&gt;投球はまず打者のスイングの有無で分岐します。今回はそのスイング有に対する分析を行います。&lt;/p&gt;
+&lt;p&gt;スイング時の投球の基本的な目標は打者が標準とする打点（Intercept Point）とバットの芯からズレることです。
+そのズレをxz平面とy軸に分解します。xz平面はSavantだと選手トップページのMovementのやつです。&lt;/p&gt;
+&lt;p&gt;-&lt;img src=&#34;http://localhost:1313/solving-baseball/images/63.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Savant Movement&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;この図、人気ですけど見ての通り現実の野球とは違う「平面」であることは忘れたくないですよね&lt;/em&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;http://localhost:1313/solving-baseball/memo/memo_19/&#34; &gt;投球のDeceptionを指標化する&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;以前の記事で紹介したこの指標を使います。&lt;/p&gt;
+&lt;p&gt;y軸はいわゆる「奥行き」で、緩急、タイミングが関わってくる視点です。&lt;/p&gt;
+&lt;p&gt;こちらはIntercept Point(x)を固定効果として設定し、GAMでIntercept Point(y)の予測、その予測値との差分をTiming Deviationとして指標化します。&lt;/p&gt;
+&lt;p&gt;-&lt;img src=&#34;http://localhost:1313/solving-baseball/images/172.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Savant Movement&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;スクーバルを可視化するとこんな感じになります。
+FFはより速く、CHはより遅く打者が感じています。&lt;/p&gt;
+&lt;p&gt;xz平面のズレとy軸のズレの関係性を示した図が以下になります。&lt;/p&gt;
+&lt;p&gt;-&lt;img src=&#34;http://localhost:1313/solving-baseball/images/171.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Savant Movement&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;xz平面のズレはy軸にも表れますし、y軸のズレはxz平面にも表れますのである程度の正の相関がある図になっています。&lt;/p&gt;
+&lt;p&gt;スクーバルはxz平面ではなくy軸のズレを主として失点を抑止していることが分かります。またセールのような投球フォームから軌道まで特殊な投手は打者が普段とは全く違ったスイング軌道で対応しようとしていることも示唆されています。&lt;/p&gt;
+&lt;p&gt;もっと精査し、得点価値とも結びつけられると、さらに高精度に野球を記述できる観点かと思います。&lt;/p&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

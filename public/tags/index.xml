@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>tags on Solving Baseball Blog</title>
+        <link>http://localhost:1313/solving-baseball/tags/</link>
+        <description>Recent content in tags on Solving Baseball Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>ja</language>
+        <lastBuildDate>Tue, 11 Nov 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/solving-baseball/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Pitching</title>
+        <link>http://localhost:1313/solving-baseball/tags/pitching/</link>
+        <pubDate>Tue, 11 Nov 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/pitching/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>コマンド</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89/</link>
+        <pubDate>Tue, 11 Nov 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>GBDT</title>
+        <link>http://localhost:1313/solving-baseball/tags/gbdt/</link>
+        <pubDate>Fri, 24 Oct 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/gbdt/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>ピッチモデリング</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E3%83%94%E3%83%83%E3%83%81%E3%83%A2%E3%83%87%E3%83%AA%E3%83%B3%E3%82%B0/</link>
+        <pubDate>Fri, 24 Oct 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/%E3%83%94%E3%83%83%E3%83%81%E3%83%A2%E3%83%87%E3%83%AA%E3%83%B3%E3%82%B0/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>ホームアドバンテージ</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E3%83%9B%E3%83%BC%E3%83%A0%E3%82%A2%E3%83%89%E3%83%90%E3%83%B3%E3%83%86%E3%83%BC%E3%82%B8/</link>
+        <pubDate>Fri, 24 Oct 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/%E3%83%9B%E3%83%BC%E3%83%A0%E3%82%A2%E3%83%89%E3%83%90%E3%83%B3%E3%83%86%E3%83%BC%E3%82%B8/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Batting</title>
+        <link>http://localhost:1313/solving-baseball/tags/batting/</link>
+        <pubDate>Sat, 11 Oct 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/batting/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>xwOBA</title>
+        <link>http://localhost:1313/solving-baseball/tags/xwoba/</link>
+        <pubDate>Sat, 11 Oct 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/xwoba/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>フレーミング</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E3%83%95%E3%83%AC%E3%83%BC%E3%83%9F%E3%83%B3%E3%82%B0/</link>
+        <pubDate>Sat, 04 Oct 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/%E3%83%95%E3%83%AC%E3%83%BC%E3%83%9F%E3%83%B3%E3%82%B0/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>審判</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E5%AF%A9%E5%88%A4/</link>
+        <pubDate>Sat, 04 Oct 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/%E5%AF%A9%E5%88%A4/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>ABS</title>
+        <link>http://localhost:1313/solving-baseball/tags/abs/</link>
+        <pubDate>Wed, 24 Sep 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/abs/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Bat Tracking</title>
+        <link>http://localhost:1313/solving-baseball/tags/bat-tracking/</link>
+        <pubDate>Tue, 23 Sep 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/bat-tracking/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>タイミング</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E3%82%BF%E3%82%A4%E3%83%9F%E3%83%B3%E3%82%B0/</link>
+        <pubDate>Tue, 23 Sep 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/%E3%82%BF%E3%82%A4%E3%83%9F%E3%83%B3%E3%82%B0/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Y to Y</title>
+        <link>http://localhost:1313/solving-baseball/tags/y-to-y/</link>
+        <pubDate>Mon, 01 Sep 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/y-to-y/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>バットトラッキング</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E3%83%90%E3%83%83%E3%83%88%E3%83%88%E3%83%A9%E3%83%83%E3%82%AD%E3%83%B3%E3%82%B0/</link>
+        <pubDate>Mon, 01 Sep 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/%E3%83%90%E3%83%83%E3%83%88%E3%83%88%E3%83%A9%E3%83%83%E3%82%AD%E3%83%B3%E3%82%B0/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>選択バイアス</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E9%81%B8%E6%8A%9E%E3%83%90%E3%82%A4%E3%82%A2%E3%82%B9/</link>
+        <pubDate>Mon, 01 Sep 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/%E9%81%B8%E6%8A%9E%E3%83%90%E3%82%A4%E3%82%A2%E3%82%B9/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>飛距離</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E9%A3%9B%E8%B7%9D%E9%9B%A2/</link>
+        <pubDate>Mon, 01 Sep 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/%E9%A3%9B%E8%B7%9D%E9%9B%A2/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>指名打者</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E6%8C%87%E5%90%8D%E6%89%93%E8%80%85/</link>
+        <pubDate>Sun, 10 Aug 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/%E6%8C%87%E5%90%8D%E6%89%93%E8%80%85/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>打球分類</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E6%89%93%E7%90%83%E5%88%86%E9%A1%9E/</link>
+        <pubDate>Mon, 04 Aug 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/%E6%89%93%E7%90%83%E5%88%86%E9%A1%9E/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Arm Angle</title>
+        <link>http://localhost:1313/solving-baseball/tags/arm-angle/</link>
+        <pubDate>Sun, 03 Aug 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/arm-angle/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>周回効果</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E5%91%A8%E5%9B%9E%E5%8A%B9%E6%9E%9C/</link>
+        <pubDate>Wed, 30 Jul 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/%E5%91%A8%E5%9B%9E%E5%8A%B9%E6%9E%9C/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>ホームランダービー</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E3%83%9B%E3%83%BC%E3%83%A0%E3%83%A9%E3%83%B3%E3%83%80%E3%83%BC%E3%83%93%E3%83%BC/</link>
+        <pubDate>Tue, 15 Jul 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/%E3%83%9B%E3%83%BC%E3%83%A0%E3%83%A9%E3%83%B3%E3%83%80%E3%83%BC%E3%83%93%E3%83%BC/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>平均への回帰</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E5%B9%B3%E5%9D%87%E3%81%B8%E3%81%AE%E5%9B%9E%E5%B8%B0/</link>
+        <pubDate>Tue, 15 Jul 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/%E5%B9%B3%E5%9D%87%E3%81%B8%E3%81%AE%E5%9B%9E%E5%B8%B0/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>球種</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E7%90%83%E7%A8%AE/</link>
+        <pubDate>Sat, 07 Jun 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/%E7%90%83%E7%A8%AE/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>wOBA</title>
+        <link>http://localhost:1313/solving-baseball/tags/woba/</link>
+        <pubDate>Sun, 01 Jun 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/woba/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>CSAA</title>
+        <link>http://localhost:1313/solving-baseball/tags/csaa/</link>
+        <pubDate>Tue, 06 May 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/csaa/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>GLMM</title>
+        <link>http://localhost:1313/solving-baseball/tags/glmm/</link>
+        <pubDate>Tue, 06 May 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/glmm/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>混合モデル</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E6%B7%B7%E5%90%88%E3%83%A2%E3%83%87%E3%83%AB/</link>
+        <pubDate>Tue, 06 May 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/%E6%B7%B7%E5%90%88%E3%83%A2%E3%83%87%E3%83%AB/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>外野守備</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E5%A4%96%E9%87%8E%E5%AE%88%E5%82%99/</link>
+        <pubDate>Thu, 14 Nov 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/%E5%A4%96%E9%87%8E%E5%AE%88%E5%82%99/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>BABIP</title>
+        <link>http://localhost:1313/solving-baseball/tags/babip/</link>
+        <pubDate>Mon, 04 Nov 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/babip/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>ポストシーズン</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E3%83%9D%E3%82%B9%E3%83%88%E3%82%B7%E3%83%BC%E3%82%BA%E3%83%B3/</link>
+        <pubDate>Mon, 04 Nov 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/%E3%83%9D%E3%82%B9%E3%83%88%E3%82%B7%E3%83%BC%E3%82%BA%E3%83%B3/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Exit Velocity</title>
+        <link>http://localhost:1313/solving-baseball/tags/exit-velocity/</link>
+        <pubDate>Thu, 26 Sep 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/exit-velocity/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>身長</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E8%BA%AB%E9%95%B7/</link>
+        <pubDate>Thu, 26 Sep 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/%E8%BA%AB%E9%95%B7/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Run Value</title>
+        <link>http://localhost:1313/solving-baseball/tags/run-value/</link>
+        <pubDate>Sun, 22 Sep 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/run-value/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>wRC&#43;</title>
+        <link>http://localhost:1313/solving-baseball/tags/wrc&#43;/</link>
+        <pubDate>Sun, 22 Sep 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/wrc&#43;/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>球速</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E7%90%83%E9%80%9F/</link>
+        <pubDate>Sun, 22 Sep 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/%E7%90%83%E9%80%9F/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>pwOBA</title>
+        <link>http://localhost:1313/solving-baseball/tags/pwoba/</link>
+        <pubDate>Tue, 27 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/pwoba/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>SwSp%</title>
+        <link>http://localhost:1313/solving-baseball/tags/swsp/</link>
+        <pubDate>Tue, 27 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/swsp/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>ブロッキング</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E3%83%96%E3%83%AD%E3%83%83%E3%82%AD%E3%83%B3%E3%82%B0/</link>
+        <pubDate>Sun, 07 Jul 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/%E3%83%96%E3%83%AD%E3%83%83%E3%82%AD%E3%83%B3%E3%82%B0/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>捕手</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E6%8D%95%E6%89%8B/</link>
+        <pubDate>Sun, 07 Jul 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/%E6%8D%95%E6%89%8B/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Barrel</title>
+        <link>http://localhost:1313/solving-baseball/tags/barrel/</link>
+        <pubDate>Mon, 01 Jul 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/barrel/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Adjusted EV</title>
+        <link>http://localhost:1313/solving-baseball/tags/adjusted-ev/</link>
+        <pubDate>Tue, 18 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/adjusted-ev/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>xwOBAcon</title>
+        <link>http://localhost:1313/solving-baseball/tags/xwobacon/</link>
+        <pubDate>Tue, 18 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/xwobacon/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>得点圏</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E5%BE%97%E7%82%B9%E5%9C%8F/</link>
+        <pubDate>Mon, 17 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/%E5%BE%97%E7%82%B9%E5%9C%8F/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>信頼度</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E4%BF%A1%E9%A0%BC%E5%BA%A6/</link>
+        <pubDate>Thu, 02 May 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/%E4%BF%A1%E9%A0%BC%E5%BA%A6/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>ピッチクロック</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E3%83%94%E3%83%83%E3%83%81%E3%82%AF%E3%83%AD%E3%83%83%E3%82%AF/</link>
+        <pubDate>Sun, 07 Apr 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/%E3%83%94%E3%83%83%E3%83%81%E3%82%AF%E3%83%AD%E3%83%83%E3%82%AF/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>WAR</title>
+        <link>http://localhost:1313/solving-baseball/tags/war/</link>
+        <pubDate>Sat, 02 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/war/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>リード</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E3%83%AA%E3%83%BC%E3%83%89/</link>
+        <pubDate>Sat, 02 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/%E3%83%AA%E3%83%BC%E3%83%89/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>盗塁阻止</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E7%9B%97%E5%A1%81%E9%98%BB%E6%AD%A2/</link>
+        <pubDate>Thu, 29 Feb 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/%E7%9B%97%E5%A1%81%E9%98%BB%E6%AD%A2/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Attack Zones</title>
+        <link>http://localhost:1313/solving-baseball/tags/attack-zones/</link>
+        <pubDate>Wed, 21 Feb 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/attack-zones/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>ルーキー</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E3%83%AB%E3%83%BC%E3%82%AD%E3%83%BC/</link>
+        <pubDate>Wed, 21 Feb 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/%E3%83%AB%E3%83%BC%E3%82%AD%E3%83%BC/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>OAA</title>
+        <link>http://localhost:1313/solving-baseball/tags/oaa/</link>
+        <pubDate>Tue, 20 Feb 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/oaa/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>コンバート</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E3%82%B3%E3%83%B3%E3%83%90%E3%83%BC%E3%83%88/</link>
+        <pubDate>Tue, 20 Feb 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/%E3%82%B3%E3%83%B3%E3%83%90%E3%83%BC%E3%83%88/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>守備機会</title>
+        <link>http://localhost:1313/solving-baseball/tags/%E5%AE%88%E5%82%99%E6%A9%9F%E4%BC%9A/</link>
+        <pubDate>Tue, 20 Feb 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/solving-baseball/tags/%E5%AE%88%E5%82%99%E6%A9%9F%E4%BC%9A/</guid>
+        <description></description>
+        </item>
+        
+    </channel>
+</rss>
