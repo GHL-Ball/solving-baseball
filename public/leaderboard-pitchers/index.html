@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+    <head><script src="/solving-baseball/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=solving-baseball/livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="\rDisruption\rPitch Model\rシーズン：\rAll\r2023\r2024\r2025\r最小Swings数：100\nNameYearSwings\rDisruptionAdjusted DisruptionBias\rシーズン：\rAll\r2021\r2022\r2023\r2024\r2025\r最小Pitches数：500\nNameYearPitches\rStuff RV/70Pitch RV/150\r">
+<title>Pitchers Leaderboard</title>
+
+<link rel='canonical' href='http://localhost:1313/solving-baseball/leaderboard-pitchers/'>
+
+<link rel="stylesheet" href="/solving-baseball/scss/style.min.4d36f8dc1fd48129e1635deb4b8eb2870fa09474f7280c4cb606d40b2526994b.css"><meta property='og:title' content="Pitchers Leaderboard">
+<meta property='og:description' content="\rDisruption\rPitch Model\rシーズン：\rAll\r2023\r2024\r2025\r最小Swings数：100\nNameYearSwings\rDisruptionAdjusted DisruptionBias\rシーズン：\rAll\r2021\r2022\r2023\r2024\r2025\r最小Pitches数：500\nNameYearPitches\rStuff RV/70Pitch RV/150\r">
+<meta property='og:url' content='http://localhost:1313/solving-baseball/leaderboard-pitchers/'>
+<meta property='og:site_name' content='Solving Baseball Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='' />
+<meta name="twitter:title" content="Pitchers Leaderboard">
+<meta name="twitter:description" content="\rDisruption\rPitch Model\rシーズン：\rAll\r2023\r2024\r2025\r最小Swings数：100\nNameYearSwings\rDisruptionAdjusted DisruptionBias\rシーズン：\rAll\r2021\r2022\r2023\r2024\r2025\r最小Pitches数：500\nNameYearPitches\rStuff RV/70Pitch RV/150\r">
+    <link rel="shortcut icon" href="/solving-baseball/images/favicon.png" />
+<style>
+  :root {
+    --ja-font-family: "Noto Sans JP", "游ゴシック体", "Yu Gothic", YuGothic, 
+      "ヒラギノ角ゴ Pro", "Hiragino Kaku Gothic Pro", "メイリオ", "Meiryo";
+    --base-font-family: "Lato", var(--sys-font-family), var(--ja-font-family),
+      sans-serif;
+  }
+
+   
+  .article-content {
+    color: var(--card-text-color-main);
+  }
+
+  .article-content a {
+    color: var(--accent-color);
+  }
+</style>
+
+<script>
+  (function () {
+    const customFont = document.createElement("link");
+    customFont.href =
+      "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Lato:wght@400;700&display=swap";
+    customFont.type = "text/css";
+    customFont.rel = "stylesheet";
+    document.head.appendChild(customFont);
+  })();
+</script>
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="メニューを開く・閉じる">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/solving-baseball">Solving Baseball Blog</a></h1>
+            <h2 class="site-description">Aspiring Saberistの備忘録</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://x.com/GHiLiBall'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://note.com/calm_phlox375'
+                        target="_blank"
+                        title="note"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li  class='current' >
+            <a href='/solving-baseball/leaderboard-pitchers/' >
+                
+                
+                
+                <span>Pitcher Leaderboard</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/leaderboard-batters/' >
+                
+                
+                
+                <span>Batter Leaderboard</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/' >
+                
+                
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/about/' >
+                
+                
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/breakdown/' >
+                
+                
+                
+                <span>解説系</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/analysis/' >
+                
+                
+                
+                <span>分析系</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/memo/' >
+                
+                
+                
+                <span>メモ</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/page/search/' >
+                
+                
+                
+                <span>検索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/categories/' >
+                
+                
+                
+                <span>カテゴリ一覧</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/solving-baseball/tags/' >
+                
+                
+                
+                <span>タグ一覧</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>ダークモード</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/solving-baseball/leaderboard-pitchers/">Pitchers Leaderboard</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<style>
+.tab-buttons { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; }
+.tab-btn {
+  padding: 6px 18px; cursor: pointer; border: 1px solid #888;
+  border-radius: 4px; background: transparent; color: inherit; font-size: 0.95rem;
+}
+.tab-btn.active { background: #555; color: #fff; border-color: #555; }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+.filter-row { display: flex; gap: 2rem; align-items: center; flex-wrap: wrap; margin-bottom: 1rem; }
+</style>
+<div class="tab-buttons">
+  <button class="tab-btn active" onclick="switchTab('disruption')">Disruption</button>
+  <button class="tab-btn" onclick="switchTab('pitchmodel')">Pitch Model</button>
+</div>
+<!-- Disruption タブ -->
+<div id="tab-disruption" class="tab-content active">
+  <div class="filter-row">
+    <div>
+      <label for="yearFilter1">シーズン：</label>
+      <select id="yearFilter1">
+        <option value="">All</option>
+        <option value="2023">2023</option>
+        <option value="2024">2024</option>
+        <option value="2025">2025</option>
+      </select>
+    </div>
+    <div>
+      <label for="minSwings">最小Swings数：<span id="minSwingsVal">100</span></label><br>
+      <input type="range" id="minSwings" min="1" max="500" value="100" step="1" style="width:200px;">
+    </div>
+  </div>
+  <table id="disruptionTable" class="display" style="width:100%">
+    <thead>
+      <tr>
+        <th>Name</th><th>Year</th><th>Swings</th>
+        <th>Disruption</th><th>Adjusted Disruption</th><th>Bias</th>
+      </tr>
+    </thead>
+  </table>
+</div>
+<!-- Pitch Model タブ -->
+<div id="tab-pitchmodel" class="tab-content">
+  <div class="filter-row">
+   <div>
+     <label for="yearFilter2">シーズン：</label>
+     <select id="yearFilter2">
+      <option value="">All</option>
+      <option value="2021">2021</option>
+      <option value="2022">2022</option>
+      <option value="2023">2023</option>
+      <option value="2024">2024</option>
+      <option value="2025">2025</option>
+     </select>
+    </div>
+    <div>
+      <label for="minPitches">最小Pitches数：<span id="minPitchesVal">500</span></label><br>
+      <input type="range" id="minPitches" min="1" max="3000" value="500" step="50" style="width:200px;">
+    </div>
+  </div>
+  <table id="pitchmodelTable" class="display" style="width:100%">
+    <thead>
+      <tr>
+        <th>Name</th><th>Year</th><th>Pitches</th>
+        <th>Stuff RV/70</th><th>Pitch RV/150</th>
+      </tr>
+    </thead>
+  </table>
+</div>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<script>
+var playersMap = {};
+var disruptionData = [];
+var pitchmodelData = [];
+var loadedCount = 0;
+var dtDisruption = null;
+var dtPitchmodel = null;
+
+function tryRender() {
+  if (loadedCount < 3) return;
+
+  // 名前マッピング
+  [disruptionData, pitchmodelData].forEach(function(arr) {
+    arr.forEach(function(r) {
+      var id = String(r.pitcher_id);
+      r.name = playersMap[id] || id;
+    });
+  });
+
+  // Disruption テーブル
+  dtDisruption = $("#disruptionTable").DataTable({
+    data: disruptionData.filter(r => r.n_pitches >= 100),
+    columns: [
+      { data: "name" },
+      { data: "year" },
+      { data: "n_pitches" },
+      { data: "disruption_1", render: d => d != null ? (+d).toFixed(3) : "-" },
+      { data: "disruption_2", render: d => d != null ? (+d).toFixed(3) : "-" },
+      { data: "bias_1",       render: d => d != null ? (+d).toFixed(3) : "-" }
+    ],
+    order: [[3, "desc"]],
+    pageLength: 25
+  });
+
+  // Pitch Model テーブル
+  dtPitchmodel = $("#pitchmodelTable").DataTable({
+    data: pitchmodelData.filter(r => r.pitches >= 500),
+    columns: [
+      { data: "name" },
+      { data: "year" },
+      { data: "pitches" },
+      { data: "stuff_rv_70",  render: d => d != null ? (+d).toFixed(3) : "-" },
+      { data: "pitch_rv_150", render: d => d != null ? (+d).toFixed(3) : "-" }
+    ],
+    order: [[3, "desc"]],
+    pageLength: 25
+  });
+
+  // Disruptionフィルター
+  $("#yearFilter1").on("change", function() { applyDisruptionFilter(); });
+  $("#minSwings").on("input", function() {
+    $("#minSwingsVal").text($(this).val());
+    applyDisruptionFilter();
+  });
+
+  // Pitch Modelフィルター
+  $("#yearFilter2").on("change", function() { applyPitchmodelFilter(); });
+  $("#minPitches").on("input", function() {
+    $("#minPitchesVal").text($(this).val());
+    applyPitchmodelFilter();
+  });
+}
+
+function applyDisruptionFilter() {
+  var yr   = $("#yearFilter1").val();
+  var minN = parseInt($("#minSwings").val());
+  $.fn.dataTable.ext.search = [];
+  $.fn.dataTable.ext.search.push(function(settings, data, dataIndex, rowData) {
+    if (settings.nTable.id !== "disruptionTable") return true;
+    if (yr && String(rowData.year) !== yr) return false;
+    if (rowData.n_pitches < minN) return false;
+    return true;
+  });
+  dtDisruption.draw();
+}
+
+function applyPitchmodelFilter() {
+  var yr   = $("#yearFilter2").val();
+  var minN = parseInt($("#minPitches").val());
+  $.fn.dataTable.ext.search = [];
+  $.fn.dataTable.ext.search.push(function(settings, data, dataIndex, rowData) {
+    if (settings.nTable.id !== "pitchmodelTable") return true;
+    if (yr && String(rowData.year) !== yr) return false;
+    if (rowData.pitches < minN) return false;
+    return true;
+  });
+  dtPitchmodel.draw();
+}
+
+function switchTab(name) {
+  document.querySelectorAll(".tab-content").forEach(el => el.classList.remove("active"));
+  document.querySelectorAll(".tab-btn").forEach(el => el.classList.remove("active"));
+  document.getElementById("tab-" + name).classList.add("active");
+  event.target.classList.add("active");
+  // タブ切り替え時にDataTablesのカラム幅を再計算
+  if (name === "disruption" && dtDisruption) dtDisruption.columns.adjust().draw();
+  if (name === "pitchmodel" && dtPitchmodel) dtPitchmodel.columns.adjust().draw();
+}
+
+// players.csv
+Papa.parse("/solving-baseball/data/players.csv", {
+  download: true, header: true,
+  complete: function(results) {
+    results.data.forEach(r => { if (r.MLBAMID) playersMap[String(r.MLBAMID)] = r.Name; });
+    loadedCount++; tryRender();
+  }
+});
+
+// disruption CSV
+Papa.parse("/solving-baseball/data/leaderboards/disruption_2023_2025.csv", {
+  download: true, header: true, dynamicTyping: true,
+  complete: function(results) {
+    disruptionData = results.data.filter(r => r.pitcher_id);
+    loadedCount++; tryRender();
+  }
+});
+
+// pitch model CSV
+Papa.parse("/solving-baseball/data/leaderboards/pitch_model_gbdt_2021_2025.csv", {
+  download: true, header: true, dynamicTyping: true,
+  complete: function(results) {
+    pitchmodelData = results.data.filter(r => r.pitcher_id);
+    loadedCount++; tryRender();
+  }
+});
+</script>
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        const elementsToRender = [".main-article", ".widget--toc"];
+
+        elementsToRender.forEach(selector => {
+            const element = document.querySelector(selector);
+            if (element) {
+                renderMathInElement(element, {
+                    delimiters: [
+                        { left: "$$", right: "$$", display: true },
+                        { left: "$", right: "$", display: false },
+                        { left: "\\(", right: "\\)", display: false },
+                        { left: "\\[", right: "\\]", display: true }
+                    ],
+                    ignoredClasses: ["gist"]
+                });
+            }
+        });
+    });
+</script>
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <script
+    src="https://giscus.app/client.js"
+    data-repo="GHL-Ball/solving-baseball"
+    data-repo-id="R_kgDOQbQpuw"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOQbQpu84CzMFQ"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="light"
+    data-lang="ja"
+    data-loading=""
+    crossorigin="anonymous"
+    async
+></script>
+<script>
+    function setGiscusTheme(theme) {
+        let giscus = document.querySelector("iframe.giscus-frame");
+        if (giscus) {
+            giscus.contentWindow.postMessage(
+                {
+                    giscus: {
+                        setConfig: {
+                            theme: theme,
+                        },
+                    },
+                },
+                "https://giscus.app"
+            );
+        }
+    }
+
+    (function () {
+        addEventListener("message", (e) => {
+            if (event.origin !== "https://giscus.app") return;
+            handler();
+        });
+        window.addEventListener("onColorSchemeChange", handler);
+
+        function handler() {
+            if (document.documentElement.dataset.scheme === "light") {
+                setGiscusTheme('light');
+            } else {
+                setGiscusTheme('dark_dimmed');
+            }
+        }
+    })();
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2025 - 
+        
+        2026 Solving Baseball Blog
+    </section>
+    
+    <section class="powerby">
+        
+            トレバ-(^o^)丿 <br/>
+        <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> で構築されています。 <br />
+        テーマ <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.32.0">Stack</a></b> は <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> によって設計されています。
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/solving-baseball/ts/main.2b3fc53c7455b5631da9fabeefcc69ffc0a3f3cb719d708d3a5f18faf7af88a6.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
