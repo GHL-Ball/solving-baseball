@@ -2621,56 +2621,130 @@ MLBでは1シーズンで100人ほどの審判が球審を担当します。こ�
         <guid>http://localhost:1313/solving-baseball/leaderboard-batters/</guid>
         <description>&lt;link rel=&#34;stylesheet&#34; href=&#34;https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css&#34;&gt;
 &lt;style&gt;
-.filter-row { display: flex; gap: 2rem; align-items: center; flex-wrap: wrap; margin-bottom: 1rem; }
 .dataTables_wrapper { overflow-x: auto; }
+.tab-buttons { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.tab-btn {
+  padding: 6px 18px; cursor: pointer; border: 1px solid #888;
+  border-radius: 4px; background: transparent; color: inherit; font-size: 0.95rem;
+}
+.tab-btn.active { background: #555; color: #fff; border-color: #555; }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+.filter-row { display: flex; gap: 2rem; align-items: center; flex-wrap: wrap; margin-bottom: 1rem; }
+.col-btn {
+  padding: 4px 12px; cursor: pointer; border: 1px solid #888;
+  border-radius: 4px; background: transparent; color: inherit; font-size: 0.85rem;
+}
+.col-btn.active { background: #555; color: #fff; border-color: #555; }
 &lt;/style&gt;
-&lt;div class=&#34;filter-row&#34;&gt;
-  &lt;div&gt;
-    &lt;label for=&#34;yearFilter&#34;&gt;シーズン：&lt;/label&gt;
-    &lt;select id=&#34;yearFilter&#34;&gt;
-      &lt;option value=&#34;&#34;&gt;All&lt;/option&gt;
-      &lt;option value=&#34;2021&#34;&gt;2021&lt;/option&gt;
-      &lt;option value=&#34;2022&#34;&gt;2022&lt;/option&gt;
-      &lt;option value=&#34;2023&#34;&gt;2023&lt;/option&gt;
-      &lt;option value=&#34;2024&#34;&gt;2024&lt;/option&gt;
-      &lt;option value=&#34;2025&#34;&gt;2025&lt;/option&gt;
-    &lt;/select&gt;
-  &lt;/div&gt;
-  &lt;div&gt;
-    &lt;label for=&#34;minPitches&#34;&gt;最小Pitches数：&lt;span id=&#34;minPitchesVal&#34;&gt;500&lt;/span&gt;&lt;/label&gt;&lt;br&gt;
-    &lt;input type=&#34;range&#34; id=&#34;minPitches&#34; min=&#34;1&#34; max=&#34;3000&#34; value=&#34;500&#34; step=&#34;50&#34; style=&#34;width:200px;&#34;&gt;
-  &lt;/div&gt;
+&lt;div class=&#34;tab-buttons&#34;&gt;
+  &lt;button class=&#34;tab-btn active&#34; onclick=&#34;switchTab(&#39;opponent&#39;, event)&#34;&gt;Opponent Pitch Model&lt;/button&gt;
+  &lt;button class=&#34;tab-btn&#34; onclick=&#34;switchTab(&#39;xwoba&#39;, event)&#34;&gt;xwOBA&lt;/button&gt;
 &lt;/div&gt;
-&lt;table id=&#34;batterTable&#34; class=&#34;display&#34; style=&#34;width:100%&#34;&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Name&lt;/th&gt;
-      &lt;th&gt;Year&lt;/th&gt;
-      &lt;th&gt;Pitches&lt;/th&gt;
-      &lt;th&gt;Opponent Stuff RV/70&lt;/th&gt;
-      &lt;th&gt;Opponent Pitch RV/150&lt;/th&gt;
-      &lt;th&gt;wOBA&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-&lt;/table&gt;
+&lt;!-- Opponent Pitch Model タブ --&gt;
+&lt;div id=&#34;tab-opponent&#34; class=&#34;tab-content active&#34;&gt;
+  &lt;div class=&#34;filter-row&#34;&gt;
+    &lt;div&gt;
+      &lt;label for=&#34;oppYearFilter&#34;&gt;シーズン：&lt;/label&gt;
+      &lt;select id=&#34;oppYearFilter&#34;&gt;
+        &lt;option value=&#34;&#34;&gt;All&lt;/option&gt;
+        &lt;option value=&#34;2021&#34;&gt;2021&lt;/option&gt;
+        &lt;option value=&#34;2022&#34;&gt;2022&lt;/option&gt;
+        &lt;option value=&#34;2023&#34;&gt;2023&lt;/option&gt;
+        &lt;option value=&#34;2024&#34;&gt;2024&lt;/option&gt;
+        &lt;option value=&#34;2025&#34;&gt;2025&lt;/option&gt;
+      &lt;/select&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;label for=&#34;oppMinPitches&#34;&gt;最小Pitches数：&lt;span id=&#34;oppMinPitchesVal&#34;&gt;500&lt;/span&gt;&lt;/label&gt;&lt;br&gt;
+      &lt;input type=&#34;range&#34; id=&#34;oppMinPitches&#34; min=&#34;1&#34; max=&#34;3000&#34; value=&#34;500&#34; step=&#34;50&#34; style=&#34;width:200px;&#34;&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;table id=&#34;batterTable&#34; class=&#34;display&#34; style=&#34;width:100%&#34;&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;
+        &lt;th&gt;Name&lt;/th&gt;&lt;th&gt;Year&lt;/th&gt;&lt;th&gt;Pitches&lt;/th&gt;
+        &lt;th&gt;Opponent Stuff RV/70&lt;/th&gt;&lt;th&gt;Opponent Pitch RV/150&lt;/th&gt;&lt;th&gt;wOBA&lt;/th&gt;
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+  &lt;/table&gt;
+&lt;/div&gt;
+&lt;!-- xwOBA タブ --&gt;
+&lt;div id=&#34;tab-xwoba&#34; class=&#34;tab-content&#34;&gt;
+  &lt;div class=&#34;filter-row&#34;&gt;
+    &lt;div&gt;
+      &lt;label for=&#34;xwobaYearFilter&#34;&gt;シーズン：&lt;/label&gt;
+      &lt;select id=&#34;xwobaYearFilter&#34;&gt;
+        &lt;option value=&#34;&#34;&gt;All&lt;/option&gt;
+        &lt;option value=&#34;2021&#34;&gt;2021&lt;/option&gt;
+        &lt;option value=&#34;2022&#34;&gt;2022&lt;/option&gt;
+        &lt;option value=&#34;2023&#34;&gt;2023&lt;/option&gt;
+        &lt;option value=&#34;2024&#34;&gt;2024&lt;/option&gt;
+        &lt;option value=&#34;2025&#34;&gt;2025&lt;/option&gt;
+      &lt;/select&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;label for=&#34;xwobaMinPA&#34;&gt;最小PA数：&lt;span id=&#34;xwobaMinPAVal&#34;&gt;300&lt;/span&gt;&lt;/label&gt;&lt;br&gt;
+      &lt;input type=&#34;range&#34; id=&#34;xwobaMinPA&#34; min=&#34;1&#34; max=&#34;700&#34; value=&#34;300&#34; step=&#34;10&#34; style=&#34;width:200px;&#34;&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;span&gt;表示列：&lt;/span&gt;
+      &lt;button class=&#34;col-btn active&#34; onclick=&#34;setColGroup(&#39;woba&#39;, event)&#34;&gt;wOBA系&lt;/button&gt;
+      &lt;button class=&#34;col-btn&#34; onclick=&#34;setColGroup(&#39;wobacon&#39;, event)&#34;&gt;wOBAcon系&lt;/button&gt;
+      &lt;button class=&#34;col-btn&#34; onclick=&#34;setColGroup(&#39;both&#39;, event)&#34;&gt;両方&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;table id=&#34;xwobaBatTable&#34; class=&#34;display&#34; style=&#34;width:100%&#34;&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;
+        &lt;th&gt;Name&lt;/th&gt;&lt;th&gt;Year&lt;/th&gt;&lt;th&gt;PA&lt;/th&gt;
+        &lt;th&gt;wOBA&lt;/th&gt;
+        &lt;th&gt;xwOBA (ev+la)&lt;/th&gt;
+        &lt;th&gt;xwOBA (ev+la+sa)&lt;/th&gt;
+        &lt;th&gt;wOBA-xwOBA (2p)&lt;/th&gt;
+        &lt;th&gt;wOBA-xwOBA (3p)&lt;/th&gt;
+        &lt;th&gt;xwOBA (3p-2p)&lt;/th&gt;
+        &lt;th&gt;wOBAcon&lt;/th&gt;
+        &lt;th&gt;xwOBAcon (ev+la)&lt;/th&gt;
+        &lt;th&gt;xwOBAcon (ev+la+sa)&lt;/th&gt;
+        &lt;th&gt;wOBAcon-xwOBAcon (2p)&lt;/th&gt;
+        &lt;th&gt;wOBAcon-xwOBAcon (3p)&lt;/th&gt;
+        &lt;th&gt;xwOBAcon (3p-2p)&lt;/th&gt;
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+  &lt;/table&gt;
+&lt;/div&gt;
 &lt;script src=&#34;https://code.jquery.com/jquery-3.7.0.min.js&#34;&gt;&lt;/script&gt;
 &lt;script src=&#34;https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js&#34;&gt;&lt;/script&gt;
 &lt;script src=&#34;https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js&#34;&gt;&lt;/script&gt;
 &lt;script&gt;
 var playersMap = {};
-var batterData = [];
+var oppData = [];
+var xwobaBatData = [];
 var loadedCount = 0;
 var dtBatter = null;
+var dtXwobaBat = null;
+
+// wOBA系: col index 3-8, wOBAcon系: 9-14
+var colGroups = {
+  woba:    [3,4,5,6,7,8],
+  wobacon: [9,10,11,12,13,14],
+  both:    [3,4,5,6,7,8,9,10,11,12,13,14]
+};
 
 function tryRender() {
-  if (loadedCount &lt; 2) return;
+  if (loadedCount &lt; 3) return;
 
-  batterData.forEach(function(r) {
-    r.name = playersMap[String(r.batter_id)] || String(r.batter_id);
+  [oppData, xwobaBatData].forEach(function(arr) {
+    arr.forEach(function(r) {
+      var id = String(r.batter_id);
+      r.name = playersMap[id] || id;
+    });
   });
 
+  // Opponent Pitch Model
   dtBatter = $(&#34;#batterTable&#34;).DataTable({
-    data: batterData.filter(r =&gt; r.pitches &gt;= 500),
+    data: oppData.filter(r =&gt; r.pitches &gt;= 500),
     columns: [
       { data: &#34;name&#34; },
       { data: &#34;year&#34; },
@@ -2683,23 +2757,88 @@ function tryRender() {
     pageLength: 25
   });
 
-  $(&#34;#yearFilter&#34;).on(&#34;change&#34;, function() { applyFilter(); });
-  $(&#34;#minPitches&#34;).on(&#34;input&#34;, function() {
-    $(&#34;#minPitchesVal&#34;).text($(this).val());
-    applyFilter();
+  // xwOBA
+  dtXwobaBat = $(&#34;#xwobaBatTable&#34;).DataTable({
+    data: xwobaBatData.filter(r =&gt; r.pa &gt;= 300),
+    columns: [
+      { data: &#34;name&#34; },
+      { data: &#34;year&#34; },
+      { data: &#34;pa&#34; },
+      { data: &#34;woba&#34;,                        render: d =&gt; d != null ? (+d).toFixed(3) : &#34;-&#34; },
+      { data: &#34;xwoba_ev_la&#34;,                 render: d =&gt; d != null ? (+d).toFixed(3) : &#34;-&#34; },
+      { data: &#34;xwoba_ev_la_sa&#34;,              render: d =&gt; d != null ? (+d).toFixed(3) : &#34;-&#34; },
+      { data: &#34;woba_minus_xwoba_2p&#34;,         render: d =&gt; d != null ? (+d).toFixed(3) : &#34;-&#34; },
+      { data: &#34;woba_minus_xwoba_3p&#34;,         render: d =&gt; d != null ? (+d).toFixed(3) : &#34;-&#34; },
+      { data: &#34;xwoba_3p_minus_xwoba_2p&#34;,     render: d =&gt; d != null ? (+d).toFixed(3) : &#34;-&#34; },
+      { data: &#34;wobacon&#34;,                     render: d =&gt; d != null ? (+d).toFixed(3) : &#34;-&#34; },
+      { data: &#34;xwobacon_ev_la&#34;,              render: d =&gt; d != null ? (+d).toFixed(3) : &#34;-&#34; },
+      { data: &#34;xwobacon_ev_la_sa&#34;,           render: d =&gt; d != null ? (+d).toFixed(3) : &#34;-&#34; },
+      { data: &#34;wobacon_minus_xwobacon_2p&#34;,   render: d =&gt; d != null ? (+d).toFixed(3) : &#34;-&#34; },
+      { data: &#34;wobacon_minus_xwobacon_3p&#34;,   render: d =&gt; d != null ? (+d).toFixed(3) : &#34;-&#34; },
+      { data: &#34;xwobacon_3p_minus_xwobacon_2p&#34;, render: d =&gt; d != null ? (+d).toFixed(3) : &#34;-&#34; }
+    ],
+    order: [[3, &#34;desc&#34;]],
+    pageLength: 25,
+    columnDefs: [
+      { targets: [9,10,11,12,13,14], visible: false }
+    ]
+  });
+
+  $(&#34;#oppYearFilter&#34;).on(&#34;change&#34;, function() { applyOppFilter(); });
+  $(&#34;#oppMinPitches&#34;).on(&#34;input&#34;, function() {
+    $(&#34;#oppMinPitchesVal&#34;).text($(this).val());
+    applyOppFilter();
+  });
+  $(&#34;#xwobaYearFilter&#34;).on(&#34;change&#34;, function() { applyXwobaFilter(); });
+  $(&#34;#xwobaMinPA&#34;).on(&#34;input&#34;, function() {
+    $(&#34;#xwobaMinPAVal&#34;).text($(this).val());
+    applyXwobaFilter();
   });
 }
 
-function applyFilter() {
-  var yr   = $(&#34;#yearFilter&#34;).val();
-  var minN = parseInt($(&#34;#minPitches&#34;).val());
+function applyOppFilter() {
+  var yr   = $(&#34;#oppYearFilter&#34;).val();
+  var minN = parseInt($(&#34;#oppMinPitches&#34;).val());
   $.fn.dataTable.ext.search = [];
   $.fn.dataTable.ext.search.push(function(settings, data, dataIndex, rowData) {
+    if (settings.nTable.id !== &#34;batterTable&#34;) return true;
     if (yr &amp;&amp; String(rowData.year) !== yr) return false;
     if (rowData.pitches &lt; minN) return false;
     return true;
   });
   dtBatter.draw();
+}
+
+function applyXwobaFilter() {
+  var yr   = $(&#34;#xwobaYearFilter&#34;).val();
+  var minN = parseInt($(&#34;#xwobaMinPA&#34;).val());
+  $.fn.dataTable.ext.search = [];
+  $.fn.dataTable.ext.search.push(function(settings, data, dataIndex, rowData) {
+    if (settings.nTable.id !== &#34;xwobaBatTable&#34;) return true;
+    if (yr &amp;&amp; String(rowData.year) !== yr) return false;
+    if (rowData.pa &lt; minN) return false;
+    return true;
+  });
+  dtXwobaBat.draw();
+}
+
+function setColGroup(group, e) {
+  document.querySelectorAll(&#34;.col-btn&#34;).forEach(el =&gt; el.classList.remove(&#34;active&#34;));
+  e.target.classList.add(&#34;active&#34;);
+  var allCols = [3,4,5,6,7,8,9,10,11,12,13,14];
+  var show = colGroups[group];
+  allCols.forEach(function(i) {
+    dtXwobaBat.column(i).visible(show.includes(i));
+  });
+}
+
+function switchTab(name, e) {
+  document.querySelectorAll(&#34;.tab-content&#34;).forEach(el =&gt; el.classList.remove(&#34;active&#34;));
+  document.querySelectorAll(&#34;.tab-btn&#34;).forEach(el =&gt; el.classList.remove(&#34;active&#34;));
+  document.getElementById(&#34;tab-&#34; + name).classList.add(&#34;active&#34;);
+  e.target.classList.add(&#34;active&#34;);
+  if (name === &#34;opponent&#34; &amp;&amp; dtBatter) dtBatter.columns.adjust().draw();
+  if (name === &#34;xwoba&#34; &amp;&amp; dtXwobaBat) dtXwobaBat.columns.adjust().draw();
 }
 
 Papa.parse(&#34;/solving-baseball/data/players.csv&#34;, {
@@ -2713,7 +2852,15 @@ Papa.parse(&#34;/solving-baseball/data/players.csv&#34;, {
 Papa.parse(&#34;/solving-baseball/data/leaderboards/opponent_pitch_model_gbdt_2021_2025.csv&#34;, {
   download: true, header: true, dynamicTyping: true,
   complete: function(results) {
-    batterData = results.data.filter(r =&gt; r.batter_id);
+    oppData = results.data.filter(r =&gt; r.batter_id);
+    loadedCount++; tryRender();
+  }
+});
+
+Papa.parse(&#34;/solving-baseball/data/leaderboards/xwoba_bat_2021_2025.csv&#34;, {
+  download: true, header: true, dynamicTyping: true,
+  complete: function(results) {
+    xwobaBatData = results.data.filter(r =&gt; r.batter_id);
     loadedCount++; tryRender();
   }
 });
@@ -2727,7 +2874,7 @@ Papa.parse(&#34;/solving-baseball/data/leaderboards/opponent_pitch_model_gbdt_20
         <guid>http://localhost:1313/solving-baseball/leaderboard-pitchers/</guid>
         <description>&lt;link rel=&#34;stylesheet&#34; href=&#34;https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css&#34;&gt;
 &lt;style&gt;
-.tab-buttons { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; }
+.tab-buttons { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
 .tab-btn {
   padding: 6px 18px; cursor: pointer; border: 1px solid #888;
   border-radius: 4px; background: transparent; color: inherit; font-size: 0.95rem;
@@ -2736,10 +2883,17 @@ Papa.parse(&#34;/solving-baseball/data/leaderboards/opponent_pitch_model_gbdt_20
 .tab-content { display: none; }
 .tab-content.active { display: block; }
 .filter-row { display: flex; gap: 2rem; align-items: center; flex-wrap: wrap; margin-bottom: 1rem; }
+.dataTables_wrapper { overflow-x: auto; }
+.col-btn {
+  padding: 4px 12px; cursor: pointer; border: 1px solid #888;
+  border-radius: 4px; background: transparent; color: inherit; font-size: 0.85rem;
+}
+.col-btn.active { background: #555; color: #fff; border-color: #555; }
 &lt;/style&gt;
 &lt;div class=&#34;tab-buttons&#34;&gt;
-  &lt;button class=&#34;tab-btn active&#34; onclick=&#34;switchTab(&#39;disruption&#39;)&#34;&gt;Disruption&lt;/button&gt;
-  &lt;button class=&#34;tab-btn&#34; onclick=&#34;switchTab(&#39;pitchmodel&#39;)&#34;&gt;Pitch Model&lt;/button&gt;
+  &lt;button class=&#34;tab-btn active&#34; onclick=&#34;switchTab(&#39;disruption&#39;, event)&#34;&gt;Disruption&lt;/button&gt;
+  &lt;button class=&#34;tab-btn&#34; onclick=&#34;switchTab(&#39;pitchmodel&#39;, event)&#34;&gt;Pitch Model&lt;/button&gt;
+  &lt;button class=&#34;tab-btn&#34; onclick=&#34;switchTab(&#39;xwoba&#39;, event)&#34;&gt;xwOBA&lt;/button&gt;
 &lt;/div&gt;
 &lt;!-- Disruption タブ --&gt;
 &lt;div id=&#34;tab-disruption&#34; class=&#34;tab-content active&#34;&gt;
@@ -2770,16 +2924,16 @@ Papa.parse(&#34;/solving-baseball/data/leaderboards/opponent_pitch_model_gbdt_20
 &lt;!-- Pitch Model タブ --&gt;
 &lt;div id=&#34;tab-pitchmodel&#34; class=&#34;tab-content&#34;&gt;
   &lt;div class=&#34;filter-row&#34;&gt;
-   &lt;div&gt;
-     &lt;label for=&#34;yearFilter2&#34;&gt;シーズン：&lt;/label&gt;
-     &lt;select id=&#34;yearFilter2&#34;&gt;
-      &lt;option value=&#34;&#34;&gt;All&lt;/option&gt;
-      &lt;option value=&#34;2021&#34;&gt;2021&lt;/option&gt;
-      &lt;option value=&#34;2022&#34;&gt;2022&lt;/option&gt;
-      &lt;option value=&#34;2023&#34;&gt;2023&lt;/option&gt;
-      &lt;option value=&#34;2024&#34;&gt;2024&lt;/option&gt;
-      &lt;option value=&#34;2025&#34;&gt;2025&lt;/option&gt;
-     &lt;/select&gt;
+    &lt;div&gt;
+      &lt;label for=&#34;yearFilter2&#34;&gt;シーズン：&lt;/label&gt;
+      &lt;select id=&#34;yearFilter2&#34;&gt;
+        &lt;option value=&#34;&#34;&gt;All&lt;/option&gt;
+        &lt;option value=&#34;2021&#34;&gt;2021&lt;/option&gt;
+        &lt;option value=&#34;2022&#34;&gt;2022&lt;/option&gt;
+        &lt;option value=&#34;2023&#34;&gt;2023&lt;/option&gt;
+        &lt;option value=&#34;2024&#34;&gt;2024&lt;/option&gt;
+        &lt;option value=&#34;2025&#34;&gt;2025&lt;/option&gt;
+      &lt;/select&gt;
     &lt;/div&gt;
     &lt;div&gt;
       &lt;label for=&#34;minPitches&#34;&gt;最小Pitches数：&lt;span id=&#34;minPitchesVal&#34;&gt;500&lt;/span&gt;&lt;/label&gt;&lt;br&gt;
@@ -2795,6 +2949,51 @@ Papa.parse(&#34;/solving-baseball/data/leaderboards/opponent_pitch_model_gbdt_20
     &lt;/thead&gt;
   &lt;/table&gt;
 &lt;/div&gt;
+&lt;!-- xwOBA タブ --&gt;
+&lt;div id=&#34;tab-xwoba&#34; class=&#34;tab-content&#34;&gt;
+  &lt;div class=&#34;filter-row&#34;&gt;
+    &lt;div&gt;
+      &lt;label for=&#34;xwobaYearFilter&#34;&gt;シーズン：&lt;/label&gt;
+      &lt;select id=&#34;xwobaYearFilter&#34;&gt;
+        &lt;option value=&#34;&#34;&gt;All&lt;/option&gt;
+        &lt;option value=&#34;2021&#34;&gt;2021&lt;/option&gt;
+        &lt;option value=&#34;2022&#34;&gt;2022&lt;/option&gt;
+        &lt;option value=&#34;2023&#34;&gt;2023&lt;/option&gt;
+        &lt;option value=&#34;2024&#34;&gt;2024&lt;/option&gt;
+        &lt;option value=&#34;2025&#34;&gt;2025&lt;/option&gt;
+      &lt;/select&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;label for=&#34;xwobaMinPA&#34;&gt;最小PA数：&lt;span id=&#34;xwobaMinPAVal&#34;&gt;300&lt;/span&gt;&lt;/label&gt;&lt;br&gt;
+      &lt;input type=&#34;range&#34; id=&#34;xwobaMinPA&#34; min=&#34;1&#34; max=&#34;700&#34; value=&#34;300&#34; step=&#34;10&#34; style=&#34;width:200px;&#34;&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;span&gt;表示列：&lt;/span&gt;
+      &lt;button class=&#34;col-btn active&#34; onclick=&#34;setPitColGroup(&#39;woba&#39;, event)&#34;&gt;wOBA系&lt;/button&gt;
+      &lt;button class=&#34;col-btn&#34; onclick=&#34;setPitColGroup(&#39;wobacon&#39;, event)&#34;&gt;wOBAcon系&lt;/button&gt;
+      &lt;button class=&#34;col-btn&#34; onclick=&#34;setPitColGroup(&#39;both&#39;, event)&#34;&gt;両方&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;table id=&#34;xwobaPitTable&#34; class=&#34;display&#34; style=&#34;width:100%&#34;&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;
+        &lt;th&gt;Name&lt;/th&gt;&lt;th&gt;Year&lt;/th&gt;&lt;th&gt;PA&lt;/th&gt;
+        &lt;th&gt;wOBA&lt;/th&gt;
+        &lt;th&gt;xwOBA (ev+la)&lt;/th&gt;
+        &lt;th&gt;xwOBA (ev+la+sa)&lt;/th&gt;
+        &lt;th&gt;wOBA-xwOBA (2p)&lt;/th&gt;
+        &lt;th&gt;wOBA-xwOBA (3p)&lt;/th&gt;
+        &lt;th&gt;xwOBA (3p-2p)&lt;/th&gt;
+        &lt;th&gt;wOBAcon&lt;/th&gt;
+        &lt;th&gt;xwOBAcon (ev+la)&lt;/th&gt;
+        &lt;th&gt;xwOBAcon (ev+la+sa)&lt;/th&gt;
+        &lt;th&gt;wOBAcon-xwOBAcon (2p)&lt;/th&gt;
+        &lt;th&gt;wOBAcon-xwOBAcon (3p)&lt;/th&gt;
+        &lt;th&gt;xwOBAcon (3p-2p)&lt;/th&gt;
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+  &lt;/table&gt;
+&lt;/div&gt;
 &lt;script src=&#34;https://code.jquery.com/jquery-3.7.0.min.js&#34;&gt;&lt;/script&gt;
 &lt;script src=&#34;https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js&#34;&gt;&lt;/script&gt;
 &lt;script src=&#34;https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js&#34;&gt;&lt;/script&gt;
@@ -2802,22 +3001,28 @@ Papa.parse(&#34;/solving-baseball/data/leaderboards/opponent_pitch_model_gbdt_20
 var playersMap = {};
 var disruptionData = [];
 var pitchmodelData = [];
+var xwobaPitData = [];
 var loadedCount = 0;
 var dtDisruption = null;
 var dtPitchmodel = null;
+var dtXwobaPit = null;
+
+var pitColGroups = {
+  woba:    [3,4,5,6,7,8],
+  wobacon: [9,10,11,12,13,14],
+  both:    [3,4,5,6,7,8,9,10,11,12,13,14]
+};
 
 function tryRender() {
-  if (loadedCount &lt; 3) return;
+  if (loadedCount &lt; 4) return;
 
-  // 名前マッピング
-  [disruptionData, pitchmodelData].forEach(function(arr) {
+  [disruptionData, pitchmodelData, xwobaPitData].forEach(function(arr) {
     arr.forEach(function(r) {
       var id = String(r.pitcher_id);
       r.name = playersMap[id] || id;
     });
   });
 
-  // Disruption テーブル
   dtDisruption = $(&#34;#disruptionTable&#34;).DataTable({
     data: disruptionData.filter(r =&gt; r.n_pitches &gt;= 100),
     columns: [
@@ -2832,7 +3037,6 @@ function tryRender() {
     pageLength: 25
   });
 
-  // Pitch Model テーブル
   dtPitchmodel = $(&#34;#pitchmodelTable&#34;).DataTable({
     data: pitchmodelData.filter(r =&gt; r.pitches &gt;= 500),
     columns: [
@@ -2846,18 +3050,48 @@ function tryRender() {
     pageLength: 25
   });
 
-  // Disruptionフィルター
+  dtXwobaPit = $(&#34;#xwobaPitTable&#34;).DataTable({
+    data: xwobaPitData.filter(r =&gt; r.pa &gt;= 300),
+    columns: [
+      { data: &#34;name&#34; },
+      { data: &#34;year&#34; },
+      { data: &#34;pa&#34; },
+      { data: &#34;woba&#34;,                          render: d =&gt; d != null ? (+d).toFixed(3) : &#34;-&#34; },
+      { data: &#34;xwoba_ev_la&#34;,                   render: d =&gt; d != null ? (+d).toFixed(3) : &#34;-&#34; },
+      { data: &#34;xwoba_ev_la_sa&#34;,                render: d =&gt; d != null ? (+d).toFixed(3) : &#34;-&#34; },
+      { data: &#34;woba_minus_xwoba_2p&#34;,           render: d =&gt; d != null ? (+d).toFixed(3) : &#34;-&#34; },
+      { data: &#34;woba_minus_xwoba_3p&#34;,           render: d =&gt; d != null ? (+d).toFixed(3) : &#34;-&#34; },
+      { data: &#34;xwoba_3p_minus_xwoba_2p&#34;,       render: d =&gt; d != null ? (+d).toFixed(3) : &#34;-&#34; },
+      { data: &#34;wobacon&#34;,                       render: d =&gt; d != null ? (+d).toFixed(3) : &#34;-&#34; },
+      { data: &#34;xwobacon_ev_la&#34;,                render: d =&gt; d != null ? (+d).toFixed(3) : &#34;-&#34; },
+      { data: &#34;xwobacon_ev_la_sa&#34;,             render: d =&gt; d != null ? (+d).toFixed(3) : &#34;-&#34; },
+      { data: &#34;wobacon_minus_xwobacon_2p&#34;,     render: d =&gt; d != null ? (+d).toFixed(3) : &#34;-&#34; },
+      { data: &#34;wobacon_minus_xwobacon_3p&#34;,     render: d =&gt; d != null ? (+d).toFixed(3) : &#34;-&#34; },
+      { data: &#34;xwobacon_3p_minus_xwobacon_2p&#34;, render: d =&gt; d != null ? (+d).toFixed(3) : &#34;-&#34; }
+    ],
+    order: [[3, &#34;desc&#34;]],
+    pageLength: 25,
+    columnDefs: [
+      { targets: [9,10,11,12,13,14], visible: false }
+    ]
+  });
+
   $(&#34;#yearFilter1&#34;).on(&#34;change&#34;, function() { applyDisruptionFilter(); });
   $(&#34;#minSwings&#34;).on(&#34;input&#34;, function() {
     $(&#34;#minSwingsVal&#34;).text($(this).val());
     applyDisruptionFilter();
   });
 
-  // Pitch Modelフィルター
   $(&#34;#yearFilter2&#34;).on(&#34;change&#34;, function() { applyPitchmodelFilter(); });
   $(&#34;#minPitches&#34;).on(&#34;input&#34;, function() {
     $(&#34;#minPitchesVal&#34;).text($(this).val());
     applyPitchmodelFilter();
+  });
+
+  $(&#34;#xwobaYearFilter&#34;).on(&#34;change&#34;, function() { applyXwobaPitFilter(); });
+  $(&#34;#xwobaMinPA&#34;).on(&#34;input&#34;, function() {
+    $(&#34;#xwobaMinPAVal&#34;).text($(this).val());
+    applyXwobaPitFilter();
   });
 }
 
@@ -2887,17 +3121,39 @@ function applyPitchmodelFilter() {
   dtPitchmodel.draw();
 }
 
-function switchTab(name) {
+function applyXwobaPitFilter() {
+  var yr   = $(&#34;#xwobaYearFilter&#34;).val();
+  var minN = parseInt($(&#34;#xwobaMinPA&#34;).val());
+  $.fn.dataTable.ext.search = [];
+  $.fn.dataTable.ext.search.push(function(settings, data, dataIndex, rowData) {
+    if (settings.nTable.id !== &#34;xwobaPitTable&#34;) return true;
+    if (yr &amp;&amp; String(rowData.year) !== yr) return false;
+    if (rowData.pa &lt; minN) return false;
+    return true;
+  });
+  dtXwobaPit.draw();
+}
+
+function setPitColGroup(group, e) {
+  document.querySelectorAll(&#34;.col-btn&#34;).forEach(el =&gt; el.classList.remove(&#34;active&#34;));
+  e.target.classList.add(&#34;active&#34;);
+  var allCols = [3,4,5,6,7,8,9,10,11,12,13,14];
+  var show = pitColGroups[group];
+  allCols.forEach(function(i) {
+    dtXwobaPit.column(i).visible(show.includes(i));
+  });
+}
+
+function switchTab(name, e) {
   document.querySelectorAll(&#34;.tab-content&#34;).forEach(el =&gt; el.classList.remove(&#34;active&#34;));
   document.querySelectorAll(&#34;.tab-btn&#34;).forEach(el =&gt; el.classList.remove(&#34;active&#34;));
   document.getElementById(&#34;tab-&#34; + name).classList.add(&#34;active&#34;);
-  event.target.classList.add(&#34;active&#34;);
-  // タブ切り替え時にDataTablesのカラム幅を再計算
+  e.target.classList.add(&#34;active&#34;);
   if (name === &#34;disruption&#34; &amp;&amp; dtDisruption) dtDisruption.columns.adjust().draw();
   if (name === &#34;pitchmodel&#34; &amp;&amp; dtPitchmodel) dtPitchmodel.columns.adjust().draw();
+  if (name === &#34;xwoba&#34; &amp;&amp; dtXwobaPit) dtXwobaPit.columns.adjust().draw();
 }
 
-// players.csv
 Papa.parse(&#34;/solving-baseball/data/players.csv&#34;, {
   download: true, header: true,
   complete: function(results) {
@@ -2906,7 +3162,6 @@ Papa.parse(&#34;/solving-baseball/data/players.csv&#34;, {
   }
 });
 
-// disruption CSV
 Papa.parse(&#34;/solving-baseball/data/leaderboards/disruption_2023_2025.csv&#34;, {
   download: true, header: true, dynamicTyping: true,
   complete: function(results) {
@@ -2915,11 +3170,18 @@ Papa.parse(&#34;/solving-baseball/data/leaderboards/disruption_2023_2025.csv&#34
   }
 });
 
-// pitch model CSV
 Papa.parse(&#34;/solving-baseball/data/leaderboards/pitch_model_gbdt_2021_2025.csv&#34;, {
   download: true, header: true, dynamicTyping: true,
   complete: function(results) {
     pitchmodelData = results.data.filter(r =&gt; r.pitcher_id);
+    loadedCount++; tryRender();
+  }
+});
+
+Papa.parse(&#34;/solving-baseball/data/leaderboards/xwoba_pit_2021_2025.csv&#34;, {
+  download: true, header: true, dynamicTyping: true,
+  complete: function(results) {
+    xwobaPitData = results.data.filter(r =&gt; r.pitcher_id);
     loadedCount++; tryRender();
   }
 });
