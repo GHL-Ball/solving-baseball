@@ -13,6 +13,7 @@ title: "Pitchers Leaderboard"
 .tab-content { display: none; }
 .tab-content.active { display: block; }
 .filter-row { display: flex; gap: 2rem; align-items: center; flex-wrap: wrap; margin-bottom: 1rem; }
+.dataTables_wrapper { overflow-x: auto; }
 </style>
 
 <div class="tab-buttons">
