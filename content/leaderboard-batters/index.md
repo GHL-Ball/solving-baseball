@@ -5,6 +5,7 @@ title: "Batters Leaderboard"
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 <style>
 .filter-row { display: flex; gap: 2rem; align-items: center; flex-wrap: wrap; margin-bottom: 1rem; }
+.dataTables_wrapper { overflow-x: auto; }
 </style>
 
 <div class="filter-row">
