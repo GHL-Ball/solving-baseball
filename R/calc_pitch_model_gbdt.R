@@ -822,7 +822,7 @@ calculate_pitcher_metrics <- function(df_with_predictions, train_bbe_data, fg_da
       delta_pitcher_run_exp = mean(delta_pitcher_run_exp, na.rm = TRUE),
       .groups = "drop"
     ) %>% 
-    filter(pitches >= 1000) %>% 
+    filter(pitches >= 1) %>% 
     left_join(fg_data, by = c("pitcher_id" = "MLBAMID"))
   
   return(list(
@@ -850,7 +850,8 @@ pitcher_all <- pitcher_all |>
 
 pitcher_all <- pitcher_all |> 
   mutate(stuff_rv_70 = -round(stuff_overall_run_cat * 70, 3),
-         pitch_rv_150 = -round(pit_overall_run_cat * 150, 3))
+         pitch_rv_150 = -round(pit_overall_run_cat * 150, 3),
+         pitch_minus_stuff = pitch_rv_150 - stuff_rv_70)
 
 pitcher_all <- pitcher_all |> 
   select(pitcher_id, year, pitches, stuff_rv_70, pitch_rv_150)
@@ -868,7 +869,8 @@ batter_25 <- df25_processed |>
   summarise(pitches = n(),
             stuff_overall_run_cat = mean(stuff_overall_run_cat, na.rm = T),
             pit_overall_run_cat = mean(pit_overall_run_cat, na.rm = T),
-            woba_fg = mean(woba_fg, na.rm = T))
+            woba_fg = mean(woba_fg, na.rm = T)) |> 
+  filter(pitches >= 1)
 
 batter_25 <- batter_25 |> 
   mutate(stuff_rv_70 = -round(stuff_overall_run_cat * 70, 3),
@@ -882,7 +884,8 @@ batter_24 <- df24_processed |>
   summarise(pitches = n(),
             stuff_overall_run_cat = mean(stuff_overall_run_cat, na.rm = T),
             pit_overall_run_cat = mean(pit_overall_run_cat, na.rm = T),
-            woba_fg = mean(woba_fg, na.rm = T))
+            woba_fg = mean(woba_fg, na.rm = T)) |> 
+  filter(pitches >= 1)
 
 batter_24 <- batter_24 |> 
   mutate(stuff_rv_70 = -round(stuff_overall_run_cat * 70, 3),
@@ -896,7 +899,8 @@ batter_23 <- df23_processed |>
   summarise(pitches = n(),
             stuff_overall_run_cat = mean(stuff_overall_run_cat, na.rm = T),
             pit_overall_run_cat = mean(pit_overall_run_cat, na.rm = T),
-            woba_fg = mean(woba_fg, na.rm = T))
+            woba_fg = mean(woba_fg, na.rm = T)) |> 
+  filter(pitches >= 1)
 
 batter_23 <- batter_23 |> 
   mutate(stuff_rv_70 = -round(stuff_overall_run_cat * 70, 3),
@@ -910,7 +914,8 @@ batter_22 <- df22_processed |>
   summarise(pitches = n(),
             stuff_overall_run_cat = mean(stuff_overall_run_cat, na.rm = T),
             pit_overall_run_cat = mean(pit_overall_run_cat, na.rm = T),
-            woba_fg = mean(woba_fg, na.rm = T))
+            woba_fg = mean(woba_fg, na.rm = T)) |> 
+  filter(pitches >= 1)
 
 batter_22 <- batter_22 |> 
   mutate(stuff_rv_70 = -round(stuff_overall_run_cat * 70, 3),
@@ -924,7 +929,8 @@ batter_21 <- df21_processed |>
   summarise(pitches = n(),
             stuff_overall_run_cat = mean(stuff_overall_run_cat, na.rm = T),
             pit_overall_run_cat = mean(pit_overall_run_cat, na.rm = T),
-            woba_fg = mean(woba_fg, na.rm = T))
+            woba_fg = mean(woba_fg, na.rm = T)) |> 
+  filter(pitches >= 1)
 
 batter_21 <- batter_21 |> 
   mutate(stuff_rv_70 = -round(stuff_overall_run_cat * 70, 3),
