@@ -854,7 +854,7 @@ pitcher_all <- pitcher_all |>
          pitch_minus_stuff = pitch_rv_150 - stuff_rv_70)
 
 pitcher_all <- pitcher_all |> 
-  select(pitcher_id, year, pitches, stuff_rv_70, pitch_rv_150)
+  select(pitcher_id, year, pitches, stuff_rv_70, pitch_rv_150, pitch_minus_stuff)
 
 write.csv(pitcher_all, "pitch_model_gbdt_2021_2025.csv")
 

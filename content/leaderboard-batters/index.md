@@ -4,7 +4,6 @@ title: "Batters Leaderboard"
 
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 <style>
-.dataTables_wrapper { overflow-x: auto; }
 .tab-buttons { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
 .tab-btn {
   padding: 6px 18px; cursor: pointer; border: 1px solid #888;
@@ -14,11 +13,13 @@ title: "Batters Leaderboard"
 .tab-content { display: none; }
 .tab-content.active { display: block; }
 .filter-row { display: flex; gap: 2rem; align-items: center; flex-wrap: wrap; margin-bottom: 1rem; }
+.dataTables_wrapper { overflow-x: auto; }
 .col-btn {
   padding: 4px 12px; cursor: pointer; border: 1px solid #888;
   border-radius: 4px; background: transparent; color: inherit; font-size: 0.85rem;
 }
 .col-btn.active { background: #555; color: #fff; border-color: #555; }
+.slider-group { display: flex; align-items: center; gap: 0.5rem; }
 </style>
 
 <div class="tab-buttons">
@@ -26,7 +27,6 @@ title: "Batters Leaderboard"
   <button class="tab-btn" onclick="switchTab('xwoba', event)">xwOBA</button>
 </div>
 
-<!-- Opponent Pitch Model タブ -->
 <div id="tab-opponent" class="tab-content active">
   <div class="filter-row">
     <div>
@@ -41,8 +41,11 @@ title: "Batters Leaderboard"
       </select>
     </div>
     <div>
-      <label for="oppMinPitches">最小Pitches数：<span id="oppMinPitchesVal">500</span></label><br>
-      <input type="range" id="oppMinPitches" min="1" max="3000" value="500" step="50" style="width:200px;">
+      <label>最小Pitches数：</label>
+      <div class="slider-group">
+        <input type="range" id="oppMinPitches" min="1" max="3000" value="500" step="1" style="width:150px;">
+        <input type="number" id="oppMinPitchesNum" min="1" max="3000" value="500" style="width:70px;">
+      </div>
     </div>
   </div>
   <table id="batterTable" class="display" style="width:100%">
@@ -55,7 +58,6 @@ title: "Batters Leaderboard"
   </table>
 </div>
 
-<!-- xwOBA タブ -->
 <div id="tab-xwoba" class="tab-content">
   <div class="filter-row">
     <div>
@@ -70,8 +72,11 @@ title: "Batters Leaderboard"
       </select>
     </div>
     <div>
-      <label for="xwobaMinPA">最小PA数：<span id="xwobaMinPAVal">300</span></label><br>
-      <input type="range" id="xwobaMinPA" min="1" max="700" value="300" step="10" style="width:200px;">
+      <label>最小PA数：</label>
+      <div class="slider-group">
+        <input type="range" id="xwobaMinPA" min="1" max="700" value="300" step="1" style="width:150px;">
+        <input type="number" id="xwobaMinPANum" min="1" max="700" value="300" style="width:70px;">
+      </div>
     </div>
     <div>
       <span>表示列：</span>
@@ -112,26 +117,58 @@ var loadedCount = 0;
 var dtBatter = null;
 var dtXwobaBat = null;
 
-// wOBA系: col index 3-8, wOBAcon系: 9-14
+var filters = {
+  opp:   { year: "", minN: 500 },
+  xwoba: { year: "", minN: 300 }
+};
+
 var colGroups = {
   woba:    [3,4,5,6,7,8],
   wobacon: [9,10,11,12,13,14],
   both:    [3,4,5,6,7,8,9,10,11,12,13,14]
 };
 
+$.fn.dataTable.ext.search.push(function(settings, data, dataIndex, rowData) {
+  var id = settings.nTable.id;
+  if (id === "batterTable") {
+    if (filters.opp.year && String(rowData.year) !== filters.opp.year) return false;
+    if ((rowData.pitches || 0) < filters.opp.minN) return false;
+  }
+  if (id === "xwobaBatTable") {
+    if (filters.xwoba.year && String(rowData.year) !== filters.xwoba.year) return false;
+    if ((rowData.pa || 0) < filters.xwoba.minN) return false;
+  }
+  return true;
+});
+
+function syncSliderNum(sliderId, numId, filterKey, field) {
+  $("#" + sliderId).on("input", function() {
+    var v = parseInt($(this).val());
+    $("#" + numId).val(v);
+    filters[filterKey][field] = v;
+    if (filterKey === "opp" && dtBatter) dtBatter.draw();
+    if (filterKey === "xwoba" && dtXwobaBat) dtXwobaBat.draw();
+  });
+  $("#" + numId).on("input", function() {
+    var v = parseInt($(this).val()) || 0;
+    $("#" + sliderId).val(v);
+    filters[filterKey][field] = v;
+    if (filterKey === "opp" && dtBatter) dtBatter.draw();
+    if (filterKey === "xwoba" && dtXwobaBat) dtXwobaBat.draw();
+  });
+}
+
 function tryRender() {
   if (loadedCount < 3) return;
 
   [oppData, xwobaBatData].forEach(function(arr) {
     arr.forEach(function(r) {
-      var id = String(r.batter_id);
-      r.name = playersMap[id] || id;
+      r.name = playersMap[String(r.batter_id)] || String(r.batter_id);
     });
   });
 
-  // Opponent Pitch Model
   dtBatter = $("#batterTable").DataTable({
-    data: oppData.filter(r => r.pitches >= 500),
+    data: oppData,
     columns: [
       { data: "name" },
       { data: "year" },
@@ -144,68 +181,43 @@ function tryRender() {
     pageLength: 25
   });
 
-  // xwOBA
   dtXwobaBat = $("#xwobaBatTable").DataTable({
-    data: xwobaBatData.filter(r => r.pa >= 300),
+    data: xwobaBatData,
     columns: [
       { data: "name" },
       { data: "year" },
       { data: "pa" },
-      { data: "woba",                        render: d => d != null ? (+d).toFixed(3) : "-" },
-      { data: "xwoba_ev_la",                 render: d => d != null ? (+d).toFixed(3) : "-" },
-      { data: "xwoba_ev_la_sa",              render: d => d != null ? (+d).toFixed(3) : "-" },
-      { data: "woba_minus_xwoba_2p",         render: d => d != null ? (+d).toFixed(3) : "-" },
-      { data: "woba_minus_xwoba_3p",         render: d => d != null ? (+d).toFixed(3) : "-" },
-      { data: "xwoba_3p_minus_xwoba_2p",     render: d => d != null ? (+d).toFixed(3) : "-" },
-      { data: "wobacon",                     render: d => d != null ? (+d).toFixed(3) : "-" },
-      { data: "xwobacon_ev_la",              render: d => d != null ? (+d).toFixed(3) : "-" },
-      { data: "xwobacon_ev_la_sa",           render: d => d != null ? (+d).toFixed(3) : "-" },
-      { data: "wobacon_minus_xwobacon_2p",   render: d => d != null ? (+d).toFixed(3) : "-" },
-      { data: "wobacon_minus_xwobacon_3p",   render: d => d != null ? (+d).toFixed(3) : "-" },
+      { data: "woba",                          render: d => d != null ? (+d).toFixed(3) : "-" },
+      { data: "xwoba_ev_la",                   render: d => d != null ? (+d).toFixed(3) : "-" },
+      { data: "xwoba_ev_la_sa",                render: d => d != null ? (+d).toFixed(3) : "-" },
+      { data: "woba_minus_xwoba_2p",           render: d => d != null ? (+d).toFixed(3) : "-" },
+      { data: "woba_minus_xwoba_3p",           render: d => d != null ? (+d).toFixed(3) : "-" },
+      { data: "xwoba_3p_minus_xwoba_2p",       render: d => d != null ? (+d).toFixed(3) : "-" },
+      { data: "wobacon",                       render: d => d != null ? (+d).toFixed(3) : "-" },
+      { data: "xwobacon_ev_la",                render: d => d != null ? (+d).toFixed(3) : "-" },
+      { data: "xwobacon_ev_la_sa",             render: d => d != null ? (+d).toFixed(3) : "-" },
+      { data: "wobacon_minus_xwobacon_2p",     render: d => d != null ? (+d).toFixed(3) : "-" },
+      { data: "wobacon_minus_xwobacon_3p",     render: d => d != null ? (+d).toFixed(3) : "-" },
       { data: "xwobacon_3p_minus_xwobacon_2p", render: d => d != null ? (+d).toFixed(3) : "-" }
     ],
     order: [[3, "desc"]],
     pageLength: 25,
-    columnDefs: [
-      { targets: [9,10,11,12,13,14], visible: false }
-    ]
+    columnDefs: [{ targets: [9,10,11,12,13,14], visible: false }]
   });
 
-  $("#oppYearFilter").on("change", function() { applyOppFilter(); });
-  $("#oppMinPitches").on("input", function() {
-    $("#oppMinPitchesVal").text($(this).val());
-    applyOppFilter();
+  $("#oppYearFilter").on("change", function() {
+    filters.opp.year = $(this).val();
+    dtBatter.draw();
   });
-  $("#xwobaYearFilter").on("change", function() { applyXwobaFilter(); });
-  $("#xwobaMinPA").on("input", function() {
-    $("#xwobaMinPAVal").text($(this).val());
-    applyXwobaFilter();
+  $("#xwobaYearFilter").on("change", function() {
+    filters.xwoba.year = $(this).val();
+    dtXwobaBat.draw();
   });
-}
 
-function applyOppFilter() {
-  var yr   = $("#oppYearFilter").val();
-  var minN = parseInt($("#oppMinPitches").val());
-  $.fn.dataTable.ext.search = [];
-  $.fn.dataTable.ext.search.push(function(settings, data, dataIndex, rowData) {
-    if (settings.nTable.id !== "batterTable") return true;
-    if (yr && String(rowData.year) !== yr) return false;
-    if (rowData.pitches < minN) return false;
-    return true;
-  });
+  syncSliderNum("oppMinPitches", "oppMinPitchesNum", "opp",   "minN");
+  syncSliderNum("xwobaMinPA",    "xwobaMinPANum",    "xwoba", "minN");
+
   dtBatter.draw();
-}
-
-function applyXwobaFilter() {
-  var yr   = $("#xwobaYearFilter").val();
-  var minN = parseInt($("#xwobaMinPA").val());
-  $.fn.dataTable.ext.search = [];
-  $.fn.dataTable.ext.search.push(function(settings, data, dataIndex, rowData) {
-    if (settings.nTable.id !== "xwobaBatTable") return true;
-    if (yr && String(rowData.year) !== yr) return false;
-    if (rowData.pa < minN) return false;
-    return true;
-  });
   dtXwobaBat.draw();
 }
 
@@ -213,10 +225,8 @@ function setColGroup(group, e) {
   document.querySelectorAll(".col-btn").forEach(el => el.classList.remove("active"));
   e.target.classList.add("active");
   var allCols = [3,4,5,6,7,8,9,10,11,12,13,14];
-  var show = colGroups[group];
-  allCols.forEach(function(i) {
-    dtXwobaBat.column(i).visible(show.includes(i));
-  });
+  colGroups[group].forEach(i => dtXwobaBat.column(i).visible(true));
+  allCols.filter(i => !colGroups[group].includes(i)).forEach(i => dtXwobaBat.column(i).visible(false));
 }
 
 function switchTab(name, e) {
@@ -235,7 +245,6 @@ Papa.parse("/solving-baseball/data/players.csv", {
     loadedCount++; tryRender();
   }
 });
-
 Papa.parse("/solving-baseball/data/leaderboards/opponent_pitch_model_gbdt_2021_2025.csv", {
   download: true, header: true, dynamicTyping: true,
   complete: function(results) {
@@ -243,7 +252,6 @@ Papa.parse("/solving-baseball/data/leaderboards/opponent_pitch_model_gbdt_2021_2
     loadedCount++; tryRender();
   }
 });
-
 Papa.parse("/solving-baseball/data/leaderboards/xwoba_bat_2021_2025.csv", {
   download: true, header: true, dynamicTyping: true,
   complete: function(results) {
